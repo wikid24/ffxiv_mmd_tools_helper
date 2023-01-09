@@ -1,15 +1,16 @@
-
-
 import bpy
+
+from . import register_wrap
 from . import model
 from . import import_csv
 
+@register_wrap
 class BonesRenamerPanel_MTH(bpy.types.Panel):
 	"""Creates the Bones Renamer Panel in a VIEW_3D TOOLS tab"""
 	bl_label = "Bones Renamer"
 	bl_idname = "OBJECT_PT_bones_renamer_MTH"
 	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "mmd_tools_helper"
 
 	def draw(self, context):
@@ -117,15 +118,16 @@ def main(context):
 	bpy.ops.pose.select_all(action='SELECT')
 
 
+@register_wrap
 class BonesRenamer(bpy.types.Operator):
 	"""Mass bones renamer for armature conversion"""
 	bl_idname = "object.bones_renamer"
 	bl_label = "Bones Renamer"
 
-	bpy.types.Scene.Origin_Armature_Type = bpy.props.EnumProperty(items = [('mmd_english', 'MMD English bone names', 'MikuMikuDance English bone names'), ('mmd_japanese', 'MMD Japanese bone names', 'MikuMikuDamce Japanese bone names'), ('mmd_japaneseLR', 'MMD Japanese bones names .L.R suffixes', 'MikuMikuDamce Japanese bones names with .L.R suffixes'), ('xna_lara', 'XNALara bone names', 'XNALara bone names'), ('daz_poser', 'DAZ/Poser bone names', 'DAZ/Poser/Second Life bone names'), ('blender_rigify', 'Blender rigify bone names', 'Blender rigify bone names before generating the complete rig'), ('sims_2', 'Sims 2 bone names', 'Sims 2 bone names'), ('motion_builder', 'Motion Builder bone names', 'Motion Builder bone names'), ('3ds_max', '3ds Max bone names', '3ds Max bone names'), ('bepu', 'Bepu full body IK bone names', 'Bepu full body IK bone names'), ('project_mirai', 'Project Mirai bone names', 'Project Mirai bone names'), ('manuel_bastioni_lab', 'Manuel Bastioni Lab bone names', 'Manuel Bastioni Lab bone names'), ('makehuman_mhx', 'Makehuman MHX bone names', 'Makehuman MHX bone names'), ('sims_3', 'Sims 3 bone names', 'Sims 3 bone names'), ('doa5lr', 'DOA5LR bone names', 'Dead on Arrival 5 Last Round bone names'), ('Bip_001', 'Bip001 bone names', 'Bip001 bone names'), ('biped_3ds_max', 'Biped 3DS Max bone names', 'Biped 3DS Max bone names'), ('biped_sfm', 'Biped Source Film Maker bone names', 'Biped Source Film Maker bone names'), ('valvebiped', 'ValveBiped bone names', 'ValveBiped bone names'), ('iClone7', 'iClone7 bone names', 'iClone7 bone names')], name = "Rename  bones  from :", default = 'mmd_japanese')
+	bpy.types.Scene.Origin_Armature_Type = bpy.props.EnumProperty(items = [('mmd_english', 'MMD English bone names', 'MikuMikuDance English bone names'), ('mmd_japanese', 'MMD Japanese bone names', 'MikuMikuDamce Japanese bone names'), ('mmd_japaneseLR', 'MMD Japanese bones names .L.R suffixes', 'MikuMikuDamce Japanese bones names with .L.R suffixes'), ('xna_lara', 'XNALara bone names', 'XNALara bone names'), ('daz_poser', 'DAZ/Poser bone names', 'DAZ/Poser/Second Life bone names'), ('blender_rigify', 'Blender rigify bone names', 'Blender rigify bone names before generating the complete rig'), ('sims_2', 'Sims 2 bone names', 'Sims 2 bone names'), ('motion_builder', 'Motion Builder bone names', 'Motion Builder bone names'), ('3ds_max', '3ds Max bone names', '3ds Max bone names'), ('bepu', 'Bepu full body IK bone names', 'Bepu full body IK bone names'), ('project_mirai', 'Project Mirai bone names', 'Project Mirai bone names'), ('manuel_bastioni_lab', 'Manuel Bastioni Lab bone names', 'Manuel Bastioni Lab bone names'), ('makehuman_mhx', 'Makehuman MHX bone names', 'Makehuman MHX bone names'), ('sims_3', 'Sims 3 bone names', 'Sims 3 bone names'), ('doa5lr', 'DOA5LR bone names', 'Dead on Arrival 5 Last Round bone names'), ('Bip_001', 'Bip001 bone names', 'Bip001 bone names'), ('biped_3ds_max', 'Biped 3DS Max bone names', 'Biped 3DS Max bone names'), ('biped_sfm', 'Biped Source Film Maker bone names', 'Biped Source Film Maker bone names'), ('valvebiped', 'ValveBiped bone names', 'ValveBiped bone names'), ('iClone7', 'iClone7 bone names', 'iClone7 bone names'),('ffxiv', 'ffxiv bone names', 'ffxiv bone names')], name = "Rename  bones  from :", default = 'mmd_japanese')
 
 
-	bpy.types.Scene.Destination_Armature_Type = bpy.props.EnumProperty(items = [('mmd_english', 'MMD English bone names', 'MikuMikuDance English bone names'), ('mmd_japanese', 'MMD Japanese bone names', 'MikuMikuDamce Japanese bone names'), ('mmd_japaneseLR', 'MMD Japanese bones names .L.R suffixes', 'MikuMikuDamce Japanese bones names with .L.R suffixes'), ('xna_lara', 'XNALara bone names', 'XNALara bone names'), ('daz_poser', 'DAZ/Poser bone names', 'DAZ/Poser/Second Life bone names'), ('blender_rigify', 'Blender rigify bone names', 'Blender rigify bone names before generating the complete rig'), ('sims_2', 'Sims 2 bone names', 'Sims 2 bone names'), ('motion_builder', 'Motion Builder bone names', 'Motion Builder bone names'), ('3ds_max', '3ds Max bone names', '3ds Max bone names'), ('bepu', 'Bepu full body IK bone names', 'Bepu full body IK bone names'), ('project_mirai', 'Project Mirai bone names', 'Project Mirai bone names'), ('manuel_bastioni_lab', 'Manuel Bastioni Lab bone names', 'Manuel Bastioni Lab bone names'), ('makehuman_mhx', 'Makehuman MHX bone names', 'Makehuman MHX bone names'), ('sims_3', 'Sims 3 bone names', 'Sims 3 bone names'), ('doa5lr', 'DOA5LR bone names', 'Dead on Arrival 5 Last Round bone names'), ('Bip_001', "Bip001 bone names", 'Bip001 bone names'), ('biped_3ds_max', 'Biped 3DS Max bone names', 'Biped 3DS Max bone names'), ('biped_sfm', 'Biped Source Film Maker bone names', 'Biped Source Film Maker bone names'), ('valvebiped', 'ValveBiped bone names', 'ValveBiped bone names'), ('iClone7', 'iClone7 bone names', 'iClone7 bone names')], name = "Rename  bones  to :", default = 'mmd_english')
+	bpy.types.Scene.Destination_Armature_Type = bpy.props.EnumProperty(items = [('mmd_english', 'MMD English bone names', 'MikuMikuDance English bone names'), ('mmd_japanese', 'MMD Japanese bone names', 'MikuMikuDamce Japanese bone names'), ('mmd_japaneseLR', 'MMD Japanese bones names .L.R suffixes', 'MikuMikuDamce Japanese bones names with .L.R suffixes'), ('xna_lara', 'XNALara bone names', 'XNALara bone names'), ('daz_poser', 'DAZ/Poser bone names', 'DAZ/Poser/Second Life bone names'), ('blender_rigify', 'Blender rigify bone names', 'Blender rigify bone names before generating the complete rig'), ('sims_2', 'Sims 2 bone names', 'Sims 2 bone names'), ('motion_builder', 'Motion Builder bone names', 'Motion Builder bone names'), ('3ds_max', '3ds Max bone names', '3ds Max bone names'), ('bepu', 'Bepu full body IK bone names', 'Bepu full body IK bone names'), ('project_mirai', 'Project Mirai bone names', 'Project Mirai bone names'), ('manuel_bastioni_lab', 'Manuel Bastioni Lab bone names', 'Manuel Bastioni Lab bone names'), ('makehuman_mhx', 'Makehuman MHX bone names', 'Makehuman MHX bone names'), ('sims_3', 'Sims 3 bone names', 'Sims 3 bone names'), ('doa5lr', 'DOA5LR bone names', 'Dead on Arrival 5 Last Round bone names'), ('Bip_001', "Bip001 bone names", 'Bip001 bone names'), ('biped_3ds_max', 'Biped 3DS Max bone names', 'Biped 3DS Max bone names'), ('biped_sfm', 'Biped Source Film Maker bone names', 'Biped Source Film Maker bone names'), ('valvebiped', 'ValveBiped bone names', 'ValveBiped bone names'), ('iClone7', 'iClone7 bone names', 'iClone7 bone names'),('ffxiv', 'ffxiv bone names', 'ffxiv bone names')], name = "Rename  bones  to :", default = 'mmd_english')
 
 	#@classmethod
 	#def poll(cls, context):
@@ -135,17 +137,3 @@ class BonesRenamer(bpy.types.Operator):
 	def execute(self, context):
 		main(context)
 		return {'FINISHED'}
-
-
-def register():
-	bpy.utils.register_class(BonesRenamer)
-	bpy.utils.register_class(BonesRenamerPanel_MTH)
-
-
-def unregister():
-	bpy.utils.unregister_class(BonesRenamer)
-	bpy.utils.unregister_class(BonesRenamerPanel_MTH)
-
-
-if __name__ == "__main__":
-	register()

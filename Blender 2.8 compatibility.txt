@@ -1,2 +1,0 @@
-
-At the present time, mmd_tools_helper is not compatible with Blender 2.8 or later versions of Blender. It is tested and works with Blender 2.79b.

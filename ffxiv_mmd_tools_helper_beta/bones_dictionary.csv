@@ -1,0 +1,122 @@
+mmd_english, xna_lara, daz_poser, blender_rigify, sims_2, motion_builder, 3ds_max, type_x, bepu, mmd_japanese, mmd_japaneseLR,project_mirai,manuel_bastioni_lab,makehuman_mhx,sims_3,doa5lr,Bip_001,biped_3ds_max,biped_sfm,valvebiped,iClone7,ffxiv
+view cnt,,,,,,,,, 操作中心, 操作中心,,,,,,,,,,,view cnt
+root, root ground, , root, auskel, , , , , 全ての親, 全ての親,gblctr,root,,b__ROOT__,,Bip001 Root,Root,rootTransform,RootTransform,RootNode,
+center, root hips, hip, spine, root_rot, Hips, Hips, Hip, , センター, センター,n_hara_cp,pelvis,root,b__ROOT_bind__,MOT00_Hips,Bip001 Pelvis,Pelvis,bip_pelvis,ValveBiped.Bip01_Pelvis,Hip,center
+groove,,,,,,,,, グルーブ, グルーブ,,,,,,,,,,,groove
+waist,,,,,,,,, 腰, 腰,,,,,,,,,,,n_hara
+neck, head neck lower, neck, spine.004, neck, Neck, Neck, Neck, neck, 首, 首,kl_kubi,neck,neck02,b__Neck__,MOT15_Neck,Bip001 Neck,Neck,bip_neck,ValveBiped.Bip01_Neck,NeckTwist01,j_kubi
+head, head neck upper, head, spine.005, head, Head, Head, Head, head, 頭, 頭,cl_kao,head,head,b__Head__,MOT01_Head,Bip001 Head,Head,bip_head,ValveBiped.Bip01_Head,Head,j_kao
+upper body 2, spine upper, chest, spine.002, spine2, Spine2, Chest3, , chest, 上半身2, 上半身2,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,j_sebo_b
+upper body, spine lower, abdomen, Spine.001 , spine0, chest, Chest, Chest1, spine, 上半身, 上半身,j_mune_wj,spine01,spine04,b__Spine0__,MOT16_Waist,Bip001 Spine1,Spine1,bip_spine_1,ValveBiped.Bip01_Spine1,Waist,j_sebo_a
+lower body, pelvis, , hips, , , , , hips, 下半身, 下半身,kl_kosi_etc_wj,,,b__Pelvis__,,,,,,Pelvis,j_kosi
+eye_L, head eyeball left, leftEye, eye.L, l_eye, LeftEye, LeftEye, Left Eye, eye.L, 左目, 目.L,kl_eye_l_wj,,eye.R,b__LeftEye__,OPT_Face_*_eye.0.l,Bip001 L Eye,L Eye,bip_eye_L,ValveBiped.Bip01_L_Eye,L_Eye,j_f_eye_l
+eye_R, head eyeball right, rightEye, eye.R, r_eye, RightEye, RightEye, Right Eye, eye.R, 右目, 目.R,kl_eye_r_wj,,eye.L,b__RightEye__,OPT_Face_*_eye.0.r,Bip001 R Eye,R Eye,bip_eye_R,ValveBiped.Bip01_R_Eye,R_Eye,j_f_eye_r
+shoulder_L, arm left shoulder 1, lCollar, shoulder.L, l_clavicle, LeftShoulder, LeftCollar, Left Collar, shoulder.L, 左肩, 肩.L,kl_waki_l_wj,clavicle_L,shoulder01.L,b__L_Clavicle__,MOT_*Shoulder.1.L,Bip001 L Clavicle,L Clavicle,bip_collar_L,ValveBiped.Bip01_L_Clavicle,L_Clavicle,j_sako_l
+shoulder_R, arm right shoulder 1, rCollar, shoulder.R, r_clavicle, RightShoulder, RightCollar, Right Collar, shoulder.R, 右肩, 肩.R,kl_waki_r_wj,clavicle_R,shoulder01.R,b__R_Clavicle__,MOT_*Shoulder.1.R,Bip001 R Clavicle,R Clavicle,bip_collar_R,ValveBiped.Bip01_R_Clavicle,R_Clavicle,j_sako_r
+arm_L, arm left shoulder 2, lShldr, upper_arm.L, l_upperarm, LeftUpArm, LeftShoulder, Left Shoulder, uparm.L, 左腕, 腕.L,j_kata_l_wj_cu,upperarm_L,upperarm02.L,b__L_UpperArm__,MOT_*Arm.1.L,Bip001 L UpperArm,L UpperArm,bip_upperArm_L,ValveBiped.Bip01_L_UpperArm,L_Upperarm,j_ude_a_l
+arm_R, arm right shoulder 2, rShldr, upper_arm.R, r_upperarm, RightUpArm, RightShoulder, Right Shoulder, uparm.R, 右腕, 腕.R,j_kata_r_wj_cu,upperarm_R,upperarm02.R,b__R_UpperArm__,MOT_*Arm.1.R,Bip001 R UpperArm,R UpperArm,bip_upperArm_R,ValveBiped.Bip01_R_UpperArm,R_Upperarm,j_ude_a_r
+elbow_L, arm left elbow, lForeArm, forearm.L, l_forearm, LeftLowArm, LeftElbow, Left Forearm, loarm.L, 左ひじ, ひじ.L,j_ude_l_wj,lowerarm_L,lowerarm01.L,b__L_Forearm__,MOT_*ForeArm.1.L,Bip001 L Forearm,L Forearm,bip_lowerArm_L,ValveBiped.Bip01_L_Forearm,L_Forearm,j_ude_b_l
+elbow_R, arm right elbow, rForeArm, forearm.R, r_forearm, RightLowArm, RightElbow, Right Forearm, loarm.R, 右ひじ, ひじ.R,j_ude_r_wj,lowerarm_R,lowerarm01.R,b__R_Forearm__,MOT_*ForeArm.1.R,Bip001 R Forearm,R Forearm,bip_lowerArm_R,ValveBiped.Bip01_R_Forearm,R_Forearm,j_ude_b_r
+wrist_L, arm left wrist, lHand, hand.L, l_hand, LeftHand, LeftWrist, Left Hand, finger3-1.L,左手首, 手首.L,e_ude_l_cp,hand_L,wrist.L,b__L_Hand__,MOT_*Hand.1.L,Bip001 L Hand,L Hand,bip_hand_L,ValveBiped.Bip01_L_Hand,L_Hand,j_te_l
+wrist_R, arm right wrist, rHand, hand.R, r_hand, RightHand, RightWrist, Right Hand, finger3-1.R,右手首, 手首.R,e_ude_r_cp,hand_R,wrist.R,b__R_Hand__,MOT_*Hand.1.R,Bip001 R Hand,R Hand,bip_hand_R,ValveBiped.Bip01_R_Hand,R_Hand,j_te_r
+leg_L, leg left thigh, lThigh, thigh.L, l_thigh, LeftUpLeg, LeftHip, Left Thigh, upleg.L, 左足, 足.L,j_momo_l_wj,thigh_L,upperleg01.L,b__L_Thigh__,MOT_*UpLeg.1.L,Bip001 L Thigh,L Thigh,bip_hip_L,ValveBiped.Bip01_L_Thigh,L_Thigh,j_asi_a_l
+leg_R, leg right thigh, rThigh, thigh.R, r_thigh, RightUpLeg, RightHip, Right Thigh, upleg.R, 右足, 足.R,j_momo_r_wj,thigh_R,upperleg01.R,b__R_Thigh__,MOT_*UpLeg.1.R,Bip001 R Thigh,R Thigh,bip_hip_R,ValveBiped.Bip01_R_Thigh,R_Thigh,j_asi_a_r
+knee_L, leg left knee, lShin, shin.L, l_calf, LeftLowLeg, LeftKnee, Left Shin, loleg.L, 左ひざ, ひざ.L,j_sune_l_wj,calf_L,lowerleg01.L,b__L_Calf__,MOT_*Leg.1.L,Bip001 L Calf,L Calf,bip_knee_L,ValveBiped.Bip01_L_Calf,L_Calf,j_asi_b_l
+knee_R, leg right knee, rShin, shin.R, r_calf, RightLowLeg, RightKnee, Right Shin, loleg.R, 右ひざ, ひざ.R,j_sune_r_wj,calf_R,lowerleg01.R,b__R_Calf__,MOT_*Leg.1.R,Bip001 R Calf,R Calf,bip_knee_R,ValveBiped.Bip01_R_Calf,R_Calf,j_asi_b_r
+j_asi_c_l,,,,,,,,,,,,,,,,,,,,,j_asi_c_l
+j_asi_c_r,,,,,,,,,,,,,,,,,,,,,j_asi_c_r
+ankle_L, leg left ankle, lFoot, foot.L, l_foot, LeftFoot, LeftAnkle, Left Foot, foot.L, 左足首, 足首.L,kl_asi_l_wj_co,foot_L,foot.L,b__L_Foot__,MOT_*Foot.1.L,Bip001 L Foot,L Foot,bip_foot_L,ValveBiped.Bip01_L_Foot,L_Foot,j_asi_d_l
+ankle_R, leg right ankle, rFoot, foot.R, r_foot, RightFoot, RightAnkle, Right Foot, foot.R, 右足首, 足首.R,kl_asi_r_wj_co,foot_R,foot.R,b__R_Foot__,MOT_*Foot.1.R,Bip001 R Foot,R Foot,bip_foot_R,ValveBiped.Bip01_R_Foot,R_Foot,j_asi_d_r
+toe_L, leg left toes, lToe, toe.L, l_toe, LeftToeBase, LeftToe, Left Toe, toe1-1.L, 左つま先, つま先.L,kl_toe_l_wj,toes_L,toe1-1.L,b__L_Toe__,MOT_*Toe.1.L,Bip001 L Toe0,L Toe0,bip_toe_L,ValveBiped.Bip01_L_Toe0,L_ToeBase,j_asi_e_l
+toe_R, leg right toes, rToe, toe.R, r_toe, RightToeBase, RightToe, Right Toe, toe1-1.R, 右つま先, つま先.R,kl_toe_r_wj,toes_R,toe1-1.R,b__R_Toe__,MOT_*Toe.1.R,Bip001 R Toe0,R Toe0,bip_toe_R,ValveBiped.Bip01_R_Toe0,R_ToeBase,j_asi_e_r
+leg_L_D,,,,,,,,, 左足D, 足D.L,,,,,,,,,,,left_thigh_D
+leg_R_D,,,,,,,,, 右足D, 足D.R,,,,,,,,,,,right_thigh_D
+knee_L_D,,,,,,,,, 左ひざD, ひざD.L,,,,,,,,,,,left_knee_D
+knee_R_D,,,,,,,,, 右ひざD, ひざD.R,,,,,,,,,,,right_knee_D
+ankle_L_D,,,,,,,,, 左足首D, 足首D.L,,,,,,,,,,,left_foot_D
+ankle_R_D,,,,,,,,, 右足首D, 足首D.R,,,,,,,,,,,right_foot_D
+toe_L_EX,,,,,,,,, 左足先EX, 先EX.L,,,,,,,,,,,left toes_EX
+toe_R_EX,,,,,,,,, 右足先EX, 先EX.R,,,,,,,,,,,right toes_EX
+bust_L,,,,,,,,, 左胸, 胸.L,,,,,,,,,,,j_mune_l
+bust_R,,,,,,,,, 右胸, 胸.R,,,,,,,,,,,j_mune_r
+ankle_D_L,,,,,,,,,左足首D,足首D.L,,,,,,,,,,,ankle_D_L
+ankle_D_R,,,,,,,,,右足首D,足首D.R,,,,,,,,,,,ankle_D_R
+foot_IK_root_L,,,,,,,,, 左足IK親, 足IK親.L,,,,,,,,,,,foot_IK_root_L
+leg IK_L,,,,,,,,, 左足ＩＫ, 足ＩＫ.L,,,,,,,,,,,leg IK_L
+leg IK_L_t,,,,,,,,, 左足ＩＫ先, 足ＩＫ先.L,,,,,,,,,,,leg IK_L_t
+toe IK_L,,,,,,,,, 左つま先ＩＫ, つま先ＩＫ.L,,,,,,,,,,,toe IK_L
+toe IK_L_t,,,,,,,,, 左つま先ＩＫ先, つま先ＩＫ先.L,,,,,,,,,,,toe IK_L_t
+foot_IK_root_R,,,,,,,,, 右足IK親, 足IK親.R,,,,,,,,,,,foot_IK_root_R
+leg IK_R,,,,,,,,, 右足ＩＫ, 足ＩＫ.R,,,,,,,,,,,leg IK_R
+leg IK_R_t,,,,,,,,, 右足ＩＫ先, 足ＩＫ先.R,,,,,,,,,,,leg IK_R_t
+toe IK_R,,,,,,,,, 右つま先ＩＫ, つま先ＩＫ.R,,,,,,,,,,,toe IK_R
+toe IK_R_t,,,,,,,,, 右つま先ＩＫ先, つま先ＩＫ先.R,,,,,,,,,,,toe IK_R_t
+arm twist_L,,,,,,,,, 左腕捩, 腕捩.L,,,,,,,,,,,
+wrist twist_L,,,,,,,,, 左手捩, 手捩.L,,,,,,,,,,,
+dummy_L,,,,,,,,, 左ダミー, ダミー.L,,,,,,,,,,,n_buki_l
+arm twist_R,,,,,,,,, 右腕捩, 腕捩.R,,,,,,,,,,,
+wrist twist_R,,,,,,,,, 右手捩, 手捩.R,,,,,,,,,,,
+dummy_R,,,,,,,,, 右ダミー, ダミー.R,,,,,,,,,,,n_buki_r
+hair_front_R,,,,,,,,,hair_front_R,hair_front_R,,,,,,,,,,,j_kami_f_r
+hair_front_L,,,,,,,,,hair_front_L,hair_front_L,,,,,,,,,,,j_kami_f_l
+earring_anchor_L,,,,,,,,,earring_anchor_L,earring_anchor_L,,,,,,,,,,,j_mimi_l
+earring_1_L,,,,,,,,,earring_1_L,earring_1_L,,,,,,,,,,,n_ear_a_l
+earring_2_L,,,,,,,,,earring_2_L,earring_2_L,,,,,,,,,,,n_ear_b_l
+earring_anchor_R,,,,,,,,,earring_anchor_R,earring_anchor_R,,,,,,,,,,,j_mimi_r
+earring_1_R,,,,,,,,,earring_1_R,earring_1_R,,,,,,,,,,,n_ear_a_r
+earring_2_R,,,,,,,,,earring_2_R,earring_2_R,,,,,,,,,,,n_ear_b_r
+hair_back_1,,,,,,,,,hair_back_1,hair_back_1,,,,,,,,,,,j_kami_a
+hair_back_2,,,,,,,,,hair_back_2,hair_back_2,,,,,,,,,,,j_kami_b
+shouldertwist_L,,,,,,,,,shouldertwist_L,shouldertwist_L,,,,,,,,,,,n_hkata_l
+shouldertwist_R,,,,,,,,,shouldertwist_R,shouldertwist_R,,,,,,,,,,,n_hkata_r
+lip_upper_A,,,,,,,,,lip_upper_A,lip_upper_A,,,,,,,,,,,j_f_ulip_a
+lip_upper_B,,,,,,,,,lip_upper_B,lip_upper_B,,,,,,,,,,,j_f_ulip_b
+lip_lower_A,,,,,,,,,lip_lower_A,lip_lower_A,,,,,,,,,,,j_f_dlip_a
+lip_lower_B,,,,,,,,,lip_lower_B,lip_lower_B,,,,,,,,,,,j_f_dlip_b
+armor_shoulderpad_L,,,,,,,,,armor_shoulderpad_L,armor_shoulderpad_L,,,,,,,,,,,j_buki_sebo_l
+armor_shoulderpad_R,,,,,,,,,armor_shoulderpad_R,armor_shoulderpad_R,,,,,,,,,,,j_buki_sebo_r
+eyebrow_front_L,,,,,,,,,eyebrow_front_L,eyebrow_front_L,,,,,,,,,,,j_f_miken_l
+eyebrow_front_R,,,,,,,,,eyebrow_front_R,eyebrow_front_R,,,,,,,,,,,j_f_miken_r
+eyelid_upper_R,,,,,,,,,eyelid_upper_R,eyelid_upper_R,,,,,,,,,,,j_f_umab_r
+eyelid_upper_L,,,,,,,,,eyelid_upper_L,eyelid_upper_L,,,,,,,,,,,j_f_umab_l
+eyelid_lower_R,,,,,,,,,eyelid_lower_R,eyelid_lower_R,,,,,,,,,,,j_f_dmab_r
+eyelid_lower_L,,,,,,,,,eyelid_lower_L,eyelid_lower_L,,,,,,,,,,,j_f_dmab_l
+jaw,,,,,,,,,jaw,jaw,,,,,,,,,,,j_ago
+hat_L,,,,,,,,,hat_L,hat_L,,,,,,,,,,,j_ex_met_a
+hat_R,,,,,,,,,hat_R,hat_R,,,,,,,,,,,j_ex_met_b
+nostrils,,,,,,,,,nostrils,nostrils,,,,,,,,,,,j_f_hana
+cheek_L,,,,,,,,,cheek_L,cheek_L,,,,,,,,,,,j_f_hoho_l
+cheek_R,,,,,,,,,cheek_R,cheek_R,,,,,,,,,,,j_f_hoho_r
+eyebrow_mid_L,,,,,,,,,eyebrow_mid_L,eyebrow_mid_L,,,,,,,,,,,j_f_mayu_l
+eyebrow_mid_R,,,,,,,,,eyebrow_mid_R,eyebrow_mid_R,,,,,,,,,,,j_f_mayu_r
+upper_nose,,,,,,,,,upper_nose,upper_nose,,,,,,,,,,,j_f_memoto
+lip_side_L,,,,,,,,,lip_side_L,lip_side_L,,,,,,,,,,,j_f_lip_l
+lip_side_R,,,,,,,,,lip_side_R,lip_side_R,,,,,,,,,,,j_f_lip_r
+skirt_fr_L_a,,,,,,,,,skirt_fr_L_a,skirt_fr_L_a,,,,,,,,,,,j_sk_f_a_l
+skirt_fr_L_b,,,,,,,,,skirt_fr_L_b,skirt_fr_L_b,,,,,,,,,,,j_sk_f_b_l
+skirt_fr_L_c,,,,,,,,,skirt_fr_L_c,skirt_fr_L_c,,,,,,,,,,,j_sk_f_c_l
+skirt_fr_L_d,,,,,,,,,skirt_fr_L_d,skirt_fr_L_d,,,,,,,,,,,j_sk_f_d_l
+skirt_fr_R_a,,,,,,,,,skirt_fr_R_a,skirt_fr_R_a,,,,,,,,,,,j_sk_f_a_r
+skirt_fr_R_b,,,,,,,,,skirt_fr_R_b,skirt_fr_R_b,,,,,,,,,,,j_sk_f_b_r
+skirt_fr_R_c,,,,,,,,,skirt_fr_R_c,skirt_fr_R_c,,,,,,,,,,,j_sk_f_c_r
+skirt_fr_R_d,,,,,,,,,skirt_fr_R_d,skirt_fr_R_d,,,,,,,,,,,j_sk_f_d_f
+skirt_s_L_a,,,,,,,,,skirt_s_L_a,skirt_s_L_a,,,,,,,,,,,j_sk_s_a_l
+skirt_s_L_b,,,,,,,,,skirt_s_L_b,skirt_s_L_b,,,,,,,,,,,j_sk_s_b_l
+skirt_s_L_c,,,,,,,,,skirt_s_L_c,skirt_s_L_c,,,,,,,,,,,j_sk_s_c_l
+skirt_s_L_d,,,,,,,,,skirt_s_L_d,skirt_s_L_d,,,,,,,,,,,j_sk_s_d_l
+skirt_s_R_a,,,,,,,,,skirt_s_R_a,skirt_s_R_a,,,,,,,,,,,j_sk_s_a_r
+skirt_s_R_b,,,,,,,,,skirt_s_R_b,skirt_s_R_b,,,,,,,,,,,j_sk_s_b_r
+skirt_s_R_c,,,,,,,,,skirt_s_R_c,skirt_s_R_c,,,,,,,,,,,j_sk_s_c_r
+skirt_s_R_d,,,,,,,,,skirt_s_R_d,skirt_s_R_d,,,,,,,,,,,j_sk_s_d_r
+skirt_b_L_a,,,,,,,,,skirt_b_L_a,skirt_b_L_a,,,,,,,,,,,j_sk_b_a_l
+skirt_b_L_b,,,,,,,,,skirt_b_L_b,skirt_b_L_b,,,,,,,,,,,j_sk_b_b_l
+skirt_b_L_c,,,,,,,,,skirt_b_L_c,skirt_b_L_c,,,,,,,,,,,j_sk_b_c_l
+skirt_b_L_d,,,,,,,,,skirt_b_L_d,skirt_b_L_d,,,,,,,,,,,j_sk_b_d_l
+skirt_b_R_a,,,,,,,,,skirt_b_R_a,skirt_b_R_a,,,,,,,,,,,j_sk_b_a_r
+skirt_b_R_b,,,,,,,,,skirt_b_R_b,skirt_b_R_b,,,,,,,,,,,j_sk_b_b_r
+skirt_b_R_c,,,,,,,,,skirt_b_R_c,skirt_b_R_c,,,,,,,,,,,j_sk_b_c_r
+skirt_b_R_d,,,,,,,,,skirt_b_R_d,skirt_b_R_d,,,,,,,,,,,j_sk_b_d_f
+armor_waist_1_l,,,,,,,,,armor_waist_l,armor_waist_l,,,,,,,,,,,j_buki_kosi_l
+armor_waist_1_r,,,,,,,,,armor_waist_r,armor_waist_r,,,,,,,,,,,j_buki_kosi_r
+armor_waist_2_l,,,,,,,,,armor_waist_2_l,armor_waist_2_l,,,,,,,,,,,j_buki2_kosi_l
+armor_waist_2_r,,,,,,,,,armor_waist_2_r,armor_waist_2_r,,,,,,,,,,,j_buki2_kosi_r

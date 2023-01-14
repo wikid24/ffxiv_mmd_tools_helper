@@ -177,6 +177,7 @@ def correct_root_center():
 
 def correct_groove():
 	print('\n')
+	bpy.ops.object.mode_set(mode='OBJECT')
 	if test_is_mmd_english_armature() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
 
@@ -200,6 +201,7 @@ def correct_groove():
 
 def correct_waist():
 	print('\n')
+	bpy.ops.object.mode_set(mode='OBJECT')
 	if test_is_mmd_english_armature() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
 
@@ -219,6 +221,46 @@ def correct_waist():
 
 	if test_is_mmd_english_armature() == False:
 		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
+		
+
+def correct_waist_cancel():
+	print('\n')
+	bpy.ops.object.mode_set(mode='EDIT')
+	if test_is_mmd_english_armature() == True:
+		bpy.ops.object.mode_set(mode='EDIT')
+		#measurements of the length of the foot bone which will used to calculate the lengths of the new bones.
+		LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length
+		HALF_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.5
+		QUARTER_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.25
+		TWENTIETH_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.05
+		FOURTIETH_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.025
+
+		if "waist_cancel_L" not in bpy.context.active_object.data.bones.keys():
+			waist_cancel_L = bpy.context.active_object.data.edit_bones.new("waist_cancel_L")
+			waist_cancel_L.head = bpy.context.active_object.data.edit_bones["leg_L"].head
+			waist_cancel_L.tail = bpy.context.active_object.data.edit_bones["leg_L"].head
+			waist_cancel_L.parent = bpy.context.active_object.data.edit_bones["lower body"]
+			waist_cancel_L.tail.y = bpy.context.active_object.data.edit_bones["leg_L"].head.y + HALF_LENGTH_OF_FOOT_BONE
+			print("Added waist_cancel_L bone.")
+
+		if "leg_L" in bpy.context.active_object.data.edit_bones.keys():
+			bpy.context.active_object.data.edit_bones["leg_L"].parent = bpy.context.active_object.data.edit_bones["waist_cancel_L"]
+
+		if "waist_cancel_R" not in bpy.context.active_object.data.bones.keys():
+			waist_cancel_R = bpy.context.active_object.data.edit_bones.new("waist_cancel_R")
+			waist_cancel_R.head = bpy.context.active_object.data.edit_bones["leg_R"].head
+			waist_cancel_R.tail = bpy.context.active_object.data.edit_bones["leg_R"].head
+			waist_cancel_R.tail.y = bpy.context.active_object.data.edit_bones["leg_R"].head.y + HALF_LENGTH_OF_FOOT_BONE
+			waist_cancel_R.parent = bpy.context.active_object.data.edit_bones["lower body"]
+			print("Added waist_cancel_R bone.")
+
+		if "leg_R" in bpy.context.active_object.data.edit_bones.keys():
+			bpy.context.active_object.data.edit_bones["leg_R"].parent = bpy.context.active_object.data.edit_bones["waist_cancel_R"]
+		bpy.ops.object.mode_set(mode='OBJECT')
+
+	if test_is_mmd_english_armature() == False:
+		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
+
 
 def correct_view_cnt():
 	print('\n')
@@ -302,6 +344,9 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_waist":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_waist()
+	if bpy.context.scene.selected_miscellaneous_tools == "correct_waist_cancel":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		correct_waist_cancel()
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_view_cnt":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_view_cnt()
@@ -324,6 +369,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_root_center", "Correct MMD Root and Center bones", "Correct MMD root and center bones")\
 	, ("correct_groove", "Correct MMD Groove bone", "Correct MMD Groove bone")\
 	, ("correct_waist", "Correct MMD Waist bone", "Correct MMD Waist bone")\
+	, ("correct_waist_cancel", "Correct waist cancel left and right bones", "Correct waist cancel left and right bones")\
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("create_bone_groups", "Create Bone Groups", "Create Bone Groups")\
 	], name = "Select Function:", default = 'none')

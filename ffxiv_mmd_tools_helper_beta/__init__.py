@@ -44,7 +44,7 @@ if "bpy" in locals():
 	#importlib.reload(armature_diagnostic)
 	importlib.reload(add_foot_leg_ik)
 	#importlib.reload(add_hand_arm_ik)
-	#importlib.reload(display_panel_groups)
+	importlib.reload(display_panel_groups)
 	#importlib.reload(toon_textures_to_node_editor_shader)
 	#importlib.reload(toon_modifier)
 	importlib.reload(reverse_japanese_english)
@@ -66,7 +66,7 @@ else:
 	#from . import armature_diagnostic
 	from . import add_foot_leg_ik
 	#from . import add_hand_arm_ik
-	#from . import display_panel_groups
+	from . import display_panel_groups
 	#from . import toon_textures_to_node_editor_shader
 	#from . import toon_modifier
 	from . import reverse_japanese_english

@@ -389,7 +389,7 @@ def main(context):
 	bone.tail.y = bone.tail.y + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.head.z = bone.head.z - QUARTER_LENGTH_OF_FOOT_BONE
 	bone.tail.z = bone.tail.z - QUARTER_LENGTH_OF_FOOT_BONE
-	#bone.parent = bpy.context.active_object.data.edit_bones[TOE_RIGHT]
+	bone.parent = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT_D]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
 	#if "toe IK_R_t" in bpy.context.active_object.pose.bones.keys():

@@ -220,7 +220,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_IK_LEFT_BONE)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head.y + LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head.z + LENGTH_OF_FOOT_BONE
 	if ROOT in bpy.context.active_object.data.edit_bones.keys():
 		print(ROOT, ROOT in bpy.context.active_object.data.edit_bones.keys())
 		bone.parent = bpy.context.active_object.data.edit_bones[ROOT]
@@ -230,7 +230,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_IK_RIGHT_BONE)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head.y + LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head.z + LENGTH_OF_FOOT_BONE
 	if ROOT in bpy.context.active_object.data.edit_bones.keys():
 		print(ROOT, ROOT in bpy.context.active_object.data.edit_bones.keys())
 		bone.parent = bpy.context.active_object.data.edit_bones[ROOT]
@@ -240,7 +240,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_IK_LEFT_BONE)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_LEFT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[TOE_LEFT].head.y - QUARTER_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[TOE_LEFT].head.z - QUARTER_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_IK_LEFT_BONE]
 	bone.use_connect = False
@@ -248,14 +248,14 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_IK_RIGHT_BONE)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_RIGHT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[TOE_RIGHT].head.y - QUARTER_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[TOE_RIGHT].head.z - QUARTER_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_IK_RIGHT_BONE]
 	bone.use_connect = False
 
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_IK_LEFT_BONE_TIP)
 	bone.head = bpy.context.active_object.data.edit_bones[LEG_IK_LEFT_BONE].head
 	bone.tail = bpy.context.active_object.data.edit_bones[LEG_IK_LEFT_BONE].head
-	bone.tail.y = bone.tail.y + TWENTIETH_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z + TWENTIETH_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_IK_LEFT_BONE]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
@@ -270,7 +270,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_IK_RIGHT_BONE_TIP)
 	bone.head = bpy.context.active_object.data.edit_bones[LEG_IK_RIGHT_BONE].head
 	bone.tail = bpy.context.active_object.data.edit_bones[LEG_IK_RIGHT_BONE].head
-	bone.tail.y = bone.tail.y + TWENTIETH_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z + TWENTIETH_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_IK_RIGHT_BONE]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
@@ -285,7 +285,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_IK_LEFT_BONE_TIP)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_IK_LEFT_BONE].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_IK_LEFT_BONE].head
-	bone.tail.y = bone.tail.y - TWENTIETH_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z - TWENTIETH_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[TOE_IK_LEFT_BONE]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
@@ -300,7 +300,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_IK_RIGHT_BONE_TIP)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_IK_RIGHT_BONE].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_IK_RIGHT_BONE].head
-	bone.tail.y = bone.tail.y - TWENTIETH_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z - TWENTIETH_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[TOE_IK_RIGHT_BONE]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
@@ -318,7 +318,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_LEFT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[LEG_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[LEG_LEFT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[LEG_LEFT].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[LEG_LEFT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LOWER_BODY]
 	bone.use_connect = False
@@ -326,7 +326,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(LEG_RIGHT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[LEG_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[LEG_RIGHT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[LEG_RIGHT].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[LEG_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LOWER_BODY]
 	bone.use_connect = False
@@ -334,7 +334,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(KNEE_LEFT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[KNEE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[KNEE_LEFT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[KNEE_LEFT_D].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_LEFT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_LEFT_D]
 	bone.use_connect = False
@@ -342,7 +342,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(KNEE_RIGHT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[KNEE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[KNEE_RIGHT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[KNEE_RIGHT_D].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_RIGHT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_RIGHT_D]
 	bone.use_connect = False
@@ -350,7 +350,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(ANKLE_LEFT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[ANKLE_LEFT_D].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_LEFT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[KNEE_LEFT_D]
 	bone.use_connect = False
@@ -358,7 +358,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(ANKLE_RIGHT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
-	bone.tail.y = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT_D].head.y + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[KNEE_RIGHT_D]
 	bone.use_connect = False
@@ -367,10 +367,10 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_LEFT_EX)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_LEFT].tail
+	bone.head.z = bone.head.z + QUARTER_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.head.y = bone.head.y + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.tail.y = bone.tail.y + QUARTER_LENGTH_OF_FOOT_BONE
-	bone.head.z = bone.head.z - QUARTER_LENGTH_OF_FOOT_BONE
-	bone.tail.z = bone.tail.z - QUARTER_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[ANKLE_LEFT_D]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')
@@ -385,10 +385,10 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(TOE_RIGHT_EX)
 	bone.head = bpy.context.active_object.data.edit_bones[TOE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[TOE_RIGHT].tail
+	bone.head.z = bone.head.z + QUARTER_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bone.tail.z + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.head.y = bone.head.y + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.tail.y = bone.tail.y + QUARTER_LENGTH_OF_FOOT_BONE
-	bone.head.z = bone.head.z - QUARTER_LENGTH_OF_FOOT_BONE
-	bone.tail.z = bone.tail.z - QUARTER_LENGTH_OF_FOOT_BONE
 	bone.parent = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT_D]
 	bone.use_connect = False
 	bpy.ops.object.mode_set(mode='POSE')

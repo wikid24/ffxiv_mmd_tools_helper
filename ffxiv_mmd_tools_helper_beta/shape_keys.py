@@ -7,6 +7,7 @@ from . import model
 from . import import_csv
 
 
+
 @register_wrap
 class ShapeKeysPanel(bpy.types.Panel):
 	"""Add foot and leg IK bones and constraints to MMD model"""
@@ -25,7 +26,7 @@ class ShapeKeysPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("object.add_shape_keys_btn", text = "Add shape keys to FFXIV model")
 		row = layout.row()
-
+		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs")
 
 def get_meshes_of_armature (armature):
 	bpy.ops.object.mode_set(mode='OBJECT')
@@ -43,7 +44,6 @@ def get_meshes_of_armature (armature):
 		#bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
 		#obj = bpy.context.active_object
 	return bpy.context.selected_objects
-
 
 
 def save_rest_position(armature):
@@ -103,17 +103,6 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 		quaternion_flag = True
 		#Change the rotation mode to XYZ Euler
 		pbone.rotation_mode = 'XYZ'
-		"""
-		# Get the current quaternion rotation value
-		quat_rot = pbone.rotation_quaternion
-		
-		# Convert the quaternion rotation value to euler
-		euler_rot = quat_rot.to_euler()
-		
-		# Set the euler rotation value to the bone
-		pbone.rotation_euler = euler_rot
-		"""
-
 
 # pbone.location[0] location x
 # pbone.location[1] location y
@@ -237,6 +226,7 @@ def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 
 
 def parse_shape_key_data_from_csv (csv_data):
+	shape_key_dictionary = None
 	
 	# Create an empty dictionary
 	shape_key_dictionary = {}
@@ -266,150 +256,39 @@ def parse_shape_key_data_from_csv (csv_data):
 			
 	return shape_key_dictionary
 
-
-
 def read_shape_keys_file(ffxiv_race):
 	#if test_is_mmd_english_armature() == True:
 	#	bpy.ops.object.mode_set(mode='EDIT')
+	
 	SHAPE_KEYS_DICTIONARY = None
 	#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+
+
+
 	SHAPE_KEYS_DICTIONARY = import_csv.use_csv_shape_keys_dictionary(ffxiv_race)
-
-
 	#if test_is_mmd_english_armature() == False:
 	#	print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
 
 	return SHAPE_KEYS_DICTIONARY
 
-#applies the shape keys
-
-
-
-
-
-"""
-
-def apply_shape_keys(SHAPE_KEYS_DICTIONARY_DATA, armature_name):
-	bpy.ops.object.mode_set(mode='POSE')
-	# Get the armature object
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
-	armature = bpy.context.view_layer.objects.active
-	
-
-	SHAPE_KEYS_DICTIONARY = {}
-	for row in SHAPE_KEYS_DICTIONARY_DATA:
-		SHAPE_KEYS_DICTIONARY[(row[0], row[1])] = \
-		{'locationX': row[2] \
-		, 'locationY': row[3] \
-		, 'locationZ': row[4] \
-		, 'rotateX': row[5] \
-		, 'rotateY': row[6] \
-		, 'rotateZ': row[7]}
-
-	keys = ['shape_key', 'bone_name']
-	values = ['locationX', 'locationY', 'locationZ', 'rotateX', 'rotateY', 'rotateZ']
-	SHAPE_KEYS_DICTIONARY_DATA = [dict(zip(keys, row)) for row in reader]
-	
-	for shape_key_bone_name, location_rotation in SHAPE_KEYS_DICTIONARY_DATA:
-		shape_key, bone_name = shape_key_bone_name
-		locationX, locationY, locationZ, rotateX, rotateY, rotateZ = location_rotation
-		
-		try:
-			if shape_key in armature.shape_keys:
-				 raise ValueError (f"{shape_key} exists already in armature")
-				
-			if bone_name not in armature.pose.bones:
-				raise ValueError (f"{bone_name} does not exist in the armature.")
-			bone = armature.pose.bones[bone_name]
-			bone.shape_key_add(name=shape_key)
-			bone.location = (locationX, locationY, locationZ)
-			bone.rotation_euler = (rotateX, rotateY, rotateZ)
-		except ValueError as e:
-			print(e)
-
-
-	
-	#armature = bpy.data.objects[armature_name]
-	if not armature:
-		print(f"Armature with name '{armature_name}' not found.")
-		return
-
-	# Loop through all the bones
-	for bone_name in unique_bone_names:
-		# Get the bone you want to edit
-		bone = armature.pose.bones.get(bone_name)
-		if not bone:
-			print(f"Bone with name '{bone_name}' not found in armature.")
-			continue
-
-		# Loop through all the shape keys
-		for shape_key_name in unique_shape_keys:
-			# Get the shape key you want to apply
-			shape_key = armature.data.shape_keys.key_blocks.get(shape_key_name)
-			if not shape_key:
-				print(f"Shape key with name '{shape_key_name}' not found in armature.")
-				continue
-
-			# Apply the shape key to the bone
-			bone.shape_key_add(shape_key, from_mix=True)
-			
-			locationX = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['locationX']
-			locationY = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['locationY']
-			locationZ = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['locationZ']
-			rotateX = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['rotateX']
-			rotateY = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['rotateY']
-			rotateZ = SHAPE_KEYS_DICTIONARY[shape_key_name, bone_name]['rotateZ']
-
-			# Set the location and rotation values
-			bone.location = (float(locationX) , float(locationY) , float(locationZ))
-			bone.rotation_quaternion = (float(rotateX) , float(rotateY) , float(rotateZ))
-"""
-
-
 def main(context):
+	bpy.ops.script.reload()
 	# print(bpy.context.scene.selected_ffxiv_model_type)
-	armature_object = model.findArmature(bpy.context.active_object)
-	bpy.context.view_layer.objects.active = armature_object
-
+	get_armature()
 
 	if bpy.context.scene.ffxiv_model_list == 'none':
 		pass
-	if bpy.context.scene.ffxiv_model_list == "hyur":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("hyur")
-	if bpy.context.scene.ffxiv_model_list == "miquote":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("miquote")
-	if bpy.context.scene.ffxiv_model_list == "viera":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY =read_shape_keys_file("viera")
-	if bpy.context.scene.ffxiv_model_list == "aura":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("aura")
-	if bpy.context.scene.ffxiv_model_list == "hrothgar":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("hrothgar")
-	if bpy.context.scene.ffxiv_model_list == "elezen":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("elezen")
-	if bpy.context.scene.ffxiv_model_list == "roegadyn":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("roegadyn")
-	if bpy.context.scene.ffxiv_model_list == "lalafell":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file("lalafell")
+	else:
+		SHAPE_KEYS_DICTIONARY = read_shape_keys_file(bpy.context.scene.ffxiv_model_list)
+		
+		shape_keys = parse_shape_key_data_from_csv(SHAPE_KEYS_DICTIONARY)
 
-	shape_keys = parse_shape_key_data_from_csv(SHAPE_KEYS_DICTIONARY)
+		for shape_key in shape_keys:
+			create_shape_key(get_armature(),shape_key,shape_keys[shape_key])
+			#print (key + ": \t")
+			#print (shape_keys[shape_key])
+			#print ('\n')
 
-	for shape_key in shape_keys:
-		create_shape_key(get_armature(),shape_key,shape_keys[shape_key])
-		#print (key + ": \t")
-		#print (shape_keys[shape_key])
-		#print ('\n')
-
-	
-
-	#apply_shape_keys(SHAPE_KEYS_DICTIONARY, armature_object)
 
 @register_wrap
 class Shape_Keys(bpy.types.Operator):
@@ -428,6 +307,8 @@ class Shape_Keys(bpy.types.Operator):
 	, ("roegadyn", "Import Roegadyn Shape Keys","Import Roegadyn Shape Keys") \
 	, ("lalafell", "Import Lalafell Shape Keys","Import Lalafell Shape Keys") \
 	], name = "Select Race:", default = 'hyur')
+	
+	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 
 #	@classmethod
 #	def poll(cls, context):

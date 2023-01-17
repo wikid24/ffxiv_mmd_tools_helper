@@ -50,6 +50,8 @@ if "bpy" in locals():
 	importlib.reload(reverse_japanese_english)
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(blender_bone_names_to_japanese_bone_names)
+	importlib.reload(shape_keys)
+	
 else:
 	import bpy
 	import logging
@@ -72,6 +74,7 @@ else:
 	from . import reverse_japanese_english
 	from . import miscellaneous_tools
 	from . import blender_bone_names_to_japanese_bone_names
+	from . import shape_keys
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

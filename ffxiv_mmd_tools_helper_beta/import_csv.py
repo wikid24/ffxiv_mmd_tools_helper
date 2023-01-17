@@ -42,3 +42,19 @@ def use_csv_translations_dictionary():
 		# print(t , ",")
 
 	return TRANSLATIONS_DICTIONARY
+	
+	
+def use_csv_shape_keys_dictionary(ffxiv_race):
+	CSVreader = None
+
+	shape_keys_dictionary = (__file__ + "shape_keys_" + ffxiv_race +".csv").replace("import_csv.py" , "")
+
+	with open(shape_keys_dictionary, newline='', encoding='utf-8') as csvfile:
+		CSVreader = csv.reader(csvfile, delimiter=',', skipinitialspace=True)
+		SHAPE_KEYS_DICTIONARY = [tuple(x[:8]) for x in CSVreader]
+	# delete the first element (header record)
+	SHAPE_KEYS_DICTIONARY.pop(0)
+	#trim leading and trailing white space
+	for i in range(len(SHAPE_KEYS_DICTIONARY)):
+		SHAPE_KEYS_DICTIONARY[i] = tuple(x.strip() for x in SHAPE_KEYS_DICTIONARY[i])
+	return SHAPE_KEYS_DICTIONARY

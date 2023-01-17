@@ -32,6 +32,7 @@ def all_materials_mmd_ambient_white():
 
 def import_nala():
 
+
 	bpy.ops.import_scene.fbx( \
 	filepath=r'C:\Users\wikid\OneDrive\Documents\TexTools\Saved\FullModel\Nala V3\Nala V3.fbx'\
 	, primary_bone_axis='X' \
@@ -39,7 +40,53 @@ def import_nala():
 	, use_manual_orientation=True \
 	, axis_forward='Y' \
 	, axis_up='Z'
-)
+	)
+
+	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
+	# Get the selected object
+	selected_obj = bpy.context.object #should be n_root
+	selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
+
+	bpy.context.view_layer.objects.active = selected_obj_parent
+
+	# Create a new empty object to store all the junk that comes from FFXIV
+	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
+	new_empty = bpy.context.object
+	new_empty.name = 'FFXIV Junk'
+	print (new_empty)
+
+	# Parent the new empty object to the selected object
+	new_empty.parent = selected_obj_parent
+
+	# Iterate through all children of the selected object
+	for child in selected_obj_parent.children:
+		# Check if the child object contains the substring 'Group' in its name
+		if 'Group' in child.name:
+			# Parent the child object to the new empty object
+			child.parent = new_empty
+			
+	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
+	bpy.context.view_layer.objects.active = selected_obj
+		
+			
+	# Create a new empty object to store all the Mesh Objects
+	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
+	new_empty = bpy.context.object
+	new_empty.name = 'FFXIV Mesh'
+	new_empty.parent = selected_obj
+
+	# Iterate through all children of the selected object
+	for child in selected_obj.children:
+		# Check if the child object contains the substring 'Group' in its name
+		if 'Part' in child.name:
+			# Parent the child object to the new empty object
+			child.parent = new_empty
+
+	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
+	mats = bpy.data.materials
+	for mat in mats:
+		mat.blend_method = 'HASHED'
+
 
 """
 

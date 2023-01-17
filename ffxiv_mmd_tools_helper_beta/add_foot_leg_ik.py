@@ -481,17 +481,17 @@ def main(context):
 		bpy.context.object.pose.bones[ANKLE_RIGHT].mmd_bone.ik_rotation_constraint = 4 #180*4/math.pi
 		bpy.context.object.pose.bones[ANKLE_LEFT].mmd_bone.ik_rotation_constraint = 4 # 180*4/math.pi
 
-	#bpy.context.object.pose.bones[TOE_LEFT].constraints.new("DAMPED_TRACK")
-	#bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].target = bpy.context.active_object
-	#bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].subtarget = ANKLE_LEFT
-	#bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].track_axis = 'TRACK_Y'
-	#bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].name = "mmd_ik_target_override"
+	bpy.context.object.pose.bones[TOE_LEFT].constraints.new("DAMPED_TRACK")
+	bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].target = bpy.context.active_object
+	bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].subtarget = ANKLE_LEFT
+	bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].track_axis = 'TRACK_Y'
+	bpy.context.object.pose.bones[TOE_LEFT].constraints["Damped Track"].name = "mmd_ik_target_override"
 
-	#bpy.context.object.pose.bones[TOE_RIGHT].constraints.new("DAMPED_TRACK")
-	#bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].target = bpy.context.active_object
-	#bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].subtarget = ANKLE_RIGHT
-	#bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].track_axis = 'TRACK_Y'
-	#bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].name = "mmd_ik_target_override"
+	bpy.context.object.pose.bones[TOE_RIGHT].constraints.new("DAMPED_TRACK")
+	bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].target = bpy.context.active_object
+	bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].subtarget = ANKLE_RIGHT
+	bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].track_axis = 'TRACK_Y'
+	bpy.context.object.pose.bones[TOE_RIGHT].constraints["Damped Track"].name = "mmd_ik_target_override"
 
 
 

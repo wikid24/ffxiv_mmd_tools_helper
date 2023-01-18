@@ -9,10 +9,10 @@ Todo stuff:
 
 New Features (to do):
 - ffxiv shape keys:
-  - Populate the shape keys files-- one for each race, 55 shape keys in all. Reference guide: https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917
+  - Populate the shape keys files (facial animation sliders) -- 55 shape keys for each of the 8 races...  440 in all! :S. Reference guide: https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917
   - Allow for a user to upload their OWN custom shape key csv file (instead of relying on the ones that come as part of this addon)
   - Find a way to export shape key data to CSV file (in a similar format as the IMPORT shape keys CSV)
-- Automate the rigify armature bones to match ffxiv armature bones (should be mostly easy, the majority of it is a 1:1 'transform rigify bone to match the ffxiv bone's position data)
+- Automate the rigify armature bones to match ffxiv armature bones (should be mostly easy, the majority of it is a 1:1 'transform rigify bone to match the ffxiv bone's position/rotation data)
 - fix IK to match double jointed knees (move the bone constraints to j_asi_c_l instead of j_asi_b_l, set the chain=3 instead of 2)
 - display_panel_groups.py - needs to be updated to match the ffxiv bone structure
 - MMD Tools uses Shadow bone and D bones -- find a way to get MMD Tools to make them for me (or are they really necessary?)
@@ -23,7 +23,7 @@ New Features (completed):
 - added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
 - A bunch of important useful still. Will list them later.
 
-Conversion (to do), to make compatible with blender 2.8+:
+Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py
   - armature_diagnostic.py
   - background_color_picker.py

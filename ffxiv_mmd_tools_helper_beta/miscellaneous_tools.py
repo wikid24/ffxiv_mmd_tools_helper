@@ -149,15 +149,15 @@ def analyze_selected_parent_child_bone_pair():
 			parent_bone_name = selected_bones[1]
 			child_bone_name = selected_bones[0]
 			return parent_bone_name, child_bone_name
-			# combine_2_bones_1_bone(parent_bone, child_bone)
-			# combine_2_vg_1_vg(parent_bone, child_bone)
+			combine_2_bones_1_bone(parent_bone, child_bone)
+			combine_2_vg_1_vg(parent_bone, child_bone)
 
 		if bpy.context.active_object.data.bones[selected_bones[1]].parent == bpy.context.active_object.data.bones[selected_bones[0]]:
 			parent_bone_name = selected_bones[0]
 			child_bone_name = selected_bones[1]
 			return parent_bone_name, child_bone_name
-			# combine_2_bones_1_bone(parent_bone, child_bone)
-			# combine_2_vg_1_vg(parent_bone, child_bone)
+			combine_2_bones_1_bone(parent_bone, child_bone)
+			combine_2_vg_1_vg(parent_bone, child_bone)
 
 		if bpy.context.active_object.data.bones[selected_bones[0]].parent != bpy.context.active_object.data.bones[selected_bones[1]]:
 			if bpy.context.active_object.data.bones[selected_bones[1]].parent != bpy.context.active_object.data.bones[selected_bones[0]]:

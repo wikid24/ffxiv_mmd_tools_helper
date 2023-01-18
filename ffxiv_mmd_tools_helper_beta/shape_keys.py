@@ -56,7 +56,7 @@ def save_rest_position(armature):
 	bpy.ops.object.mode_set(mode='POSE')
 
 	# Store the original positional data of the bones
-	for pbone in bpy.context.object.pose.bones:
+	for pbone in armature.pose.bones:
 		original_pose_data[pbone.name] = { \
 			'location': pbone.location.copy(), \
 			'rotation_mode': pbone.rotation_mode, \
@@ -71,13 +71,11 @@ def load_rest_position(original_pose_data, armature):
 
 	# Set the pose mode
 	bpy.context.view_layer.objects.active = armature
-
-	# Set the pose mode
 	bpy.ops.object.mode_set(mode='POSE')
 
 	# Iterate over the stored pose data and apply it back to the bones
 	for pbone_name, data in original_pose_data.items():
-		pbone = bpy.context.object.pose.bones[pbone_name]
+		pbone = armature.pose.bones[pbone_name]
 		pbone.location = data['location']
 		pbone.rotation_mode = data['rotation_mode']
 		if data['rotation_mode'] == 'XYZ':
@@ -88,13 +86,10 @@ def load_rest_position(original_pose_data, armature):
 
 def transform_pose_bone (armature,pbone_name,delta_coords):
 
-	delta = delta_coords
-	#if the value on delta is None or '', set the value to 0
-	delta = [None if x == '' else x for x in delta]
-	delta = [val if val is not None else 0 for val in delta]
-	#convert all strings to float
-	delta = [float(x) for x in delta]
 
+	
+	# Set the pose mode
+	bpy.context.view_layer.objects.active = armature
 	bpy.ops.object.mode_set(mode='POSE')
 	pbone = armature.pose.bones[pbone_name]
 	#if pose bone is quaternion, convert to XYZ euler first (not sure if I should use this yet)
@@ -104,28 +99,33 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 		#Change the rotation mode to XYZ Euler
 		pbone.rotation_mode = 'XYZ'
 
-# pbone.location[0] location x
-# pbone.location[1] location y
-# pbone.location[2] location z
-# pbone.rotation_euler[0] rotation x
-# pbone.rotation_euler[1] rotation y
-# pbone.rotation_euler[2] rotation z
+# pbone.location[[0],[1],[2]] = location x,y,z
+# pbone.rotation_euler[[0],[1],[2] = rotation x, y, z (in euler)
 
-	curr_coords = [pbone.location[0] \
-					,pbone.location[1] \
-					,pbone.location[2] \
-					,pbone.rotation_euler[0] \
-					,pbone.rotation_euler[1] \
-					,pbone.rotation_euler[2] \
-					] 
+	curr_coords = \
+		[pbone.location[0] \
+		,pbone.location[1] \
+		,pbone.location[2] \
+		,pbone.rotation_euler[0] \
+		,pbone.rotation_euler[1] \
+		,pbone.rotation_euler[2] \
+		] 
+		
+	#Data-cleanup and conversion
+	#if the value on delta is None or '', set the value to 0
+	delta_coords = [None if x == '' else x for x in delta_coords]
+	delta_coords = [val if val is not None else 0 for val in delta_coords]
+	#convert all strings to float
+	delta_coords = [float(x) for x in delta_coords]
 
-	new_coords = [curr_coords[0] + delta[0] \
-					,curr_coords[1] + delta[1] \
-					,curr_coords[2] + delta[2] \
-					,curr_coords[3] + math.radians(delta[3]) \
-					,curr_coords[4] + math.radians(delta[4]) \
-					,curr_coords[5] + math.radians(delta[5]) \
-					]
+	new_coords = \
+		[curr_coords[0] + delta_coords[0] \
+		,curr_coords[1] + delta_coords[1] \
+		,curr_coords[2] + delta_coords[2] \
+		,curr_coords[3] + math.radians(delta_coords[3]) \
+		,curr_coords[4] + math.radians(delta_coords[4]) \
+		,curr_coords[5] + math.radians(delta_coords[5]) \
+		]
 	pbone.location = [new_coords[0],new_coords[1],new_coords[2]]
 	pbone.rotation_euler = [new_coords[3],new_coords[4],new_coords[5]]
 
@@ -272,7 +272,6 @@ def read_shape_keys_file(ffxiv_race):
 	return SHAPE_KEYS_DICTIONARY
 
 def main(context):
-	bpy.ops.script.reload()
 	# print(bpy.context.scene.selected_ffxiv_model_type)
 	get_armature()
 

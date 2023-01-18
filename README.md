@@ -33,13 +33,10 @@ Conversion/upgrade to Blender 2.8+ (to do):
   - mmd_view.py
   - toon_modifier.py
   - toon_textures_to_node_editor_shader.py
- 
-
-
 
 In order to use this tool, you need:
-- To have your character exported into FBX file format (using FFXIV TexTools)
-- Blender (2.80+) or higher installed - https://www.ffxiv-textools.net/
+- To have your character exported into FBX file format (using FFXIV TexTools) - https://www.ffxiv-textools.net/
+- Blender (2.80+) or higher installed - https://www.blender.org/
 - 'MMD Tools' addon for Blender - https://github.com/UuuNyaa/blender_mmd_tools
 - uuunyaa's Helper addon to  MMD Tools for Blender - https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools
 - MekTools addon for Blender - https://www.xivmodarchive.com/modid/22780

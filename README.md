@@ -39,16 +39,16 @@ Conversion/upgrade to Blender 2.8+ (to do):
 
 In order to use this tool, you need:
 - To have your character exported into FBX file format (using FFXIV TexTools)
-- Blender (2.80+) or higher installed
-- 'MMD Tools' addon for Blender
-- uuuunaya's Helper addon to  MMD Tools for Blender
-- MekTools addon for Blender
+- Blender (2.80+) or higher installed - https://www.ffxiv-textools.net/
+- 'MMD Tools' addon for Blender - https://github.com/UuuNyaa/blender_mmd_tools
+- uuunyaa's Helper addon to  MMD Tools for Blender - https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools
+- MekTools addon for Blender - https://www.xivmodarchive.com/modid/22780
 
 Not really needed but recommended:
-- MMD (duh)
-- PXE (MMD character file editor for PMX files)
-- PMX files (MMD character files)
-- VMD files (MMD character/camera animation/dance files)
+- MMD (duh) - https://learnmmd.com/downloads/
+- PXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
+- PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate)
+- VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites
 - A bunch of MMD effects (will list them later)
 
 

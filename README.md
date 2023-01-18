@@ -48,4 +48,35 @@ Not really needed but recommended:
 - VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites
 - A bunch of MMD effects (will list them later)
 
+------------
+
+My current workflow:
+
+1) Import FBX file with these parameters:
+    
+    Set manual orientation: Y forward, Z up
+    Set primary bone: X Axis
+    Set seconrd bone: Y Axis
+
+
+      ![image](https://user-images.githubusercontent.com/19479648/213100063-fc5a4607-d850-44ee-9869-ea9f90389000.png)
+      
+2) Object will come in looking like it's on it's back.
+
+    Set rotation X to 90
+    
+    ![image](https://user-images.githubusercontent.com/19479648/213100223-cf9ede44-81e1-44f5-917b-2666ec718943.png)
+
+3) while in object mode, press CTRL+A, then apply 'Rotation', which then applied the appropriate transformations so that it treated the object's rotation as 0,0,0 to meet the global axis.
+
+  ![image](https://user-images.githubusercontent.com/19479648/213100326-968e15ab-96f1-4188-9f80-e5801a5fa26c.png)
+  
+4) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+5) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist Bones
+6) USE FFXIV MMD Helper tool to add shape keys
+7) USE FFXIV MMD Helper tool to add IK legs bones
+8) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain' property from 2 to 3. Should fix the legs orientation
+9) Import VMD file to check if motion is working
+10) Profit!
+11) USE MMD Tool to 'Convert' to a MMD Armature
 

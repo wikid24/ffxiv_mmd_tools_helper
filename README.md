@@ -21,7 +21,7 @@ New Features (to do):
 
 New Features (completed):
 - added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
-- A bunch of important useful still. Will list them later.
+- A bunch of important useful stuff. Will list them later.
 
 Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py

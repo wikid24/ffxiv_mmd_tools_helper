@@ -79,7 +79,7 @@ My current workflow:
 6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist Bones
 7) USE FFXIV MMD Helper tool to add shape keys
 8) USE FFXIV MMD Helper tool to add IK legs bones
-9) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain' property from 2 to 3. Should fix the legs orientation
+9) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain Length' property from 2 to 3. Should fix the legs orientation
 10) Import VMD file to check if motion is working
 11) Profit!
 12) USE MMD Tool to 'Convert' to a MMD Armature

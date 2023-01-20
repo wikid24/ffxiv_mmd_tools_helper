@@ -411,6 +411,13 @@ def main(context):
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["IK"].chain_count = 3
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["IK"].use_tail = True
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["IK"].iterations = 48
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_min_x = 0
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_max_x = 180
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_min_y = 0
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_max_y = 0
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_min_z = 0
+	bpy.context.object.pose.bones[KNEE_LEFT].ik_max_z = 0
+
 
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints.new("LIMIT_ROTATION")
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].use_limit_x = True
@@ -433,6 +440,13 @@ def main(context):
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["IK"].chain_count = 3
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["IK"].use_tail = True
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["IK"].iterations = 48
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_min_x = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_max_x = 180
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_min_y = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_max_y = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_min_z = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].ik_max_z = 0
+
 
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints.new("LIMIT_ROTATION")
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].use_limit_x = True

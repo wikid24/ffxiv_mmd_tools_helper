@@ -30,6 +30,34 @@ def all_materials_mmd_ambient_white():
 			m.mmd_material.ambient_color[1] == 1.0
 			m.mmd_material.ambient_color[2] == 1.0
 
+def get_armature():
+	bpy.ops.object.mode_set(mode='OBJECT')
+
+	armature = None
+
+	# Get the selected object
+	selected_object = bpy.context.object
+
+	# Check if the selected object is a mesh object
+	if selected_object.type == 'MESH':
+		# Check if the selected object's parent is an armature object
+		if selected_object.parent and selected_object.parent.type == 'ARMATURE':
+			# Get the armature object
+			armature = selected_object.parent      
+			
+		# Check if the selected object's grandparent is an armature object
+		if selected_object.parent.parent and selected_object.parent.parent.type == 'ARMATURE':
+			# Get the armature object
+			armature = selected_object.parent.parent
+
+	if selected_object.type == 'ARMATURE':
+		armature = selected_object
+
+	bpy.context.view_layer.objects.active = armature
+	  
+	return armature
+
+
 def import_nala():
 
 
@@ -86,6 +114,9 @@ def import_nala():
 	mats = bpy.data.materials
 	for mat in mats:
 		mat.blend_method = 'HASHED'
+		
+	
+
 
 
 """
@@ -106,8 +137,17 @@ automatic_bone_orientation=False, primary_bone_axis='X', secondary_bone_axis='Y'
 def fix_object_axis():
 	bpy.ops.object.mode_set(mode='OBJECT')
 	obj = bpy.context.view_layer.objects.active
+	#rotate object 90 degrees on x axis
 	obj.rotation_euler = [math.radians(90), 0, 0]
+	
 	bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+	
+	armature = get_armature()
+	bpy.ops.object.mode_set(mode='EDIT')
+	for bone in armature.data.edit_bones:
+		bone.roll = 0
+	bpy.ops.object.mode_set(mode='OBJECT')
+
 
 
 
@@ -290,15 +330,16 @@ def correct_waist():
 		# adjust the waist bone
 		bpy.ops.object.mode_set(mode='EDIT')
 		waist = bpy.context.active_object.data.edit_bones["waist"]
+		waist.name = "waist"
 		waist.tail = waist.head
 		waist.head.z = waist.tail.z - 0.05
 		waist.head.y = waist.tail.y + 0.03
 		waist.roll = 0
 		waist.parent = bpy.context.active_object.data.edit_bones["groove"]
 		if "lower body" in bpy.context.active_object.data.edit_bones.keys():
-			bpy.context.active_object.data.edit_bones["lower body"].parent = bpy.context.active_object.data.edit_bones["waist"]
+			bpy.context.active_object.data.edit_bones["lower body"].parent = waist
 		if "upper body" in bpy.context.active_object.data.edit_bones.keys():
-			bpy.context.active_object.data.edit_bones["upper body"].parent = bpy.context.active_object.data.edit_bones["waist"]
+			bpy.context.active_object.data.edit_bones["upper body"].parent = waist
 		print("inverted the waist bone.")
 		bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -360,6 +401,90 @@ def correct_view_cnt():
 
 	if test_is_mmd_english_armature() == False:
 		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
+
+
+def add_extra_finger_bones(armature,hand_mesh): 
+	
+	print('\n')
+	if test_is_mmd_english_armature() == True:
+		bpy.ops.object.mode_set(mode='EDIT')
+
+
+		correct_finger(armature,hand_mesh,'fore2_L','fore3_L')
+		correct_finger(armature,hand_mesh,'little2_L','little3_L')
+		correct_finger(armature,hand_mesh,'third2_L','third3_L')
+		correct_finger(armature,hand_mesh,'middle2_L','middle3_L')
+		correct_finger(armature,hand_mesh,'fore2_R','fore3_R')
+		correct_finger(armature,hand_mesh,'little2_R','little3_R')
+		correct_finger(armature,hand_mesh,'third2_R','third3_R')
+		correct_finger(armature,hand_mesh,'middle2_R','middle3_R')
+	
+	if test_is_mmd_english_armature() == False:
+		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
+
+			
+
+def correct_finger(armature, hand_mesh,source_bone,new_bone):
+
+
+	if new_bone not in armature.data.bones.keys():
+
+		# set the armature to Edit Mode
+		bpy.context.view_layer.objects.active = armature
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		# select the bone
+		bpy.ops.armature.select_all(action='DESELECT')
+		armature.data.edit_bones[source_bone].select = True
+
+		# get the head and tail positions of the old bone
+		source_bone_head = armature.data.bones[source_bone].head
+		source_bone_tail = armature.data.bones[source_bone].tail
+
+		# get the midpoint of the old bone
+		midpoint = (source_bone_head + source_bone_tail) / 2
+
+		# subdivide the bone into two separate bones
+		bpy.ops.armature.subdivide()
+
+		# set the armature to Object Mode
+		bpy.ops.object.mode_set(mode='OBJECT')
+
+		# rename the new bone
+		armature.data.bones[source_bone + ".001"].name = new_bone
+
+		# get the vertex group
+		mesh_vertex_groups = hand_mesh.vertex_groups[source_bone]
+
+		# iterate over the vertices of the mesh
+		for vertex in hand_mesh.data.vertices:
+			# iterate over the vertex groups of the vertex
+			for group in vertex.groups:
+				if group.group == mesh_vertex_groups.index:
+					# calculate the distance between the vertex and the midpoint of the old bone
+					vertex_location = hand_mesh.matrix_world @ vertex.co
+					dist = (vertex_location - midpoint).length
+
+					# if the distance is less than half of the distance between the bones, transfer the weight to the new bone
+					if dist < (source_bone_tail - source_bone_head).length / 2:
+						group.weight = 1.0
+
+		# create a new vertex group for the new bone
+		new_vertex_group = hand_mesh.vertex_groups.new(name=new_bone)
+
+		# assign the new vertex group to the new bone
+		for vertex in hand_mesh.data.vertices:
+			for group in vertex.groups:
+				if group.group == mesh_vertex_groups.index and group.weight == 1.0:
+					new_vertex_group.add([vertex.index], group.weight, 'REPLACE')
+
+		# remove the weight from the original vertex group
+		for vertex in hand_mesh.data.vertices:
+			for group in vertex.groups:
+				if group.group == mesh_vertex_groups.index and group.weight == 0.0:
+					hand_mesh.vertex_groups.remove(mesh_vertex_groups)
+
+
 
 
 def create_bone_groups():
@@ -592,6 +717,12 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
+	if bpy.context.scene.selected_miscellaneous_tools == "add_extra_finger_bones":
+		mesh = bpy.context.view_layer.objects.active
+		bpy.context.view_layer.objects.active  = get_armature()
+		armature = bpy.context.view_layer.objects.active
+		add_extra_finger_bones(armature,mesh)
+
 
 
 
@@ -616,6 +747,8 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("create_bone_groups", "Create Bone Groups", "Create Bone Groups")\
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
+	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
+	
 	], name = "Select Function:", default = 'none')
 
 	@classmethod

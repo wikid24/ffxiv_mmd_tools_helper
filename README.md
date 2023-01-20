@@ -25,7 +25,6 @@ New Features (completed):
 
 Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py
-  - armature_diagnostic.py
   - background_color_picker.py
   - delete_mmd_model_part.py
   - fix_bones_for_IK.py

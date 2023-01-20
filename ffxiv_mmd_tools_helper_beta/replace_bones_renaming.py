@@ -31,7 +31,7 @@ class ReplaceBonesRenamingPanel(bpy.types.Panel):
 		row = layout.row()
 
 def main(context):
-	bpy.context.scene.objects.active = model.findArmature(bpy.context.active_object)
+	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
 	if bpy.context.scene.bones_all_or_selected == True:
 		for b in bpy.context.active_object.data.bones:
 			if b.select == True:

@@ -38,10 +38,10 @@ if "bpy" in locals():
 	#importlib.reload(mmd_view)
 	#importlib.reload(mmd_lamp_setup)
 	#importlib.reload(convert_to_blender_camera)
-	#importlib.reload(background_color_picker)
+	importlib.reload(background_color_picker)
 	importlib.reload(boneMaps_renamer)
-	#importlib.reload(replace_bones_renaming)
-	#importlib.reload(armature_diagnostic)
+	importlib.reload(replace_bones_renaming)
+	importlib.reload(armature_diagnostic)
 	importlib.reload(add_foot_leg_ik)
 	#importlib.reload(add_hand_arm_ik)
 	importlib.reload(display_panel_groups)
@@ -62,10 +62,10 @@ else:
 	#from . import mmd_view
 	#from . import mmd_lamp_setup
 	#from . import convert_to_blender_camera
-	#from . import background_color_picker
+	from . import background_color_picker
 	from . import boneMaps_renamer
-	#from . import replace_bones_renaming
-	#from . import armature_diagnostic
+	from . import replace_bones_renaming
+	from . import armature_diagnostic
 	from . import add_foot_leg_ik
 	#from . import add_hand_arm_ik
 	from . import display_panel_groups

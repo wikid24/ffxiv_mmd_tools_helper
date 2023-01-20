@@ -70,13 +70,15 @@ My current workflow:
 3) while in object mode, press CTRL+A, then apply 'Rotation', which then applied the appropriate transformations so that it treated the object's rotation as 0,0,0 to meet the global axis.
 
   ![image](https://user-images.githubusercontent.com/19479648/213100326-968e15ab-96f1-4188-9f80-e5801a5fa26c.png)
-  
-4) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-5) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist Bones
-6) USE FFXIV MMD Helper tool to add shape keys
-7) USE FFXIV MMD Helper tool to add IK legs bones
-8) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain' property from 2 to 3. Should fix the legs orientation
-9) Import VMD file to check if motion is working
-10) Profit!
-11) USE MMD Tool to 'Convert' to a MMD Armature
+4) Go to Edit Mode, select all bones by pressing 'A', then select 'Clear Roll'
+![image](https://user-images.githubusercontent.com/19479648/213671651-c2294687-66d0-4330-b276-8c80014619b5.png)
+
+5) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist Bones
+7) USE FFXIV MMD Helper tool to add shape keys
+8) USE FFXIV MMD Helper tool to add IK legs bones
+9) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain' property from 2 to 3. Should fix the legs orientation
+10) Import VMD file to check if motion is working
+11) Profit!
+12) USE MMD Tool to 'Convert' to a MMD Armature
 

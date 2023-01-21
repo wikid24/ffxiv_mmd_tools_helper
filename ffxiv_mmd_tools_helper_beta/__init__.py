@@ -45,8 +45,8 @@ if "bpy" in locals():
 	importlib.reload(add_foot_leg_ik)
 	#importlib.reload(add_hand_arm_ik)
 	importlib.reload(display_panel_groups)
-	#importlib.reload(toon_textures_to_node_editor_shader)
-	#importlib.reload(toon_modifier)
+	importlib.reload(toon_textures_to_node_editor_shader)
+	importlib.reload(toon_modifier)
 	importlib.reload(reverse_japanese_english)
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(blender_bone_names_to_japanese_bone_names)
@@ -69,8 +69,8 @@ else:
 	from . import add_foot_leg_ik
 	#from . import add_hand_arm_ik
 	from . import display_panel_groups
-	#from . import toon_textures_to_node_editor_shader
-	#from . import toon_modifier
+	from . import toon_textures_to_node_editor_shader
+	from . import toon_modifier
 	from . import reverse_japanese_english
 	from . import miscellaneous_tools
 	from . import blender_bone_names_to_japanese_bone_names

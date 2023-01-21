@@ -37,7 +37,7 @@ if "bpy" in locals():
 	importlib.reload(model)
 	#importlib.reload(mmd_view)
 	#importlib.reload(mmd_lamp_setup)
-	#importlib.reload(convert_to_blender_camera)
+	importlib.reload(convert_to_blender_camera)
 	importlib.reload(background_color_picker)
 	importlib.reload(boneMaps_renamer)
 	importlib.reload(replace_bones_renaming)
@@ -61,7 +61,7 @@ else:
 	from . import model
 	#from . import mmd_view
 	#from . import mmd_lamp_setup
-	#from . import convert_to_blender_camera
+	from . import convert_to_blender_camera
 	from . import background_color_picker
 	from . import boneMaps_renamer
 	from . import replace_bones_renaming

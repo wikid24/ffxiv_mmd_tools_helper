@@ -25,13 +25,11 @@ New Features (completed):
 
 Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py
-  - background_color_picker.py
   - delete_mmd_model_part.py
   - fix_bones_for_IK.py
   - mmd_lamp_setup.py
   - mmd_view.py
-  - toon_modifier.py
-  - toon_textures_to_node_editor_shader.py
+  - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
 
 In order to use this tool, you need:
 - To have your character exported into FBX file format (using FFXIV TexTools) - https://www.ffxiv-textools.net/

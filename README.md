@@ -25,7 +25,6 @@ New Features (completed):
 
 Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py
-  - convert_to_blender_camera.py
   - mmd_lamp_setup.py
   - mmd_view.py
   - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)

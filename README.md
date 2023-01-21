@@ -25,7 +25,7 @@ New Features (completed):
 
 Conversion/upgrade to Blender 2.8+ (to do):
   - add_hand_arm_ik.py
-  - delete_mmd_model_part.py
+  - convert_to_blender_camera.py
   - fix_bones_for_IK.py
   - mmd_lamp_setup.py
   - mmd_view.py

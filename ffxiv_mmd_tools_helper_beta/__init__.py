@@ -36,7 +36,7 @@ if "bpy" in locals():
 		import importlib
 	importlib.reload(model)
 	#importlib.reload(mmd_view)
-	#importlib.reload(mmd_lamp_setup)
+	importlib.reload(mmd_lamp_setup)
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(background_color_picker)
 	importlib.reload(boneMaps_renamer)
@@ -60,7 +60,7 @@ else:
 	__bpy_property = (bpy.props._PropertyDeferred if hasattr(bpy.props, '_PropertyDeferred') else tuple)
 	from . import model
 	#from . import mmd_view
-	#from . import mmd_lamp_setup
+	from . import mmd_lamp_setup
 	from . import convert_to_blender_camera
 	from . import background_color_picker
 	from . import boneMaps_renamer

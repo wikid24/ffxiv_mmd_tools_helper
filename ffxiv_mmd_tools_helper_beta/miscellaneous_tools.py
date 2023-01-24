@@ -172,6 +172,10 @@ def combine_2_vg_1_vg(parent_vg_name, child_vg_name):
 								o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
 					o.vertex_groups.remove(o.vertex_groups[child_vg_name])
 					print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
+			if child_vg_name in o.vertex_groups.keys():
+				if parent_vg_name not in o.vertex_groups.keys():
+					o.
+					
 
 def analyze_selected_parent_child_bone_pair():
 	selected_bones = []
@@ -485,6 +489,12 @@ def correct_finger(armature, hand_mesh,source_bone,new_bone):
 					hand_mesh.vertex_groups.remove(mesh_vertex_groups)
 
 
+def add_bone_to_group (bone_name,bone_group):
+	if bone_name in bpy.context.active_object.pose.bones:
+		bone = bpy.context.active_object.pose.bones[bone_name]
+		bone.bone_group = bpy.context.active_object.pose.bone_groups[bone_group]
+	else:
+		print("bone: " +  bone_name + " does not exist in currently selected object")
 
 
 def create_bone_groups():
@@ -496,177 +506,172 @@ def create_bone_groups():
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'IK' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="IK")
-#	bpy.context.active_object.pose.bones['leg IK_L'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['leg IK_R'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['toe IK_L'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['toe IK_R'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['leg IK_L_t'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['leg IK_R_t'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['toe IK_L_t'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
-#	bpy.context.active_object.pose.bones['toe IK_R_t'].bone_group = bpy.context.active_object.pose.bone_groups['IK']
+
+	add_bone_to_group('leg IK_root_L','IK')
+	add_bone_to_group('leg IK_root_R','IK')
+	add_bone_to_group('leg IK_L','IK')
+	add_bone_to_group('leg IK_R','IK')
+	add_bone_to_group('toe IK_L','IK')
+	add_bone_to_group('toe IK_R','IK')
+	
 
 	#create an 'センター'(center) bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'root' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="root")
-	bpy.context.active_object.pose.bones['root'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['center'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['groove'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['waist'].bone_group = bpy.context.active_object.pose.bone_groups['root']
+	add_bone_to_group('root','root')
+	add_bone_to_group('center','root')
+	add_bone_to_group('view cnt','root')
+	add_bone_to_group('groove','root')
+	add_bone_to_group('waist','root')
 
 	#create an 'skirt' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'skirt' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="skirt")
-	bpy.context.active_object.pose.bones['skirt_fr_L_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_fr_L_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_fr_L_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_fr_L_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_fr_R_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_fr_R_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_fr_R_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_fr_R_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_L_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_L_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_L_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_s_L_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_R_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_R_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_s_R_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_s_R_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_L_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_L_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_L_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_b_L_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_R_a'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_R_b'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-	bpy.context.active_object.pose.bones['skirt_b_R_c'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
-#bpy.context.active_object.pose.bones['skirt_b_R_d'].bone_group = bpy.context.active_object.pose.bone_groups['skirt']
+	add_bone_to_group('skirt_fr_L_a','skirt')
+	add_bone_to_group('skirt_fr_L_b','skirt')
+	add_bone_to_group('skirt_fr_L_c','skirt')
+	add_bone_to_group('skirt_fr_R_a','skirt')
+	add_bone_to_group('skirt_fr_R_b','skirt')
+	add_bone_to_group('skirt_fr_R_c','skirt')
+	add_bone_to_group('skirt_s_L_a','skirt')
+	add_bone_to_group('skirt_s_L_b','skirt')
+	add_bone_to_group('skirt_s_L_c','skirt')
+	add_bone_to_group('skirt_s_R_a','skirt')
+	add_bone_to_group('skirt_s_R_b','skirt')
+	add_bone_to_group('skirt_s_R_c','skirt')
+	add_bone_to_group('skirt_b_L_a','skirt')
+	add_bone_to_group('skirt_b_L_b','skirt')
+	add_bone_to_group('skirt_b_L_c','skirt')
+	add_bone_to_group('skirt_b_R_a','skirt')
+	add_bone_to_group('skirt_b_R_b','skirt')
+	add_bone_to_group('skirt_b_R_c','skirt')
 
 	#create an 'armor' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'armor' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="armor")
-	bpy.context.active_object.pose.bones['armor_cape_L'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_cape_R'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_waist_1_l'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_waist_1_r'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_waist_2_l'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_waist_2_r'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['clothes_elbow_L'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['clothes_elbow_R'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_shouldpad_R'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_shouldpad_l'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_forearm_R'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['dummy_L'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['dummy_R'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
-	bpy.context.active_object.pose.bones['armor_forearm_L'].bone_group = bpy.context.active_object.pose.bone_groups['armor']
+
+	add_bone_to_group('armor_cape_L','armor')
+	add_bone_to_group('armor_cape_R','armor')
+	add_bone_to_group('armor_waist_1_l','armor')
+	add_bone_to_group('armor_waist_1_r','armor')
+	add_bone_to_group('armor_waist_2_l','armor')
+	add_bone_to_group('armor_waist_2_r','armor')
+	add_bone_to_group('clothes_elbow_L','armor')
+	add_bone_to_group('clothes_elbow_R','armor')
+	add_bone_to_group('armor_shouldpad_R','armor')
+	add_bone_to_group('armor_shouldpad_l','armor')
+	add_bone_to_group('armor_forearm_L','armor')
+	add_bone_to_group('armor_forearm_R','armor')
+	add_bone_to_group('dummy_L','armor')
+	add_bone_to_group('dummy_R','armor')
+	
+
 
 	#create an 'arms' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'arms' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="arms")
-	bpy.context.active_object.pose.bones['shoulder_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['arm_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['arm twist_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['elbow_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-#	bpy.context.active_object.pose.bones['wrist twist_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['wrist_L'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['shoulder_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['arm_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['arm twist_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['elbow_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-#	bpy.context.active_object.pose.bones['wrist twist_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
-	bpy.context.active_object.pose.bones['wrist_R'].bone_group = bpy.context.active_object.pose.bone_groups['arms']
+
+	add_bone_to_group('shoulder_L','arms')
+	add_bone_to_group('arm_L','arms')
+	add_bone_to_group('arm twist_L','arms')
+	add_bone_to_group('elbow_L','arms')
+	#add_bone_to_group('wrist twist_L','arms')
+	add_bone_to_group('wrist_L','arms')
+	add_bone_to_group('shoulder_R','arms')
+	add_bone_to_group('arm_R','arms')
+	add_bone_to_group('arm twist_R','arms')
+	add_bone_to_group('elbow_R','arms')
+	#add_bone_to_group('wrist twist_R','arms')
+	add_bone_to_group('wrist_R','arms')
+
 
 	#create a 'face' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'face' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="face")
-	bpy.context.active_object.pose.bones['eye_L'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['eye_R'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['nostrils'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head cheek left 1'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head cheek right 1'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head mouth corner left'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head mouth corner right'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyebrow left 2'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyebrow right 2'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['j_f_memoto'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyebrow left 1'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyebrow right 1'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['j_f_ulip_a'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head lip upper middle'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyelid left upper'].bone_group = bpy.context.active_object.pose.bone_groups['face']
-	bpy.context.active_object.pose.bones['head eyelid right upper'].bone_group = bpy.context.active_object.pose.bone_groups['face']
+
+	add_bone_to_group('eye_L','face')
+	add_bone_to_group('eye_R','face')
+	add_bone_to_group('head cheek left 1','face')
+	add_bone_to_group('head cheek right 1','face')
+	add_bone_to_group('head mouth corner left','face')
+	add_bone_to_group('head mouth corner right','face')
+	add_bone_to_group('head eyebrow left 2','face')
+	add_bone_to_group('head eyebrow right 2','face')
+	add_bone_to_group('j_f_memoto','face')
+	add_bone_to_group('head eyebrow left 1','face')
+	add_bone_to_group('head eyebrow right 1','face')
+	add_bone_to_group('j_f_ulip_a','face')
+	add_bone_to_group('head lip upper middle','face')
+	add_bone_to_group('head eyelid left upper','face')
+	add_bone_to_group('head eyelid right upper','face')
+
 
 #create a 'hair' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'hair' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="hair")
-#	bpy.context.active_object.pose.bones['j_ex_h0005_ke_b'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-#	bpy.context.active_object.pose.bones['j_ex_h0005_ke_f'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-	bpy.context.active_object.pose.bones['hair l'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-	bpy.context.active_object.pose.bones['hair r'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-	bpy.context.active_object.pose.bones['hair_side_L'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-	bpy.context.active_object.pose.bones['hair_back_a'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
-	bpy.context.active_object.pose.bones['hair_back_b'].bone_group = bpy.context.active_object.pose.bone_groups['hair']
+
+	#add_bone_to_group('j_ex_h0005_ke_b','hair')
+	#add_bone_to_group('j_ex_h0005_ke_f','hair')
+	add_bone_to_group('hair l','hair')
+	add_bone_to_group('hair r','hair')
+	add_bone_to_group('hair_side_L','hair')
+	add_bone_to_group('hair_back_a','hair')
+	add_bone_to_group('hair_back_b','hair')
 
 #create a 'head' bone group and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'head' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="head")
-	bpy.context.active_object.pose.bones['neck'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['head'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['head jaw'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['j_f_dlip_a'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['head lip lower middle'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['head eyelid left lower'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['head eyelid right lower'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['L ear'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['n_ear_a_l'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['n_ear_b_l'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['R ear'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['n_ear_a_r'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['n_ear_b_r'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['hat_bunny_ears_L'].bone_group = bpy.context.active_object.pose.bone_groups['head']
-	bpy.context.active_object.pose.bones['hat_bunny_ears_R'].bone_group = bpy.context.active_object.pose.bone_groups['head']
+
+	add_bone_to_group('neck','head')
+	add_bone_to_group('head','head')
+	add_bone_to_group('head jaw','head')
+	add_bone_to_group('j_f_dlip_a','head')
+	add_bone_to_group('head lip lower middle','head')
+	add_bone_to_group('head eyelid left lower','head')
+	add_bone_to_group('head eyelid right lower','head')
+	add_bone_to_group('L ear','head')
+	add_bone_to_group('n_ear_a_l','head')
+	add_bone_to_group('n_ear_b_l','head')
+	add_bone_to_group('R ear','head')
+	add_bone_to_group('n_ear_a_r','head')
+	add_bone_to_group('n_ear_b_r','head')
+	add_bone_to_group('hat_bunny_ears_L','head')
+	add_bone_to_group('hat_bunny_ears_R','head')
 
 #create a legs bone gruop and add the base bones to it
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'legs' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="legs")
-	bpy.context.active_object.pose.bones['leg_L'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['knee_L'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['j_asi_c_l'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['ankle_L'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['toe_L'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['leg_R'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['knee_R'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['j_asi_c_r'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['ankle_R'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
-	bpy.context.active_object.pose.bones['toe_R'].bone_group = bpy.context.active_object.pose.bone_groups['legs']
+
+	add_bone_to_group('leg_L','legs')
+	add_bone_to_group('knee_L','legs')
+	add_bone_to_group('j_asi_c_l','legs')
+	add_bone_to_group('ankle_L','legs')
+	add_bone_to_group('toe_L','legs')
+	add_bone_to_group('leg_R','legs')
+	add_bone_to_group('knee_R','legs')
+	add_bone_to_group('j_asi_c_r','legs')
+	add_bone_to_group('ankle_R','legs')
+	add_bone_to_group('toe_R','legs')
 
 #torso
 	bpy.ops.object.mode_set(mode='POSE')
 	if 'torso' not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name="torso")
-	bpy.context.active_object.pose.bones['waist'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
-	bpy.context.active_object.pose.bones['lower body'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
-	bpy.context.active_object.pose.bones['upper body'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
-	bpy.context.active_object.pose.bones['upper body 2'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
-	bpy.context.active_object.pose.bones['bust_L'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
-	bpy.context.active_object.pose.bones['bust_R'].bone_group = bpy.context.active_object.pose.bone_groups['torso']
 
-
-	#create a 'root' bone group and add the 'view cnt' bone to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'root' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="root")
-	bpy.context.active_object.pose.bones['root'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['view cnt'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['center'].bone_group = bpy.context.active_object.pose.bone_groups['root']
-	bpy.context.active_object.pose.bones['groove'].bone_group = bpy.context.active_object.pose.bone_groups['root']
+	add_bone_to_group('waist','torso')
+	add_bone_to_group('lower body','torso')
+	add_bone_to_group('upper body','torso')
+	add_bone_to_group('upper body 2','torso')
+	add_bone_to_group('bust_L','torso')
+	add_bone_to_group('bust_R','torso')
 
 
 	bpy.context.active_object.data.display_type = 'OCTAHEDRAL'

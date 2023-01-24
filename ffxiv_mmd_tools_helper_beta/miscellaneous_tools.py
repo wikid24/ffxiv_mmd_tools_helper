@@ -144,13 +144,11 @@ def fix_object_axis():
 	
 	armature = get_armature()
 	bpy.ops.object.mode_set(mode='EDIT')
-	for bone in armature.data.edit_bones:
-		bone.roll = 0
-	bpy.ops.object.mode_set(mode='OBJECT')
 
-
-
-
+	##commented out because current bone roll is needed otherwise wonky stuff with inverted bones happens when trying to perform transforms
+	#for bone in armature.data.edit_bones:
+	#	bone.roll = 0
+	#bpy.ops.object.mode_set(mode='OBJECT')
 
 
 def combine_2_bones_1_bone(parent_bone_name, child_bone_name):
@@ -495,189 +493,6 @@ def add_bone_to_group (bone_name,bone_group):
 		print("bone: " +  bone_name + " does not exist in currently selected object")
 
 
-def create_bone_groups():
-	print('\n')
-	if test_is_mmd_english_armature() == True:
-		bpy.ops.object.mode_set(mode='EDIT')
-	
-	#create an 'IK' bone group and add the IK bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'IK' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="IK")
-
-	add_bone_to_group('leg IK_root_L','IK')
-	add_bone_to_group('leg IK_root_R','IK')
-	add_bone_to_group('leg IK_L','IK')
-	add_bone_to_group('leg IK_R','IK')
-	add_bone_to_group('toe IK_L','IK')
-	add_bone_to_group('toe IK_R','IK')
-	
-
-	#create an 'センター'(center) bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'root' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="root")
-	add_bone_to_group('root','root')
-	add_bone_to_group('center','root')
-	add_bone_to_group('view cnt','root')
-	add_bone_to_group('groove','root')
-	add_bone_to_group('waist','root')
-
-	#create an 'skirt' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'skirt' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="skirt")
-	add_bone_to_group('skirt_fr_L_a','skirt')
-	add_bone_to_group('skirt_fr_L_b','skirt')
-	add_bone_to_group('skirt_fr_L_c','skirt')
-	add_bone_to_group('skirt_fr_R_a','skirt')
-	add_bone_to_group('skirt_fr_R_b','skirt')
-	add_bone_to_group('skirt_fr_R_c','skirt')
-	add_bone_to_group('skirt_s_L_a','skirt')
-	add_bone_to_group('skirt_s_L_b','skirt')
-	add_bone_to_group('skirt_s_L_c','skirt')
-	add_bone_to_group('skirt_s_R_a','skirt')
-	add_bone_to_group('skirt_s_R_b','skirt')
-	add_bone_to_group('skirt_s_R_c','skirt')
-	add_bone_to_group('skirt_b_L_a','skirt')
-	add_bone_to_group('skirt_b_L_b','skirt')
-	add_bone_to_group('skirt_b_L_c','skirt')
-	add_bone_to_group('skirt_b_R_a','skirt')
-	add_bone_to_group('skirt_b_R_b','skirt')
-	add_bone_to_group('skirt_b_R_c','skirt')
-
-	#create an 'armor' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'armor' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="armor")
-
-	add_bone_to_group('armor_cape_L','armor')
-	add_bone_to_group('armor_cape_R','armor')
-	add_bone_to_group('armor_waist_1_l','armor')
-	add_bone_to_group('armor_waist_1_r','armor')
-	add_bone_to_group('armor_waist_2_l','armor')
-	add_bone_to_group('armor_waist_2_r','armor')
-	add_bone_to_group('clothes_elbow_L','armor')
-	add_bone_to_group('clothes_elbow_R','armor')
-	add_bone_to_group('armor_shouldpad_R','armor')
-	add_bone_to_group('armor_shouldpad_l','armor')
-	add_bone_to_group('armor_forearm_L','armor')
-	add_bone_to_group('armor_forearm_R','armor')
-	add_bone_to_group('dummy_L','armor')
-	add_bone_to_group('dummy_R','armor')
-	
-
-
-	#create an 'arms' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'arms' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="arms")
-
-	add_bone_to_group('shoulder_L','arms')
-	add_bone_to_group('arm_L','arms')
-	add_bone_to_group('arm twist_L','arms')
-	add_bone_to_group('elbow_L','arms')
-	#add_bone_to_group('wrist twist_L','arms')
-	add_bone_to_group('wrist_L','arms')
-	add_bone_to_group('shoulder_R','arms')
-	add_bone_to_group('arm_R','arms')
-	add_bone_to_group('arm twist_R','arms')
-	add_bone_to_group('elbow_R','arms')
-	#add_bone_to_group('wrist twist_R','arms')
-	add_bone_to_group('wrist_R','arms')
-
-
-	#create a 'face' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'face' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="face")
-
-	add_bone_to_group('eye_L','face')
-	add_bone_to_group('eye_R','face')
-	add_bone_to_group('head cheek left 1','face')
-	add_bone_to_group('head cheek right 1','face')
-	add_bone_to_group('head mouth corner left','face')
-	add_bone_to_group('head mouth corner right','face')
-	add_bone_to_group('head eyebrow left 2','face')
-	add_bone_to_group('head eyebrow right 2','face')
-	add_bone_to_group('j_f_memoto','face')
-	add_bone_to_group('head eyebrow left 1','face')
-	add_bone_to_group('head eyebrow right 1','face')
-	add_bone_to_group('j_f_ulip_a','face')
-	add_bone_to_group('head lip upper middle','face')
-	add_bone_to_group('head eyelid left upper','face')
-	add_bone_to_group('head eyelid right upper','face')
-
-
-#create a 'hair' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'hair' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="hair")
-
-	#add_bone_to_group('j_ex_h0005_ke_b','hair')
-	#add_bone_to_group('j_ex_h0005_ke_f','hair')
-	add_bone_to_group('hair l','hair')
-	add_bone_to_group('hair r','hair')
-	add_bone_to_group('hair_side_L','hair')
-	add_bone_to_group('hair_back_a','hair')
-	add_bone_to_group('hair_back_b','hair')
-
-#create a 'head' bone group and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'head' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="head")
-
-	add_bone_to_group('neck','head')
-	add_bone_to_group('head','head')
-	add_bone_to_group('head jaw','head')
-	add_bone_to_group('j_f_dlip_a','head')
-	add_bone_to_group('head lip lower middle','head')
-	add_bone_to_group('head eyelid left lower','head')
-	add_bone_to_group('head eyelid right lower','head')
-	add_bone_to_group('L ear','head')
-	add_bone_to_group('n_ear_a_l','head')
-	add_bone_to_group('n_ear_b_l','head')
-	add_bone_to_group('R ear','head')
-	add_bone_to_group('n_ear_a_r','head')
-	add_bone_to_group('n_ear_b_r','head')
-	add_bone_to_group('hat_bunny_ears_L','head')
-	add_bone_to_group('hat_bunny_ears_R','head')
-
-#create a legs bone gruop and add the base bones to it
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'legs' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="legs")
-
-	add_bone_to_group('leg_L','legs')
-	add_bone_to_group('knee_L','legs')
-	add_bone_to_group('j_asi_c_l','legs')
-	add_bone_to_group('ankle_L','legs')
-	add_bone_to_group('toe_L','legs')
-	add_bone_to_group('leg_R','legs')
-	add_bone_to_group('knee_R','legs')
-	add_bone_to_group('j_asi_c_r','legs')
-	add_bone_to_group('ankle_R','legs')
-	add_bone_to_group('toe_R','legs')
-
-#torso
-	bpy.ops.object.mode_set(mode='POSE')
-	if 'torso' not in bpy.context.active_object.pose.bone_groups.keys():
-		bpy.context.active_object.pose.bone_groups.new(name="torso")
-
-	add_bone_to_group('waist','torso')
-	add_bone_to_group('lower body','torso')
-	add_bone_to_group('upper body','torso')
-	add_bone_to_group('upper body 2','torso')
-	add_bone_to_group('bust_L','torso')
-	add_bone_to_group('bust_R','torso')
-
-
-	bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
-	
-	if test_is_mmd_english_armature() == False:
-		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
-
-
 def correct_bone_length():
 
     bpy.ops.object.mode_set(mode='EDIT')
@@ -734,9 +549,6 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_view_cnt":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_view_cnt()
-	if bpy.context.scene.selected_miscellaneous_tools == "create_bone_groups":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		create_bone_groups()
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_bone_lengths":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_bone_length()
@@ -751,9 +563,6 @@ def main(context):
 		bpy.context.view_layer.objects.active  = get_armature()
 		armature = bpy.context.view_layer.objects.active
 		add_extra_finger_bones(armature,mesh)
-
-
-
 
 
 @register_wrap
@@ -774,7 +583,6 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_waist", "Correct MMD Waist bone", "Correct MMD Waist bone")\
 	, ("correct_waist_cancel", "Correct waist cancel left and right bones", "Correct waist cancel left and right bones")\
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
-	, ("create_bone_groups", "Create Bone Groups", "Create Bone Groups")\
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
 	

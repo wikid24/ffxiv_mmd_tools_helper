@@ -198,24 +198,35 @@ def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 		bpy.ops.object.select_all(action='DESELECT')
 		for ob in armature_parent.children_recursive:
 			if ob.type=='MESH':
-				ob.select_set(True)
+				vertex_group_names = [group.name for group in ob.vertex_groups]
+				#loop through all the vertex groups on the mesh
+				for vg in vertex_group_names:
+					#loop through all the bones
+					#if a vertex group name matches a bone name, shape key will be applied to this mesh
+					#this is to prevent the shape key being applied to a mesh that has nothing to do with any of the bones that were just transformed
+					for bone in shape_key_bones_data:
+						if bone[0] == vg:
+							#print ("\n\n\nhuzzah we have a match!")
+							ob.select_set(True)
 			else:
-				ob.select_set(False)
+			    ob.select_set(False)
 
-		#set the selected objects as the active object
-		bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
-		obj = bpy.context.active_object
+		if (bpy.context.selected_objects):
+			bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
+			obj = bpy.context.active_object
 
-		# Create a new Armature modifier
-		mod = obj.modifiers.new(name=shape_key_name, type='ARMATURE')
+			# Create a new Armature modifier
+			mod = obj.modifiers.new(name=shape_key_name, type='ARMATURE')
 
-		# Assign the armature object
-		mod.object = armature
+			# Assign the armature object
+			mod.object = armature
 
-		# Apply the modifier as a shape key
-		bpy.ops.object.modifier_apply_as_shapekey(keep_modifier=False, modifier=mod.name, report=False)
-		
-		print( "shape_key: '" + shape_key_name + "' created" )
+			# Apply the modifier as a shape key
+			bpy.ops.object.modifier_apply_as_shapekey(keep_modifier=False, modifier=mod.name, report=False)
+			
+			print( "shape_key: '" + shape_key_name + "' created on " + obj.name )
+		else:
+			print( "shape_key: '" + shape_key_name + "' was not applied at all" )	
 
 	else:
 		print( "shape_key: '" + shape_key_name + "' was not applied at all" )

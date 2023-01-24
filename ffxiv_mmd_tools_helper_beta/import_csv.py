@@ -75,7 +75,7 @@ def use_csv_shape_keys_dictionary(ffxiv_race):
 	print(file_path)
 	#file_path = (__file__ + "shape_keys_" + ffxiv_race +".csv").replace("import_csv.py" , "")
 	
-	SHAPE_KEYS_DICTIONARY = try_open_file(file_path,False,True)
-	SHAPE_KEYS_DICTIONARY = csv_cleanup(SHAPE_KEYS_DICTIONARY)
+	SHAPE_KEYS_DICTIONARY = try_open_file(file_path)
+	SHAPE_KEYS_DICTIONARY = csv_cleanup(SHAPE_KEYS_DICTIONARY,False,True)
 	return SHAPE_KEYS_DICTIONARY
 

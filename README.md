@@ -66,18 +66,14 @@ My current workflow:
 
   ![image](https://user-images.githubusercontent.com/19479648/213100326-968e15ab-96f1-4188-9f80-e5801a5fa26c.png)
   
-4) Go to Edit Mode, select all bones by pressing 'A', then select 'Clear Roll'
-
-![image](https://user-images.githubusercontent.com/19479648/213671651-c2294687-66d0-4330-b276-8c80014619b5.png)
-
-5) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
-7) USE FFXIV MMD Helper tool to add IK legs bones
-8) Important if you wanna use the default shape keys:
+4) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+5) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
+6) USE FFXIV MMD Helper tool to add IK legs bones
+7) Important if you wanna use the default shape keys:
     - In Object mode, select all meshes and press Ctrl+J to join them all into one mesh
     - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
-9)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
-10) Use MMD Tools to import a motion dance VMD file:
+8)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+9) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
 
     - Scale should be set to '0.08' (it should match the same scale you imported the FBX model with)

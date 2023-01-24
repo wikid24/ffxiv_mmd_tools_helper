@@ -38,7 +38,7 @@ In order to use this tool, you need:
 
 Not really needed but recommended:
 - MMD (duh) - https://learnmmd.com/downloads/
-- PXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
+- PMXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
 - PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate)
 - VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites
 - A bunch of MMD effects (will list them later)
@@ -71,20 +71,10 @@ My current workflow:
 ![image](https://user-images.githubusercontent.com/19479648/213671651-c2294687-66d0-4330-b276-8c80014619b5.png)
 
 5) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist Bones
-7) USE FFXIV MMD Helper tool to add shape keys
-
-
-NOTE FROM HOGARTH-MMD:
-  When adding MMD leg-foot IK to a model converted from other software, you may need to follow these steps:
-BEFORE adding MMD leg-foot IK with the "Add leg and foot IK to MMD model" operator of mmd_tools_helper, first export the model from Blender as a .pmx file with mmd_tools.
-
-Then re-import the .pmx model into Blender with mmd_tools.
-Then click on mmd_tools_helper's "Add leg and foot IK to MMD model" button.
-
-9) USE FFXIV MMD Helper tool to add IK legs bones
-10) Move the bone constraints from KNEE L/R to j_asi_l_c and j_asi_r_c respectively. Set 'Chain Length' property from 2 to 3. Should fix the legs orientation
-11) Import VMD file to check if motion is working
-12) Profit!
-13) USE MMD Tool to 'Convert' to a MMD Armature
+6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
+7) USE FFXIV MMD Helper tool to add IK legs bones
+8) USE FFXIV MMD Helper tool to add shape keys
+9) Import VMD file to check if motion is working
+10) Profit!
+11) USE MMD Tool to 'Convert' to a MMD Armature
 

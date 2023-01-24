@@ -66,14 +66,21 @@ My current workflow:
 
   ![image](https://user-images.githubusercontent.com/19479648/213100326-968e15ab-96f1-4188-9f80-e5801a5fa26c.png)
   
-4) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-5) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
-6) USE FFXIV MMD Helper tool to add IK legs bones
-7) Important if you wanna use the default shape keys:
+4) Use MekTools to make the textures visible so your character doesn't look like an inside-out void:
+
+  ![image](https://user-images.githubusercontent.com/19479648/214442955-a2cdfa2a-4444-4e5c-97e9-3889c35e1685.png)
+
+5) Important if you wanna use the default shape keys (for facial expressions):
     - In Object mode, select all meshes and press Ctrl+J to join them all into one mesh
     - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
-8)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
-9) Use MMD Tools to import a motion dance VMD file:
+6)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+
+
+7) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+8) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
+9) USE FFXIV MMD Helper tool to add IK legs bones
+
+10) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
 
     - Scale should be set to '0.08' (it should match the same scale you imported the FBX model with)
@@ -84,6 +91,6 @@ My current workflow:
   ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
 
 
-10) Profit!
-11) USE MMD Tools to 'Convert' to a MMD Armature
+11) Profit!
+12) USE MMD Tools to 'Convert' to a MMD Armature
 

@@ -71,12 +71,12 @@ My current workflow:
 5) Important if you wanna use the default shape keys (for facial expressions):
     - In Object mode, select all meshes and press Ctrl+J to join them all into one mesh
     - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
-6)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
 
+6) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+7) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
+8) USE FFXIV MMD Helper tool to add IK legs bones
 
-7) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-8) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
-9) USE FFXIV MMD Helper tool to add IK legs bones
+9)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
 
 10) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:

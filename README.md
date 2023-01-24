@@ -73,8 +73,21 @@ My current workflow:
 5) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
 6) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
 7) USE FFXIV MMD Helper tool to add IK legs bones
-8) USE FFXIV MMD Helper tool to add shape keys
-9) Import VMD file to check if motion is working
+8) Important if you wanna use the default shape keys:
+    - In Object mode, select all meshes and press Ctrl+J to join them all into one mesh
+    - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
+9)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+10) Use MMD Tools to import a motion dance VMD file:
+   When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
+
+    - Scale should be set to '0.08' (it should match the same scale you imported the FBX model with)
+    - Bone Mapper: set to 'Renamed bones'
+    - 'Rename Bones - L/R Suffix' should be checked
+    - 'Treat Current Pose as Rest Pose' should be checked
+
+  ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
+
+
 10) Profit!
-11) USE MMD Tool to 'Convert' to a MMD Armature
+11) USE MMD Tools to 'Convert' to a MMD Armature
 

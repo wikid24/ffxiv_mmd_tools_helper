@@ -39,7 +39,7 @@ def try_open_file (file_path):
 # Each row read from the csv file is returned as a list of strings.
 
 def use_csv_bones_dictionary():
-	file_path = (__file__ + "bones_dictionary.csv").replace("import_csv.py" , "")
+	file_path = (__file__ + r"\data\bones_dictionary.csv").replace("import_csv.py" , "")
 	print(file_path)
 	BONES_DICTIONARY = try_open_file(file_path)
 	BONES_DICTIONARY = csv_cleanup(BONES_DICTIONARY,True,False)
@@ -48,23 +48,29 @@ def use_csv_bones_dictionary():
 
 
 def use_csv_bones_fingers_dictionary():
-	file_path = (__file__ + "bones_fingers_dictionary.csv").replace("import_csv.py" , "")
+	file_path = (__file__ + r"\data\bones_fingers_dictionary.csv").replace("import_csv.py" , "")
 	print(file_path)
 	FINGER_BONES_DICTIONARY = try_open_file(file_path)
 	FINGER_BONES_DICTIONARY = csv_cleanup(FINGER_BONES_DICTIONARY,True,False)
 	return FINGER_BONES_DICTIONARY
 
 def use_csv_translations_dictionary():
-	file_path = (__file__ + "translations.csv").replace("import_csv.py" , "")
+	file_path = (__file__ + r"\data\translations.csv").replace("import_csv.py" , "")
 	print(file_path)
 	TRANSLATIONS_DICTIONARY = try_open_file(file_path)
 	TRANSLATIONS_DICTIONARY = csv_cleanup(TRANSLATIONS_DICTIONARY,True,False)
 	return TRANSLATIONS_DICTIONARY
 
+def use_csv_bone_metadata_ffxiv_dictionary():
+	file_path = (__file__ + r"\data\bones_metadata_ffxiv_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	BONES_METADATA_FFXIV_DICTIONARY = try_open_file(file_path)
+	BONES_METADATA_FFXIV_DICTIONARY = csv_cleanup(BONES_METADATA_FFXIV_DICTIONARY,True,True)
+	return BONES_METADATA_FFXIV_DICTIONARY
 	
 def use_csv_shape_keys_dictionary(ffxiv_race):
 
-	path = r"D:\MMD\ffxiv_mmd_tools_helper_beta\ffxiv_mmd_tools_helper_beta"
+	path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
 	file_path= (path + r"\data\shape_keys_" + ffxiv_race +".csv").replace("import_csv.py" , "")
 	print(file_path)
 	#file_path = (__file__ + "shape_keys_" + ffxiv_race +".csv").replace("import_csv.py" , "")

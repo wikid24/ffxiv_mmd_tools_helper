@@ -172,9 +172,7 @@ def combine_2_vg_1_vg(parent_vg_name, child_vg_name):
 								o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
 					o.vertex_groups.remove(o.vertex_groups[child_vg_name])
 					print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
-			if child_vg_name in o.vertex_groups.keys():
-				if parent_vg_name not in o.vertex_groups.keys():
-					o.
+
 					
 
 def analyze_selected_parent_child_bone_pair():

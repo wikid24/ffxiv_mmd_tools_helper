@@ -15,9 +15,7 @@ New Features (to do):
 - Automate the rigify armature bones to match ffxiv armature bones (should be mostly easy, the majority of it is a 1:1 'transform rigify bone to match the ffxiv bone's position/rotation data)
 - fix IK to match double jointed knees (move the bone constraints to j_asi_c_l instead of j_asi_b_l, set the chain=3 instead of 2)
 - display_panel_groups.py - needs to be updated to match the ffxiv bone structure
-- MMD Tools uses Shadow bone and D bones -- find a way to get MMD Tools to make them for me (or are they really necessary?)
 - automate the bone order export for PMX export (should be easy since ffxiv bones are mostly standard across the board)
-- get a list of all the mmd tools properties/ property names so I can can manipulate them directly from python
 
 New Features (completed):
 - added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
@@ -39,8 +37,8 @@ In order to use this tool, you need:
 Not really needed but recommended:
 - MMD (duh) - https://learnmmd.com/downloads/
 - PMXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
-- PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate)
-- VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites
+- PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate), alternatively you can use uuunyaa's Helper addon to download some models from within Blender
+- VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites. Alternatively you can use uuunyaa's Helper addon to download some VMD files from within Blender
 - A bunch of MMD effects (will list them later)
 
 ------------

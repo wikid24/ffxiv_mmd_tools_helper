@@ -51,6 +51,7 @@ if "bpy" in locals():
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(blender_bone_names_to_japanese_bone_names)
 	importlib.reload(shape_keys)
+	importlib.reload(bone_groups)
 	
 else:
 	import bpy
@@ -67,6 +68,7 @@ else:
 	from . import replace_bones_renaming
 	from . import armature_diagnostic
 	from . import add_foot_leg_ik
+
 	#from . import add_hand_arm_ik
 	from . import display_panel_groups
 	from . import toon_textures_to_node_editor_shader
@@ -75,6 +77,7 @@ else:
 	from . import miscellaneous_tools
 	from . import blender_bone_names_to_japanese_bone_names
 	from . import shape_keys
+	from . import bone_groups
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

@@ -678,6 +678,32 @@ def create_bone_groups():
 		print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
 
 
+def correct_bone_length():
+
+    bpy.ops.object.mode_set(mode='EDIT')
+
+    #bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+    armature = bpy.context.view_layer.objects.active
+
+
+    fix_bone_length(armature,'shoulder_L','arm_L')
+    fix_bone_length(armature,'shoulder_R','arm_R')
+    fix_bone_length(armature,'arm_L','elbow_L')
+    fix_bone_length(armature,'arm_R','elbow_R')
+    fix_bone_length(armature,'elbow_L','wrist_L')
+    fix_bone_length(armature,'elbow_R','wrist_R')
+        
+
+def fix_bone_length(armature,source_bone,target_bone):
+
+    source_bone = armature.data.edit_bones[source_bone]
+    target_bone = armature.data.edit_bones[target_bone]
+
+    source_bone.tail = target_bone.head
+
+
+
+
 def main(context):
 	# print(bpy.context.scene.selected_miscellaneous_tools)
 	if bpy.context.scene.selected_miscellaneous_tools == "combine_2_bones":
@@ -713,7 +739,7 @@ def main(context):
 		create_bone_groups()
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_bone_lengths":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		correct_bone_lengths()
+		correct_bone_length()
 	if bpy.context.scene.selected_miscellaneous_tools == "import_nala":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		import_nala()

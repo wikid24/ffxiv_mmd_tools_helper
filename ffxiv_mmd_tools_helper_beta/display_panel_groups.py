@@ -147,6 +147,8 @@ My_Display_Panel_Groups =[
 # by name, children of head bone, IK constraint
 
 def display_panel_groups_create(root, armature_object):
+
+
 	BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_dictionary()
 	FINGER_BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_fingers_dictionary()
 
@@ -163,13 +165,18 @@ def display_panel_groups_create(root, armature_object):
 	finger_names = []
 	ik_names = [] # ["IK", "ik", ＩＫ"]
 
+
+	#Get all bones from the bone_dictionary.csv and store them in a list
 	for b in BONE_NAMES_DICTIONARY:
 		if BONE_NAMES_DICTIONARY.index(b) not in [0,1,3]:
 			# not in [0,1,3] , not a bonemap ID, not a root bone, not a head bone
 			body_names = body_names + list(b)
+
+	#Get all bones from the bones_fingers_dictionary.csv and store them in a list
 	for f in FINGER_BONE_NAMES_DICTIONARY:
 		finger_names = finger_names + list(f)
 
+	#get all IK pose bones and store them in ik_names
 	bpy.ops.object.mode_set(mode='POSE')
 	for pb in bpy.context.active_object.pose.bones:
 		for c in pb.constraints:
@@ -178,15 +185,18 @@ def display_panel_groups_create(root, armature_object):
 					if c.subtarget not in ik_names:
 						ik_names.append(c.subtarget)
 
+
 	groups_names_1 = [("ＩＫ", ik_names), ("髪", hair_names), ("頭", head_names),  ("スカト", skirt_names)]
 	groups_names_2 = [("Root", root_names), ("指", finger_names),  ("体", body_names)]
 
+	#If the Groups from My_Display_Panel_Groups does not exist, create it
 	bpy.context.view_layer.objects.active  = root
 	for g in My_Display_Panel_Groups:
 		if g[1] not in bpy.context.active_object.mmd_root.display_item_frames.keys():
 			group = bpy.context.active_object.mmd_root.display_item_frames.add()
 			group.name = g[1]
 			group.name_e = g[0]
+
 
 
 	for b in armature_object.data.bones.keys():
@@ -236,11 +246,17 @@ def main(context):
 		display_panel_groups_non_vertex_morphs(root)
 		delete_empty_display_panel_groups(root)
 	if bpy.context.scene.display_panel_options == 'add_display_panel_groups':
+		print ("calling 1")
 		clear_display_panel_groups(root)
+		print ("calling 2")
 		display_panel_groups_create(root, armature_object)
+		print ("calling 3")
 		display_panel_groups_from_shape_keys(mesh_objects_list)
+		print ("calling 4")
 		display_panel_groups_non_vertex_morphs(root)
-		delete_empty_display_panel_groups(root)
+		print ("calling 5")
+		#delete_empty_display_panel_groups(root)
+		#print ("calling 6")
 
 @register_wrap
 class MmdToolsDisplayPanelGroups(bpy.types.Operator):

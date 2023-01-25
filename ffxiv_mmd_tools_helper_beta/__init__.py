@@ -52,6 +52,7 @@ if "bpy" in locals():
 	importlib.reload(blender_bone_names_to_japanese_bone_names)
 	importlib.reload(shape_keys)
 	importlib.reload(bone_groups)
+	importlib.reload(import_ffxiv_test_model)
 	
 else:
 	import bpy
@@ -78,6 +79,7 @@ else:
 	from . import blender_bone_names_to_japanese_bone_names
 	from . import shape_keys
 	from . import bone_groups
+	from . import import_ffxiv_test_model
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

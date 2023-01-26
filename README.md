@@ -16,6 +16,7 @@ New Features (to do):
 - fix IK to match double jointed knees (move the bone constraints to j_asi_c_l instead of j_asi_b_l, set the chain=3 instead of 2)
 - display_panel_groups.py - needs to be updated to match the ffxiv bone structure
 - automate the bone order export for PMX export (should be easy since ffxiv bones are mostly standard across the board)
+- find a way to auto-generate rigid bodies (https://github.com/12funkeys/rigid_bodys_gen - https://www.youtube.com/watch?v=0haYapQ7l_U )
 
 New Features (completed):
 - added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.

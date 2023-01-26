@@ -160,16 +160,28 @@ def combine_2_bones_1_bone(parent_bone_name, child_bone_name):
 	print("Combined 2 bones: ", parent_bone_name, child_bone_name)
 
 def combine_2_vg_1_vg(parent_vg_name, child_vg_name):
-	for o in bpy.context.scene.objects:
-		if o.type == 'MESH':
-			if parent_vg_name in o.vertex_groups.keys():
-				if child_vg_name in o.vertex_groups.keys():
-					for v in o.data.vertices:
-						for g in v.groups:
-							if o.vertex_groups[g.group] == o.vertex_groups[child_vg_name]:
-								o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
-					o.vertex_groups.remove(o.vertex_groups[child_vg_name])
-					print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
+    #re-weight all vertex groups to the parent and delete the child
+    for o in bpy.context.scene.objects:
+        if o.type == 'MESH':
+            if parent_vg_name in o.vertex_groups.keys():
+                if child_vg_name in o.vertex_groups.keys():
+                    for v in o.data.vertices:
+                        for g in v.groups:
+                            if o.vertex_groups[g.group] == o.vertex_groups[child_vg_name]:
+                                o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
+                    o.vertex_groups.remove(o.vertex_groups[child_vg_name])
+                    print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
+
+    #rename all orphaned vertex groups in the step above from the deleted child to the parent
+    for o in bpy.context.scene.objects:
+        if o.type == 'MESH':
+            if (child_vg_name in o.vertex_groups.keys()) and (parent_vg_name not in o.vertex_groups.keys()):
+                for v in o.data.vertices:
+                    for g in v.groups:
+                        if o.vertex_groups[g.group].name == child_vg_name:
+                            o.vertex_groups[child_vg_name].name = parent_vg_name
+                            print("renamed orphaned child vg ",child_vg_name, " on ", o.name," to ", parent_vg_name)
+
 
 					
 

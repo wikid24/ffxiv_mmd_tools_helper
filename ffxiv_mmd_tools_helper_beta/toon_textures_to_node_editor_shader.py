@@ -221,7 +221,20 @@ def main (context):
 			if object.data == bpy.data.lights[0]:
 				LAMP = object
 
-		toonify_material(o)
+		#toonify_material(o)
+
+	# Iterate over the selected objects
+	for obj in bpy.context.selected_objects:
+		# Check if the object is a mesh object
+		if obj.type == 'MESH':
+			# Iterate over the object's material slots
+			for slot in obj.material_slots:
+				mat = slot.material
+				#bpy.context.object.active_material = mat
+				toonify_material(mat)
+				print(f"The material in slot {slot.name} of object {obj.name} is {mat.name}")
+		#else:
+			#print(f'{obj.name} is not a mesh object')
 
 	
 
@@ -230,7 +243,7 @@ def main (context):
 def toonify_material(mat):
 
 	# Get the active material
-	mat = bpy.context.object.active_material
+	#mat = bpy.context.object.active_material
 
 	# Find the principled BSDF node
 	principled = None

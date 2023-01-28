@@ -3,6 +3,8 @@ import math
 
 from . import register_wrap
 from . import model
+from . import boneMaps_renamer
+from . import add_foot_leg_ik
 
 @register_wrap
 class MiscellaneousToolsPanel(bpy.types.Panel):
@@ -96,7 +98,7 @@ def import_nala():
 	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
 	bpy.context.view_layer.objects.active = selected_obj
 		
-			
+	"""
 	# Create a new empty object to store all the Mesh Objects
 	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
 	new_empty = bpy.context.object
@@ -109,11 +111,24 @@ def import_nala():
 		if 'Part' in child.name:
 			# Parent the child object to the new empty object
 			child.parent = new_empty
-
+	"""
+	
 	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
 	mats = bpy.data.materials
 	for mat in mats:
 		mat.blend_method = 'HASHED'
+
+	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
+	# Get the armature object
+	armature = bpy.data.objects.get("n_root")
+	# Get the first mesh object that is a child of the armature
+	mesh = [child for child in armature.children if child.type == 'MESH'][0]
+	# Add the armature modifier to the mesh
+	modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
+	# Set the armature as the object to which the modifier applies
+	modifier.object = armature
+	modifier.object = bpy.data.objects["n_root"]
+
 		
 	
 
@@ -567,6 +582,20 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "import_nala":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		import_nala()
+	if bpy.context.scene.selected_miscellaneous_tools == "import_nala_deluxe":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		import_nala()
+		fix_object_axis()
+		boneMaps_renamer.main(context)
+		correct_root_center()
+		correct_groove()
+		correct_waist()
+		correct_waist_cancel()
+		add_foot_leg_ik.main(context)
+
+
+
+
 	if bpy.context.scene.selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
@@ -586,6 +615,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	bpy.types.Scene.selected_miscellaneous_tools = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
 	, ("import_nala", "import_nala","import_nala") \
+	, ("import_nala_deluxe", "import_nala_deluxe","import_nala_deluxe") \
 	, ("fix_object_axis", "fix object axis","fix object axis") \
 	, ("combine_2_bones", "Combine 2 bones", "Combine a parent-child pair of bones and their vertex groups to 1 bone and 1 vertex group")\
 	, ("delete_unused", "Delete unused bones and unused vertex groups", "Delete all bones and vertex groups which have the word 'unused' in them")\

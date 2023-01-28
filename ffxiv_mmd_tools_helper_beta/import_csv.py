@@ -79,3 +79,15 @@ def use_csv_shape_keys_dictionary(ffxiv_race):
 	SHAPE_KEYS_DICTIONARY = csv_cleanup(SHAPE_KEYS_DICTIONARY,False,True)
 	return SHAPE_KEYS_DICTIONARY
 
+
+def use_csv_rigid_body_dictionary():
+
+    path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
+    file_path= (path + r"\data\rigid_body_dictionary.csv").replace("import_csv.py" , "")
+    print(file_path)
+    #file_path = (__file__ + r"\data\rigid_body.csv").replace("import_csv.py" , "")
+    
+    RIGID_BODY_DICTIONARY = try_open_file(file_path)
+    RIGID_BODY_DICTIONARY = csv_cleanup(RIGID_BODY_DICTIONARY,False,True)
+    return RIGID_BODY_DICTIONARY
+

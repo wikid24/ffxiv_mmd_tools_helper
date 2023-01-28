@@ -216,7 +216,7 @@ def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 							#print ("\n\n\nhuzzah we have a match!")
 							ob.select_set(True)
 			else:
-			    ob.select_set(False)
+				ob.select_set(False)
 
 		if (bpy.context.selected_objects):
 			bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]

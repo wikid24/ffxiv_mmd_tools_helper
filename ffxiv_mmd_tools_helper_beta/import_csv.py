@@ -88,6 +88,6 @@ def use_csv_rigid_body_dictionary():
     #file_path = (__file__ + r"\data\rigid_body.csv").replace("import_csv.py" , "")
     
     RIGID_BODY_DICTIONARY = try_open_file(file_path)
-    RIGID_BODY_DICTIONARY = csv_cleanup(RIGID_BODY_DICTIONARY,False,True)
+    RIGID_BODY_DICTIONARY = csv_cleanup(RIGID_BODY_DICTIONARY,True,True)
     return RIGID_BODY_DICTIONARY
 

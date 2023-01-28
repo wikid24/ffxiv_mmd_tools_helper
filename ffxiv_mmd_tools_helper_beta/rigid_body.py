@@ -34,147 +34,156 @@ class RigidBodyPanel(bpy.types.Panel):
 
 
 def read_rigid_body_file():
-    #if test_is_mmd_english_armature() == True:
-    #	bpy.ops.object.mode_set(mode='EDIT')
-    
-    RIGID_BODY_DICTIONARY = None
-    #bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+	#if test_is_mmd_english_armature() == True:
+	#	bpy.ops.object.mode_set(mode='EDIT')
+	
+	RIGID_BODY_DICTIONARY = None
+	#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+
+	RIGID_BODY_DICTIONARY = import_csv.use_csv_rigid_body_dictionary()
+
+	#convert the rigid_body_data list into a dictionary with a header
+	RIGID_BODY_DICTIONARY = [dict(zip(RIGID_BODY_DICTIONARY[0],row)) for row in RIGID_BODY_DICTIONARY[1:]]
+
+	#convert the values in 'collision_group_mask' into a boolean list
+	for row in RIGID_BODY_DICTIONARY:
+		if (row['collision_group_mask'] == 0.0):
+			row['collision_group_mask'] = str('')
+		index_values = str(row['collision_group_mask']).split('/')
+		bool_list = [str(i) in index_values for i in range(16)]
+		row['collision_group_mask'] = bool_list
 
 
 
-    RIGID_BODY_DICTIONARY = import_csv.use_csv_rigid_body_dictionary()
-    #if test_is_mmd_english_armature() == False:
-    #	print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
+	#if test_is_mmd_english_armature() == False:
+	#	print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
 
-
-    return RIGID_BODY_DICTIONARY
+	return RIGID_BODY_DICTIONARY
 
 
 def apply_all_rigid_bodies(armature,rigid_body_data):
 
+
+	
+	if rigid_body_data: 
+		for rigid_body in rigid_body_data:
+			rigid_body_name = rigid_body['rigid_body_name']
+			bone = rigid_body['bone_name']
+			offset_loc = [rigid_body['offset_x'],rigid_body['offset_y'],rigid_body['offset_z']]
+			name_j = rigid_body['name_j']
+			name_e = rigid_body['name_e']
+			collision_group_number = int(rigid_body['collision_group'])
+			collision_group_mask = rigid_body['collision_group_mask']
+            #collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
+
+			rigid_type = str(int(rigid_body['rigid_type'])) #'0'= Bone, '1' = Physics, '2' = Physics+Bone
+			rigid_shape = rigid_body['rigid_shape']  #SPHERE, BOX, CAPSULE        
+			size = [rigid_body['x'], rigid_body['y'],rigid_body['z']]  #size[0] = X, size[1] = Y, size[2] = Z
+			mass = rigid_body['mass']
+			friction = rigid_body['friction'] 
+			bounce = rigid_body['bounce']  #restitution
+			linear_damping = rigid_body['linear_damping']
+			angular_damping = rigid_body['angular_damping']
+			
+			bpy.context.view_layer.objects.active = armature         
+			create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
 	
 
-	if rigid_body_data: 
-		
-		bpy.context.view_layer.objects.active = armature
-		
-		for rigid_body in rigid_body_data:
-			bpy.context.view_layer.objects.active = armature
-			bone = rigid_body[0]
-			offset_loc = [rigid_body[1],rigid_body[2],rigid_body[3]]
-			name_j = rigid_body[4]
-			name_e = rigid_body[5]
-			collision_group_number = int(rigid_body[21])
-			collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
+def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
 
-			rigid_type = str(int(rigid_body[6])) #'0'= Bone, '1' = Physics, '2' = Physics+Bone
-			rigid_shape = rigid_body[7]  #SPHERE, BOX, CAPSULE        
-			size = [rigid_body[8], rigid_body[9],rigid_body[10]]  #size[0] = X, size[1] = Y, size[2] = Z
-			mass = rigid_body[15]
-			friction = rigid_body[22] 
-			bounce = rigid_body[20]  #restitution
-			linear_damping = rigid_body[28]
-			angular_damping = rigid_body[31]
+	#check if bone exists
+	if bone in armature.data.bones:
+
+		#if rigid body exists, delete it
+		for obj in armature.parent.children_recursive:
+			if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_name:
+				# Delete the object
+				bpy.data.objects.remove(obj, do_unlink=True)
+		
+		"""
+		name_j = '$name_j'
+		name_e = '$name_e'
+		collision_group_number = 0
+		collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
+		rigid_type = '0' #'0'= Bone, '1' = Physics, '2' = Physics+Bone
+		rigid_shape = 'SPHERE' #SPHERE, BOX, CAPSULE
+		size = [0.6, 0.6, 0.6]  #size[0] = X, size[1] = Y, size[2] = Z
+		mass = 1 
+		friction = 0.5
+		bounce = 0 #restitution
+		linear_damping = 0.04
+		angular_damping = 0.1
+		"""
+		# Set mode as edit mode
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		# Set active bone
+		#armature = bpy.context.object
+		#bpy.context.view_layer.objects.active = armature
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		# Select the bone
+		bpy.ops.armature.select_all(action='DESELECT')
+		armature.data.edit_bones[bone].select = True
+		armature.data.bones.active = armature.data.bones[bone]
 			
-			"""
-			print(armature,' ' \
-					,bone,' '\
-					,offset_loc,' '\
-					,name_j,' '\
-					,name_e, ' '\
-					,collision_group_number, ' '\
-					,collision_group_mask
-					,rigid_type,' '\
-					,rigid_shape, ' '\
-					, size, ' '\
-					, mass, ' '\
-					, bounce, ' '\
+		bpy.ops.mmd_tools.rigid_body_add(
+			name_j= name_j
+			,name_e= name_e
+			,collision_group_number=collision_group_number
+			,collision_group_mask=collision_group_mask
+			,rigid_type=rigid_type
+			,rigid_shape=rigid_shape
+			,size=size
+			,mass=mass
+			,friction=friction
+			,bounce=bounce
+			,linear_damping=linear_damping
+			,angular_damping=angular_damping
+		)
+		
+		rigid_body = bpy.context.view_layer.objects.active
 
-					,friction, ' '\
-					,linear_damping, ' '\
-					,angular_damping, ' '\
-					)
-			"""
-			create_rigid_body(armature,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
-        
+		#set rigid_body_name
+		rigid_body.name = rigid_body_name
 
-
-
-
-def create_rigid_body(armature,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
-
-    #check if bone exists
-    if bone in armature.data.bones:
-
-        #if rigid body exists, delete it
-        for obj in armature.parent.children_recursive:
-            if obj.mmd_type == 'RIGID_BODY' and obj.name == bone:
-                # Delete the object
-                bpy.data.objects.remove(obj, do_unlink=True)
-        
-        """
-        name_j = '$name_j'
-        name_e = '$name_e'
-        collision_group_number = 0
-        collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
-        rigid_type = '0' #'0'= Bone, '1' = Physics, '2' = Physics+Bone
-        rigid_shape = 'SPHERE' #SPHERE, BOX, CAPSULE
-        size = [0.6, 0.6, 0.6]  #size[0] = X, size[1] = Y, size[2] = Z
-        mass = 1 
-        friction = 0.5
-        bounce = 0 #restitution
-        linear_damping = 0.04
-        angular_damping = 0.1
-        """
-        # Set mode as edit mode
-        bpy.ops.object.mode_set(mode='EDIT')
-
-        # Set active bone
-        #armature = bpy.context.object
-        #bpy.context.view_layer.objects.active = armature
-        bpy.ops.object.mode_set(mode='EDIT')
-
-        # Select the bone
-        bpy.ops.armature.select_all(action='DESELECT')
-        armature.data.edit_bones[bone].select = True
-        armature.data.bones.active = armature.data.bones[bone]
-            
-        bpy.ops.mmd_tools.rigid_body_add(
-            name_j= name_j
-            ,name_e= name_e
-            ,collision_group_number=collision_group_number
-            ,collision_group_mask=collision_group_mask
-            ,rigid_type=rigid_type
-            ,rigid_shape=rigid_shape
-            ,size=size
-            ,mass=mass
-            ,friction=friction
-            ,bounce=bounce
-            ,linear_damping=linear_damping
-            ,angular_damping=angular_damping
-        )
-        
-        rigid_body = bpy.context.view_layer.objects.active
-            
-        #set the size to match what the MMD Rigid Body Panel displays as the size
-        if rigid_shape == 'SPHERE':
-            rigid_body.mmd_rigid.size[0] = max(size[0], 1e-3)
-        elif rigid_shape == 'BOX':
-            rigid_body.mmd_rigid.size[0] = max(size[0], 1e-3)
-            rigid_body.mmd_rigid.size[1] = max(size[1], 1e-3)
-            rigid_body.mmd_rigid.size[2] = max(size[2], 1e-3)
-        elif rigid_shape == 'CAPSULE':
-            rigid_body.mmd_rigid.size[0] = max(size[0], 1e-3)
-            rigid_body.mmd_rigid.size[1] = max(size[1], 1e-3)
-            
-        #set the offset
-            rigid_body.location.x = rigid_body.location.x + offset_loc[0]
-            rigid_body.location.y = rigid_body.location.y + offset_loc[1]
-            rigid_body.location.z = rigid_body.location.z + offset_loc[2]
-
-        return rigid_body
-    else:
-        print ('bone ',bone,' does not exist')
+			
+		#set the size to match what the MMD Rigid Body Panel displays as the size
+		if rigid_shape == 'SPHERE':
+			rigid_body.mmd_rigid.size = (max(size[0], 1e-3)\
+											,0\
+											,0 )
+		elif rigid_shape == 'BOX':
+			rigid_body.mmd_rigid.size = (max(size[0], 1e-3)\
+										,max(size[1] , 1e-3)\
+										,max(size[2] , 1e-3))
+			
+			
+			#rigid_body.mmd_rigid.size[0] = max(size[0] , 1e-3)
+			#rigid_body.mmd_rigid.size[1] = max(size[1] , 1e-3)
+			#rigid_body.mmd_rigid.size[2] = max(size[2] , 1e-3)
+			
+		elif rigid_shape == 'CAPSULE':
+			rigid_body.mmd_rigid.size = (max(size[0], 1e-3) \
+										,max(size[1], 1e-3) \
+										,0)
+			
+			#rigid_body.mmd_rigid.size[0] = (max(size[0], 1e-3)
+			#rigid_body.mmd_rigid.size[1] = max(size[1], 1e-3)
+			
+		#set the offset
+		#rigid_body.delta_location.x = offset_loc[0]
+		#rigid_body.delta_location.y = offset_loc[1]
+		#rigid_body.delta_location.z = offset_loc[2]
+		rigid_body.location.x = rigid_body.location.x + offset_loc[0]
+		rigid_body.location.y = rigid_body.location.y + offset_loc[1]
+		rigid_body.location.z = rigid_body.location.z + offset_loc[2]
+		
+		
+		return rigid_body
+	else:
+		print ('bone ',bone,' does not exist')
+ 
  
 
 

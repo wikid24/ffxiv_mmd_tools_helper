@@ -109,10 +109,10 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 11) USE FFXIV MMD Helper tool to add joints
 
-9)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+12)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
 
 
-10) Use MMD Tools to import a motion dance VMD file:
+13) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
 
     - Scale should be set to '0.08' (it should match the same scale you imported the FBX model with)
@@ -123,6 +123,6 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
 
 
-11) Profit!
-12) USE MMD Tools to 'Convert' to a MMD Armature
+14) Profit!
+
 

@@ -35,8 +35,9 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
     - Add presets for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
     - Add presets for hair (set min max settings, will generate for the entire chain, heaviest on the top)
 - automate the MMD material sorter population:
-    - not sure which way to go with this-- should I take the original mesh parts and automate them as their own single material? 
+    - not sure which way to go with this-- should I take the original mesh parts and automate them as their own single material the MMD tools panel? 
     - or should I create a new hierarchy based on hair/skirt/etc...?
+    - or should I do it based on individual textures?
     - or should create an option to pick/choose one vs the other?
 - Cleanup the UI  (it's a horrible mess), merging similar functionality into one panel. Copy how MMD Tools does it, but use these categories:
     -  camera & lighting

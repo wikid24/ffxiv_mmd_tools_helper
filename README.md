@@ -1,4 +1,4 @@
-# this is a fork of Hogarth-MMD's mmd_tools_helper (https://github.com/Hogarth-MMD/mmd_tools_helper), updated to be compatible with ffxiv and Blender 2.8+. It's a work in progress.
+# this is a fork of Hogarth-MMD's mmd_tools_helper (https://github.com/Hogarth-MMD/mmd_tools_helper), updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
 
 Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool working, tutorials on how to export FFXIV characters to MMD will come. 
 
@@ -45,6 +45,8 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - uuunyaa's Helper addon to  MMD Tools for Blender - https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools
 - MekTools addon for Blender - https://www.xivmodarchive.com/modid/22780
 
+
+
 # Not really needed but recommended:
 - MMD (duh) - https://learnmmd.com/downloads/
 - PMXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
@@ -53,6 +55,20 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - A bunch of MMD effects (will list them later)
 
 ------------
+
+# How to Install
+
+ - Download the latest release package.zip
+ - Go to Edit -> Preferences -> Add-ons -> Install and select the zip file you downloaded
+  ![image](https://user-images.githubusercontent.com/19479648/215303847-8a5b34de-b8be-4070-9ab7-dc51ada3fc10.png)
+  
+ - In the search box, type in 'ffxiv' until the addon 'Object: FFXIV MMD Tools Helper' shows up and check the checkbox
+  ![image](https://user-images.githubusercontent.com/19479648/215303990-62fca28b-79b3-4648-b620-d9c6b0f5aa3c.png)
+
+ - Once you see "ffxiv_mmd_tools_helper", you'll know it is installed correctly. All of the tools are located here.
+  ![image](https://user-images.githubusercontent.com/19479648/215304046-309d996e-939e-458c-9d0f-1dc626972931.png)
+
+
 
 # My current workflow:
 

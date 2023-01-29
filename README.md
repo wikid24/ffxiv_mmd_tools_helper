@@ -107,24 +107,26 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
   ![image](https://user-images.githubusercontent.com/19479648/214442955-a2cdfa2a-4444-4e5c-97e9-3889c35e1685.png)
 
-5) Important if you wanna use the default shape keys (for facial expressions):
+5) delete all the facial tattoo's / face paint / horrible reaper eyes from the model
+
+6) If you wanna use the default shape keys (for facial expressions):
     - In Object mode, select all meshes and press Ctrl+J to join them all into one mesh
     - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
 
-6) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-7) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel bones
-8) USE FFXIV MMD Helper tool to add IK legs bones
-9) Use MMD Tools to 'Convert Model'
+7) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
+8) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel bones
+9) USE FFXIV MMD Helper tool to add IK legs bones
+10) Use MMD Tools to 'Convert Model'
   ![image](https://user-images.githubusercontent.com/19479648/215303255-96e633fa-00dd-4261-9e97-89dc275e5c4c.png)
   
-10) USE FFXIV MMD Helper tool to add rigid bodies
+11) USE FFXIV MMD Helper tool to add rigid bodies
 
-11) USE FFXIV MMD Helper tool to add joints
+12) USE FFXIV MMD Helper tool to add joints
 
-12)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+13)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
 
 
-13) Use MMD Tools to import a motion dance VMD file:
+14) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
 
     - Scale should be set to '0.08' (if you imported the FBX file with a scale of 1.00 this is the correct setting to use)
@@ -135,6 +137,6 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
 
 
-14) Profit!
+15) Profit!
 
 

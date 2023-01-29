@@ -100,7 +100,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
     - USE FFXIV MMD Helper tool to select your FFXIV model's race and click the button to add the shape keys
 
 6) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
-7) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
+7) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel bones
 8) USE FFXIV MMD Helper tool to add IK legs bones
 9) Use MMD Tools to 'Convert Model'
   ![image](https://user-images.githubusercontent.com/19479648/215303255-96e633fa-00dd-4261-9e97-89dc275e5c4c.png)

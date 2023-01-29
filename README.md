@@ -2,13 +2,24 @@
 
 Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool working, tutorials on how to export FFXIV characters to MMD will come. 
 
+------------
 
+# New Features (completed):
+- added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
+- added 'Automate FFXIV rig Rigid Bodies' feature. Working but it doesn't have any raw data to work with yet.
+- added 'Automate FFXIV rig Joints' feature. Working but it doesn't have any raw data to work with yet.
 
+- A bunch of important useful stuff. Will list them later.
 
-Todo stuff:
+# Conversion/upgrade to Blender 2.8+ (to do):
+  - add_hand_arm_ik.py
+  - mmd_lamp_setup.py
+  - mmd_view.py
+  - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
 
-New Features (to do):
+# To do:
 - ffxiv shape keys:
+  - make it easy to preview a shape key, edit it before applying (proper UI is needed)
   - Populate the shape keys files (facial animation sliders) -- 55 shape keys for each of the 8 races...  440 in all! :S. Reference guide: https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917
   - Allow for a user to upload their OWN custom shape key csv file (instead of relying on the ones that come as part of this addon)
   - Find a way to export shape key data to CSV file (in a similar format as the IMPORT shape keys CSV)
@@ -16,29 +27,25 @@ New Features (to do):
 - fix IK to match double jointed knees (move the bone constraints to j_asi_c_l instead of j_asi_b_l, set the chain=3 instead of 2)
 - display_panel_groups.py - needs to be updated to match the ffxiv bone structure
 - automate the bone order export for PMX export (should be easy since ffxiv bones are mostly standard across the board)
-- find a way to auto-generate rigid bodies (https://github.com/12funkeys/rigid_bodys_gen - https://www.youtube.com/watch?v=0haYapQ7l_U )
+- auto-generate rigid bodies instead of using csv (https://github.com/12funkeys/rigid_bodys_gen - https://www.youtube.com/watch?v=0haYapQ7l_U )
+    - Add presets for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
+    - Add presets for hair (set min max settings, will generate for the entire chain, heaviest on the top)
+- auto-generate joints instead of using csv:
+    - Add presets for boobs
+    - Add presets for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
+    - Add presets for hair (set min max settings, will generate for the entire chain, heaviest on the top)
+- Cleanup the UI  (it's a horrible mess), merging similar functionality into one panel. Copy how MMD Tools does it.
 
-New Features (completed):
-- added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
-- added 'Automate FFXIV rig Rigid Bodies' feature. Working but it doesn't have any raw data to work with yet.
-- added 'Automate FFXIV rig Joints' feature. Working but it doesn't have any raw data to work with yet.
+------------
 
-- A bunch of important useful stuff. Will list them later.
-
-Conversion/upgrade to Blender 2.8+ (to do):
-  - add_hand_arm_ik.py
-  - mmd_lamp_setup.py
-  - mmd_view.py
-  - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
-
-In order to use this tool, you need:
+# In order to use this tool, you need:
 - To have your character exported into FBX file format (using FFXIV TexTools) - https://www.ffxiv-textools.net/
 - Blender (2.80+) or higher installed - https://www.blender.org/
 - 'MMD Tools' addon for Blender - https://github.com/UuuNyaa/blender_mmd_tools
 - uuunyaa's Helper addon to  MMD Tools for Blender - https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools
 - MekTools addon for Blender - https://www.xivmodarchive.com/modid/22780
 
-Not really needed but recommended:
+# Not really needed but recommended:
 - MMD (duh) - https://learnmmd.com/downloads/
 - PMXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
 - PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate), alternatively you can use uuunyaa's Helper addon to download some models from within Blender
@@ -47,7 +54,7 @@ Not really needed but recommended:
 
 ------------
 
-My current workflow:
+# My current workflow:
 
 1) Import FBX file with these parameters:
     

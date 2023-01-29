@@ -115,7 +115,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 13) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:
 
-    - Scale should be set to '0.08' (it should match the same scale you imported the FBX model with)
+    - Scale should be set to '0.08' (if you imported the FBX file with a scale of 1.00 this is the correct setting to use)
     - Bone Mapper: set to 'Renamed bones'
     - 'Rename Bones - L/R Suffix' should be checked
     - 'Treat Current Pose as Rest Pose' should be checked

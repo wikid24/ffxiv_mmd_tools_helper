@@ -17,32 +17,16 @@ class RigidBodyPanel(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="Find this string in bone names:")
-		row = layout.row()
-		row.prop(context.scene,"find_bone_to_add")
-		row = layout.row()
-		row.label(text="Replace it with this string:")
-		row = layout.row()
-		row.prop(context.scene,"rigid_body_name")
-		row = layout.row()
-		row.prop(context.scene, "rigid_bodies_all")
-		row = layout.row()
-		row.label(text="Selected rigid_bodies only")
-		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies to armature")
 		row = layout.row()
 
 
 def read_rigid_body_file():
-	#if test_is_mmd_english_armature() == True:
-	#	bpy.ops.object.mode_set(mode='EDIT')
 	
 	RIGID_BODY_DICTIONARY = None
-	#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-
 	RIGID_BODY_DICTIONARY = import_csv.use_csv_rigid_body_dictionary()
 
-	#convert the rigid_body_data list into a dictionary with a header
+	#convert the list into a dictionary with a header
 	RIGID_BODY_DICTIONARY = [dict(zip(RIGID_BODY_DICTIONARY[0],row)) for row in RIGID_BODY_DICTIONARY[1:]]
 
 	#convert the values in 'collision_group_mask' into a boolean list
@@ -53,17 +37,24 @@ def read_rigid_body_file():
 		bool_list = [str(i) in index_values for i in range(16)]
 		row['collision_group_mask'] = bool_list
 
-
-
-	#if test_is_mmd_english_armature() == False:
-	#	print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
-
 	return RIGID_BODY_DICTIONARY
 
+def get_armature():
+	
+	if bpy.context.selected_objects[0].type == 'ARMATURE':
+		return model.findArmature(bpy.context.selected_objects[0])
+	if model.findArmature(bpy.context.selected_objects[0]) is not None:
+		return model.findArmature(bpy.context.selected_objects[0])
+	for child in  bpy.context.selected_objects[0].parent.children:
+		if child.type == 'ARMATURE':
+			return child
+	for child in  bpy.context.selected_objects[0].parent.parent.children:
+		if child.type == 'ARMATURE':
+			return child
+	else:
+		print ('could not find armature for selected object:', bpy.context.selected_objects[0].name)
 
 def apply_all_rigid_bodies(armature,rigid_body_data):
-
-
 	
 	if rigid_body_data: 
 		for rigid_body in rigid_body_data:
@@ -74,8 +65,6 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			name_e = rigid_body['name_e']
 			collision_group_number = int(rigid_body['collision_group'])
 			collision_group_mask = rigid_body['collision_group_mask']
-            #collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
-
 			rigid_type = str(int(rigid_body['rigid_type'])) #'0'= Bone, '1' = Physics, '2' = Physics+Bone
 			rigid_shape = rigid_body['rigid_shape']  #SPHERE, BOX, CAPSULE        
 			size = [rigid_body['x'], rigid_body['y'],rigid_body['z']]  #size[0] = X, size[1] = Y, size[2] = Z
@@ -97,9 +86,8 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		#if rigid body exists, delete it
 		for obj in armature.parent.children_recursive:
 			if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_name:
-				# Delete the object
+				print ('deleting existing rigid_body:', obj.name)
 				bpy.data.objects.remove(obj, do_unlink=True)
-		
 		"""
 		name_j = '$name_j'
 		name_e = '$name_e'
@@ -107,22 +95,15 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		collision_group_mask = [True,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False] 
 		rigid_type = '0' #'0'= Bone, '1' = Physics, '2' = Physics+Bone
 		rigid_shape = 'SPHERE' #SPHERE, BOX, CAPSULE
-		size = [0.6, 0.6, 0.6]  #size[0] = X, size[1] = Y, size[2] = Z
+		size = [0.6, 0.6, 0.6]  #X, Y, Z
 		mass = 1 
 		friction = 0.5
 		bounce = 0 #restitution
 		linear_damping = 0.04
 		angular_damping = 0.1
 		"""
-		# Set mode as edit mode
-		bpy.ops.object.mode_set(mode='EDIT')
-
-		# Set active bone
-		#armature = bpy.context.object
-		#bpy.context.view_layer.objects.active = armature
-		bpy.ops.object.mode_set(mode='EDIT')
-
 		# Select the bone
+		bpy.ops.object.mode_set(mode='EDIT')
 		bpy.ops.armature.select_all(action='DESELECT')
 		armature.data.edit_bones[bone].select = True
 		armature.data.bones.active = armature.data.bones[bone]
@@ -147,29 +128,13 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		#set rigid_body_name
 		rigid_body.name = rigid_body_name
 
-			
 		#set the size to match what the MMD Rigid Body Panel displays as the size
 		if rigid_shape == 'SPHERE':
-			rigid_body.mmd_rigid.size = (max(size[0], 1e-3)\
-											,0\
-											,0 )
+			rigid_body.mmd_rigid.size = [max(size[0], 1e-3),0,0] #radius,y,z
 		elif rigid_shape == 'BOX':
-			rigid_body.mmd_rigid.size = (max(size[0], 1e-3)\
-										,max(size[1] , 1e-3)\
-										,max(size[2] , 1e-3))
-			
-			
-			#rigid_body.mmd_rigid.size[0] = max(size[0] , 1e-3)
-			#rigid_body.mmd_rigid.size[1] = max(size[1] , 1e-3)
-			#rigid_body.mmd_rigid.size[2] = max(size[2] , 1e-3)
-			
+			rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1] , 1e-3),max(size[2] , 1e-3)] #x,y,z
 		elif rigid_shape == 'CAPSULE':
-			rigid_body.mmd_rigid.size = (max(size[0], 1e-3) \
-										,max(size[1], 1e-3) \
-										,0)
-			
-			#rigid_body.mmd_rigid.size[0] = (max(size[0], 1e-3)
-			#rigid_body.mmd_rigid.size[1] = max(size[1], 1e-3)
+			rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1], 1e-3),0] #radius,diameter,z
 			
 		#set the offset
 		#rigid_body.delta_location.x = offset_loc[0]
@@ -179,49 +144,26 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		rigid_body.location.y = rigid_body.location.y + offset_loc[1]
 		rigid_body.location.z = rigid_body.location.z + offset_loc[2]
 		
-		
+		print ('created rigid body: ',rigid_body.name)
 		return rigid_body
 	else:
 		print ('bone ',bone,' does not exist')
  
- 
-
 
 def main(context):
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
-	armature = bpy.context.view_layer.objects.active
-	"""
-	if bpy.context.scene.bones_all_or_selected == True:
-		for b in bpy.context.active_object.data.bones:
-			if b.select == True:
-				if 'dummy' not in b.name and 'shadow' not in b.name:
-					b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
-	if bpy.context.scene.bones_all_or_selected == False:
-		for b in bpy.context.active_object.data.bones:
-			if 'dummy' not in b.name and 'shadow' not in b.name:
-				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
-	"""
+	bpy.context.view_layer.objects.active = get_armature()
+	armature = get_armature()
 
 	RIGID_BODY_DICTIONARY = read_rigid_body_file ()
 	
 	apply_all_rigid_bodies(armature, RIGID_BODY_DICTIONARY)
 	#apply_all_rigid_bodies(armature)
 
-
-
-
-
 @register_wrap
 class AddRigidBody(bpy.types.Operator):
 	"""Add Rigid Body properties to a MMD Model"""
 	bl_idname = "ffxiv_mmd_tools_helper.add_rigid_body"
 	bl_label = "Replace bones renaming"
-
-	bpy.types.Scene.find_bone_to_add = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
-	
-	bpy.types.Scene.rigid_body_name = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
-
-	bpy.types.Scene.rigid_bodies_all = bpy.props.BoolProperty(name="Selected bones only", description="", default=False, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 
 	@classmethod
 	def poll(cls, context):

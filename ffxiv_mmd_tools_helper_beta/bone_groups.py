@@ -76,7 +76,7 @@ def add_bone_to_group (bone_name,bone_group):
 
 def delete_bone_groups():
     # Get the currently selected armature
-    armature = bpy.context.active_object
+    armature = model.find_MMD_Armature(bpy.context.object)
 
     # Check if the selected object is an armature
     if armature.type != 'ARMATURE':

@@ -39,10 +39,7 @@ def get_meshes_of_armature (armature):
 			ob.select_set(True)
 		else:
 			ob.select_set(False)
-			
-		#set the selected objects as the active object
-		#bpy.context.view_layer.objects.active = bpy.context.selected_objects[0]
-		#obj = bpy.context.active_object
+
 	return bpy.context.selected_objects
 
 
@@ -78,15 +75,13 @@ def load_rest_position(original_pose_data, armature):
 		pbone = armature.pose.bones[pbone_name]
 		pbone.location = data['location']
 		pbone.rotation_mode = data['rotation_mode']
-		if data['rotation_mode'] == 'XYZ':
-			pbone.rotation_euler = data['rotation_euler']
-		else:
+		if data['rotation_mode'] == 'QUATERNION':
 			pbone.rotation_quaternion = data['rotation_quaternion']
+		else:
+			pbone.rotation_euler = data['rotation_euler']
 		pbone.scale = data['scale']
 
 def transform_pose_bone (armature,pbone_name,delta_coords):
-
-
 	
 	# Set the pose mode
 	bpy.context.view_layer.objects.active = armature
@@ -99,19 +94,18 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 		#Change the rotation mode to XYZ Euler
 		pbone.rotation_mode = 'XYZ'
 
-# pbone.location[[0],[1],[2]] = location x,y,z
-# pbone.rotation_euler[[0],[1],[2] = rotation x, y, z (in euler)
-
+	# pbone.location[[0],[1],[2]] = location x,y,z
+	# pbone.rotation_euler[[0],[1],[2] = rotation x, y, z (in euler)
 	curr_coords = \
-		[pbone.location[0] \
-		,pbone.location[1] \
-		,pbone.location[2] \
-		,pbone.rotation_euler[0] \
-		,pbone.rotation_euler[1] \
-		,pbone.rotation_euler[2] \
-		,pbone.scale[0] \
-		,pbone.scale[1] \
-		,pbone.scale[2] \
+		[pbone.location[0] 
+		,pbone.location[1] 
+		,pbone.location[2] 
+		,pbone.rotation_euler[0] 
+		,pbone.rotation_euler[1] 
+		,pbone.rotation_euler[2] 
+		,pbone.scale[0] 
+		,pbone.scale[1] 
+		,pbone.scale[2] 
 		] 
 		
 	#Data-cleanup and conversion
@@ -122,15 +116,15 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 	delta_coords = [float(x) for x in delta_coords]
 
 	new_coords = \
-		[curr_coords[0] + delta_coords[0] \
-		,curr_coords[1] + delta_coords[1] \
-		,curr_coords[2] + delta_coords[2] \
-		,curr_coords[3] + math.radians(delta_coords[3]) \
-		,curr_coords[4] + math.radians(delta_coords[4]) \
-		,curr_coords[5] + math.radians(delta_coords[5]) \
-		,curr_coords[6] + delta_coords[6] \
-		,curr_coords[7] + delta_coords[7] \
-		,curr_coords[8] + delta_coords[8] \
+		[curr_coords[0] + delta_coords[0] 
+		,curr_coords[1] + delta_coords[1] 
+		,curr_coords[2] + delta_coords[2] 
+		,curr_coords[3] + math.radians(delta_coords[3]) 
+		,curr_coords[4] + math.radians(delta_coords[4]) 
+		,curr_coords[5] + math.radians(delta_coords[5]) 
+		,curr_coords[6] + delta_coords[6] 
+		,curr_coords[7] + delta_coords[7] 
+		,curr_coords[8] + delta_coords[8] 
 		]
 	pbone.location = [new_coords[0],new_coords[1],new_coords[2]]
 	pbone.rotation_euler = [new_coords[3],new_coords[4],new_coords[5]]
@@ -139,32 +133,6 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 	if quaternion_flag == True:
 		pbone.rotation_mode = 'QUATERNION'
 
-def get_armature():
-	bpy.ops.object.mode_set(mode='OBJECT')
-
-	armature = None
-
-	# Get the selected object
-	selected_object = bpy.context.object
-
-	# Check if the selected object is a mesh object
-	if selected_object.type == 'MESH':
-		# Check if the selected object's parent is an armature object
-		if selected_object.parent and selected_object.parent.type == 'ARMATURE':
-			# Get the armature object
-			armature = selected_object.parent      
-			
-		# Check if the selected object's grandparent is an armature object
-		if selected_object.parent.parent and selected_object.parent.parent.type == 'ARMATURE':
-			# Get the armature object
-			armature = selected_object.parent.parent
-
-	if selected_object.type == 'ARMATURE':
-		armature = selected_object
-
-	bpy.context.view_layer.objects.active = armature
-	  
-	return armature
 
 def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 	
@@ -194,7 +162,6 @@ def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 			i += 1
 		else:
 			print( "shape_key: '" + shape_key_name + "', armature: '" + armature.name + "', bone: '" + bone[0] + "' doesn't exist" )
-	
 	
 	bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -249,7 +216,6 @@ def parse_shape_key_data_from_csv (csv_data):
 	# Create an empty dictionary
 	shape_key_dictionary = {}
 
-	# Iterate through each row and 
 	for shape_key_bone_data in csv_data:
 		
 		#group the data based on the first row(shape key name)
@@ -269,46 +235,31 @@ def parse_shape_key_data_from_csv (csv_data):
 		for i, j in enumerate(bone_data):
 			bone_data[i] = j[1:]
 			
-	#for shape_key in shape_key_dictionary
-	#create_shape_key(armature,shape_key,shape_key_dictionary[shape_key])
-			
 	return shape_key_dictionary
 
 def read_shape_keys_file(ffxiv_race):
-	#if test_is_mmd_english_armature() == True:
-	#	bpy.ops.object.mode_set(mode='EDIT')
-	
+
 	SHAPE_KEYS_DICTIONARY = None
-	#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-
-
-
 	SHAPE_KEYS_DICTIONARY = import_csv.use_csv_shape_keys_dictionary(ffxiv_race)
-	#if test_is_mmd_english_armature() == False:
-	#	print("This operator will only work on an armature with mmd_english bone names. First rename bones to mmd_english and then try running this operator again.")
 
 	return SHAPE_KEYS_DICTIONARY
 
-def clear_all_transformations():
+def clear_all_transformations(armature):
 	
 	# Get the active object
 	obj = bpy.context.object
 
-	# Check if the active object is in pose mode
 	if obj.mode == 'POSE':
-		# Get the armature object
-		armature = obj.data
 
 		# Select all pose bones
 		for bone in armature.pose.bones:
 			bone.bone.select = True
 
-	# Clear all transformations of the selected bones
+		# Clear all transformations of the selected bones
 		for bone in armature.pose.bones:
-			bone.location = (0, 0, 0)
-			bone.rotation_euler = (0, 0, 0)
-			bone.scale = (1, 1, 1)
-		#print("All pose bones have been selected and their transformations have been cleared")
+			bone.location = [0, 0, 0]
+			bone.rotation_euler = [0, 0, 0]
+			bone.scale = [1, 1, 1]
 	else:
 		print(f"{obj.name} is not in pose mode, please switch to pose mode")
 
@@ -320,44 +271,31 @@ def clear_all_transformations():
 
 def switch_to_data_properties_menu():
 
-	# Get the active object
-	obj = bpy.context.object
-
-	# Switch to object mode
-	bpy.ops.object.mode_set(mode='OBJECT')
-
 	# Select the active object's mesh
+	obj = bpy.context.object
+	bpy.ops.object.mode_set(mode='OBJECT')
 	obj.select_set(True)
-
-	# Make the active object's mesh the active object
 	bpy.context.view_layer.objects.active = obj
 
 	# Switch to the 'properties' menu
 	bpy.context.area.type = 'PROPERTIES'
-
 	# set the active context to 'DATA'
 	bpy.context.area.spaces.active.context = 'DATA'
 
-
-
 def main(context):
-	# print(bpy.context.scene.selected_ffxiv_model_type)
-	get_armature()
+	armature = model.find_MMD_Armature(bpy.context.object)
+	bpy.context.view_layer.objects.active = armature
 
-	clear_all_transformations()
+	clear_all_transformations(armature)
 
 	if bpy.context.scene.ffxiv_model_list == 'none':
 		pass
 	else:
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file(bpy.context.scene.ffxiv_model_list)
-		
+		SHAPE_KEYS_DICTIONARY = read_shape_keys_file(bpy.context.scene.ffxiv_model_list)	
 		shape_keys = parse_shape_key_data_from_csv(SHAPE_KEYS_DICTIONARY)
-
 		for shape_key in shape_keys:
-			create_shape_key(get_armature(),shape_key,shape_keys[shape_key])
-			#print (key + ": \t")
-			#print (shape_keys[shape_key])
-			#print ('\n')
+			create_shape_key(armature,shape_key,shape_keys[shape_key])
+
 
 
 @register_wrap

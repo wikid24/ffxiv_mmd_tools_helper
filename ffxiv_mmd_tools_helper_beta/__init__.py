@@ -54,6 +54,7 @@ if "bpy" in locals():
 	importlib.reload(bone_groups)
 	importlib.reload(import_ffxiv_test_model)
 	importlib.reload(rigid_body)
+	importlib.reload(joints)
 	
 else:
 	import bpy
@@ -82,6 +83,7 @@ else:
 	from . import bone_groups
 	from . import import_ffxiv_test_model
 	from . import rigid_body
+	from . import joints
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

@@ -31,7 +31,7 @@ def all_materials_mmd_ambient_white():
 			m.mmd_material.ambient_color[0] == 1.0
 			m.mmd_material.ambient_color[1] == 1.0
 			m.mmd_material.ambient_color[2] == 1.0
-
+"""
 def get_armature():
 	bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -58,7 +58,7 @@ def get_armature():
 	bpy.context.view_layer.objects.active = armature
 	  
 	return armature
-
+"""
 
 def import_nala():
 
@@ -157,7 +157,7 @@ def fix_object_axis():
 	
 	bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
 	
-	armature = get_armature()
+	armature = model.find_MMD_Armature(bpy.context.object)
 	bpy.ops.object.mode_set(mode='EDIT')
 
 	##commented out because current bone roll is needed otherwise wonky stuff with inverted bones happens when trying to perform transforms
@@ -543,8 +543,30 @@ def fix_bone_length(armature,source_bone,target_bone):
 
     source_bone.tail = target_bone.head
 
+def add_extra_titty_bones(armature):
 
+	armature = bpy.context.view_layer.objects.active
+	bpy.ops.object.mode_set(mode='EDIT')
 
+	titty = armature.data.edit_bones['j_mune_l']
+
+	duplicate_bone = armature.data.edit_bones.new(titty.name + "_tip")
+	duplicate_bone.head = titty.head
+	duplicate_bone.tail = titty.tail
+	duplicate_bone.length = titty.length * 1.25
+	duplicate_bone.head = titty.tail
+	duplicate_bone.roll = titty.roll
+	duplicate_bone.parent = titty
+
+	titty = armature.data.edit_bones['j_mune_r']
+
+	duplicate_bone = armature.data.edit_bones.new(titty.name + "_tip")
+	duplicate_bone.head = titty.head
+	duplicate_bone.tail = titty.tail
+	duplicate_bone.length = titty.length * 1.25
+	duplicate_bone.head = titty.tail
+	duplicate_bone.roll = titty.roll
+	duplicate_bone.parent = titty
 
 def main(context):
 	# print(bpy.context.scene.selected_miscellaneous_tools)
@@ -592,18 +614,18 @@ def main(context):
 		correct_waist()
 		correct_waist_cancel()
 		add_foot_leg_ik.main(context)
-
-
-
-
 	if bpy.context.scene.selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
 	if bpy.context.scene.selected_miscellaneous_tools == "add_extra_finger_bones":
 		mesh = bpy.context.view_layer.objects.active
-		bpy.context.view_layer.objects.active  = get_armature()
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_extra_finger_bones(armature,mesh)
+	if bpy.context.scene.selected_miscellaneous_tools == "add_extra_titty_bones":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		add_extra_titty_bones(armature)
 
 
 @register_wrap
@@ -627,6 +649,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
+	, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
 	
 	], name = "Select Function:", default = 'none')
 

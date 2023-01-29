@@ -57,7 +57,7 @@ class Add_MMD_foot_leg_IK_Panel(bpy.types.Panel):
 def clear_IK(context):
 	IK_target_bones = []
 	IK_target_tip_bones = []
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
+	bpy.context.view_layer.objects.active = get_armature()
 	bpy.ops.object.mode_set(mode='POSE')
 	english = ["knee_L", "knee_R", "ankle_L", "ankle_R", "toe_L", "toe_R"]
 	japanese = ["左ひざ", "右ひざ", "左足首", "右足首", "左つま先", "右つま先"]
@@ -96,7 +96,7 @@ def clear_IK(context):
 
 
 def main(context):
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.object)
+	bpy.context.view_layer.objects.active = get_armature()
 
 	#test japanese or english ("leg_R", "右足"), ("leg_L", "左足"),
 	english = ["knee_L", "knee_R", "ankle_L", "ankle_R", "toe_L", "toe_R"]
@@ -684,30 +684,19 @@ def apply_MMD_additional_rotation (armature,additional_transform_bone, target_bo
 	#FnBone.clean_additional_transformation(armature)
 	
 def get_armature():
-	# Get the active object
-	obj = bpy.context.object
-
-	# Check if the object is an armature
-	if obj.type == 'ARMATURE':
-		print(f'The active object is an armature and its name is {obj.name}')
-		armature = obj
-
-	# Check if the object is a mesh object
-	elif obj.type == 'MESH':
-		# Iterate over the object's modifiers
-		for modifier in obj.modifiers:
-			# Check if the modifier is an armature modifier
-			if modifier.type == 'ARMATURE':
-				# Get the armature object
-				armature = modifier.object
-				print(f'The armature of the selected object is {armature.name}')
-				break
-		else:
-			print(f'The selected object is not connected to an armature')
+	
+	if bpy.context.selected_objects[0].type == 'ARMATURE':
+		return model.findArmature(bpy.context.selected_objects[0])
+	if model.findArmature(bpy.context.selected_objects[0]) is not None:
+		return model.findArmature(bpy.context.selected_objects[0])
+	for child in  bpy.context.selected_objects[0].parent.children:
+		if child.type == 'ARMATURE':
+			return child
+	for child in  bpy.context.selected_objects[0].parent.parent.children:
+		if child.type == 'ARMATURE':
+			return child
 	else:
-		print(f'The selected object is not an armature or a mesh object')
-
-	return armature
+		print ('could not find armature for selected object:', bpy.context.selected_objects[0].name)
 
 @register_wrap
 class Add_MMD_foot_leg_IK(bpy.types.Operator):

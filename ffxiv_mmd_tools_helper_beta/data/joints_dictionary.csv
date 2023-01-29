@@ -1,0 +1,9 @@
+﻿rigid_body_child,rigid_body_parent,use_bone_rotation,linear_min_x,linear_min_y,linear_min_z,linear_max_x,linear_max_y,linear_max_z,angular_min_x,angular_min_y,angular_min_z,angular_max_x,angular_max_y,angular_max_z,linear_spring_x,linear_spring_y,linear_spring_z,angular_spring_x,angular_spring_y,angular_spring_z
+j_mune_l,upper body 2b,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_mune_r,upper body 2b,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_kami_a,head,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_kami_b,j_kami_a,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_kami_f_l,head,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_kami_f_r,head,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_ex_h0106_ke_f_a,head,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+j_ex_h0106_ke_f_b,j_ex_h0106_ke_f_a,1,,,,,,,-5,-5,-5,5,5,5,,,,,,

@@ -86,16 +86,13 @@ def import_ffxiv_model(ffxiv_model):
 
 	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
 	# Get the armature object
-	armature = bpy.data.objects.get("n_root")
+	armature = model.find_MMD_Armature(bpy.context.object)
 	# Get the first mesh object that is a child of the armature
 	mesh = [child for child in armature.children if child.type == 'MESH'][0]
 	# Add the armature modifier to the mesh
 	modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
 	# Set the armature as the object to which the modifier applies
-	modifier.object = armature
-	modifier.object = bpy.data.objects["n_root"]
-
-		
+	modifier.object = armature		
 	
 
 def main(context):

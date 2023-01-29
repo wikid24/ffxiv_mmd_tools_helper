@@ -16,6 +16,7 @@ class RigidBodyPanel(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
+		
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies to armature")
 		row = layout.row()
@@ -167,7 +168,8 @@ class AddRigidBody(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		return context.active_object is not None
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		main(context)

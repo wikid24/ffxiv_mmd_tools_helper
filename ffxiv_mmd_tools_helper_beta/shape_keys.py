@@ -318,9 +318,10 @@ class Shape_Keys(bpy.types.Operator):
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 
-#	@classmethod
-#	def poll(cls, context):
-#		return context.active_object is not None
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		main(context)

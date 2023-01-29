@@ -47,7 +47,6 @@ class Add_MMD_foot_leg_IK_Panel(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-
 		row.label(text="Add leg and foot IK to MMD model", icon="ARMATURE_DATA")
 		row = layout.row()
 		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK to MMD model")
@@ -706,7 +705,8 @@ class Add_MMD_foot_leg_IK(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		return context.active_object is not None
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		clear_IK(context)

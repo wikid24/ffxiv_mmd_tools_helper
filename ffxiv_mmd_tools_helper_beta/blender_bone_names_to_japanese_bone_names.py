@@ -34,6 +34,11 @@ class BlenderToJapaneseBoneNames(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd_tools_helper.blender_to_japanese_bone_names"
 	bl_label = "Copy Blender bone names to Japanese bone names"
 
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
 	def execute(self, context):
 		main(context)
 		return {'FINISHED'}

@@ -3,10 +3,11 @@ bl_info = {
 	"author": "Hogarth-MMD, UuuNyaa, wikid24",
 	"version": (2, 6),
 	"blender": (2, 80, 0),
-	"location": "View3D > Tool Shelf > FFXIV MMD Tools Helper",
+	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "fork of MMDToolsHelper for FFXIV & Blender 2.8+",
 	"warning": "",
-	"wiki_url": "",
+	"wiki_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper",
+	"tracker_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper/issues",
 	"category": "Object",
 	}
 

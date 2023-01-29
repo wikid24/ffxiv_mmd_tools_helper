@@ -20,6 +20,9 @@ New Features (to do):
 
 New Features (completed):
 - added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
+- added 'Automate FFXIV rig Rigid Bodies' feature. Working but it doesn't have any raw data to work with yet.
+- added 'Automate FFXIV rig Joints' feature. Working but it doesn't have any raw data to work with yet.
+
 - A bunch of important useful stuff. Will list them later.
 
 Conversion/upgrade to Blender 2.8+ (to do):
@@ -76,8 +79,15 @@ My current workflow:
 6) Use FFXIV MMD Helper tool to rename bones from 'ffxiv bones' to 'MMD English'
 7) Use FFXIV MMD Helper tool to add Center/Root/Goove/Waist/Waist Cancel
 8) USE FFXIV MMD Helper tool to add IK legs bones
+9) Use MMD Tools to 'Convert Model'
+  ![image](https://user-images.githubusercontent.com/19479648/215303255-96e633fa-00dd-4261-9e97-89dc275e5c4c.png)
+  
+10) USE FFXIV MMD Helper tool to add rigid bodies
+
+11) USE FFXIV MMD Helper tool to add joints
 
 9)  USE FFXIV MMD Helper tool to rename the bones to 'MMD Japanese LR'
+
 
 10) Use MMD Tools to import a motion dance VMD file:
    When using MMD Tools' 'Import Motion' functionality to import a VMD motion file:

@@ -4,8 +4,8 @@ The relationship between rigid bodies, bones, meshes, and joints is important. B
    - Let's say your FFXIV model has a tail. 
    - If you want physics to work you need to create a 'physics-based' rigid body, ONE FOR EACH BONE on the tail. Once you do this, your tail will now adhere to the rigid body's physics and it will (mostly) ignore the parent/child relationship that there are bones. If you press the 'play' button in blender, the tail rigid bodies will fall due to gravity.
    - It is important to note that there is no parent/child relationship between rigid bodies like there are for bones. To create parent/child/sibling relationship, you need to create 'joints'.
-   - You need to create joints to connect each 'physics-based' rigid connects body EACH OTHER. You connect each rigid body to eachother via joints, and finally the tail stem is attached via a joint to a "non-moving" rigid body called a "collision-based" rigid body, so that it will stick to the body.
-   - You have to tune the parameters on the rigid bodies and joints to make sure that when physics are applied, it will bend and move according to how you want it to.
+   - You need to create joints to connect each 'physics-based' rigid body to EACH OTHER. You connect each rigid body to eachother via joints, and finally the tail stem is attached via a joint to a "non-moving" rigid body called a "collision-based" rigid body, so that it will stick to the body.
+   - You have to tune the parameters on the rigid bodies and joints to make sure that when physics are applied, so that it will bend and move according to how you want it to.
 
 Once you add rigid bodies and joints to your model, physics will work. 
    

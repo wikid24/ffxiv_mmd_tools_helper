@@ -59,7 +59,7 @@ Once you add rigid bodies and joints to your model, the physics will work proper
 It appears there are two kinds of joints on skirts: vertical joints and horizontal joints
 
 ### Vertical Joints :
--  First Vertical Joint attaches from lower body to top of skirts
+-  The first Vertical Joint attaches from lower body to top of skirts, and continues all the way down to the bottom of the rigid body chain (following the bone's chain)
 -  Disable collisions is unchecked
 -  Uses Angular limits and spring angular
     #### Lisa Genshin Model

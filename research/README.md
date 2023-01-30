@@ -20,7 +20,7 @@ Once you add rigid bodies and joints to your model, the physics will work proper
       - Pretty much the human skeleton will be all collision-based rigid bodies, where as hair, skirts, breasts, tails will be physics-based.
       - For the human skeletion, there is usually a 1:1 bone to rigid body mapping. However, there are some places on the human body where one rigid body isn't enough.
       - For example, the upper body bone usually has 2 or more rigid bodies attached to it. This is because the shape of one rigid body Isn't enough to cover the entire mesh
-   - "Physics-based" rigid bodies on a contain properties that are important for gravity:
+   - "Physics-based" rigid bodies contain properties that are important for gravity:
       - When it comes to gravity, you want some rigid bodies on a rigid body 'chain' to be heavier than others:
           - You'd want the bottom of the skirt to be heavier than the top of the skirt (to make sure it retains it's form and doesn't go floating out to space)
           - You'd want the top of hair to be heavier than the bottom of the hair (to make sure that hair 'whips' around realistically)

@@ -110,7 +110,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 5) delete all the facial tattoo's / face paint / horrible reaper eyes from the model
 
 6) go to the FIRST mesh's modifier properties and rename the modifier from 'n_root' to 'mmd_bone_order_override'
-    ![image](https://user-images.githubusercontent.com/19479648/215368929-ad660252-ea32-421e-ab53-bc00ee77dc6d.png)
+   ![image](https://user-images.githubusercontent.com/19479648/215369054-2f793d0f-7be8-439d-8c91-5c554bf205d8.png)
 
 
 7) If you wanna use the default shape keys (for facial expressions):

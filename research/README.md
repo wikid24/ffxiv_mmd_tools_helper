@@ -32,7 +32,7 @@
 		- Same goes with free-floating accessories such as earrings
 
 
-##Skirts
+## Skirts
 	It appears there are two kinds of joints on skirts: vertical joints and horizontal joints
 
 ### Vertical Joints :

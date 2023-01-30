@@ -28,6 +28,9 @@ Once you add rigid bodies and joints to your model, the physics will work proper
 
 ![image](https://user-images.githubusercontent.com/19479648/215564617-88770c4d-b195-45d5-8a18-4e0f0e3b947f.png)
 
+![image](https://user-images.githubusercontent.com/19479648/215577795-103c4fb6-77b7-4003-8cca-4d5450e365c6.png)
+
+
 
 # Joints
 -  Joints need to be added to rigid bodies with physics such as hair, skirts and tails. They attach the rigid bodies to eachother so that they don't just 'fall off' and hit the floor.

@@ -25,6 +25,7 @@ Once you add rigid bodies and joints to your model, the physics will work proper
           - You'd want the bottom of the skirt to be heavier than the top of the skirt (to make sure it retains it's form and doesn't go floating out to space)
           - You'd want the top of hair to be heavier than the bottom of the hair (to make sure that hair 'whips' around realistically)
 
+![image](https://user-images.githubusercontent.com/19479648/215564617-88770c4d-b195-45d5-8a18-4e0f0e3b947f.png)
 
 
 # Joints

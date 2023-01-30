@@ -5,9 +5,9 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 
 # New Features (completed):
-- added 'Automate FFXIV rig Shape Keys' feature. Working but it doesn't have any raw data to work with yet.
-- added 'Automate FFXIV rig Rigid Bodies' feature. Working but it doesn't have any raw data to work with yet.
-- added 'Automate FFXIV rig Joints' feature. Working but it doesn't have any raw data to work with yet.
+- added 'Automate FFXIV rig Shape Keys from csv' feature. Working but it doesn't have any raw data in the CSVs to work with yet.
+- added 'Automate FFXIV rig Rigid Bodies from csv' feature. Working but it doesn't have any raw data in the CSVs to work with yet.
+- added 'Automate FFXIV rig Joints from csv' feature. Working but it doesn't have any raw data in the CSVs to work with yet.
 
 - A bunch of important useful stuff. Will list them later.
 

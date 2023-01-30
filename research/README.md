@@ -2,24 +2,24 @@ Physically-based objects are never 'animated' like you would for a bone. When ph
 
 The relationship between rigid bodies, bones, meshes, and joints is important. Bones control a mesh and how it deforms. However, if you turn physics on, rigid bodies control a bone (and therefore, the mesh). 
    - Let's say your FFXIV model has a tail. 
-   - If you want physics to work you need to create a 'physics-based' rigid body, ONE FOR EACH BONE on the tail. Once you do this, your tail will now adhere to the rigid body's physics and it will (mostly) ignore the parent/child relationship that there are bones. If you press the 'play' button in blender, the tail rigid bodies will fall due to gravity.
-   - It is important to note that there is no parent/child relationship between rigid bodies like there are for bones. To create parent/child/sibling relationship, you need to create 'joints'.
+   - If you want physics to work you need to create a 'physics-based' rigid body, ONE FOR EACH BONE on the tail. Once you do this, your tail will now adhere to the rigid body's physics and it will (mostly) ignore the parent/child relationship that there are bones. If you press the 'play' button in blender and physics are turned on, the tail rigid bodies will fall due to gravity.
+   - It is important to note that there is no parent/child relationship between rigid bodies like there are for bones to make sure that rigid bodies will stay togehter. To make rigid bodies stick to each other and to create a parent/child/sibling relationship, you need to use 'joints'.
    - You need to create joints to connect each 'physics-based' rigid body to EACH OTHER. You connect each rigid body to eachother via joints, and finally the tail stem is attached via a joint to a "non-moving" rigid body called a "collision-based" rigid body, so that it will stick to the body.
-   - You have to tune the parameters on the rigid bodies and joints to make sure that when physics are applied, so that it will bend and move according to how you want it to.
+   - You have to tune the parameters on the rigid bodies and joints to make sure that when physics are applied, that it will bend and move according to how it would in real life.
 
-Once you add rigid bodies and joints to your model, physics will work. 
+Once you add rigid bodies and joints to your model, the physics will work properly. 
    
 
 # Rigid Bodies
 - Rigid Bodies are added to bones, and cover the entirety of your model's mesh.   
 - The entire purpose of rigid bodies is so that you can apply physics SOME parts of your model, so that some parts will have physics applied (such as hair and skirts) and other parts will serve as collision objects so that they are not passed through.
-- Rigid bodies 'mostly' cover the entireity of your model's mesh to pretty much ensure that all physics rules are applied. 
-- There are two types of rigid bodies: collision-based rigid bodies and physics-based rigid bodies
-   - Collison-based rigid bodies are used for making sure that physics-based based rigid bodies don't pass through them
+- Rigid bodies 'mostly' cover the entireity of your model's mesh to ensure that all physics rules are applied. 
+- There are two types of rigid bodies: "collision-based" rigid bodies and "physics-based" rigid bodies
+   - "Collison-based" rigid bodies are used for making sure that physics-based based rigid bodies don't pass through them
       - Pretty much the human skeleton will be all collision-based rigid bodies, where as hair, skirts, breasts, tails will be physics-based.
       - For the human skeletion, there is usually a 1:1 bone to rigid body mapping. However, there are some places on the human body where one rigid body isn't enough.
       - For example, the upper body bone usually has 2 or more rigid bodies attached to it. This is because the shape of one rigid body Isn't enough to cover the entire mesh
-   - Physics-based rigid bodies on a contain properties that are important for gravity:
+   - "Physics-based" rigid bodies on a contain properties that are important for gravity:
       - When it comes to gravity, you want some rigid bodies on a rigid body 'chain' to be heavier than others:
           - You'd want the bottom of the skirt to be heavier than the top of the skirt (to make sure it retains it's form and doesn't go floating out to space)
           - You'd want the top of hair to be heavier than the bottom of the hair (to make sure that hair 'whips' around realistically)
@@ -28,7 +28,7 @@ Once you add rigid bodies and joints to your model, physics will work.
 
 # Joints
 -  Joints need to be added to rigid bodies with physics such as hair, skirts and tails. They attach the rigid bodies to eachother so that they don't just 'fall off' and hit the floor.
--  Joints are used to attach rigid bodies that will have physics applied to them (such as hair, tails, skirts, breasts and earrings).
+-  Joints are used to attach "physics-based" rigid bodies together, as well as to pin it to a "collision-based" rigid body so it doesn't fall off your model (such as hair, tails, skirts, breasts and earrings).
 -  Joints control physics "sway" such as how far the rigid body is allowed to bend.
     - Tails (if you'd want to be very stiff) so you'd limit them to +/- 5 degrees or so in all directions (so x,y,z) would apply the same amount.
     - Skirts (if you'd want to be very loose) so you'd allow them to bend +/- 100 degrees possibly. X,Y amd Z depends on which direction you'd want them to go in (they should all be different).
@@ -36,12 +36,12 @@ Once you add rigid bodies and joints to your model, physics will work.
     - Accessories such as earrings is also a toss up
     - Breasts (if you want breast jiggle) +/- 5 to 10 degrees in all directions seems about right? IDK never got that far yet.
 -  Each joint 'chain' should always be connected to one rigid body that is NOT physics based.
-    - For example, on a tail, you'd want one 'tail stem' rigid body that doesn't move. The first joint would be attached to the 'tail stem' and the movable tail rigid body
-    - Joints that don't have a chain (such as earrings or breasts) need to be attached to a rigid body that doesn't move too.)
+    - For example, on a tail, you'd want one 'tail stem' (collision-based) rigid body that doesn't move. The first joint would be attached to the 'tail stem' and the movable tail rigid body
+    - Joints that don't have a chain (such as earrings or breasts) need to be attached to a rigid body that doesn't move too.
 - Joints have the switch to enable whether collisions with other rigid bodies are respected or not ("Disable collisions" checkbox)
     - Tails seem to have 'Disable Collisions' checked
     - Hair (depending on if it will cause issues and where it is located), you'd need to decide if collilison is needed or not.
-    - Same goes with free-floating accessories such as earrings
+    - Same goes with free-floating accessories such as earrings.
 
 
 ## Skirts

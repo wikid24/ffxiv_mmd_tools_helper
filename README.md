@@ -38,15 +38,6 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
     - or should I create a new hierarchy based on hair/skirt/etc...?
     - or should I do it based on individual textures?
     - or should create an option to pick/choose one vs the other?
-- Cleanup the UI  (it's a horrible mess), merging similar functionality into one panel. Copy how MMD Tools does it, but use these categories:
-    -  camera & lighting
-    -  shading / toon materials
-    -  language & translation
-    -  bones / IK
-    -  shape keys
-    -  joints & rigid bodies
-    -  misc tools / testing / diagnostics
-
 ------------
 
 # In order to use this tool, you need:

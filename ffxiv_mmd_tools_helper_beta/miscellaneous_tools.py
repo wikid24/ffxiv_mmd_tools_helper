@@ -6,9 +6,10 @@ from . import model
 from . import boneMaps_renamer
 from . import add_foot_leg_ik
 
+"""
 @register_wrap
 class MiscellaneousToolsPanel(bpy.types.Panel):
-	"""Miscellaneous Tools panel"""
+	#Miscellaneous Tools panel
 	bl_label = "Miscellaneous Tools Panel"
 	bl_idname = "OBJECT_PT_miscellaneous_tools"
 	bl_space_type = "VIEW_3D"
@@ -24,7 +25,7 @@ class MiscellaneousToolsPanel(bpy.types.Panel):
 		row.label(text="Miscellaneous Tools", icon='WORLD_DATA')
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute Function")
-
+"""
 def all_materials_mmd_ambient_white():
 	for m in bpy.data.materials:
 		if "mmd_tools_rigid" not in m.name:
@@ -60,90 +61,6 @@ def get_armature():
 	return armature
 """
 
-def import_nala():
-
-
-	bpy.ops.import_scene.fbx( \
-	filepath=r'C:\Users\wikid\OneDrive\Documents\TexTools\Saved\FullModel\Nala V3\Nala V3.fbx'\
-	, primary_bone_axis='X' \
-	, secondary_bone_axis='Y' \
-	, use_manual_orientation=True \
-	, axis_forward='Y' \
-	, axis_up='Z'
-	)
-
-	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
-	# Get the selected object
-	selected_obj = bpy.context.object #should be n_root
-	selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
-
-	bpy.context.view_layer.objects.active = selected_obj_parent
-
-	# Create a new empty object to store all the junk that comes from FFXIV
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Junk'
-	print (new_empty)
-
-	# Parent the new empty object to the selected object
-	new_empty.parent = selected_obj_parent
-
-	# Iterate through all children of the selected object
-	for child in selected_obj_parent.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Group' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
-			
-	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
-	bpy.context.view_layer.objects.active = selected_obj
-		
-	"""
-	# Create a new empty object to store all the Mesh Objects
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Mesh'
-	new_empty.parent = selected_obj
-
-	# Iterate through all children of the selected object
-	for child in selected_obj.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Part' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
-	"""
-	
-	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
-	mats = bpy.data.materials
-	for mat in mats:
-		mat.blend_method = 'HASHED'
-
-	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
-	# Get the armature object
-	armature = bpy.data.objects.get("n_root")
-	# Get the first mesh object that is a child of the armature
-	mesh = [child for child in armature.children if child.type == 'MESH'][0]
-	
-	mmd_bone_order_override_modifier = None
-
-	for modifier in mesh.modifiers:
-		if modifier.type == 'ARMATURE' and modifier.object.name in ('n_root','mmd_bone_order_override'):
-			mmd_bone_order_override_modifier = modifier
-			mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
-			break
-
-	if mmd_bone_order_override_modifier == None:
-		# Add the armature modifier to the mesh
-		mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
-		# Set the armature as the object to which the modifier applies
-		mmd_bone_order_override_modifier.object = armature
-		mmd_bone_order_override_modifier.object = bpy.data.objects["n_root"]
-
-		
-	
-
-
-
 """
 
 bpy.ops.import_scene.fbx('INVOKE_DEFAULT')
@@ -159,21 +76,7 @@ automatic_bone_orientation=False, primary_bone_axis='X', secondary_bone_axis='Y'
 """
 
 
-def fix_object_axis():
-	bpy.ops.object.mode_set(mode='OBJECT')
-	obj = bpy.context.view_layer.objects.active
-	#rotate object 90 degrees on x axis
-	obj.rotation_euler = [math.radians(90), 0, 0]
-	
-	bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
-	
-	armature = model.find_MMD_Armature(bpy.context.object)
-	bpy.ops.object.mode_set(mode='EDIT')
 
-	##commented out because current bone roll is needed otherwise wonky stuff with inverted bones happens when trying to perform transforms
-	#for bone in armature.data.edit_bones:
-	#	bone.roll = 0
-	#bpy.ops.object.mode_set(mode='OBJECT')
 
 
 def combine_2_bones_1_bone(parent_bone_name, child_bone_name):
@@ -578,6 +481,22 @@ def add_extra_titty_bones(armature):
 	duplicate_bone.roll = titty.roll
 	duplicate_bone.parent = titty
 
+def fix_object_axis():
+	bpy.ops.object.mode_set(mode='OBJECT')
+	obj = bpy.context.view_layer.objects.active
+	#rotate object 90 degrees on x axis
+	obj.rotation_euler = [math.radians(90), 0, 0]
+	
+	bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+	
+	armature = model.find_MMD_Armature(bpy.context.object)
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	##commented out because current bone roll is needed otherwise wonky stuff with inverted bones happens when trying to perform transforms
+	#for bone in armature.data.edit_bones:
+	#	bone.roll = 0
+	#bpy.ops.object.mode_set(mode='OBJECT')
+
 def main(context):
 	# print(bpy.context.scene.selected_miscellaneous_tools)
 	if bpy.context.scene.selected_miscellaneous_tools == "combine_2_bones":
@@ -611,19 +530,6 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_bone_lengths":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_bone_length()
-	if bpy.context.scene.selected_miscellaneous_tools == "import_nala":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		import_nala()
-	if bpy.context.scene.selected_miscellaneous_tools == "import_nala_deluxe":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		import_nala()
-		fix_object_axis()
-		boneMaps_renamer.main(context)
-		correct_root_center()
-		correct_groove()
-		correct_waist()
-		correct_waist_cancel()
-		add_foot_leg_ik.main(context)
 	if bpy.context.scene.selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
@@ -646,8 +552,6 @@ class MiscellaneousTools(bpy.types.Operator):
 
 	bpy.types.Scene.selected_miscellaneous_tools = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
-	, ("import_nala", "import_nala","import_nala") \
-	, ("import_nala_deluxe", "import_nala_deluxe","import_nala_deluxe") \
 	, ("fix_object_axis", "fix object axis","fix object axis") \
 	, ("combine_2_bones", "Combine 2 bones", "Combine a parent-child pair of bones and their vertex groups to 1 bone and 1 vertex group")\
 	, ("delete_unused", "Delete unused bones and unused vertex groups", "Delete all bones and vertex groups which have the word 'unused' in them")\

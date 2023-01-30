@@ -7,10 +7,10 @@ from . import model
 from . import import_csv
 
 
-
+"""
 @register_wrap
 class ShapeKeysPanel(bpy.types.Panel):
-	"""Add foot and leg IK bones and constraints to MMD model"""
+	#Add foot and leg IK bones and constraints to MMD model
 	bl_idname = "OBJECT_PT_mmd_add_shape_keys"
 	bl_label = "Add shape keys to FFXIV model"
 	bl_space_type = "VIEW_3D"
@@ -28,6 +28,7 @@ class ShapeKeysPanel(bpy.types.Panel):
 		row = layout.row()
 		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs")
 
+"""
 def get_meshes_of_armature (armature):
 	bpy.ops.object.mode_set(mode='OBJECT')
 	#Loop through all the objects, if it is a mesh, select it

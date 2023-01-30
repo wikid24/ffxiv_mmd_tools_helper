@@ -53,9 +53,16 @@ if "bpy" in locals():
 	importlib.reload(blender_bone_names_to_japanese_bone_names)
 	importlib.reload(shape_keys)
 	importlib.reload(bone_groups)
-	importlib.reload(import_ffxiv_test_model)
+	importlib.reload(import_ffxiv_model)
 	importlib.reload(rigid_body)
 	importlib.reload(joints)
+	importlib.reload(panel_bones_ik)
+	importlib.reload(panel_camera_lighting)
+	importlib.reload(panel_language_translation)
+	importlib.reload(panel_misc_testing_diagnostics)
+	importlib.reload(panel_rigid_bodies_joints)
+	importlib.reload(panel_shading_toon)
+	importlib.reload(panel_shape_keys)
 	
 else:
 	import bpy
@@ -81,27 +88,21 @@ else:
 	from . import blender_bone_names_to_japanese_bone_names
 	from . import shape_keys
 	from . import bone_groups
-	from . import import_ffxiv_test_model
+	from . import import_ffxiv_model
 	from . import rigid_body
 	from . import joints
+	from .panels import panel_bones_ik
+	from .panels import panel_camera_lighting
+	from .panels import panel_language_translation
+	from .panels import panel_misc_testing_diagnostics
+	from .panels import panel_rigid_bodies_joints
+	from .panels import panel_shading_toon
+	from .panels import panel_shape_keys
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)
 
 logging.basicConfig(format='%(message)s', level=logging.DEBUG)
-
-@register_wrap
-class MMDToolsHelperPanel(bpy.types.Panel):
-	"""Creates the FFXIV MMD Tools Helper Panel in a VIEW_3D TOOLS tab"""
-	bl_label = "FFXIV MMD Tools Helper"
-	bl_idname = "OBJECT_PT_ffxiv_mmd_tools_helper"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
 
 
 def register():

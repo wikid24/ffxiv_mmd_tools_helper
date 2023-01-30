@@ -3,9 +3,10 @@ import sys
 
 from . import register_wrap
 
+"""
 @register_wrap
 class MMDBackgroundColorPicker_Panel(bpy.types.Panel):
-	"""Selects world background color and a contrasting text color"""
+	#Selects world background color and a contrasting text color#
 	bl_idname = "OBJECT_PT_mmd_background_color_picker"
 	bl_label = "MMD background color picker"
 	bl_space_type = "VIEW_3D"
@@ -20,7 +21,7 @@ class MMDBackgroundColorPicker_Panel(bpy.types.Panel):
 		layout.prop(context.scene, "BackgroundColor")
 		row.operator("ffxiv_mmd_tools_helper.background_color_picker", text = "MMD background color picker")
 		row = layout.row()
-
+"""
 
 def main(context):
 

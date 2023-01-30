@@ -3,9 +3,10 @@ import bpy
 from . import register_wrap
 from . import model
 
+"""
 @register_wrap
 class BlenderToJapaneseBoneNamesPanel(bpy.types.Panel):
-	"""Creates a Panel"""
+	#Creates a Panel
 	bl_idname = "OBJECT_PT_blender_to_japanese_bone_names"
 	bl_label = "Copy Blender bone names to Japanese bone names"
 	bl_space_type = "VIEW_3D"
@@ -20,7 +21,7 @@ class BlenderToJapaneseBoneNamesPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.blender_to_japanese_bone_names", text = "Copy Blender bone names to Japanese bone names")
 		row = layout.row()
-
+"""
 def main(context):
 	armature = model.findArmature(bpy.context.active_object)
 	for b in armature.data.bones:

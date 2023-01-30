@@ -4,9 +4,10 @@ from . import register_wrap
 from . import import_csv
 from . import model
 
+"""
 @register_wrap
 class ArmatureDiagnosticPanel(bpy.types.Panel):
-	"""Armature Diagnostic panel"""
+	#Armature Diagnostic panel
 	bl_label = "Armature Diagnostic Panel"
 	bl_idname = "OBJECT_PT_armature_diagnostic"
 	bl_space_type = "VIEW_3D"
@@ -23,7 +24,7 @@ class ArmatureDiagnosticPanel(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature")
 		row = layout.row()
 		row = layout.row()
-
+"""
 
 def main(context):
 	missing_bone_names = []

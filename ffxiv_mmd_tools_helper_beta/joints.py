@@ -5,9 +5,10 @@ from . import import_csv
 import math
 from mmd_tools.operators.rigid_body import AddRigidBody
 
+"""
 @register_wrap
 class JointsPanel(bpy.types.Panel):
-	"""Joints panel"""
+	#Joints panel#
 	bl_label = "Joints panel"
 	bl_idname = "OBJECT_PT_joints_panel"
 	bl_space_type = "VIEW_3D"
@@ -19,7 +20,7 @@ class JointsPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints to Rigid Bodies")
 		row = layout.row()
-
+"""
 def get_armature():
 	
 	if bpy.context.selected_objects[0].type == 'ARMATURE':

@@ -5,9 +5,10 @@ from mmd_tools.operators.rigid_body import AddRigidBody
 from . import import_csv
 
 
+"""
 @register_wrap
 class RigidBodyPanel(bpy.types.Panel):
-	"""Rigid Body panel"""
+	#Rigid Body panel#
 	bl_label = "Rigid Body panel"
 	bl_idname = "OBJECT_PT_rigid_body_panel"
 	bl_space_type = "VIEW_3D"
@@ -20,7 +21,7 @@ class RigidBodyPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies to armature")
 		row = layout.row()
-
+"""
 
 def read_rigid_body_file():
 	

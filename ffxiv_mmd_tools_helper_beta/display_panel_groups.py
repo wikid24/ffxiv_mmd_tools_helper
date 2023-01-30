@@ -7,9 +7,10 @@ from . import import_csv
 def __items(display_item_frame):
     return getattr(display_item_frame, 'data', display_item_frame.items)
 
+"""
 @register_wrap
 class MmdToolsDisplayPanelGroupsPanel(bpy.types.Panel):
-	"""Mass add bone names and shape key names to display panel groups"""
+	#Mass add bone names and shape key names to display panel groups#
 	bl_idname = "OBJECT_PT_mmd_add_display_panel_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
 	bl_space_type = "VIEW_3D"
@@ -26,6 +27,7 @@ class MmdToolsDisplayPanelGroupsPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items")
 		row = layout.row()
+"""
 
 def delete_empty_display_panel_groups(root):
 	bpy.context.view_layer.objects.active  = root

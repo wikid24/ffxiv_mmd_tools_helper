@@ -6,9 +6,10 @@ from . import model
  # blend_type
 	# Type:	enum in ["MIX", "ADD", "MULTIPLY", "SUBTRACT", "SCREEN", "DIVIDE", "DIFFERENCE", "DARKEN", "LIGHTEN", "OVERLAY", "DODGE", "BURN", "HUE", "SATURATION", "VALUE", "COLOR", "SOFT_LIGHT", "LINEAR_LIGHT"], default ‘MIX’
 
+"""
 @register_wrap
 class MMDToonModifierPanel(bpy.types.Panel):
-	"""User can modify the rendering of toon texture color"""
+	#User can modify the rendering of toon texture color
 	bl_idname = "OBJECT_PT_mmd_toon_modifier"
 	bl_label = "MMD toon modifier"
 	bl_space_type = "VIEW_3D"
@@ -25,6 +26,7 @@ class MMDToonModifierPanel(bpy.types.Panel):
 		layout.prop(context.scene, "ToonModifierColor")
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.toon_modifier", text = "Modify Toon")
+"""
 
 def main(context):
 	mesh_objects_list = model.find_MMD_MeshesList(bpy.context.active_object)

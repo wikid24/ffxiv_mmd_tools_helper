@@ -2,8 +2,11 @@ import bpy
 import math
 
 from . import register_wrap
+#from .panels.bones_ik import Add_MMD_foot_leg_IK_Panel
 from . import model
 from mmd_tools.core.bone import FnBone
+
+
 
 # def armature_diagnostic():
 	# ENGLISH_LEG_BONES = ["knee_L", "knee_R", "ankle_L", "ankle_R", "toe_L", "toe_R"]
@@ -35,9 +38,10 @@ from mmd_tools.core.bone import FnBone
 		# if b in bpy.context.active_object.data.bones.keys():
 			# print('This armature appears to already have IK bones. This bone seems to be an IK bone:', '\n', b)
 
-@register_wrap
+"""
+#@register_wrap
 class Add_MMD_foot_leg_IK_Panel(bpy.types.Panel):
-	"""Add foot and leg IK bones and constraints to MMD model"""
+	#Add foot and leg IK bones and constraints to MMD model
 	bl_idname = "OBJECT_PT_mmd_add_foot_leg_ik"
 	bl_label = "Add foot leg IK to MMD model"
 	bl_space_type = "VIEW_3D"
@@ -52,6 +56,7 @@ class Add_MMD_foot_leg_IK_Panel(bpy.types.Panel):
 		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK to MMD model")
 		row = layout.row()
 		row = layout.row()
+"""
 
 def clear_IK(context):
 	IK_target_bones = []

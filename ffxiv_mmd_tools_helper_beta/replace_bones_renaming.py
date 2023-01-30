@@ -2,10 +2,12 @@ import bpy
 
 from . import register_wrap
 from . import model
+#from .panels.bones_ik import ReplaceBonesRenamingPanel
 
+"""
 @register_wrap
 class ReplaceBonesRenamingPanel(bpy.types.Panel):
-	"""Replace Bones Renaming panel"""
+	#Replace Bones Renaming panel
 	bl_label = "Replace bones renaming panel"
 	bl_idname = "OBJECT_PT_replace_bones_renaming"
 	bl_space_type = "VIEW_3D"
@@ -29,6 +31,7 @@ class ReplaceBonesRenamingPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Find and replace a string in bone names")
 		row = layout.row()
+"""
 
 def main(context):
 	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)

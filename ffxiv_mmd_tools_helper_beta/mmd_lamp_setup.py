@@ -2,9 +2,10 @@ import bpy
 
 from . import register_wrap
 
+"""
 @register_wrap
 class MMDlightSetupPanel(bpy.types.Panel):
-	"""One-click light Setup for mmd_tools"""
+	#One-click light Setup for mmd_tools#
 	bl_idname = "OBJECT_PT_mmd_light_setup"
 	bl_label = "MMD light Setup"
 	bl_space_type = "VIEW_3D"
@@ -20,6 +21,7 @@ class MMDlightSetupPanel(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "MMD light")
 		row = layout.row()
 		row = layout.row()
+"""
 
 def light_setup(o):
 	o.rotation_mode = 'XYZ'

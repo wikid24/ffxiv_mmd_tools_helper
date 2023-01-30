@@ -4,12 +4,15 @@ from . import register_wrap
 from . import model
 from . import import_csv
 
+
+
 def __items(display_item_frame):
     return getattr(display_item_frame, 'data', display_item_frame.items)
 
+"""
 @register_wrap
 class MmdToolsBoneGroupsPanel(bpy.types.Panel):
-	"""Mass add bone groups"""
+	#Mass add bone groups
 	bl_idname = "OBJECT_PT_mmd_add_bone_groups"
 	bl_label = "Create Bone Groups"
 	bl_space_type = "VIEW_3D"
@@ -26,7 +29,7 @@ class MmdToolsBoneGroupsPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("object.add_bone_groups", text = "Add Blender bone groups")
 		row = layout.row()
-
+"""
 
 def read_bones_metadata_file():
 	BONES_METADATA_FFXIV_DICTIONARY = import_csv.use_csv_bone_metadata_ffxiv_dictionary()

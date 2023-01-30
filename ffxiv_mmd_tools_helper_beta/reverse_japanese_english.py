@@ -2,9 +2,10 @@ import bpy
 
 from . import register_wrap
 
+"""
 @register_wrap
 class ReverseJapaneseEnglishPanel(bpy.types.Panel):
-	"""Sets up nodes in Blender node editor for rendering toon textures"""
+	#Sets up nodes in Blender node editor for rendering toon textures
 	bl_idname = "OBJECT_PT_reverse_japanese_english"
 	bl_label = "Reverse Japanese English names"
 	bl_space_type = "VIEW_3D"
@@ -19,6 +20,7 @@ class ReverseJapaneseEnglishPanel(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.reverse_japanese_english", text = "Reverse Japanese English names")
 		row = layout.row()
+"""
 
 def main(context):
 	for m in bpy.data.materials:

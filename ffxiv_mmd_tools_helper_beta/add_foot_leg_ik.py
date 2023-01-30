@@ -315,7 +315,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(KNEE_LEFT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[KNEE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[KNEE_LEFT].head
-	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_LEFT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_LEFT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_LEFT_D]
 	bone.use_connect = False
@@ -323,7 +323,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(KNEE_RIGHT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[KNEE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[KNEE_RIGHT].head
-	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_RIGHT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[KNEE_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 	bone.parent = bpy.context.active_object.data.edit_bones[LEG_RIGHT_D]
 	bone.use_connect = False
@@ -349,7 +349,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(ANKLE_LEFT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head
-	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_LEFT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_LEFT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 
 	if 'j_asi_c_l' in [b.name for b in bpy.context.active_object.data.edit_bones]:
@@ -361,7 +361,7 @@ def main(context):
 	bone = bpy.context.active_object.data.edit_bones.new(ANKLE_RIGHT_D)
 	bone.head = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
 	bone.tail = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head
-	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT_D].head.z + HALF_LENGTH_OF_FOOT_BONE
+	bone.tail.z = bpy.context.active_object.data.edit_bones[ANKLE_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
 	print('bone = ', bone)
 
 	if 'j_asi_c_r' in [b.name for b in bpy.context.active_object.data.edit_bones]:

@@ -123,11 +123,21 @@ def import_nala():
 	armature = bpy.data.objects.get("n_root")
 	# Get the first mesh object that is a child of the armature
 	mesh = [child for child in armature.children if child.type == 'MESH'][0]
-	# Add the armature modifier to the mesh
-	modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
-	# Set the armature as the object to which the modifier applies
-	modifier.object = armature
-	modifier.object = bpy.data.objects["n_root"]
+	
+	mmd_bone_order_override_modifier = None
+
+	for modifier in mesh.modifiers:
+		if modifier.type == 'ARMATURE' and modifier.object.name in ('n_root','mmd_bone_order_override'):
+			mmd_bone_order_override_modifier = modifier
+			mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
+			break
+
+	if mmd_bone_order_override_modifier == None:
+		# Add the armature modifier to the mesh
+		mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
+		# Set the armature as the object to which the modifier applies
+		mmd_bone_order_override_modifier.object = armature
+		mmd_bone_order_override_modifier.object = bpy.data.objects["n_root"]
 
 		
 	
@@ -655,8 +665,8 @@ class MiscellaneousTools(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		obj = context.active_object 
+		return obj is not None
 
 	def execute(self, context):
 		main(context)

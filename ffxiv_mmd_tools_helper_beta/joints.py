@@ -88,6 +88,7 @@ def create_joint(armature,rigid_body_child,rigid_body_parent,use_bone_rotation,l
 		)
 		
 		joint = bpy.context.view_layer.objects.active
+		#joint.rotation_euler[0] = 0 #sets x rotation to 0
 		bpy.context.view_layer.objects.active = joint
 		print ('created joint: ',joint.name)
 		

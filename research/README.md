@@ -45,6 +45,11 @@ Once you add rigid bodies and joints to your model, the physics will work proper
     - Hair (depending on if it will cause issues and where it is located), you'd need to decide if collilison is needed or not.
     - Same goes with free-floating accessories such as earrings.
 
+![image](https://user-images.githubusercontent.com/19479648/215570041-21a0cb3f-c720-4fe4-a2e1-0e809e1968ef.png)
+
+
+![image](https://user-images.githubusercontent.com/19479648/215570786-67424d37-b7dc-4337-a4b4-1203b349db79.png)
+
 
 ## Skirts
 It appears there are two kinds of joints on skirts: vertical joints and horizontal joints

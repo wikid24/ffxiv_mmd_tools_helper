@@ -39,7 +39,7 @@
 	-  First Vertical Joint attaches from lower body to top of skirts
 	-  Disable collisions is unchecked
 	-  Uses Angular limits and spring angular
-		#### Lisa Genshin Model
+#### Lisa Genshin Model
 		- angular limit: -30, -30, -10, 7, 30, 10 (lower x, lower y, lower z, upper x, upper y, upper z)
 		- spring linear: 10,10,10
 		- spring angular: 110, 110, 110
@@ -48,7 +48,7 @@
 	- Attaches rigid bodies to eachother horizontally. Used to prevent horizontal 'stretching' since we want skirts to somewhat keep their form.
 	- Disable collisions is checked
 	- Uses Linear limits, spring linear and spring angular
-		#### Lisa Genshin Model
+#### Lisa Genshin Model
 		- linear limit: -0.0201,-0.0201,-0.0201,0.0201,0.0201,0.0201 (lower x, lower y, lower z, upper x, upper y, upper z)
 		- spring linear: 10,10,10
 		- spring angular: 100, 100, 100

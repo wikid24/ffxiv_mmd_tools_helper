@@ -549,6 +549,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	"""Miscellanous Tools"""
 	bl_idname = "ffxiv_mmd_tools_helper.miscellaneous_tools"
 	bl_label = "Miscellaneous Tools"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.selected_miscellaneous_tools = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\

@@ -48,6 +48,7 @@ class MMDToonModifier(bpy.types.Operator):
 	"""User can modify the rendering of toon texture color"""
 	bl_idname = "ffxiv_mmd_tools_helper.toon_modifier"
 	bl_label = "MMD toon modifier"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.ToonModifierColor = bpy.props.FloatVectorProperty( \
 		name="Toon Modifer Color" \

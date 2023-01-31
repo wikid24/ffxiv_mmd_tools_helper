@@ -446,6 +446,7 @@ class Add_MMD_Hand_Arm_IK(bpy.types.Operator):
 	"""Add hand and arm IK bones and constraints to active MMD model"""
 	bl_idname = "object.add_hand_arm_ik"
 	bl_label = "Add Hand Arm IK to MMD model"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	@classmethod
 	def poll(cls, context):

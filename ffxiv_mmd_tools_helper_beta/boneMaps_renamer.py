@@ -124,6 +124,7 @@ class BonesRenamer(bpy.types.Operator):
 	"""Mass bones renamer for armature conversion"""
 	bl_idname = "object.bones_renamer"
 	bl_label = "Bones Renamer"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.Origin_Armature_Type = bpy.props.EnumProperty(items = [\
 	('mmd_english', 'MMD English', 'MikuMikuDance English bone names')\

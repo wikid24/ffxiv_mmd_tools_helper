@@ -707,6 +707,7 @@ class Add_MMD_foot_leg_IK(bpy.types.Operator):
 	"""Add foot and leg IK bones and constraints to MMD model"""
 	bl_idname = "object.add_foot_leg_ik"
 	bl_label = "Add foot leg IK to MMD model"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	@classmethod
 	def poll(cls, context):

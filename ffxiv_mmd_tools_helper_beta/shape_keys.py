@@ -304,6 +304,7 @@ class Shape_Keys(bpy.types.Operator):
 	"""Shape Keys"""
 	bl_idname = "object.add_shape_keys_btn"
 	bl_label = "Import Shape Keys"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.ffxiv_model_list = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\

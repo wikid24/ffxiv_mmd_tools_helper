@@ -61,6 +61,7 @@ class MMDCameraToBlenderCamera(bpy.types.Operator):
 	"""Convert MMD cameras back to Blender cameras"""
 	bl_idname = "ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera"
 	bl_label = "Convert MMD Cameras to Blender cameras"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	# @classmethod
 	# def poll(cls, context):

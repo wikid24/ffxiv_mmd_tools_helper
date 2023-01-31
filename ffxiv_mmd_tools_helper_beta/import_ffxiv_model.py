@@ -173,6 +173,7 @@ class ImportFFXIVModel(bpy.types.Operator):
 	"""Import FFXIV Test Model"""
 	bl_idname = "ffxiv_mmd_tools_helper.import_ffxiv_model"
 	bl_label = "Import FFXIV Test Model"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.selected_ffxiv_test_model = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\

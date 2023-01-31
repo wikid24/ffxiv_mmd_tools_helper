@@ -51,6 +51,7 @@ class ReplaceBonesRenaming(bpy.types.Operator):
 	"""Find and replace mass renaming of bones"""
 	bl_idname = "ffxiv_mmd_tools_helper.replace_bones_renaming"
 	bl_label = "Replace bones renaming"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.find_bone_string = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	

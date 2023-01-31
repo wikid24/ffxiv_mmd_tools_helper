@@ -145,6 +145,7 @@ class BoneGroups(bpy.types.Operator):
 	"""Mass add bone names and shape key names to display panel groups"""
 	bl_idname = "object.add_bone_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.bone_panel_bone_type_options = bpy.props.EnumProperty(items = \
 		[('mmd_english', 'MMD English', 'MMD English')\

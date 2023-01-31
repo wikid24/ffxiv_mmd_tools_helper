@@ -46,6 +46,7 @@ class MMDBackgroundColorPicker(bpy.types.Operator):
 	"""Selects world background color and a contrasting text color"""
 	bl_idname = "ffxiv_mmd_tools_helper.background_color_picker"
 	bl_label = "MMD background color picker"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.BackgroundColor = bpy.props.FloatVectorProperty( \
 		name="Background Color" \

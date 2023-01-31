@@ -265,6 +265,7 @@ class MmdToolsDisplayPanelGroups(bpy.types.Operator):
 	"""Mass add bone names and shape key names to display panel groups"""
 	bl_idname = "object.add_display_panel_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.display_panel_options = bpy.props.EnumProperty(items = [('no_change', 'No Change', 'Make no changes to display panel groups'), ('display_panel_groups_from_bone_groups', 'Display Panel Groups from Bone Groups', 'Add Display Panel Groups from Bone Groups'), ('add_display_panel_groups', 'Add Display Panel Groups', 'Display panel groups and items are created and added by this add-on')], name = "MMD Display Panel Groups :", default = 'no_change')
 

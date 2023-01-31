@@ -166,6 +166,7 @@ class AddRigidBody(bpy.types.Operator):
 	"""Add Rigid Body properties to a MMD Model"""
 	bl_idname = "ffxiv_mmd_tools_helper.add_rigid_body"
 	bl_label = "Replace bones renaming"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	@classmethod
 	def poll(cls, context):

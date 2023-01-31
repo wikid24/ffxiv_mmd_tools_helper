@@ -90,7 +90,8 @@ class MMDlightSetup(bpy.types.Operator):
 	"""One-click light Setup for mmd_tools"""
 	bl_idname = "ffxiv_mmd_tools_helper.mmd_light_setup"
 	bl_label = "MMD light Setup"
-
+	bl_options = {'REGISTER', 'UNDO'}
+	
 	# @classmethod
 	# def poll(cls, context):
 		# return context.active_object is not None

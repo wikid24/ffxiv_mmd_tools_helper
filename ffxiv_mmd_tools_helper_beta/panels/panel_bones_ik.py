@@ -15,17 +15,17 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row()
 		row = layout.row()
-		row.label(text="Add IK to MMD model", icon="ARMATURE_DATA")
+		row.label(text="Add IK to MMD model", icon="CONSTRAINT_BONE")
 		row = layout.row()
-		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK to MMD model")
+		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK", icon="CONSTRAINT_BONE" )
 		row = layout.row()
-		row.operator("object.add_hand_arm_ik", text = "Add hand and arm IK to MMD model")
+		row.operator("object.add_hand_arm_ik", text = "Add hand and arm IK", icon="CONSTRAINT_BONE")
 		row = layout.row()
-		row.label(text="Add Bone Groups", icon="ARMATURE_DATA")
+		row.label(text="Add Bone Groups", icon="GROUP_BONE")
 		row = layout.row()
 		layout.prop (context.scene, "bone_panel_bone_type_options")
 		row = layout.row()
-		row.operator("object.add_bone_groups", text = "Add Blender bone groups")
+		row.operator("object.add_bone_groups", text = "Add Blender bone groups", icon="GROUP_BONE")
 		row = layout.row()
 
 """

@@ -13,14 +13,11 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-
-		row.label(text="MMD light", icon="light" if bpy.app.version < (2,80,0) else "LIGHT")
+		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "Add MMD light", icon="LIGHT")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "MMD light")
+		row.operator("ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras", icon="CAMERA_DATA")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.background_color_picker", text = "MMD background color picker")
+		row.operator("ffxiv_mmd_tools_helper.background_color_picker", text = "MMD background color picker", icon="COLOR")
 		layout.prop(context.scene, "BackgroundColor")
 		row = layout.row()
 	

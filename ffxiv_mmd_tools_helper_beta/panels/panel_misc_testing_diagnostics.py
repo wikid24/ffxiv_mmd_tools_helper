@@ -5,7 +5,7 @@ from .. import register_wrap
 @register_wrap
 class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 	#Miscellaneous Tools panel
-	bl_label = "Miscellaneous Tools"
+	bl_label = "Misc/Testing/Diagnostics"
 	bl_idname = "OBJECT_PT_MiscellaneousToolsPanel_MTH"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
@@ -19,25 +19,25 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		layout.prop(context.scene, "selected_miscellaneous_tools")	
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute Function")
+		row.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute Function", icon='ORIENTATION_NORMAL')
 		row = layout.row()
 		row.label(text="Armature Diagnostic", icon='ARMATURE_DATA')
 		row = layout.row()
 		layout.prop(context.scene, "selected_armature_to_diagnose")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature")
+		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature",icon='ORPHAN_DATA')
 		row = layout.row()
-		row.label(text="Add MMD Display Panel Groups", icon="ARMATURE_DATA")
+		row.label(text="Add MMD Display Panel Groups", icon="LONGDISPLAY")
 		row = layout.row()
 		layout.prop (context.scene, "display_panel_options")
 		row = layout.row()
-		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items")
+		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items", icon="LONGDISPLAY")
 		row = layout.row()
-		row.label(text="Import FFXIV Model", icon='WORLD_DATA')
+		row.label(text="Import FFXIV Model", icon='IMPORT')
 		row = layout.row()
 		layout.prop(context.scene, "selected_ffxiv_test_model")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.import_ffxiv_model", text = "Execute Function")
+		row.operator("ffxiv_mmd_tools_helper.import_ffxiv_model", text = "Import FFXIV Model", icon='IMPORT')
 
 """
 @register_wrap

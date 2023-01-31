@@ -112,7 +112,7 @@ def import_nala():
 
 def import_ffxiv_model(ffxiv_model):
 
-	file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_test_model.py" , "")
+	file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
 	print(file_path)
 	
 	bpy.ops.import_scene.fbx( \
@@ -190,6 +190,7 @@ def import_ffxiv_model(ffxiv_model):
 		# Set the armature as the object to which the modifier applies
 		mmd_bone_order_override_modifier.object = armature
 		mmd_bone_order_override_modifier.object = bpy.data.objects["n_root"]
+
 	
 
 def main(context):

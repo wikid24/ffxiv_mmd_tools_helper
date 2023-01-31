@@ -15,18 +15,18 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row()
 
-		row.label(text="Mass Rename Bones", icon="ARMATURE_DATA")
+		row.label(text="Mass Rename Bones", icon="GROUP_BONE")
 		row = layout.row()
 		row = layout.row()
 		layout.prop(context.scene, "Origin_Armature_Type")
 		row = layout.row()
 		layout.prop(context.scene, "Destination_Armature_Type")
 		row = layout.row()
-		row.operator("object.bones_renamer", text = "Mass Rename Bones")
+		row.operator("object.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.blender_to_japanese_bone_names", text = "Blender to MMD Japanese Bone Name")
+		row.operator("ffxiv_mmd_tools_helper.blender_to_japanese_bone_names", text = "Blender to MMD Japanese Bone Name",icon='TRACKING_REFINE_FORWARDS')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.reverse_japanese_english", text = "Swap MMD Japanese/English Bone Names")
+		row.operator("ffxiv_mmd_tools_helper.reverse_japanese_english", text = "Swap MMD Japanese/English Bone Names",icon='UV_SYNC_SELECT')
 		row = layout.row()
 		row.label(text="Find this string in bone names:")
 		row = layout.row()
@@ -40,7 +40,7 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.label(text="Selected bones only")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Find and replace a string in bone names")
+		row.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Find and replace a string in bone names", icon='BONE_DATA')
 
 
 """

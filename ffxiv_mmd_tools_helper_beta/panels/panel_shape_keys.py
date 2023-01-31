@@ -13,10 +13,10 @@ class ShapeKeysPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="Add shape keys to FFXIV model", icon="ARMATURE_DATA")
+		row.label(text="Add shape keys to FFXIV model", icon="SHAPEKEY_DATA")
 		row = layout.row()
 		layout.prop (context.scene, "ffxiv_model_list")
 		row = layout.row()
-		row.operator("object.add_shape_keys_btn", text = "Add shape keys to FFXIV model")
+		row.operator("object.add_shape_keys_btn", text = "Add shape keys to FFXIV model",icon='SHAPEKEY_DATA')
 		row = layout.row()
 		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs")

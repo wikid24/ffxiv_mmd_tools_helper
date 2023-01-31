@@ -60,6 +60,8 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 # Useful Guides:
 - Useful guides to exporting: https://www.xivmodarchive.com/modid/9408
+- FFXIV Shaders in blender: https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa
+
 
 ------------
 

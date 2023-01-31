@@ -565,7 +565,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
 	, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
 	
-	], name = "Select Function:", default = 'none')
+	], name = "Function", default = 'none')
 
 	@classmethod
 	def poll(cls, context):

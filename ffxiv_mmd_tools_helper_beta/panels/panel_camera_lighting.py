@@ -13,7 +13,7 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "Add MMD light", icon="LIGHT")
+		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "Add MMD light (broken)", icon="LIGHT")
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras", icon="CAMERA_DATA")
 		row = layout.row()

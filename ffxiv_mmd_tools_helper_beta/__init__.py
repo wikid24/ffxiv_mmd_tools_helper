@@ -56,13 +56,16 @@ if "bpy" in locals():
 	importlib.reload(import_ffxiv_model)
 	importlib.reload(rigid_body)
 	importlib.reload(joints)
-	importlib.reload(panel_bones_ik)
-	importlib.reload(panel_camera_lighting)
+	importlib.reload(panel_import_model)
 	importlib.reload(panel_language_translation)
 	importlib.reload(panel_misc_testing_diagnostics)
+	importlib.reload(panel_bones_ik)
 	importlib.reload(panel_rigid_bodies_joints)
-	importlib.reload(panel_shading_toon)
 	importlib.reload(panel_shape_keys)
+	importlib.reload(panel_camera_lighting)
+	importlib.reload(panel_shading_toon)
+	
+	
 	
 else:
 	import bpy
@@ -91,13 +94,16 @@ else:
 	from . import import_ffxiv_model
 	from . import rigid_body
 	from . import joints
-	from .panels import panel_bones_ik
-	from .panels import panel_camera_lighting
+	from .panels import panel_import_model
 	from .panels import panel_language_translation
 	from .panels import panel_misc_testing_diagnostics
+	from .panels import panel_bones_ik
 	from .panels import panel_rigid_bodies_joints
-	from .panels import panel_shading_toon
 	from .panels import panel_shape_keys
+	from .panels import panel_camera_lighting
+	from .panels import panel_shading_toon
+	
+	
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

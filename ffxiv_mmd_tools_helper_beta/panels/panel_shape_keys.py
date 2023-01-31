@@ -19,4 +19,4 @@ class ShapeKeysPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("object.add_shape_keys_btn", text = "Add shape keys to FFXIV model",icon='SHAPEKEY_DATA')
 		row = layout.row()
-		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs")
+		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")

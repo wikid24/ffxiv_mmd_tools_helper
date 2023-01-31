@@ -15,17 +15,17 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row()
 
-		row.label(text="MMD Render toon textures", icon="MATERIAL")
+		row.label(text="MMD Render toon textures (broken)", icon="MATERIAL")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes",icon='MATERIAL')
+		row.operator("ffxiv_mmd_tools_helper.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes (broken)",icon='MATERIAL')
 		row = layout.row()
 
-		row.label(text="MMD Toon modifier", icon='NODE_MATERIAL')
+		row.label(text="MMD Toon modifier (broken)", icon='NODE_MATERIAL')
 		layout.prop(context.scene, "ToonModifierBlendType")
 		row = layout.row()
 		layout.prop(context.scene, "ToonModifierColor")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.toon_modifier", text = "Modify Toon",icon='NODE_MATERIAL')
+		row.operator("ffxiv_mmd_tools_helper.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
 
 """
 

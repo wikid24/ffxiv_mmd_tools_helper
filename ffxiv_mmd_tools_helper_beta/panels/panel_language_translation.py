@@ -38,8 +38,6 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.prop(context.scene, "bones_all_or_selected")
 		row = layout.row()
-		row.label(text="Selected bones only")
-		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Find and replace a string in bone names", icon='BONE_DATA')
 
 

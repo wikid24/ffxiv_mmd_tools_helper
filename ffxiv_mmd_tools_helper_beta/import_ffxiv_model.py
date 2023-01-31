@@ -6,6 +6,7 @@ from . import model
 from . import miscellaneous_tools
 from . import boneMaps_renamer
 from . import add_foot_leg_ik
+from bpy.props import StringProperty
 
 """
 @register_wrap
@@ -28,103 +29,32 @@ class ImportFFXIVTestModelPanel(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.import_ffxiv_model", text = "Execute Function")
 """
 
-def import_nala():
-
-
-	bpy.ops.import_scene.fbx( \
-	filepath=r'C:\Users\wikid\OneDrive\Documents\TexTools\Saved\FullModel\Nala V3\Nala V3.fbx'\
-	, primary_bone_axis='X' \
-	, secondary_bone_axis='Y' \
-	, use_manual_orientation=True \
-	, axis_forward='Y' \
-	, axis_up='Z'
-	)
-
-	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
-	# Get the selected object
-	selected_obj = bpy.context.object #should be n_root
-	selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
-
-	bpy.context.view_layer.objects.active = selected_obj_parent
-
-	# Create a new empty object to store all the junk that comes from FFXIV
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Junk'
-	print (new_empty)
-
-	# Parent the new empty object to the selected object
-	new_empty.parent = selected_obj_parent
-
-	# Iterate through all children of the selected object
-	for child in selected_obj_parent.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Group' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
-			
-	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
-	bpy.context.view_layer.objects.active = selected_obj
-		
-	"""
-	# Create a new empty object to store all the Mesh Objects
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Mesh'
-	new_empty.parent = selected_obj
-
-	# Iterate through all children of the selected object
-	for child in selected_obj.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Part' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
-	"""
-	
-	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
-	mats = bpy.data.materials
-	for mat in mats:
-		mat.blend_method = 'HASHED'
-
-	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
-	# Get the armature object
-	armature = bpy.data.objects.get("n_root")
-	# Get the first mesh object that is a child of the armature
-	mesh = [child for child in armature.children if child.type == 'MESH'][0]
-	
-	mmd_bone_order_override_modifier = None
-
-	for modifier in mesh.modifiers:
-		if modifier.type == 'ARMATURE' and modifier.object.name in ('n_root','mmd_bone_order_override'):
-			mmd_bone_order_override_modifier = modifier
-			mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
-			break
-
-	if mmd_bone_order_override_modifier == None:
-		# Add the armature modifier to the mesh
-		mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
-		# Set the armature as the object to which the modifier applies
-		mmd_bone_order_override_modifier.object = armature
-		mmd_bone_order_override_modifier.object = bpy.data.objects["n_root"]
-
-
-
-
-def import_ffxiv_model(ffxiv_model):
+def get_test_model_file_path(ffxiv_model):
 
 	file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
-	print(file_path)
+
+	return file_path
+
+def import_ffxiv_model(file_path):
+
+	#file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
+	#print(file_path)
 	
 	bpy.ops.import_scene.fbx( \
 	filepath = file_path \
+	, global_scale = 1
 	, primary_bone_axis='X' \
 	, secondary_bone_axis='Y' \
 	, use_manual_orientation=True \
 	, axis_forward='Y' \
 	, axis_up='Z'
 	)
-
-
+	
+	#get the most recently added armature
+	armature = bpy.data.armatures[-1]
+	armature = bpy.data.objects.get(armature.name)
+	
+	
 	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
 	# Get the selected object
 	selected_obj = bpy.context.object #should be n_root
@@ -136,7 +66,7 @@ def import_ffxiv_model(ffxiv_model):
 	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
 	new_empty = bpy.context.object
 	new_empty.name = 'FFXIV Junk'
-	print (new_empty)
+	#print (new_empty)
 
 	# Parent the new empty object to the selected object
 	new_empty.parent = selected_obj_parent
@@ -151,7 +81,7 @@ def import_ffxiv_model(ffxiv_model):
 	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
 	bpy.context.view_layer.objects.active = selected_obj
 		
-			
+	"""		
 	# Create a new empty object to store all the Mesh Objects
 	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
 	new_empty = bpy.context.object
@@ -164,22 +94,21 @@ def import_ffxiv_model(ffxiv_model):
 		if 'Part' in child.name:
 			# Parent the child object to the new empty object
 			child.parent = new_empty
+	"""
 
 	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
 	mats = bpy.data.materials
 	for mat in mats:
 		mat.blend_method = 'HASHED'
-
+	
 	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
-	# Get the armature object
-	armature = bpy.data.objects.get("n_root")
 	# Get the first mesh object that is a child of the armature
 	mesh = [child for child in armature.children if child.type == 'MESH'][0]
-	
+
 	mmd_bone_order_override_modifier = None
 
 	for modifier in mesh.modifiers:
-		if modifier.type == 'ARMATURE' and modifier.object.name in ('n_root','mmd_bone_order_override'):
+		if modifier.type == 'ARMATURE' and modifier.object.name in (armature.name,'mmd_bone_order_override'):
 			mmd_bone_order_override_modifier = modifier
 			mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
 			break
@@ -189,18 +118,21 @@ def import_ffxiv_model(ffxiv_model):
 		mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
 		# Set the armature as the object to which the modifier applies
 		mmd_bone_order_override_modifier.object = armature
-		mmd_bone_order_override_modifier.object = bpy.data.objects["n_root"]
-
 	
+	
+
 
 def main(context):
 
 	if bpy.context.scene.selected_ffxiv_test_model == "import_nala":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		import_nala()
+		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
+		import_ffxiv_model(filepath)
+
 	elif bpy.context.scene.selected_ffxiv_test_model == "import_nala_deluxe":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		import_nala()
+		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
+		import_ffxiv_model(filepath)
 		miscellaneous_tools.fix_object_axis()
 		boneMaps_renamer.main(context)
 		miscellaneous_tools.correct_root_center()
@@ -209,7 +141,31 @@ def main(context):
 		miscellaneous_tools.correct_waist_cancel()
 		add_foot_leg_ik.main(context)
 	else:
-		import_ffxiv_model(bpy.context.scene.selected_ffxiv_test_model)
+		import_ffxiv_model(get_test_model_file_path(bpy.context.scene.selected_ffxiv_test_model))
+
+
+from bpy_extras.io_utils import ImportHelper
+@register_wrap
+class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
+	"""Operator that opens the file browser dialog"""
+	bl_idname = "object.ffxiv_file_browser_operator"
+	bl_label = "File Browser Operator"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	filename_ext = ".fbx"
+	filter_glob: bpy.props.StringProperty(
+		default="*.fbx",
+		options={'HIDDEN'},
+	)
+
+	def execute(self, context):
+		file = self.filepath
+		# Add code here to process the selected file
+		print (file)
+		import_ffxiv_model(file)
+
+		return {'FINISHED'}
+
 
 
 @register_wrap
@@ -232,7 +188,7 @@ class ImportFFXIVModel(bpy.types.Operator):
 	, ("Roegadyn Female", "Roegadyn Female","Roegadyn Female") \
 	, ("Viera Female", "Viera Female","Viera Female") \
 	
-	], name = "Select Model to Import:", default = 'none')
+	], name = "Model", default = 'none')
 	
 
 	@classmethod

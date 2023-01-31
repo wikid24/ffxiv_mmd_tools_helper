@@ -14,7 +14,6 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row = layout.row()
 		row.label(text="Add IK to MMD model", icon="CONSTRAINT_BONE")
 		row = layout.row()
 		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK", icon="CONSTRAINT_BONE" )
@@ -26,6 +25,12 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		layout.prop (context.scene, "bone_panel_bone_type_options")
 		row = layout.row()
 		row.operator("object.add_bone_groups", text = "Add Blender bone groups", icon="GROUP_BONE")
+		row = layout.row()
+		row.label(text="Armature Diagnostic (broken)", icon='ARMATURE_DATA')
+		row = layout.row()
+		layout.prop(context.scene, "selected_armature_to_diagnose")
+		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature",icon='ORPHAN_DATA')
 		row = layout.row()
 
 """

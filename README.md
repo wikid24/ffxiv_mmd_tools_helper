@@ -56,6 +56,11 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites. Alternatively you can use uuunyaa's Helper addon to download some VMD files from within Blender
 - A bunch of MMD effects (will list them later)
 
+
+------------
+# Useful Guides:
+- Useful guides to exporting: https://www.xivmodarchive.com/modid/9408
+
 ------------
 
 # How to Install

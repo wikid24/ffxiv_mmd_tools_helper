@@ -85,27 +85,27 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 # My new workflow:
 
 On the **FFXIV MMD** tab
-1) On the "Import an FFXIV Model" panel, click on  **Import your model FBX File**
-2) On the "Language and Translation" panel, click on "**Mass Rename Bones**" (from FFXIV to MMD English)
-3) On the "Misc/Testing/Diagnostics" tab, run all of these functions IN ORDER from top to bottom (Start w/ "**Correct MMD Root & Center Bones**", end with **Correct Arm Wrist Twist**"
+1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
+2) On the **Language and Translation** panel, click on "**Mass Rename Bones**" (from FFXIV to MMD English)
+3) On the **Misc/Testing/Diagnostics** panel, run all of these functions IN ORDER from top to bottom (Start w/ **Correct MMD Root & Center Bones**, end with **Correct Arm Wrist Twist**)
 
 ![image](https://user-images.githubusercontent.com/19479648/216136708-c97f8000-03e1-4c4b-86be-1e9c5d36da8f.png)
 
-4) Go the "**MMD Tools**" Tab, click on "**Convert Model**"
+4) Go the **MMD** tab, click on **Convert Model**
 
 ![image](https://user-images.githubusercontent.com/19479648/216136857-5a0f9c28-d825-42dc-87c0-ca76d66d1a21.png)
 
-5)Back on the **FFXIV MMD** tab on the "**Bones and IK**" panel, click on '**Add Leg and foot IK**'
-6) On the "**Rigid Bodies and Joints**" panel, click on '**Add Rigid Bodies to converted MMD armature**'
-7) Click on '**Add Joints to converted MMD armature**'
+5)Back on the **FFXIV MMD** tab on the "**Bones and IK**" panel, click on **Add Leg and foot IK**
+6) On the "**Rigid Bodies and Joints**" panel, click on **Add Rigid Bodies to converted MMD armature**
+7) Click on **Add Joints to converted MMD armature**
 ![image](https://user-images.githubusercontent.com/19479648/216137068-a52465b3-09ad-4b74-8127-5b435cb5968a.png)
 
-8) On the "**Language and Translation**" panel, change "**To: **" to **MMD Japanese w/.L.R suffix**
+8) On the **Language and Translation** panel, change **To: ** to **MMD Japanese w/.L.R suffix**
 9) Mass Rename Bones again
 
 ![image](https://user-images.githubusercontent.com/19479648/216137344-4d051b88-309a-488f-b83a-4323c38eb5fc.png)
 
-10) Back on the "MMD" tab,click on the "**Physics**" button
+10) Back on the **MMD** tab,click on the "**Physics**" button
 11) Import an MMD Motion file.
 12) Press Play. You're done!
 

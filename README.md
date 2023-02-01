@@ -89,9 +89,10 @@ On the **FFXIV MMD** tab
 
 ![image](https://user-images.githubusercontent.com/19479648/216136857-5a0f9c28-d825-42dc-87c0-ca76d66d1a21.png)
 
-5)Back on the **FFXIV MMD** tab on the "**Bones and IK**" panel, click on **Add Leg and foot IK**
+5)Back on the **FFXIV MMD** tab on the "**Bones and IK**" panel, click on "**Add Leg and foot IK**"
 6) On the "**Rigid Bodies and Joints**" panel, click on **Add Rigid Bodies to converted MMD armature**
 7) Click on **Add Joints to converted MMD armature**
+
 ![image](https://user-images.githubusercontent.com/19479648/216137068-a52465b3-09ad-4b74-8127-5b435cb5968a.png)
 
 8) On the **Language and Translation** panel, change **To: ** to **MMD Japanese w/.L.R suffix**

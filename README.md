@@ -6,6 +6,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 # New Features (completed):
 - added 'Automate FFXIV rig Shape Keys from csv' feature. Working but there's no raw data in the CSVs yet.
+- added 'Automate FFXIV rig Bone Morphs from csv' feature. Working but there's no raw data in the CSVs yet.
 - added 'Automate FFXIV rig Rigid Bodies from csv' feature. Working but there's no raw data in the CSVs yet.
 - added 'Automate FFXIV rig Joints from csv' feature. Working but it doesn't have any raw data in the CSVs yet.
 
@@ -62,7 +63,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - Useful guides to exporting: https://www.xivmodarchive.com/modid/9408
 - FIX FFXIV Textures in blender addon: https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa
 - Quick tutorial how to use the FFXIV Shader plugin above: https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4
-- 
+- XAT guide to animation retargeting (an alternative approach to animating MMD using FFXIV characters) https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit
 
 
 

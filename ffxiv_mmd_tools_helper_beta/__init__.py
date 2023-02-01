@@ -62,7 +62,7 @@ if "bpy" in locals():
 	importlib.reload(panel_misc_testing_diagnostics)
 	importlib.reload(panel_bones_ik)
 	importlib.reload(panel_rigid_bodies_joints)
-	importlib.reload(panel_shape_keys)
+	importlib.reload(panel_shape_keys_bone_morphs)
 	importlib.reload(panel_camera_lighting)
 	importlib.reload(panel_shading_toon)
 	
@@ -101,7 +101,7 @@ else:
 	from .panels import panel_misc_testing_diagnostics
 	from .panels import panel_bones_ik
 	from .panels import panel_rigid_bodies_joints
-	from .panels import panel_shape_keys
+	from .panels import panel_shape_keys_bone_morphs
 	from .panels import panel_camera_lighting
 	from .panels import panel_shading_toon
 	

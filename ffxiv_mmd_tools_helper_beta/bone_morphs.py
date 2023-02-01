@@ -9,10 +9,7 @@ from mmd_tools.utils import ItemOp
 
 
 
-def create_bone_morph(bone_morph_name
-	#,bone_morph_e_name
-	#,bone_morph_category
-	):
+def create_bone_morph(bone_morph_name,bone_morph_e_name,bone_morph_category):
 	obj = bpy.context.active_object
 	root = mmd_model.Model.findRoot(obj)
 	mmd_root = root.mmd_root
@@ -20,10 +17,8 @@ def create_bone_morph(bone_morph_name
 	morphs = getattr(mmd_root, morph_type)
 	morph,mmd_root.active_morph = ItemOp.add_after(morphs, mmd_root.active_morph)
 	morph.name = bone_morph_name
-
-	### TO DO ###
-	#morph.name_e = bone_morph_e_name
-	#morph.category = bone_morph_category
+	morph.name_e = bone_morph_e_name
+	morph.category = bone_morph_category
 	
 	#items=[
 	#        ('SYSTEM', 'Hidden', '', 0),
@@ -42,7 +37,7 @@ def get_bone_morph(bone_morph_name):
 	mmd_root = root.mmd_root
 
 	for morph in mmd_root.bone_morphs:
-		if morph.name == bone_morph_name:
+		if (morph.name == bone_morph_name) or (morph.name_e == bone_morph_name):
 			return morph
 			break
 		
@@ -55,7 +50,7 @@ def remove_bone_morph(bone_morph_name):
 	morphs = getattr(mmd_root, 'bone_morphs') 
 	
 	for index,morph in enumerate(mmd_root.bone_morphs):
-		if morph.name == bone_morph_name:
+		if (morph.name == bone_morph_name) or (morph.name_e == bone_morph_name):
 			morphs.remove(index)
 			mmd_root.active_morph = max(0, mmd_root.active_morph-1)
 			print(f"bone morph {bone_morph_name} removed")
@@ -147,12 +142,25 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 
 
 def generate_bone_morph (armature,bone_morph_name,bone_morph_bones_data):
-	
+
 	bpy.ops.object.mode_set(mode='POSE')
+
+	name = bone_morph_name
+	name_e = bone_morph_name
+	category = 'OTHER'
+
+	#pull data from mmd_bone_morphs_list to get the metadata
+	mmd_bone_morphs_list = import_csv.use_csv_bone_morphs_list()
+	for mmd_bone_morph in mmd_bone_morphs_list:
+		if bone_morph_name in (mmd_bone_morph[1],mmd_bone_morph[2]):
+			name = mmd_bone_morph[0]
+			name_e = mmd_bone_morph[1]
+			category = mmd_bone_morph[2]
+			break
 
 	#if a bone_morph exists with the same name, delete it first
 	remove_bone_morph(bone_morph_name)
-	bone_morph_obj = create_bone_morph(bone_morph_name)
+	bone_morph_obj = create_bone_morph(name,name_e,category)
 
 	i = 0
 	
@@ -204,13 +212,19 @@ def parse_bone_morphs_data_from_csv (csv_data):
 			
 	return bone_morphs_dictionary
 
-def read_bone_morphs_file(ffxiv_race):
+def read_bone_morphs_dict_file(ffxiv_race):
 
 	BONE_MORPHS_DICTIONARY = None
 	BONE_MORPHS_DICTIONARY = import_csv.use_csv_bone_morphs_dictionary(ffxiv_race)
 
 	return BONE_MORPHS_DICTIONARY
 
+def read_bone_morphs_list_file():
+
+	BONE_MORPHS_LIST = None
+	BONE_MORPHS_LIST = import_csv.use_csv_bone_morphs_list()
+
+	return BONE_MORPHS_LIST
 
 def main(context):
 	armature = bpy.context.active_object #model.find_MMD_Armature(bpy.context.object)
@@ -218,10 +232,13 @@ def main(context):
 
 	clear_bone_morph()
 
+	
+		#print(bone_morph)
+
 	if bpy.context.scene.bone_morph_ffxiv_model_list == 'none':
 		pass
 	else:
-		BONE_MORPH_DICTIONARY = read_bone_morphs_file(bpy.context.scene.bone_morph_ffxiv_model_list)	
+		BONE_MORPH_DICTIONARY = read_bone_morphs_dict_file(bpy.context.scene.bone_morph_ffxiv_model_list)	
 		bone_morphs = parse_bone_morphs_data_from_csv(BONE_MORPH_DICTIONARY)
 		for bone_morph in bone_morphs:
 			generate_bone_morph(armature,bone_morph,bone_morphs[bone_morph])
@@ -229,7 +246,7 @@ def main(context):
 
 
 @register_wrap
-class Bone_Morphs(bpy.types.Operator):
+class AddBoneMorphs(bpy.types.Operator):
 	bl_idname = "object.add_bone_morphs"
 	bl_label = "Import Bone Morphs"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -255,4 +272,25 @@ class Bone_Morphs(bpy.types.Operator):
 
 	def execute(self, context):
 		main(context)
+		#context.scene.bone_morph_ffxiv_model_list = self.bone_morph_ffxiv_model_list
+		return {'FINISHED'}
+
+@register_wrap
+class OpenBoneMorphsFile(bpy.types.Operator):
+	bl_idname = "object.open_bone_morphs_file"
+	bl_label = "Open Bone Morphs CSV File"
+
+	def execute(self, context):
+		import_csv.open_bone_morphs_dictionary(context.scene.bone_morph_ffxiv_model_list)
+		return {'FINISHED'}
+
+@register_wrap
+class PopulateMMDBoneMorphsFile(bpy.types.Operator):
+	bl_idname = "object.populate_mmd_bone_morphs_file"
+	bl_label = "Open Bone Morphs CSV File"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		for bone_morph in read_bone_morphs_list_file():
+			create_bone_morph(bone_morph[0],bone_morph[1],bone_morph[2])
 		return {'FINISHED'}

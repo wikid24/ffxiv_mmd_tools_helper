@@ -1,0 +1,56 @@
+﻿japanese,english,category
+まばたき ,Blink,EYE
+笑い ,Smile,EYE
+ウィンク ,Wink,EYE
+ウィンク右 ,Wink-a,EYE
+ウィンク２ ,Wink-b,EYE
+ｳｨﾝｸ２右 ,Wink-c,EYE
+なごみ ,Howawa,EYE
+はぅ ,> <,EYE
+びっくり ,Ha!!!,EYE
+じと目 ,Jito-eye,EYE
+ｷﾘｯ ,Kiri-eye,EYE
+はちゅ目 ,O O,EYE
+星目 ,EyeStar,EYE
+はぁと ,EyeHeart,EYE
+瞳小 ,EyeSmall,EYE
+瞳縦潰れ ,EyeSmall-v,EYE
+光下 ,EyeUnderli,EYE
+恐ろしい子！ ,EyeFunky,EYE
+ハイライト消 ,EyeHi-off,EYE
+映り込み消 ,EyeRef-off,EYE
+喜び ,Joy,EYE
+わぉ?! ,Wao?!,EYE
+なごみω ,Howawa ω,EYE
+悲しむ ,Wail,EYE
+敵意 ,Hostility,EYE
+あ ,a,MOUTH
+い ,i,MOUTH
+う ,u,MOUTH
+え ,e,MOUTH
+お ,o,MOUTH
+あ２ ,a 2,MOUTH
+ん ,n,MOUTH
+▲ ,Mouse_1,MOUTH
+∧ ,Mouse_2,MOUTH
+□ ,□,MOUTH
+ワ ,Wa,MOUTH
+ω ,Omega,MOUTH
+ω□ ,ω□,MOUTH
+にやり ,Niyari,MOUTH
+にやり２ ,Niyari2,MOUTH
+にっこり ,Smile,MOUTH
+ぺろっ ,Pero,MOUTH
+てへぺろ ,Bero-tehe,MOUTH
+てへぺろ２ ,Bero-tehe2,MOUTH
+口角上げ ,MouseUP,MOUTH
+口角下げ ,MouseDW,MOUTH
+口横広げ ,MouseWD,MOUTH
+歯無し上 ,ToothAnon,MOUTH
+歯無し下 ,ToothBnon,MOUTH
+真面目 ,Serious,EYEBROW
+困る ,Trouble,EYEBROW
+にこり ,Smily,EYEBROW
+怒り ,Get angry,EYEBROW
+上 ,UP,EYEBROW
+下 ,Down,EYEBROW

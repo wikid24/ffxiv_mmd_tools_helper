@@ -521,7 +521,48 @@ def apply_MMD_additional_rotation (armature,additional_transform_bone, target_bo
 
 	FnBone.apply_additional_transformation(armature)
 	#FnBone.clean_additional_transformation(armature)
+
+
+def correct_arm_wrist_twist():
 	
+	bpy.ops.object.mode_set(mode='EDIT')
+	# set the armature to Edit Mode
+	armature = bpy.context.view_layer.objects.active
+	
+	#parent the elbow bone to the arm twist
+	arm_twist_L = armature.data.edit_bones["n_hkata_l"]
+	arm_twist_R = armature.data.edit_bones["n_hkata_r"]
+	elbow_L = armature.data.edit_bones["elbow_L"]
+	elbow_R = armature.data.edit_bones["elbow_R"]
+	elbow_L.parent = arm_twist_L
+	elbow_R.parent = arm_twist_R
+
+	#parent the wrist bone to the wrist twist
+	wrist_twist_L = armature.data.edit_bones["n_hte_l"]
+	wrist_twist_R = armature.data.edit_bones["n_hte_r"]
+	wrist_L = armature.data.edit_bones["wrist_L"]
+	wrist_R = armature.data.edit_bones["wrist_R"]
+	wrist_L.parent = wrist_twist_L
+	wrist_R.parent = wrist_twist_R
+	
+	#rename the bones
+	arm_twist_L.name = 'arm twist_L'
+	arm_twist_R.name = 'arm twist_R'
+	wrist_twist_L.name = 'wrist twist_L'
+	wrist_twist_R.name = 'wrist twist_R'
+	
+	#bpy.ops.object.mode_set(mode='POSE')
+	#lock rotation to the Y axis only
+	
+	armature.pose.bones.get(arm_twist_L.name).lock_rotation = [True,False,True]
+	armature.pose.bones.get(arm_twist_R.name).lock_rotation = [True,False,True]
+	armature.pose.bones.get(wrist_twist_L.name).lock_rotation = [True,False,True]
+	armature.pose.bones.get(wrist_twist_R.name).lock_rotation = [True,False,True]
+
+
+
+
+
 """
 def get_armature():
 	
@@ -604,6 +645,9 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "add_eye_control_bone":
 		armature = bpy.context.view_layer.objects.active
 		add_eye_control_bone(armature)
+	if bpy.context.scene.selected_miscellaneous_tools == "correct_arm_wrist_twist":
+		armature = bpy.context.view_layer.objects.active
+		correct_arm_wrist_twist()
 
 
 @register_wrap
@@ -628,6 +672,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
 	, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
 	, ("add_eye_control_bone", "add_eye_control_bone (RUN TWICE)", "add_eye_control_bone (RUN TWICE)")\
+	, ("correct_arm_wrist_twist", "correct_arm_wrist_twist", "correct_arm_wrist_twist")\
 	
 	], name = "Function", default = 'none')
 

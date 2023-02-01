@@ -71,11 +71,12 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
  - In the search box, type in 'ffxiv' until the addon 'Object: FFXIV MMD Tools Helper' shows up and check the checkbox
   ![image](https://user-images.githubusercontent.com/19479648/215303990-62fca28b-79b3-4648-b620-d9c6b0f5aa3c.png)
 
- - Once you see "ffxiv_mmd_tools_helper", you'll know it is installed correctly. All of the tools are located here.
-  ![image](https://user-images.githubusercontent.com/19479648/215304046-309d996e-939e-458c-9d0f-1dc626972931.png)
+ - Once you see "FFXIV MMD", you'll know it is installed correctly. All of the tools are located here.
+  ![image](https://user-images.githubusercontent.com/19479648/216140678-1b14644f-8639-472d-99dd-23136001bcc7.png)
 
+--------------
 
-# My new workflow:
+# How to use (my new workflow:)
 
 On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**

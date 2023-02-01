@@ -8,6 +8,7 @@ from . import boneMaps_renamer
 from . import add_foot_leg_ik
 from bpy.props import StringProperty
 
+
 """
 @register_wrap
 class ImportFFXIVTestModelPanel(bpy.types.Panel):
@@ -55,12 +56,16 @@ def import_ffxiv_model(file_path):
 	armature = bpy.data.objects.get(armature.name)
 	
 	
+	
 	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
 	# Get the selected object
 	selected_obj = bpy.context.object #should be n_root
 	selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
 
 	bpy.context.view_layer.objects.active = selected_obj_parent
+
+	#rotate the model 90 degrees on the x axis
+	miscellaneous_tools.fix_object_axis()
 
 	# Create a new empty object to store all the junk that comes from FFXIV
 	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))

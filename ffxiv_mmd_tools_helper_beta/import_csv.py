@@ -94,6 +94,19 @@ def use_csv_shape_keys_dictionary(ffxiv_race):
 	return SHAPE_KEYS_DICTIONARY
 
 
+def use_csv_bone_morphs_dictionary(ffxiv_race):
+
+	path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
+	file_path= (path + r"\data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
+	print(file_path)
+	#file_path = (__file__ + "shape_keys_" + ffxiv_race +".csv").replace("import_csv.py" , "")
+	
+	BONE_MORPHS_DICTIONARY = try_open_file(file_path)
+	BONE_MORPHS_DICTIONARY = csv_cleanup(BONE_MORPHS_DICTIONARY,False,True,True,False)
+	return BONE_MORPHS_DICTIONARY
+
+
+
 def use_csv_rigid_body_dictionary():
 
     path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"

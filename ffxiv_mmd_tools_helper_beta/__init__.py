@@ -56,6 +56,7 @@ if "bpy" in locals():
 	importlib.reload(import_ffxiv_model)
 	importlib.reload(rigid_body)
 	importlib.reload(joints)
+	importlib.reload(bone_morphs)
 	importlib.reload(panel_import_model)
 	importlib.reload(panel_language_translation)
 	importlib.reload(panel_misc_testing_diagnostics)
@@ -94,6 +95,7 @@ else:
 	from . import import_ffxiv_model
 	from . import rigid_body
 	from . import joints
+	from . import bone_morphs
 	from .panels import panel_import_model
 	from .panels import panel_language_translation
 	from .panels import panel_misc_testing_diagnostics

@@ -250,7 +250,7 @@ def clear_all_transformations(armature):
 	# Get the active object
 	obj = bpy.context.object
 
-	if obj.mode == 'POSE':
+	if bpy.context.object.mode == 'POSE':
 
 		# Select all pose bones
 		for bone in armature.pose.bones:
@@ -284,7 +284,7 @@ def switch_to_data_properties_menu():
 	bpy.context.area.spaces.active.context = 'DATA'
 
 def main(context):
-	armature = model.find_MMD_Armature(bpy.context.object)
+	armature = bpy.context.active_object #model.find_MMD_Armature(bpy.context.object)
 	bpy.context.view_layer.objects.active = armature
 
 	clear_all_transformations(armature)
@@ -323,7 +323,7 @@ class Shape_Keys(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		return obj is not None #and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		main(context)

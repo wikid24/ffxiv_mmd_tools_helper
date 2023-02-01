@@ -5,6 +5,7 @@ from . import register_wrap
 from . import model
 from . import boneMaps_renamer
 from . import add_foot_leg_ik
+from mmd_tools.core.bone import FnBone
 
 """
 @register_wrap
@@ -57,7 +58,7 @@ def get_armature():
 		armature = selected_object
 
 	bpy.context.view_layer.objects.active = armature
-	  
+	
 	return armature
 """
 
@@ -88,27 +89,27 @@ def combine_2_bones_1_bone(parent_bone_name, child_bone_name):
 	print("Combined 2 bones: ", parent_bone_name, child_bone_name)
 
 def combine_2_vg_1_vg(parent_vg_name, child_vg_name):
-    #re-weight all vertex groups to the parent and delete the child
-    for o in bpy.context.scene.objects:
-        if o.type == 'MESH':
-            if parent_vg_name in o.vertex_groups.keys():
-                if child_vg_name in o.vertex_groups.keys():
-                    for v in o.data.vertices:
-                        for g in v.groups:
-                            if o.vertex_groups[g.group] == o.vertex_groups[child_vg_name]:
-                                o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
-                    o.vertex_groups.remove(o.vertex_groups[child_vg_name])
-                    print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
+	#re-weight all vertex groups to the parent and delete the child
+	for o in bpy.context.scene.objects:
+		if o.type == 'MESH':
+			if parent_vg_name in o.vertex_groups.keys():
+				if child_vg_name in o.vertex_groups.keys():
+					for v in o.data.vertices:
+						for g in v.groups:
+							if o.vertex_groups[g.group] == o.vertex_groups[child_vg_name]:
+								o.vertex_groups[parent_vg_name].add([v.index], o.vertex_groups[child_vg_name].weight(v.index), 'ADD')
+					o.vertex_groups.remove(o.vertex_groups[child_vg_name])
+					print("Combined 2 vertex groups: ", parent_vg_name, child_vg_name)
 
-    #rename all orphaned vertex groups in the step above from the deleted child to the parent
-    for o in bpy.context.scene.objects:
-        if o.type == 'MESH':
-            if (child_vg_name in o.vertex_groups.keys()) and (parent_vg_name not in o.vertex_groups.keys()):
-                for v in o.data.vertices:
-                    for g in v.groups:
-                        if o.vertex_groups[g.group].name == child_vg_name:
-                            o.vertex_groups[child_vg_name].name = parent_vg_name
-                            print("renamed orphaned child vg ",child_vg_name, " on ", o.name," to ", parent_vg_name)
+	#rename all orphaned vertex groups in the step above from the deleted child to the parent
+	for o in bpy.context.scene.objects:
+		if o.type == 'MESH':
+			if (child_vg_name in o.vertex_groups.keys()) and (parent_vg_name not in o.vertex_groups.keys()):
+				for v in o.data.vertices:
+					for g in v.groups:
+						if o.vertex_groups[g.group].name == child_vg_name:
+							o.vertex_groups[child_vg_name].name = parent_vg_name
+							print("renamed orphaned child vg ",child_vg_name, " on ", o.name," to ", parent_vg_name)
 
 
 					
@@ -435,26 +436,26 @@ def add_bone_to_group (bone_name,bone_group):
 
 def correct_bone_length():
 
-    bpy.ops.object.mode_set(mode='EDIT')
+	bpy.ops.object.mode_set(mode='EDIT')
 
-    #bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-    armature = bpy.context.view_layer.objects.active
+	#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+	armature = bpy.context.view_layer.objects.active
 
 
-    fix_bone_length(armature,'shoulder_L','arm_L')
-    fix_bone_length(armature,'shoulder_R','arm_R')
-    fix_bone_length(armature,'arm_L','elbow_L')
-    fix_bone_length(armature,'arm_R','elbow_R')
-    fix_bone_length(armature,'elbow_L','wrist_L')
-    fix_bone_length(armature,'elbow_R','wrist_R')
-        
+	fix_bone_length(armature,'shoulder_L','arm_L')
+	fix_bone_length(armature,'shoulder_R','arm_R')
+	fix_bone_length(armature,'arm_L','elbow_L')
+	fix_bone_length(armature,'arm_R','elbow_R')
+	fix_bone_length(armature,'elbow_L','wrist_L')
+	fix_bone_length(armature,'elbow_R','wrist_R')
+		
 
 def fix_bone_length(armature,source_bone,target_bone):
 
-    source_bone = armature.data.edit_bones[source_bone]
-    target_bone = armature.data.edit_bones[target_bone]
+	source_bone = armature.data.edit_bones[source_bone]
+	target_bone = armature.data.edit_bones[target_bone]
 
-    source_bone.tail = target_bone.head
+	source_bone.tail = target_bone.head
 
 def add_extra_titty_bones(armature):
 
@@ -481,6 +482,63 @@ def add_extra_titty_bones(armature):
 	duplicate_bone.roll = titty.roll
 	duplicate_bone.parent = titty
 
+def add_eye_control_bone(armature):
+	#armature = bpy.context.view_layer.objects.active
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	eye_L_bone = armature.data.edit_bones.get("eye_L")
+	eye_R_bone = armature.data.edit_bones.get("eye_R")
+	head_bone = armature.data.edit_bones.get("head")
+	
+	eyes_bone = None
+	if armature.data.edit_bones.get("eyes") is None:
+		eyes_bone = armature.data.edit_bones.new("eyes")
+	else:
+		eyes_bone = armature.data.edit_bones.get("eyes")
+	
+	eyes_bone.head = 0.5 * (eye_L_bone.head + eye_R_bone.head)
+	eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
+	eyes_bone.length = eye_L_bone.length
+		
+	eyes_bone.parent = head_bone
+	
+	#flip the orientation of the bone
+	eye_controller_bone_head = eyes_bone.head.copy()
+	eye_controller_bone_tail = eyes_bone.tail.copy()
+	eyes_bone.head = eye_controller_bone_tail
+	eyes_bone.tail = eye_controller_bone_head
+	
+	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY RUNNING THIS FUNCTION TWICE MANUALLY, DO NOT CHANGE THIS CODE
+	if armature.pose.bones[eye_L_bone.name].mmd_bone.additional_transform_bone == '':
+		apply_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name)
+	else:
+		apply_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name)
+	
+def apply_MMD_additional_rotation (armature,additional_transform_bone, target_bone):
+	pose_bone = armature.pose.bones.get(target_bone)
+	pose_bone.mmd_bone.has_additional_rotation = True
+	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
+
+	FnBone.apply_additional_transformation(armature)
+	#FnBone.clean_additional_transformation(armature)
+	
+"""
+def get_armature():
+	
+	if bpy.context.selected_objects[0].type == 'ARMATURE':
+		return model.findArmature(bpy.context.selected_objects[0])
+	if model.findArmature(bpy.context.selected_objects[0]) is not None:
+		return model.findArmature(bpy.context.selected_objects[0])
+	for child in  bpy.context.selected_objects[0].parent.children:
+		if child.type == 'ARMATURE':
+			return child
+	for child in  bpy.context.selected_objects[0].parent.parent.children:
+		if child.type == 'ARMATURE':
+			return child
+	else:
+		print ('could not find armature for selected object:', bpy.context.selected_objects[0].name)
+"""
+
 def fix_object_axis():
 	bpy.ops.object.mode_set(mode='OBJECT')
 	obj = bpy.context.view_layer.objects.active
@@ -490,7 +548,8 @@ def fix_object_axis():
 	bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
 	
 	armature = model.find_MMD_Armature(bpy.context.object)
-	bpy.ops.object.mode_set(mode='EDIT')
+	
+	#bpy.ops.object.mode_set(mode='EDIT')
 
 	##commented out because current bone roll is needed otherwise wonky stuff with inverted bones happens when trying to perform transforms
 	#for bone in armature.data.edit_bones:
@@ -542,6 +601,9 @@ def main(context):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_extra_titty_bones(armature)
+	if bpy.context.scene.selected_miscellaneous_tools == "add_eye_control_bone":
+		armature = bpy.context.view_layer.objects.active
+		add_eye_control_bone(armature)
 
 
 @register_wrap
@@ -565,6 +627,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
 	, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
+	, ("add_eye_control_bone", "add_eye_control_bone (RUN TWICE)", "add_eye_control_bone (RUN TWICE)")\
 	
 	], name = "Function", default = 'none')
 

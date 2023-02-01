@@ -36,7 +36,7 @@ Once you add rigid bodies and joints to your model, the physics will work proper
 # Joints
 -  Joints need to be added to rigid bodies with physics such as hair, skirts and tails. They attach the rigid bodies to eachother so that they don't just 'fall off' and hit the floor.
 -  Joints are used to attach "physics-based" rigid bodies together, as well as to pin it to a "collision-based" rigid body so it doesn't fall off your model (such as hair, tails, skirts, breasts and earrings).
--  Joints control physics "sway" such as how far the rigid body is allowed to bend.
+-  Joints control physics "sway" such as how far the rigid body is allowed to bend or elasticity (such as how far two rigid bodies are allowed to stretch away from eachother before getting pulled back like a spring.
     - Tails (if you'd want to be very stiff) so you'd limit them to +/- 5 degrees or so in all directions (so x,y,z) would apply the same amount.
     - Skirts (if you'd want to be very loose) so you'd allow them to bend +/- 100 degrees possibly. X,Y amd Z depends on which direction you'd want them to go in (they should all be different).
     - Hair is somewhere in-between the two.

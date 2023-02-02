@@ -114,8 +114,13 @@ On the **FFXIV MMD** tab
 
   ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
 
-13) Press play. You're done!
+13) Use MMD Tools to import Facial Animations:
+    - Under 'Assembly' click on the Morph tab. 
+    - It will create a mesh called .placeholder. Click on it.
+    - Then go to 'import motion', and select the same motion VMD dance file
+   ![image](https://user-images.githubusercontent.com/19479648/216222723-f1f3bcc1-e17b-4b9d-9385-c447ffead7f3.png)
 
+14) Press play. All done!! :D
 --------------------------
 
 

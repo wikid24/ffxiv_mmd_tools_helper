@@ -291,6 +291,7 @@ class PopulateMMDBoneMorphsFile(bpy.types.Operator):
 	bl_options = {'REGISTER', 'UNDO'}
 
 	def execute(self, context):
-		for bone_morph in read_bone_morphs_list_file():
+		bone_morphs = read_bone_morphs_list_file()
+		for bone_morph in bone_morphs:
 			create_bone_morph(bone_morph[0],bone_morph[1],bone_morph[2])
 		return {'FINISHED'}

@@ -125,7 +125,7 @@ def main(context):
 	sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_DICTIONARY,bpy.context.scene.bone_panel_bone_type_options)
 
 	for row in sorted_bones:
-		print (row[1],":",row[0]) # bone_group, bone
+		#print (row[1],":",row[0]) # bone_group, bone
 		add_bone_to_group(row[1], row[0])
 
 

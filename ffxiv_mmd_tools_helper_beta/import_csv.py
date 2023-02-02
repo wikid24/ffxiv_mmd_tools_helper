@@ -80,7 +80,7 @@ def use_csv_bone_metadata_ffxiv_dictionary():
 	file_path = (__file__ + r"data\bones_metadata_ffxiv_dictionary.csv").replace("import_csv.py" , "")
 	print(file_path)
 	BONES_METADATA_FFXIV_DICTIONARY = try_read_file(file_path)
-	BONES_METADATA_FFXIV_DICTIONARY = csv_cleanup(BONES_METADATA_FFXIV_DICTIONARY,True,True,True,False)
+	BONES_METADATA_FFXIV_DICTIONARY = csv_cleanup(BONES_METADATA_FFXIV_DICTIONARY,True,False,False,True)
 	return BONES_METADATA_FFXIV_DICTIONARY
 	
 def use_csv_shape_keys_dictionary(ffxiv_race):

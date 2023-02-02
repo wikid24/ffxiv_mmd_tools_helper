@@ -7,7 +7,7 @@ from . import import_csv
 
 
 def __items(display_item_frame):
-    return getattr(display_item_frame, 'data', display_item_frame.items)
+	return getattr(display_item_frame, 'data', display_item_frame.items)
 
 """
 @register_wrap
@@ -36,60 +36,65 @@ def read_bones_metadata_file():
 	return BONES_METADATA_FFXIV_DICTIONARY
 
 def get_csv_bone_groups(BONES_METADATA_FFXIV):
-    # Create an empty set to store the unique values
-    bone_groups = set()
+	# Create an empty set to store the unique values
+	bone_groups = set()
 
-    # Get the index of "blender_bone_group" column
-    header = BONES_METADATA_FFXIV[0]
-    blender_bone_group_index = header.index("blender_bone_group")
+	# Get the index of "blender_bone_group" column
+	header = BONES_METADATA_FFXIV[0]
+	blender_bone_group_index = header.index("blender_bone_group")
 
-    # Iterate over the list, starting from the second row
-    for row in BONES_METADATA_FFXIV[1:]:
-        # Get the value of the "blender_bone_group" column
-        bone_group = row[blender_bone_group_index]
-        # Add the value to the set
-        bone_groups.add(bone_group)
+	# Iterate over the list, starting from the second row
+	for row in BONES_METADATA_FFXIV[1:]:
+		# Get the value of the "blender_bone_group" column
+		bone_group = row[blender_bone_group_index]
+		# Add the value to the set
+		bone_groups.add(bone_group)
 
-    # Assign the set to a variable
-    bone_groups = list(bone_groups)
-    return bone_groups
+	# Assign the set to a variable
+	bone_groups = list(bone_groups)
+	return bone_groups
 
 
 
 def get_csv_bones_by_bone_group(BONES_METADATA_FFXIV,target_column):
 	
-    header = BONES_METADATA_FFXIV[0]
-    blender_bone_group_index = header.index("blender_bone_group")
-    column_data = header.index(target_column)
-    # Use a lambda function to filter out the rows where the target_column column is 0
-    filtered_rows = filter(lambda row: row[column_data] != 0, BONES_METADATA_FFXIV[1:])
-    # Use a dictionary comprehension to group the rows by "blender_bone_group" and extract the target_column's data
-    bones_in_bone_group = {row[blender_bone_group_index]: [row[column_data]] for row in filtered_rows}
-    return bones_in_bone_group
+	header = BONES_METADATA_FFXIV[0]
+	blender_bone_group_index = header.index("blender_bone_group")
+	column_data = header.index(target_column)
+	
+	# Use a lambda function to filter out the rows where the target_column column is None
+	filtered_rows = filter(lambda row: row[column_data] != None, BONES_METADATA_FFXIV[1:])
+
+	
+
+	# Use a dictionary comprehension to group the rows by "blender_bone_group" and extract the target_column's data
+	#bones_in_bone_group = {row[blender_bone_group_index]: [row[column_data]] for row in filtered_rows}
+	bones_in_bone_group = [(row[blender_bone_group_index],row[column_data]) for row in filtered_rows]
+	return bones_in_bone_group
 
 def add_bone_to_group (bone_name,bone_group):
-    if bone_group not in bpy.context.active_object.pose.bone_groups.keys():
-        bpy.context.active_object.pose.bone_groups.new(name=bone_group)
-        print(f"Bone group '{bone_group}' created")
-    if bone_name in bpy.context.active_object.pose.bones:
-        bone = bpy.context.active_object.pose.bones[bone_name]
-        bone.bone_group = bpy.context.active_object.pose.bone_groups[bone_group]
-    else:
-        print("bone: " +  bone_name + " does not exist in currently selected object")
+	if bone_group not in bpy.context.active_object.pose.bone_groups.keys():
+		bpy.context.active_object.pose.bone_groups.new(name=bone_group)
+		print(f"Bone group '{bone_group}' created")
+	if bone_name in bpy.context.active_object.pose.bones:
+		bone = bpy.context.active_object.pose.bones[bone_name]
+		bone.bone_group = bpy.context.active_object.pose.bone_groups[bone_group]
+	else:
+		print("bone: " +  bone_name + " does not exist in currently selected object")
 
 def delete_bone_groups():
-    # Get the currently selected armature
-    armature = model.find_MMD_Armature(bpy.context.object)
+	# Get the currently selected armature
+	armature = model.find_MMD_Armature(bpy.context.object)
 
-    # Check if the selected object is an armature
-    if armature.type != 'ARMATURE':
-        print("Error: Please select an armature.")
-        return
-    
-    # Delete all bone groups
-    for group in armature.pose.bone_groups:
-        armature.pose.bone_groups.remove(group)
-    print("All bone groups deleted.")
+	# Check if the selected object is an armature
+	if armature.type != 'ARMATURE':
+		print("Error: Please select an armature.")
+		return
+	
+	# Delete all bone groups
+	for group in armature.pose.bone_groups:
+		armature.pose.bone_groups.remove(group)
+	print("All bone groups deleted.")
 
 
 """
@@ -99,8 +104,8 @@ bone_groups = get_csv_bone_groups(BONES_METADATA_FFXIV_DICTIONARY)
 sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_FFXIV_DICTIONARY,"ffxiv")
 
 for bone_group_name, bone_names in sorted_bones.items():
-    for bone_name in bone_names:
-        add_bone_to_group(bone_name, bone_group_name)
+	for bone_name in bone_names:
+		add_bone_to_group(bone_name, bone_group_name)
 
 print (sorted_bones)
 """
@@ -119,9 +124,15 @@ def main(context):
 	BONES_METADATA_DICTIONARY = read_bones_metadata_file()
 	sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_DICTIONARY,bpy.context.scene.bone_panel_bone_type_options)
 
-	for bone_group_name, bone_names in sorted_bones.items():
-		for bone_name in bone_names:
-			add_bone_to_group(bone_name, bone_group_name)
+	for row in sorted_bones:
+		print (row[1],":",row[0]) # bone_group, bone
+		add_bone_to_group(row[1], row[0])
+
+
+	#for bone_group_name, bone_names in sorted_bones.items():
+	#	for bone_name in bone_names:
+	#		print (bone_group_name,":",bone_name)
+	#		add_bone_to_group(bone_name, bone_group_name)
 
 
 	"""

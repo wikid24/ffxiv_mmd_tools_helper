@@ -61,6 +61,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - XAT guide to animation retargeting (an alternative approach to animating MMD using FFXIV characters) https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit
 - Skirt Rigging Tutorial: https://www.youtube.com/watch?v=cGcBfhYyjC8
 - uuunyaa's Physics Adjuster: https://www.youtube.com/watch?v=pRJNJDFSYfk
+- MMD Tools wiki: https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual
 
 ------------
 

@@ -98,8 +98,8 @@ On the **FFXIV MMD** tab
 
 ![image](https://user-images.githubusercontent.com/19479648/216137068-a52465b3-09ad-4b74-8127-5b435cb5968a.png)
 
-8) On the **Language and Translation** panel, change **To: ** to **MMD Japanese w/.L.R suffix**
-9) Mass Rename Bones again
+8) On the **Language and Translation** panel, change **To:** to **MMD Japanese w/.L.R suffix**
+9) Click on **Mass Rename Bones** again
 
 ![image](https://user-images.githubusercontent.com/19479648/216137344-4d051b88-309a-488f-b83a-4323c38eb5fc.png)
 

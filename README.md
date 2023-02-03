@@ -1,16 +1,16 @@
-# this is a fork of Hogarth-MMD's mmd_tools_helper (https://github.com/Hogarth-MMD/mmd_tools_helper), updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
+# this is a fork of Hogarth-MMD's [mmd_tools_helper](https://github.com/Hogarth-MMD/mmd_tools_helper), updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
 
 Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool working, tutorials on how to export FFXIV characters to MMD will come. 
 
 ------------
 
 # New Features (completed):
-- added 'Automate FFXIV rig Shape Keys from csv' feature. Working but there's no raw data in the CSVs yet.
-- added 'Automate FFXIV rig Bone Morphs from csv' feature. Working but there's no raw data in the CSVs yet.
-- added 'Automate FFXIV rig Rigid Bodies from csv' feature. Working but there's no raw data in the CSVs yet.
-- added 'Automate FFXIV rig Joints from csv' feature. Working but it doesn't have any raw data in the CSVs yet.
-
-- A bunch of important useful stuff. Will list them later.
+  - 'Insert Bone Morphs from csv'. Working for Hyur in the CSVs now.
+  - 'Insert Rigid Bodies from csv'. Working but only partially completed.
+  - 'Insert Joints from csv'. Working but only partially completed.
+  - 'Insert Bone Groups from csv'. Working but it doesn't add ALL the various bones for hats/accessories/earrings etc... Just the essentials.
+  - 'Insert Shape Keys from csv'. Working for Hyur, partially completed. 
+  - A bunch of important useful stuff. Will list them later.
 
 # Conversion/upgrade to Blender 2.8+ (to do):
   - mmd_lamp_setup.py
@@ -18,50 +18,47 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
 
 # To do:
-- ffxiv shape keys:
-  - Populate the shape keys files (facial animation sliders) -- 55 shape keys for each of the 8 races...  440 in all! :S. Reference guide: https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917
-  - Allow for a user to upload their OWN custom shape key csv file (instead of relying on the ones that come as part of this addon)
-- Automate the rigify armature bones to match ffxiv armature bones (should be mostly easy, the majority of it is a 1:1 'transform rigify bone to match the ffxiv bone's position/rotation data)
-- display_panel_groups.py - needs to be updated to match the ffxiv bone structure
-- automate the bone order export for PMX export (should be easy since ffxiv bones are mostly standard across the board)
-- auto-generate rigid bodies instead of using csv (https://github.com/12funkeys/rigid_bodys_gen - https://www.youtube.com/watch?v=0haYapQ7l_U )
-    - Add presets for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
-    - Add presets for hair (set min max settings, will generate for the entire chain, heaviest on the top)
-- auto-generate joints instead of using csv:
-    - Add presets for boobs (figure out the proper boobs parameters)
-    - Add presets for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
-    - Add presets for hair (set min max settings, will generate for the entire chain, heaviest on the top)
-- automate the MMD material sorter population:
-    - not sure which way to go with this-- should I take the original mesh parts and automate them as their own single material the MMD tools panel? 
-    - or should I create a new hierarchy based on hair/skirt/etc...?
-    - or should I do it based on individual textures?
-    - or should create an option to pick/choose one vs the other?
+- FFXIV Bone Morphs (facial animation sliders):
+  - Populate the csv files with data. [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
+  - Allow for user to upload their OWN csv file (instead of using the template in this addon)
+- Add 'Transform Rigify armature to match ffxiv armature'
+- display_panel_groups.py - Updated to Match the ffxiv bone structure
+- Automate Bone Order for PMX export
+- Create 'bulk-add Rigid Bodies' with min/max values ([sample plugin](https://github.com/12funkeys/rigid_bodys_gen) - (tutorial)[https://www.youtube.com/watch?v=0haYapQ7l_U] )
+    - Add presets for skirt (set min max settings, will generate for the entire chain, heaviest on the bottom)
+    - Add presets for hairs (set min max settings, will generate for the entire chain, heaviest on the top)
+- Create 'bulk-add joints' with min/max values:
+    - Add preset for boobs (need to figure out the proper boobs parameters)
+    - Add preset for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
+    - Add preset for hair (set min max settings, will generate for the entire chain, heaviest on the top)
+- Automate MMD Tools material sorter
+- Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)
+- Add skirt replacement & physics module (the default one from FFXIV sucks for physics)
 ------------
 
 # In order to use this tool, you need:
-- To have your character exported into FBX file format (using FFXIV TexTools) - https://www.ffxiv-textools.net/
-- Blender (2.80+) or higher installed - https://www.blender.org/
-- 'MMD Tools' addon for Blender - https://github.com/UuuNyaa/blender_mmd_tools
-- uuunyaa's Helper addon to  MMD Tools for Blender - https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools
+- To have your character exported into FBX file format (using[FFXIV TexTools](https://www.ffxiv-textools.net/) - 
+    - Tutorial: Watch the from the beinning to the 7 minute mark: https://www.youtube.com/watch?v=JbkNt51PRyM 
+- [Blender](https://www.blender.org/) (2.80+) or higher installed - 
+- [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender - 
+- VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl) or check reddit or [bowlroll](https://bowlroll.net/). Alternatively you can use UuuNyaa's Helper addon (listed below)
 
 # Not really needed but recommended:
-- Miku Miku Dance (duh) - https://learnmmd.com/downloads/
-- PMXE (MMD 3d modeling editor for PMX files) - https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588
-- PMX files (MMD model files) - https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models (or you can find the majority of them on asian websites that I can't understand without google translate), alternatively you can use uuunyaa's Helper addon to download some models from within Blender
-- VMD files (MMD character/camera animation/dance files) - https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl or check reddit or again, asian websites. Alternatively you can use uuunyaa's Helper addon to download some VMD files from within Blender
+- [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
+- [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
+- PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models) (or you can find the majority of them on [bowlroll](https://bowlroll.net/), alternatively you can use UuuNyaa's Helper addon (listed above)
+- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) (MMD 3d modeling editor for PMX files)
 - A bunch of MMD effects (will list them later)
-- MekTools addon for Blender - https://www.xivmodarchive.com/modid/22780
-
+- [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender
 
 ------------
 # Useful Guides:
-- Useful guides to exporting: https://www.xivmodarchive.com/modid/9408
-- FIX FFXIV Textures in blender addon: https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa
-- Quick tutorial how to use the FFXIV Shader plugin above: https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4
-- XAT guide to animation retargeting (an alternative approach to animating MMD using FFXIV characters) https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit
-- Skirt Rigging Tutorial: https://www.youtube.com/watch?v=cGcBfhYyjC8
-- uuunyaa's Physics Adjuster: https://www.youtube.com/watch?v=pRJNJDFSYfk
-- MMD Tools wiki: https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual
+- XIV Mod Archive - [Useful guides to exporting](https://www.xivmodarchive.com/modid/9408): 
+- FIX FFXIV Materials/Textures: [blender addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
+- Animation Retargeting (an alternative approach to animating MMD using FFXIV characters) [tutorial](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) )
+- MMD Skirt Rigging Tutorial: [video tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
+- uuunyaa's Physics Adjuster: [video tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
+- MMD Tools wiki: [link](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)
 
 ------------
 

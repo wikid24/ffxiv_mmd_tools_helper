@@ -19,12 +19,12 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 # To do:
 - FFXIV Bone Morphs (facial animation sliders):
-  - Populate the csv files with data. [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
+  - Populate the csv files with data. 
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'
 - display_panel_groups.py - Updated to Match the ffxiv bone structure
 - Automate Bone Order for PMX export
-- Create 'bulk-add Rigid Bodies' with min/max values ([sample plugin](https://github.com/12funkeys/rigid_bodys_gen) - (tutorial)[https://www.youtube.com/watch?v=0haYapQ7l_U] )
+- Create 'bulk-add Rigid Bodies' with min/max values ([sample plugin](https://github.com/12funkeys/rigid_bodys_gen) - [tutorial][https://www.youtube.com/watch?v=0haYapQ7l_U]
     - Add presets for skirt (set min max settings, will generate for the entire chain, heaviest on the bottom)
     - Add presets for hairs (set min max settings, will generate for the entire chain, heaviest on the top)
 - Create 'bulk-add joints' with min/max values:
@@ -37,28 +37,28 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 
 # In order to use this tool, you need:
-- To have your character exported into FBX file format (using[FFXIV TexTools](https://www.ffxiv-textools.net/) - 
-    - Tutorial: Watch the from the beinning to the 7 minute mark: https://www.youtube.com/watch?v=JbkNt51PRyM 
-- [Blender](https://www.blender.org/) (2.80+) or higher installed - 
-- [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender - 
-- VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl) or check reddit or [bowlroll](https://bowlroll.net/). Alternatively you can use UuuNyaa's Helper addon (listed below)
+- To have your character exported into FBX file format (using [FFXIV TexTools](https://www.ffxiv-textools.net/) Tutorial: [watch the first 7 minutes](https://www.youtube.com/watch?v=JbkNt51PRyM)
+- [Blender](https://www.blender.org/) (2.80+) or higher installed
+- [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
+- VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
 
 # Not really needed but recommended:
 - [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
 - [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
-- PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models) (or you can find the majority of them on [bowlroll](https://bowlroll.net/), alternatively you can use UuuNyaa's Helper addon (listed above)
-- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) (MMD 3d modeling editor for PMX files)
-- A bunch of MMD effects (will list them later)
+- PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
+- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD 3d modeling editor for PMX files
 - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender
+- A bunch of MMD effects (will list them later)
 
 ------------
 # Useful Guides:
-- XIV Mod Archive - [Useful guides to exporting](https://www.xivmodarchive.com/modid/9408): 
-- FIX FFXIV Materials/Textures: [blender addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
-- Animation Retargeting (an alternative approach to animating MMD using FFXIV characters) [tutorial](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) )
-- MMD Skirt Rigging Tutorial: [video tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
-- uuunyaa's Physics Adjuster: [video tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
-- MMD Tools wiki: [link](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)
+- [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
+- [FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
+- [Useful guides to exporting](https://www.xivmodarchive.com/modid/9408) - XIV Mod Archive 
+- [MMD Skirt Rigging Tutorial: Video Tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
+- [UuuNyaa's Physics Adjuster: Video Tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
+- [MMD Tools wiki](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)
+- [Animation Retargeting Video Tutorial](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) - An alternative approach to animating MMD using FFXIV characters
 
 ------------
 

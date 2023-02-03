@@ -104,6 +104,7 @@ On the **FFXIV MMD** tab
 ![image](https://user-images.githubusercontent.com/19479648/216137344-4d051b88-309a-488f-b83a-4323c38eb5fc.png)
 
 10) Back on the **MMD** tab,click on the "**Physics**" button
+
 11) Import an MMD Motion file.
 ![image](https://user-images.githubusercontent.com/19479648/216139143-d9f58160-0a74-4ad2-81d9-75f5ec1c6eb7.png)
 
@@ -117,13 +118,19 @@ On the **FFXIV MMD** tab
 
   ![image](https://user-images.githubusercontent.com/19479648/214442288-e62fa637-f605-4ba8-b806-6b5ee935d8d5.png)
 
-13) Use MMD Tools to import Facial Animations:
+13) Back on the **FFXIV MMD** tab on the **Shape Keys / Bone Morphs** panel, pick your model's race and select **Add Bone Morphs to FFXIV Model**
+
+  ![image](https://user-images.githubusercontent.com/19479648/216657347-3c600aa5-3c2a-4970-ac34-32d231080795.png)
+
+
+14) Use MMD Tools to import Facial Animations:
     - Under 'Assembly' click on the Morph tab. 
     - It will create a mesh called .placeholder. Click on it.
     - Then go to 'import motion', and select the same motion VMD dance file
    ![image](https://user-images.githubusercontent.com/19479648/216222723-f1f3bcc1-e17b-4b9d-9385-c447ffead7f3.png)
 
 14) Press play. All done!! :D
+
 --------------------------
 
 

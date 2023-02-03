@@ -41,10 +41,11 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 # Not really needed but recommended:
 - [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
+- [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
 - [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
 - PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
-- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD 3d modeling editor for PMX files
-- [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender
+- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
+- [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import)
 - A bunch of MMD effects (will list them later)
 
 ------------

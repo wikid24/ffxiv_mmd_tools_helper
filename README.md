@@ -8,7 +8,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - 'Insert Bone Morphs from csv'. Working for Hyur in the CSVs now.
   - 'Insert Rigid Bodies from csv'. Working but only partially completed.
   - 'Insert Joints from csv'. Working but only partially completed.
-  - 'Insert Bone Groups from csv'. Working but it doesn't add ALL the various bones for hats/accessories/earrings etc... Just the essentials.
+  - 'Insert Bone Groups from csv'. Working but it doesn't add ALL the various bones for hair/hats/accessories/earrings etc... Just the essentials.
   - 'Insert Shape Keys from csv'. Working for Hyur, partially completed. 
   - A bunch of important useful stuff. Will list them later.
 

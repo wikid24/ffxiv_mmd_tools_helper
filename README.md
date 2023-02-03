@@ -24,20 +24,17 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - Add 'Transform Rigify armature to match ffxiv armature'
 - display_panel_groups.py - Updated to Match the ffxiv bone structure
 - Automate Bone Order for PMX export
-- Create 'bulk-add Rigid Bodies' with min/max values ([sample plugin](https://github.com/12funkeys/rigid_bodys_gen) - [tutorial][https://www.youtube.com/watch?v=0haYapQ7l_U]
-    - Add presets for skirt (set min max settings, will generate for the entire chain, heaviest on the bottom)
-    - Add presets for hairs (set min max settings, will generate for the entire chain, heaviest on the top)
+- Create 'bulk-add Rigid Bodies' with min/max values ([example plugin](https://github.com/12funkeys/rigid_bodys_gen) - [Video Tutorial](https://www.youtube.com/watch?v=0haYapQ7l_U) )
+    - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Create 'bulk-add joints' with min/max values:
-    - Add preset for boobs (need to figure out the proper boobs parameters)
-    - Add preset for skirts (set min max settings, will generate for the entire chain, heaviest on the bottom)
-    - Add preset for hair (set min max settings, will generate for the entire chain, heaviest on the top)
+    - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Automate MMD Tools material sorter
-- Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)
+- Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) )
 - Add skirt replacement & physics module (the default one from FFXIV sucks for physics)
 ------------
 
 # In order to use this tool, you need:
-- To have your character exported into FBX file format (using [FFXIV TexTools](https://www.ffxiv-textools.net/) Tutorial: [watch the first 7 minutes](https://www.youtube.com/watch?v=JbkNt51PRyM)
+- A FFXIV Model exported into FBX file format - [FFXIV TexTools](https://www.ffxiv-textools.net/) - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
 - [Blender](https://www.blender.org/) (2.80+) or higher installed
 - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
 - VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
@@ -53,8 +50,8 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 # Useful Guides:
 - [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
-- [FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
-- [Useful guides to exporting](https://www.xivmodarchive.com/modid/9408) - XIV Mod Archive 
+- [FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
+- [XIV Mod Archive - Useful guides to exporting](https://www.xivmodarchive.com/modid/9408) 
 - [MMD Skirt Rigging Tutorial: Video Tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
 - [UuuNyaa's Physics Adjuster: Video Tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
 - [MMD Tools wiki](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)

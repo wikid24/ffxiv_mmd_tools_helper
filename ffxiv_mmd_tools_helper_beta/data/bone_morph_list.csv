@@ -1,6 +1,6 @@
 ﻿japanese,english,category
 まばたき ,Blink,EYE
-笑い ,Smile,EYE
+笑い ,EyeSmile,EYE
 ウィンク ,Wink,EYE
 ウィンク右 ,Wink-a,EYE
 ウィンク２ ,Wink-b,EYE
@@ -33,7 +33,7 @@
 ん ,n,MOUTH
 ▲ ,Mouse_1,MOUTH
 ∧ ,Mouse_2,MOUTH
-□ ,□,MOUTH
+□ ,Square,MOUTH
 ワ ,Wa,MOUTH
 ω ,Omega,MOUTH
 ω□ ,ω□,MOUTH

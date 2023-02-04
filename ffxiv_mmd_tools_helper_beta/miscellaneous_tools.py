@@ -7,77 +7,13 @@ from . import boneMaps_renamer
 from . import add_foot_leg_ik
 from mmd_tools.core.bone import FnBone
 
-"""
-@register_wrap
-class MiscellaneousToolsPanel(bpy.types.Panel):
-	#Miscellaneous Tools panel
-	bl_label = "Miscellaneous Tools Panel"
-	bl_idname = "OBJECT_PT_miscellaneous_tools"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
 
-	def draw(self, context):
-		layout = self.layout
-
-		row = layout.row()
-		layout.prop(context.scene, "selected_miscellaneous_tools")
-		row = layout.row()
-		row.label(text="Miscellaneous Tools", icon='WORLD_DATA')
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute Function")
-"""
 def all_materials_mmd_ambient_white():
 	for m in bpy.data.materials:
 		if "mmd_tools_rigid" not in m.name:
 			m.mmd_material.ambient_color[0] == 1.0
 			m.mmd_material.ambient_color[1] == 1.0
 			m.mmd_material.ambient_color[2] == 1.0
-"""
-def get_armature():
-	bpy.ops.object.mode_set(mode='OBJECT')
-
-	armature = None
-
-	# Get the selected object
-	selected_object = bpy.context.object
-
-	# Check if the selected object is a mesh object
-	if selected_object.type == 'MESH':
-		# Check if the selected object's parent is an armature object
-		if selected_object.parent and selected_object.parent.type == 'ARMATURE':
-			# Get the armature object
-			armature = selected_object.parent      
-			
-		# Check if the selected object's grandparent is an armature object
-		if selected_object.parent.parent and selected_object.parent.parent.type == 'ARMATURE':
-			# Get the armature object
-			armature = selected_object.parent.parent
-
-	if selected_object.type == 'ARMATURE':
-		armature = selected_object
-
-	bpy.context.view_layer.objects.active = armature
-	
-	return armature
-"""
-
-"""
-
-bpy.ops.import_scene.fbx('INVOKE_DEFAULT')
-
-bpy.ops.import_scene.fbx(filepath='', directory='', filter_glob='*.fbx', files=None, 
-ui_tab='MAIN', use_manual_orientation=False, global_scale=1.0, bake_space_transform=False, 
-use_custom_normals=True, colors_type='SRGB', use_image_search=True, use_alpha_decals=False, 
-decal_offset=0.0, use_anim=True, anim_offset=1.0, use_subsurf=False, use_custom_props=True, 
-use_custom_props_enum_as_string=True, ignore_leaf_bones=False, force_connect_children=False, 
-automatic_bone_orientation=False, primary_bone_axis='X', secondary_bone_axis='Y', use_prepost_rot=True, axis_forward='-Z', axis_up='Y'
-
-
-"""
-
-
-
 
 
 def combine_2_bones_1_bone(parent_bone_name, child_bone_name):
@@ -434,6 +370,8 @@ def add_bone_to_group (bone_name,bone_group):
 		print("bone: " +  bone_name + " does not exist in currently selected object")
 
 
+
+
 def correct_bone_length():
 
 	bpy.ops.object.mode_set(mode='EDIT')
@@ -482,8 +420,8 @@ def add_extra_titty_bones(armature):
 	duplicate_bone.roll = titty.roll
 	duplicate_bone.parent = titty
 
-def add_eye_control_bone(armature):
-	#armature = bpy.context.view_layer.objects.active
+def add_eye_control_bone():
+	armature = bpy.context.view_layer.objects.active
 	bpy.ops.object.mode_set(mode='EDIT')
 
 	eye_L_bone = armature.data.edit_bones.get("eye_L")
@@ -493,33 +431,35 @@ def add_eye_control_bone(armature):
 	eyes_bone = None
 	if armature.data.edit_bones.get("eyes") is None:
 		eyes_bone = armature.data.edit_bones.new("eyes")
+		
+		eyes_bone.head = 0.5 * (eye_L_bone.head + eye_R_bone.head)
+		eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
+		eyes_bone.length = eye_L_bone.length
+			
+		eyes_bone.parent = head_bone
+		
+		#flip the orientation of the bone
+		eye_controller_bone_head = eyes_bone.head.copy()
+		eye_controller_bone_tail = eyes_bone.tail.copy()
+		eyes_bone.head = eye_controller_bone_tail
+		eyes_bone.tail = eye_controller_bone_head
+			
 	else:
 		eyes_bone = armature.data.edit_bones.get("eyes")
 	
-	eyes_bone.head = 0.5 * (eye_L_bone.head + eye_R_bone.head)
-	eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
-	eyes_bone.length = eye_L_bone.length
-		
-	eyes_bone.parent = head_bone
-	
-	#flip the orientation of the bone
-	eye_controller_bone_head = eyes_bone.head.copy()
-	eye_controller_bone_tail = eyes_bone.tail.copy()
-	eyes_bone.head = eye_controller_bone_tail
-	eyes_bone.tail = eye_controller_bone_head
-	
 	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY RUNNING THIS FUNCTION TWICE MANUALLY, DO NOT CHANGE THIS CODE
-	if armature.pose.bones[eye_L_bone.name].mmd_bone.additional_transform_bone == '':
-		apply_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name)
-	else:
-		apply_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name)
+	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name)
+	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name)
+	FnBone.apply_additional_transformation(armature)
 	
-def apply_MMD_additional_rotation (armature,additional_transform_bone, target_bone):
+
+def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone):
 	pose_bone = armature.pose.bones.get(target_bone)
 	pose_bone.mmd_bone.has_additional_rotation = True
+	pose_bone.mmd_bone.is_additional_transform_dirty = True
 	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
 
-	FnBone.apply_additional_transformation(armature)
+	#FnBone.apply_additional_transformation(armature)
 	#FnBone.clean_additional_transformation(armature)
 
 
@@ -670,8 +610,8 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
-	, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
-	, ("add_eye_control_bone", "add_eye_control_bone (RUN TWICE)", "add_eye_control_bone (RUN TWICE)")\
+	#, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
+	, ("add_eye_control_bone", "Add Eye Control Bone", "Add Eye Control Bone")\
 	, ("correct_arm_wrist_twist", "correct_arm_wrist_twist", "correct_arm_wrist_twist")\
 	
 	], name = "Function", default = 'none')

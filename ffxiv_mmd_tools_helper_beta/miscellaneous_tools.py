@@ -584,7 +584,7 @@ def main(context):
 		add_extra_titty_bones(armature)
 	if bpy.context.scene.selected_miscellaneous_tools == "add_eye_control_bone":
 		armature = bpy.context.view_layer.objects.active
-		add_eye_control_bone(armature)
+		add_eye_control_bone()
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_arm_wrist_twist":
 		armature = bpy.context.view_layer.objects.active
 		correct_arm_wrist_twist()

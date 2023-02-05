@@ -5,6 +5,7 @@ from . import register_wrap
 from . import model
 from . import boneMaps_renamer
 from . import add_foot_leg_ik
+from . import skirt
 from mmd_tools.core.bone import FnBone
 
 
@@ -450,6 +451,8 @@ def add_eye_control_bone():
 	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY RUNNING THIS FUNCTION TWICE MANUALLY, DO NOT CHANGE THIS CODE
 	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name)
 	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name)
+	
+	armature.data.edit_bones.active = eyes_bone
 	FnBone.apply_additional_transformation(armature)
 	
 
@@ -588,6 +591,9 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_arm_wrist_twist":
 		armature = bpy.context.view_layer.objects.active
 		correct_arm_wrist_twist()
+	if bpy.context.scene.selected_miscellaneous_tools == "add_skirt":
+		armature = bpy.context.view_layer.objects.active
+		add_skirt()
 
 
 @register_wrap
@@ -611,9 +617,9 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
 	#, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
-	, ("add_eye_control_bone", "Add Eye Control Bone", "Add Eye Control Bone")\
+	, ("add_eye_control_bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
 	, ("correct_arm_wrist_twist", "correct_arm_wrist_twist", "correct_arm_wrist_twist")\
-	
+	, ("add_skirt", "add skirt", "add skirt")\
 	], name = "Function", default = 'none')
 
 	@classmethod

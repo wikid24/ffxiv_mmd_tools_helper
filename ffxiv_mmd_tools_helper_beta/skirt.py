@@ -49,13 +49,11 @@ def create_mesh_cylinder(num_segments, radius_tail, radius_head, height, floor_o
     bpy.ops.mesh.subdivide(number_cuts=subdivisions)
     bpy.ops.object.mode_set(mode='OBJECT')
     
-
     # Search all objects for one that uses this mesh
     for obj in bpy.data.objects:
         if obj.data == mesh:
             # Object found
             return obj
-            break
 
 
 def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floor_offset, x_scale, y_scale, num_subdivisions):
@@ -89,9 +87,12 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floo
         bone = obj.data.edit_bones.new(f"skirt_{i}_0")
         bone.head = head
         bone.tail = tail
+        bone.roll = math.atan2(tail[1] - head[1], tail[0] - head[0])
         sub_bone_list.append(bone)
         
         parent_bone = bone
+        # Align bone roll with the radius
+        
         # Subdivide the bone
         for j in range(1, num_subdivisions):
             sub_head = (
@@ -109,12 +110,8 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floo
             sub_bone.use_connect = True
             sub_bone.head = sub_head
             sub_bone.tail = sub_tail
-            sub_bone_list.append(sub_bone)
-            #
-            
-            
-            
-            
+            sub_bone.roll = parent_bone.roll
+            sub_bone_list.append(sub_bone) 
         parent_bone.tail = sub_bone_list[1].head
     
     # Search all objects for one that uses this mesh
@@ -122,9 +119,6 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floo
         if obj.data == armature:
             # Object found
             return obj
-            break
-    
-    #return armature.owner
 
 
 def main():

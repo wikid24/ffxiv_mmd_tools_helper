@@ -128,6 +128,7 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floo
 
 
 def main():
+    bpy.ops.object.mode_set(mode='OBJECT')
     
     skirt_arm = bpy.data.objects.get('skirt')
     
@@ -138,16 +139,16 @@ def main():
         bpy.ops.object.delete()
     
     # Define the parameters for the cone of bones & the cylinder
-    num_bone_parents = 14
-    num_segments = 14
-    num_subdivisions = 3
-    radius_tail = 0.30
+    num_bone_parents = 16
+    num_segments = 16
+    num_subdivisions = 5
+    radius_tail = 0.32
     radius_head = 0.12
     height = 1.05604
-    floor_offset = 0.5
+    floor_offset = 0.3
     x_scale = 1.3
     y_scale = 1.0
-    num_bone_children = 9
+    num_bone_children = 13
     #curve_factor = 2
 
 

@@ -3,7 +3,7 @@ import math
 from . import register_wrap
 
 
-def create_mesh_cylinder(num_segments, radius_tail, radius_head, height, x_scale, y_scale,subdivisions):
+def create_mesh_cylinder(num_segments, radius_tail, radius_head, height, floor_offset, x_scale, y_scale,subdivisions):
     # Create a cylinder mesh
     mesh = bpy.data.meshes.new("Cylinder")
 
@@ -14,12 +14,14 @@ def create_mesh_cylinder(num_segments, radius_tail, radius_head, height, x_scale
     for i in range(num_segments + 1):
         angle = 2 * math.pi * i / num_segments
         for j in range(subdivisions + 1):
-            z = height * j / subdivisions
             if j == 0:
+                z = floor_offset
                 radius = radius_tail
             elif j == subdivisions:
+                z = height #- floor_offset
                 radius = radius_head
             else:
+                z = (height - floor_offset)  * j / subdivisions + floor_offset
                 radius = radius_tail + (radius_head - radius_tail) * j / subdivisions
             x = radius * x_scale * math.cos(angle)
             y = radius * y_scale * math.sin(angle)
@@ -48,17 +50,15 @@ def create_mesh_cylinder(num_segments, radius_tail, radius_head, height, x_scale
     bpy.ops.object.mode_set(mode='OBJECT')
     
 
-
     # Search all objects for one that uses this mesh
     for obj in bpy.data.objects:
         if obj.data == mesh:
             # Object found
             return obj
+            break
 
 
-
-
-def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height, x_scale, y_scale, num_subdivisions):
+def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height,floor_offset, x_scale, y_scale, num_subdivisions):
     # Create a new armature object
     armature = bpy.data.armatures.new(name="skirt")
     obj = bpy.data.objects.new(name="skirt", object_data=armature)
@@ -79,7 +79,7 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height, x_s
         angle = 2 * math.pi * i / num_bone_parents
         x_tail = radius_tail * math.cos(angle) * x_scale
         y_tail = radius_tail * math.sin(angle) * y_scale
-        tail = (x_tail, y_tail, 0)
+        tail = (x_tail, y_tail, 0 + floor_offset)
         
         x_head = radius_head * math.cos(angle) * x_scale
         y_head = radius_head * math.sin(angle) * y_scale
@@ -105,34 +105,48 @@ def create_bone_cylinder(num_bone_parents, radius_tail, radius_head, height, x_s
                 head[2] + (tail[2] - head[2]) * (j + 1) / num_subdivisions,
             )
             sub_bone = obj.data.edit_bones.new(f"skirt_{i}_{j}")
+            sub_bone.parent = sub_bone_list[j-1]
+            sub_bone.use_connect = True
             sub_bone.head = sub_head
             sub_bone.tail = sub_tail
             sub_bone_list.append(sub_bone)
-            sub_bone.parent = sub_bone_list[j-1]
+            #
+            
+            
             
             
         parent_bone.tail = sub_bone_list[1].head
     
-    # Search all objects for one that uses this armature
+    # Search all objects for one that uses this mesh
     for obj in bpy.data.objects:
         if obj.data == armature:
             # Object found
             return obj
             break
     
-
+    #return armature.owner
 
 
 def main():
+    
+    skirt_arm = bpy.data.objects.get('skirt')
+    
+    if skirt_arm is not None:
+        skirt_arm.select_set(True)
+
+        # Remove the object
+        bpy.ops.object.delete()
+    
     # Define the parameters for the cone of bones & the cylinder
     num_bone_parents = 14
     num_segments = 14
     num_subdivisions = 3
-    radius_tail = 0.37182
-    radius_head = 0.249672
+    radius_tail = 0.30
+    radius_head = 0.12
     height = 1.05604
-    x_scale = 1.0
-    y_scale = 1.3
+    floor_offset = 0.5
+    x_scale = 1.3
+    y_scale = 1.0
     num_bone_children = 9
     #curve_factor = 2
 
@@ -163,6 +177,7 @@ def main():
     
     # Enable automatic weights
     #bpy.ops.object.vertex_group_assign()
+    
 
 
 @register_wrap

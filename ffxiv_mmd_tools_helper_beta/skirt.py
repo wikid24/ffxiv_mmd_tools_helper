@@ -391,16 +391,18 @@ def move_bones_and_skirt_to_ffxiv_model(armature):
     for o in bpy.context.view_layer.objects:
         o.select_set(False)
 
-    #move all the meshes into the armature
-    for mesh in meshes:
-        mesh.select_set(True)    
-    armature.select_set(True)
-    bpy.context.view_layer.objects.active = armature
-    bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
+    if meshes != None:
+        #move all the meshes into the armature
+        for mesh in meshes:
+            mesh.select_set(True)    
+        armature.select_set(True)
+        bpy.context.view_layer.objects.active = armature
+        bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
 
     #delete the new_skirt_shape mesh
     new_skirt_shape = bpy.data.meshes['new_skirt_shape']
-    bpy.data.meshes.remove(new_skirt_shape)
+    if new_skirt_shape != None:
+        bpy.data.meshes.remove(new_skirt_shape)
 
 
             

@@ -373,7 +373,7 @@ def add_bone_to_group (bone_name,bone_group):
 
 
 
-def correct_bone_length():
+def correct_bones_length():
 
 	bpy.ops.object.mode_set(mode='EDIT')
 
@@ -448,9 +448,9 @@ def add_eye_control_bone():
 	else:
 		eyes_bone = armature.data.edit_bones.get("eyes")
 	
-	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY RUNNING THIS FUNCTION TWICE MANUALLY, DO NOT CHANGE THIS CODE
-	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name,1)
-	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name,1)
+	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY hard_coding the bone name, do not change this code
+	setup_MMD_additional_rotation(armature,'eyes','eye_L',1)
+	setup_MMD_additional_rotation(armature,'eyes','eye_R',1)
 	
 	armature.data.edit_bones.active = eyes_bone
 	FnBone.apply_additional_transformation(armature)
@@ -565,7 +565,6 @@ def correct_arm_wrist_twist():
 
     
 def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone, influence):
-    print('we\'re here at', target_bone)
     pose_bone = armature.pose.bones.get(target_bone)
     pose_bone.mmd_bone.has_additional_rotation = True
     pose_bone.mmd_bone.is_additional_transform_dirty = True
@@ -576,7 +575,51 @@ def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bo
     #FnBone.clean_additional_transformation(armature)    
     
 
+def add_shoulder_control_bones():
+    bpy.ops.object.mode_set(mode='EDIT')
+    # set the armature to Edit Mode
+    armature = bpy.context.view_layer.objects.active
 
+    #get the bones
+    shoulder_L = armature.data.edit_bones["shoulder_L"]
+    shoulder_R = armature.data.edit_bones["shoulder_R"]
+    arm_L = armature.data.edit_bones["arm_L"]
+    arm_R = armature.data.edit_bones["arm_R"]
+    j_sebo_c = armature.data.edit_bones["j_sebo_c"]
+
+    #create new bones
+    shoulder_P_L = add_bone(armature, 'shoulder_P_L',shoulder_L.length,shoulder_L.head ,shoulder_L.head,j_sebo_c)
+    shoulder_P_R = add_bone(armature, 'shoulder_P_R',shoulder_R.length,shoulder_R.head ,shoulder_R.head,j_sebo_c)
+
+    shoulder_C_L = add_bone(armature, 'shoulder_C_L',shoulder_L.length,shoulder_L.tail ,shoulder_L.tail,shoulder_L)
+    shoulder_C_R = add_bone(armature, 'shoulder_C_R',shoulder_R.length,shoulder_R.tail ,shoulder_R.tail,shoulder_R)
+
+    #add_bone(armature, bone_name, length, head, tail, parent_bone)
+
+    #set the new bone's positions vertical
+    shoulder_P_L.tail.z = shoulder_P_L.tail.z - (shoulder_P_L.length * 0.25)
+    shoulder_P_R.tail.z = shoulder_P_R.tail.z - (shoulder_P_R.length * 0.25)
+
+    shoulder_C_L.tail.z = shoulder_C_L.tail.z - (shoulder_C_L.length * 0.25)
+    shoulder_C_R.tail.z = shoulder_C_R.tail.z - (shoulder_C_R.length * 0.25)
+
+    #make shoulder_C bones the parent of the arm bones
+    arm_L.parent = shoulder_C_L
+    arm_R.parent = shoulder_C_R
+    shoulder_L.parent = shoulder_P_L
+    shoulder_R.parent = shoulder_P_R
+
+    #make shoulder_C a control bone for shoulder_P
+    
+    bpy.ops.object.mode_set(mode='POSE')
+            
+    # Select all bones in the armature
+    for bone in armature.pose.bones:
+        bone.bone.select = True
+    
+    setup_MMD_additional_rotation (armature,'shoulder_P_L', 'shoulder_C_L', -1.0)
+    setup_MMD_additional_rotation (armature,'shoulder_P_R', 'shoulder_C_R', -1.0)
+    FnBone.apply_additional_transformation(armature)
 
 """
 def get_armature():
@@ -642,9 +685,9 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_view_cnt":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_view_cnt()
-	if bpy.context.scene.selected_miscellaneous_tools == "correct_bone_lengths":
+	if bpy.context.scene.selected_miscellaneous_tools == "correct_bones_lengths":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		correct_bone_length()
+		correct_bones_length()
 	if bpy.context.scene.selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
@@ -663,6 +706,10 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_arm_wrist_twist":
 		armature = bpy.context.view_layer.objects.active
 		correct_arm_wrist_twist()
+	if bpy.context.scene.selected_miscellaneous_tools == "add_shoulder_control_bones":
+		armature = bpy.context.view_layer.objects.active
+		add_shoulder_control_bones()
+
 
 
 @register_wrap
@@ -683,11 +730,12 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_waist", "Correct MMD Waist bone", "Correct MMD Waist bone")\
 	, ("correct_waist_cancel", "Correct waist cancel left and right bones", "Correct waist cancel left and right bones")\
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
-	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
+	, ("correct_bones_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_extra_finger_bones", "Add Extra Finger Bones", "Add Extra Finger Bones")\
 	#, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
 	, ("add_eye_control_bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
 	, ("correct_arm_wrist_twist", "Correct Arm Twist Bones", "Correct Arm Twist Bones")\
+	, ("add_shoulder_control_bones", "Add Shoulder Control Bones", "Add Shoulder Control Bones")\
 	], name = "Function", default = 'none')
 
 	@classmethod

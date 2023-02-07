@@ -10,6 +10,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - 'Insert Joints from csv'. Working but only partially completed.
   - 'Insert Bone Groups from csv'. Working but it doesn't add ALL the various bones for hair/hats/accessories/earrings etc... Just the essentials.
   - 'Insert Shape Keys from csv'. Working for Hyur, partially completed. 
+  - Auto skirt rig generator. Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - A bunch of important useful stuff. Will list them later.
 
 # Conversion/upgrade to Blender 2.8+ (to do):
@@ -30,7 +31,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
     - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Automate MMD Tools material sorter
 - Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) )
-- Add skirt replacement & physics module (the default one from FFXIV sucks for physics)
+- Add skirt physics module (the default skirt from FFXIV sucks for physics)
 ------------
 
 # In order to use this tool, you need:

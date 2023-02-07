@@ -43,8 +43,8 @@ def read_rigid_body_file():
 
 def get_armature():
 	
-	if bpy.context.selected_objects[0].type == 'ARMATURE':
-		return model.findArmature(bpy.context.selected_objects[0])
+	if bpy.context.active_object.type == 'ARMATURE':
+		return model.findArmature(bpy.context.active_object)
 	if model.findArmature(bpy.context.selected_objects[0]) is not None:
 		return model.findArmature(bpy.context.selected_objects[0])
 	for child in  bpy.context.selected_objects[0].parent.children:
@@ -58,6 +58,7 @@ def get_armature():
 
 def apply_all_rigid_bodies(armature,rigid_body_data):
 	
+
 	if rigid_body_data: 
 		for rigid_body in rigid_body_data:
 			rigid_body_name = rigid_body['rigid_body_name']
@@ -76,20 +77,27 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			linear_damping = rigid_body['linear_damping']
 			angular_damping = rigid_body['angular_damping']
 			
-			bpy.context.view_layer.objects.active = armature         
+
+			bpy.context.view_layer.objects.active = armature
 			create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
 	
 
 def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
 
-	#check if bone exists
-	if bone in armature.data.bones:
+	
+	
+	#if rigid body exists, delete it
+	for obj in armature.parent.children_recursive:
+		if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_name:
+			print ('deleting existing rigid_body:', obj.name)
+			bpy.data.objects.remove(obj, do_unlink=True)
 
-		#if rigid body exists, delete it
-		for obj in armature.parent.children_recursive:
-			if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_name:
-				print ('deleting existing rigid_body:', obj.name)
-				bpy.data.objects.remove(obj, do_unlink=True)
+	
+	#check if bone exists
+	bpy.ops.object.mode_set(mode='EDIT')
+	if bone in bpy.context.active_object.data.edit_bones:
+
+		
 		"""
 		name_j = '$name_j'
 		name_e = '$name_e'
@@ -105,7 +113,7 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		angular_damping = 0.1
 		"""
 		# Select the bone
-		bpy.ops.object.mode_set(mode='EDIT')
+		
 		bpy.ops.armature.select_all(action='DESELECT')
 		armature.data.edit_bones[bone].select = True
 		armature.data.bones.active = armature.data.bones[bone]

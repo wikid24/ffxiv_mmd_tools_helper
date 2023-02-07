@@ -23,8 +23,8 @@ class JointsPanel(bpy.types.Panel):
 """
 def get_armature():
 	
-	if bpy.context.selected_objects[0].type == 'ARMATURE':
-		return model.findArmature(bpy.context.selected_objects[0])
+	if bpy.context.active_object.type == 'ARMATURE':
+		return model.findArmature(bpy.context.active_object)
 	if model.findArmature(bpy.context.selected_objects[0]) is not None:
 		return model.findArmature(bpy.context.selected_objects[0])
 	for child in  bpy.context.selected_objects[0].parent.children:
@@ -48,13 +48,16 @@ def read_joints_file():
 	
 	return JOINTS_DICTIONARY
 
-def create_joint(armature,rigid_body_child,rigid_body_parent,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular):
+def create_joint(armature,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular):
 
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
 		if obj.mmd_type == 'JOINT': 
-			if (obj.rigid_body_constraint.object1.name == rigid_body_child or  obj.rigid_body_constraint.object1.name == rigid_body_parent):
-				if (obj.rigid_body_constraint.object2.name == rigid_body_child or  obj.rigid_body_constraint.object2.name == rigid_body_parent):
+			if (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
+				print ('deleting joint with missing rigid body object1 or object2:', obj.name)
+				bpy.data.objects.remove(obj, do_unlink=True)
+			elif (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
+				if (obj.rigid_body_constraint.object2.name == rigid_body_1 or  obj.rigid_body_constraint.object2.name == rigid_body_2):
 					print ('deleting existing joint:', obj.name)
 					bpy.data.objects.remove(obj, do_unlink=True)
 	
@@ -66,12 +69,13 @@ def create_joint(armature,rigid_body_child,rigid_body_parent,use_bone_rotation,l
 
 	#object 1
 	for obj in armature.parent.children_recursive:
-		if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_child:
+		if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_1:
 			object_1 = obj
 			object_1.select_set(True)
+			bpy.context.view_layer.objects.active = object_1
 	#object 2
 	for obj in armature.parent.children_recursive:
-		if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_parent:
+		if obj.mmd_type == 'RIGID_BODY' and obj.name == rigid_body_2:
 			object_2 = obj
 			object_2.select_set(True)
 			bpy.context.view_layer.objects.active = object_2
@@ -95,14 +99,14 @@ def create_joint(armature,rigid_body_child,rigid_body_parent,use_bone_rotation,l
 		
 		return joint
 	else: 
-		print ('could not find either \'', rigid_body_parent, '\' or \'',rigid_body_child,'\' to create joint')
+		print ('could not find either \'', rigid_body_1, '\' or \'',rigid_body_2,'\' to create joint')
 
 def apply_all_joints(armature,joints_data):
 	
 	if joints_data: 
 		for joint in joints_data:
-			rigid_body_child = joint['rigid_body_child']
-			rigid_body_parent = joint['rigid_body_parent']
+			rigid_body_1 = joint['rigid_body_1']
+			rigid_body_2 = joint['rigid_body_2']
 			use_bone_rotation = joint['use_bone_rotation']
 			limit_linear_lower = [joint['linear_min_x'],joint['linear_min_y'],joint['linear_min_z']]
 			limit_linear_upper = [joint['linear_max_x'],joint['linear_max_y'],joint['linear_max_z']]
@@ -111,7 +115,7 @@ def apply_all_joints(armature,joints_data):
 			spring_linear = [joint['linear_spring_x'],joint['linear_spring_y'],joint['linear_spring_z']]
 			spring_angular= [joint['angular_spring_x'],joint['angular_spring_y'],joint['angular_spring_z']]
 
-			create_joint(armature,rigid_body_child,rigid_body_parent,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
+			create_joint(armature,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
 			
 def main(context):
 	bpy.context.view_layer.objects.active = get_armature()

@@ -483,14 +483,12 @@ def main(context):
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].use_limit_x = True
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].use_limit_y = True
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].use_limit_z = True
-	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].min_x = math.pi/360 #radians = 0.5 degrees
-	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].max_x = math.pi #radians = 180 degrees
-
+	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].min_x = 0
+	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].max_x = 0
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].min_y = 0
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].max_y = 0
-	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].min_z = 0
-	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].max_z = 0
-
+	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].min_z = math.pi/360 #radians = 0.5 degrees #bugfix that it is exporting x axis to z axis in pmxe
+	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].max_z = math.pi #radians = 180 degrees #bugfix that it is exporting x axis to z axis in pmxe
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].owner_space = "LOCAL"
 	bpy.context.object.pose.bones[KNEE_LEFT].constraints["Limit Rotation"].name = "mmd_ik_limit_override"
 
@@ -516,12 +514,12 @@ def main(context):
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].use_limit_x = True
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].use_limit_y = True
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].use_limit_z = True
-	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].min_x = math.pi/360 #radians = 0.5 degrees
-	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].max_x = math.pi #radians = 180 degrees
+	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].min_x = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].max_x = 0
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].min_y = 0
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].max_y = 0
-	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].min_z = 0
-	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].max_z = 0
+	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].min_z = math.pi/360 #radians = 0.5 degrees #bugfix that it is exporting x axis to z axis in pmxe
+	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].max_z = math.pi #radians = 180 degrees #bugfix that it is exporting x axis to z axis in pmxe
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].owner_space = "LOCAL"
 	bpy.context.object.pose.bones[KNEE_RIGHT].constraints["Limit Rotation"].name = "mmd_ik_limit_override"
 
@@ -545,12 +543,12 @@ def main(context):
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].use_limit_x = True
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].use_limit_y = True
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].use_limit_z = True
-		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].min_x = math.pi/360 #radians = 0.5 degrees
-		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].max_x = math.pi #radians = 180 degrees
+		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].min_x = 0
+		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].max_x = 0
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].min_y = 0
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].max_y = 0
-		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].min_z = 0
-		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].max_z = 0
+		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].min_z = math.pi/360 #radians = 0.5 degrees #bugfix that it is exporting x axis to z axis in pmxe
+		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].max_z = math.pi #radians = 180 degrees #bugfix that it is exporting x axis to z axis in pmxe
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].owner_space = "LOCAL"
 		bpy.context.object.pose.bones['j_asi_c_l'].constraints["Limit Rotation"].name = "mmd_ik_limit_override"
 
@@ -575,12 +573,12 @@ def main(context):
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].use_limit_x = True
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].use_limit_y = True
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].use_limit_z = True
-		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].min_x = math.pi/360 #radians = 0.5 degrees
-		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].max_x = math.pi #radians = 180 degrees
+		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].min_x = 0
+		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].max_x = 0
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].min_y = 0
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].max_y = 0
-		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].min_z = 0
-		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].max_z = 0
+		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].min_z = math.pi/360 #radians = 0.5 degrees #bugfix that it is exporting x axis to z axis in pmxe
+		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].max_z = math.pi #radians = 180 degrees #bugfix that it is exporting x axis to z axis in pmxe
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].owner_space = "LOCAL"
 		bpy.context.object.pose.bones['j_asi_c_r'].constraints["Limit Rotation"].name = "mmd_ik_limit_override"
 	

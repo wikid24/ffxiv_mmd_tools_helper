@@ -1,6 +1,6 @@
 import bpy
 import math
-
+import mathutils
 from . import register_wrap
 from . import model
 from . import boneMaps_renamer
@@ -449,14 +449,14 @@ def add_eye_control_bone():
 		eyes_bone = armature.data.edit_bones.get("eyes")
 	
 	#THIS IS THE ONLY WAY I GOT IT TO WORK IS BY RUNNING THIS FUNCTION TWICE MANUALLY, DO NOT CHANGE THIS CODE
-	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name)
-	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name)
+	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_L_bone.name,1)
+	setup_MMD_additional_rotation(armature,eyes_bone.name,eye_R_bone.name,1)
 	
 	armature.data.edit_bones.active = eyes_bone
 	FnBone.apply_additional_transformation(armature)
 	
 
-def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone):
+def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone,influence):
 	pose_bone = armature.pose.bones.get(target_bone)
 	pose_bone.mmd_bone.has_additional_rotation = True
 	pose_bone.mmd_bone.is_additional_transform_dirty = True
@@ -465,6 +465,60 @@ def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bo
 	#FnBone.apply_additional_transformation(armature)
 	#FnBone.clean_additional_transformation(armature)
 
+
+def add_bone(armature, bone_name, length, head, tail, parent_bone):
+    # Create a new bone
+    new_bone = armature.data.edit_bones.new(bone_name)
+    # Set the length of the bone
+    new_bone.head = head
+    new_bone.tail = tail
+    new_bone.length = length
+    # Point the bone directly upwards
+    new_bone.roll = 0
+    new_bone.parent = parent_bone
+    return new_bone
+
+def create_twist_support_bones(armature,source_bone,bone_1,bone_2,bone_3,additional_rotation_bone):
+
+
+    if armature:
+        # Get the armature in edit mode
+        bpy.ops.object.mode_set(mode='EDIT')
+        # Get the source bone
+        source_bone = armature.data.edit_bones.get(source_bone)
+        if source_bone:
+            # Get the length of the arm_L bone
+            length = source_bone.length
+            # Get the start and end points of the arm_L bone
+            start = source_bone.head
+            end = source_bone.tail
+            # Calculate the positions of the three new bones
+            pos1 = start + (end - start) * 0.25
+            pos2 = start + (end - start) * 0.5
+            pos3 = start + (end - start) * 0.75
+            # Add the three new bones
+            _bone_1 = add_bone(armature, bone_1, length * 0.30, pos1, pos1 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+            _bone_2 = add_bone(armature, bone_2, length * 0.30, pos2, pos2 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+            _bone_3 = add_bone(armature, bone_3, length * 0.30, pos3, pos3 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+            
+            bpy.ops.object.mode_set(mode='POSE')
+            
+            # Select all bones in the armature
+            for bone in armature.pose.bones:
+                bone.bone.select = True
+            
+            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_1, 0.25)
+            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_2, 0.50)
+            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_3, 0.75)
+            
+            
+            armature.data.edit_bones.active = source_bone
+            FnBone.apply_additional_transformation(armature)
+            
+            # Return to object mode
+            bpy.ops.object.mode_set(mode='OBJECT')
+    else:
+        print("Armature object not found")
 
 def correct_arm_wrist_twist():
 	
@@ -489,10 +543,10 @@ def correct_arm_wrist_twist():
 	wrist_R.parent = wrist_twist_R
 	
 	#rename the bones
-	arm_twist_L.name = 'arm twist_L'
-	arm_twist_R.name = 'arm twist_R'
-	wrist_twist_L.name = 'wrist twist_L'
-	wrist_twist_R.name = 'wrist twist_R'
+	arm_twist_L.name = 'arm_twist_L'
+	arm_twist_R.name = 'arm_twist_R'
+	wrist_twist_L.name = 'wrist_twist_L'
+	wrist_twist_R.name = 'wrist_twist_R'
 	
 	#bpy.ops.object.mode_set(mode='POSE')
 	#lock rotation to the Y axis only
@@ -503,6 +557,24 @@ def correct_arm_wrist_twist():
 	armature.pose.bones.get(wrist_twist_R.name).lock_rotation = [True,False,True]
 
 
+	create_twist_support_bones(armature,'arm_L','arm_twist_1_L','arm_twist_2_L','arm_twist_3_L','arm_twist_L')
+	create_twist_support_bones(armature,'arm_R','arm_twist_1_R','arm_twist_2_R','arm_twist_3_R','arm_twist_R')
+	create_twist_support_bones(armature,'elbow_L','wrist_twist_1_L','wrist_twist_2_L','wrist_twist_3_L','wrist_twist_L')
+	create_twist_support_bones(armature,'elbow_R','wrist_twist_1_R','wrist_twist_2_R','wrist_twist_3_R','wrist_twist_R')
+
+
+    
+def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone, influence):
+    print('we\'re here at', target_bone)
+    pose_bone = armature.pose.bones.get(target_bone)
+    pose_bone.mmd_bone.has_additional_rotation = True
+    pose_bone.mmd_bone.is_additional_transform_dirty = True
+    pose_bone.mmd_bone.additional_transform_influence = influence
+    pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
+
+    #FnBone.apply_additional_transformation(armature)
+    #FnBone.clean_additional_transformation(armature)    
+    
 
 
 
@@ -591,9 +663,6 @@ def main(context):
 	if bpy.context.scene.selected_miscellaneous_tools == "correct_arm_wrist_twist":
 		armature = bpy.context.view_layer.objects.active
 		correct_arm_wrist_twist()
-	if bpy.context.scene.selected_miscellaneous_tools == "add_skirt":
-		armature = bpy.context.view_layer.objects.active
-		add_skirt()
 
 
 @register_wrap
@@ -605,7 +674,7 @@ class MiscellaneousTools(bpy.types.Operator):
 
 	bpy.types.Scene.selected_miscellaneous_tools = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
-	, ("fix_object_axis", "fix object axis","fix object axis") \
+	, ("fix_object_axis", "Fix Object Axis (90 degrees)","Fix Object Axis (90 degrees)") \
 	, ("combine_2_bones", "Combine 2 bones", "Combine a parent-child pair of bones and their vertex groups to 1 bone and 1 vertex group")\
 	, ("delete_unused", "Delete unused bones and unused vertex groups", "Delete all bones and vertex groups which have the word 'unused' in them")\
 	, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
@@ -615,11 +684,10 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("correct_waist_cancel", "Correct waist cancel left and right bones", "Correct waist cancel left and right bones")\
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("correct_bone_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
-	, ("add_extra_finger_bones", "Add extra finger bones", "Add extra finger bones")\
+	, ("add_extra_finger_bones", "Add Extra Finger Bones", "Add Extra Finger Bones")\
 	#, ("add_extra_titty_bones", "add_extra_titty_bones", "add_extra_titty_bones")\
 	, ("add_eye_control_bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
-	, ("correct_arm_wrist_twist", "correct_arm_wrist_twist", "correct_arm_wrist_twist")\
-	, ("add_skirt", "add skirt", "add skirt")\
+	, ("correct_arm_wrist_twist", "Correct Arm Twist Bones", "Correct Arm Twist Bones")\
 	], name = "Function", default = 'none')
 
 	@classmethod

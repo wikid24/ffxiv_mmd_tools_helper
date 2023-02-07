@@ -15,7 +15,7 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		
 		row = layout.row()
-		row.label(text="Miscellaneous Tools", icon='WORLD_DATA')
+		row.label(text="Misc Tools (MMD English bones only)", icon='WORLD_DATA')
 		row = layout.row()
 		layout.prop(context.scene, "selected_miscellaneous_tools")	
 		row = layout.row()

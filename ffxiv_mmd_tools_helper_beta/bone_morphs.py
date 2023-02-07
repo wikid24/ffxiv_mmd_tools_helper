@@ -268,7 +268,7 @@ class AddBoneMorphs(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None #and obj.type == 'ARMATURE'
+		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		main(context)

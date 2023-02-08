@@ -13,11 +13,12 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="MMD English bones only")
+		row.label(text="Converted to MMD Model(English bones only)")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies to converted MMD armature", icon="RIGID_BODY")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints to converted MMD armature", icon = "RIGID_BODY_CONSTRAINT")
+		col = row.column()
+		col.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies", icon="RIGID_BODY")
+		col = row.column()
+		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints", icon = "RIGID_BODY_CONSTRAINT")
 
 
 """

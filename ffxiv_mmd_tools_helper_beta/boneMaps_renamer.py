@@ -184,3 +184,22 @@ class BonesRenamer(bpy.types.Operator):
 	def execute(self, context):
 		main(context)
 		return {'FINISHED'}
+
+@register_wrap
+class ShowHideBoneNames(bpy.types.Operator):
+	"""Hide Bone Names"""
+	bl_idname = "object.bone_names_showhide"
+	bl_label = "Bone Names Show/Hide"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		if bpy.context.object.data.show_names == True:
+			bpy.context.object.data.show_names = False
+		else:
+			bpy.context.object.data.show_names = True
+		return {'FINISHED'}

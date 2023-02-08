@@ -115,9 +115,9 @@ def move_vg_to_pos(mesh, vg_name, target_pos):
             #call vgmove to set the vg to that specific position
             vgmove(delta)        
 
-#mesh = bpy.data.objects['c1801b0002_top Part 9.0']        
-#vg_name = 'waist'
-#target_pos = 10
+#mesh = bpy.data.objects['c1801b0002_top Part 9.0']  #mesh that contains the bone order
+#vg_name = 'waist' #name of the vertex group I would like to move
+#target_pos = 10 #the bone order position I would like it to have
 
 #move_vg_to_pos(mesh,vg_name,target_pos)    
 
@@ -145,7 +145,7 @@ def main(context):
 		
 @register_wrap
 class BoneGroups(bpy.types.Operator):
-	"""Mass add bone names and shape key names to display panel groups"""
+	"""Mass add bone names to blender bone groups"""
 	bl_idname = "object.add_bone_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -155,7 +155,7 @@ class BoneGroups(bpy.types.Operator):
 		, ('mmd_japanese', 'MMD Japanese', 'MMD Japanese')\
 		, ('mmd_japaneseLR', 'MMD Japanese LR', 'MMD Japanese LR')\
 		, ('ffxiv', 'FFXIV', 'FFXIV')\
-		], name = "MMD Bone Type Groups :", default = 'ffxiv')
+		], name = "Bone Type", default = 'ffxiv')
 
 
 	@classmethod

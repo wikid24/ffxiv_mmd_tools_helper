@@ -127,7 +127,7 @@ def main(context):
 
 @register_wrap
 class AddJoints(bpy.types.Operator):
-	"""Add Rigid Body properties to a MMD Model"""
+	"""Add Joints to a FFXIV Model (Converted to an MMD Model)"""
 	bl_idname = "ffxiv_mmd_tools_helper.add_joints"
 	bl_label = "Replace bones renaming"
 	bl_options = {'REGISTER', 'UNDO'}

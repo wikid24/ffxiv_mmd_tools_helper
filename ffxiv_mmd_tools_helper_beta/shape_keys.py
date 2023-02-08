@@ -316,7 +316,7 @@ class Shape_Keys(bpy.types.Operator):
 	, ("elezen", "Import Elezen Shape Keys","Import Elezen Shape Keys") \
 	, ("roegadyn", "Import Roegadyn Shape Keys","Import Roegadyn Shape Keys") \
 	, ("lalafell", "Import Lalafell Shape Keys","Import Lalafell Shape Keys") \
-	], name = "Select Race:", default = 'hyur')
+	], name = "FFXIV Race", default = 'hyur')
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 

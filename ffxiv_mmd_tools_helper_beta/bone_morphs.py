@@ -247,21 +247,22 @@ def main(context):
 
 @register_wrap
 class AddBoneMorphs(bpy.types.Operator):
+	"""Add Bone Morphs to an FFXIV Model (converted to an MMD Model)"""
 	bl_idname = "object.add_bone_morphs"
 	bl_label = "Import Bone Morphs"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.bone_morph_ffxiv_model_list = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
-	, ("hyur", "Import Hyur (Human) Bone Morphs","Import Hyur Bone Morphs") \
-	, ("miquote", "Import Miquote Bone Morphs","Import Miquote Bone Morphs") \
-	, ("viera", "Import Viera Bone Morphs","Import Viera Bone Morphs") \
-	, ("aura", "Import Au Ra Bone Morphs","Import Au Ra Bone Morphs") \
-	, ("hrothgar", "Import Hrothgar Bone Morphs","Import Hrothgar Bone Morphs") \
-	, ("elezen", "Import Elezen Bone Morphs","Import Elezen Bone Morphs") \
-	, ("roegadyn", "Import Roegadyn Bone Morphs","Import Roegadyn Bone Morphs") \
-	, ("lalafell", "Import Lalafell Bone Morphs","Import Lalafell Bone Morphs") \
-	], name = "Select Race:", default = 'hyur')
+	, ("hyur", "Hyur (Human)","Import Hyur Bone Morphs") \
+	, ("miquote", "Miquote","Import Miquote Bone Morphs") \
+	, ("viera", "Viera","Import Viera Bone Morphs") \
+	, ("aura", "Au Ra","Import Au Ra Bone Morphs") \
+	, ("hrothgar", "Hrothgar","Import Hrothgar Bone Morphs") \
+	, ("elezen", "Elezen","Import Elezen Bone Morphs") \
+	, ("roegadyn", "Roegadyn","Import Roegadyn Bone Morphs") \
+	, ("lalafell", "Lalafell","Import Lalafell Bone Morphs") \
+	], name = "Race", default = 'hyur')
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 
@@ -277,6 +278,7 @@ class AddBoneMorphs(bpy.types.Operator):
 
 @register_wrap
 class OpenBoneMorphsFile(bpy.types.Operator):
+	"""Open Bone Morphs CSV File for the selected race"""
 	bl_idname = "object.open_bone_morphs_file"
 	bl_label = "Open Bone Morphs CSV File"
 

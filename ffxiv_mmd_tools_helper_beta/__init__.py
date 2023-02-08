@@ -67,6 +67,7 @@ if "bpy" in locals():
 	importlib.reload(panel_skirt)
 	importlib.reload(panel_camera_lighting)
 	importlib.reload(panel_shading_toon)
+	importlib.reload(panel_exportMMD)
 	
 	
 	
@@ -109,7 +110,7 @@ else:
 	from .panels import panel_skirt
 	from .panels import panel_camera_lighting
 	from .panels import panel_shading_toon
-	
+	from .panels import panel_exportMMD
 	
 
 if bpy.app.version < (2, 80, 0):

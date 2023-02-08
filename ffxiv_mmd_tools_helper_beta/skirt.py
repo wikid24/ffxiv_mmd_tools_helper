@@ -462,9 +462,9 @@ class GenerateSkirtModal(bpy.types.Operator):
     bl_label = "Create New Skirt"
     bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
     
-    num_bone_parents: bpy.props.IntProperty(name="Bone Parents", default=16, min =1, update =_skirt_shape_update)
+    num_bone_parents: bpy.props.IntProperty(name="Bone Parents", default=16, min =0, update =_skirt_shape_update)
     num_bone_children: bpy.props.IntProperty(name="Number of Bone Children", default=13, min=2, update =_skirt_shape_update)
-    num_segments: bpy.props.IntProperty(name="Mesh Segments", default=16, min = 4, update =_skirt_shape_update)
+    num_segments: bpy.props.IntProperty(name="Mesh Segments", default=16, min = 0, update =_skirt_shape_update)
     num_subdivisions: bpy.props.IntProperty(name="Mesh Subdivisions:", default=5,min=1, update =_skirt_shape_update)
     height: bpy.props.FloatProperty(name="Head Height", default=0.98,min=0, update =_skirt_shape_update)
     radius_head: bpy.props.FloatProperty(name="Head Radius", default=0.12,min=0, update =_skirt_shape_update)

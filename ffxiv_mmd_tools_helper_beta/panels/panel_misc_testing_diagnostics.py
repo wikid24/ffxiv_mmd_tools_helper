@@ -17,16 +17,11 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.label(text="Misc Tools (MMD English bones only)", icon='WORLD_DATA')
 		row = layout.row()
-		layout.prop(context.scene, "selected_miscellaneous_tools")	
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute Function", icon='ORIENTATION_NORMAL')
+		split = layout.split(factor=0.66)
+		split.prop(context.scene, "selected_miscellaneous_tools")	
+		split.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute", icon='ORIENTATION_NORMAL')
 
-		row = layout.row()
-		row.label(text="Add MMD Display Panel Groups (broken)", icon="LONGDISPLAY")
-		row = layout.row()
-		layout.prop (context.scene, "display_panel_options")
-		row = layout.row()
-		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items (broken)", icon="LONGDISPLAY")
+		
 
 """
 @register_wrap

@@ -17,7 +17,7 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		layout.prop (context.scene, "bone_morph_ffxiv_model_list")
 		row = layout.row()
-		row.operator("object.add_bone_morphs", text = "Add bone morphs to FFXIV model",icon='SHAPEKEY_DATA')
+		row.operator("object.add_bone_morphs", text = "Add bone morphs to converted FFXIV model",icon='SHAPEKEY_DATA')
 		row = layout.row()
 		row.operator("object.open_bone_morphs_file", text = "Open CSV file",icon='FILE')
 		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")

@@ -97,18 +97,30 @@ def delete_bone_groups():
 	print("All bone groups deleted.")
 
 
-"""
-bone_groups = get_csv_bone_groups(BONES_METADATA_FFXIV_DICTIONARY)
 
+#MOVE VERTEX GROUP / BONE ORDER TO A SPECIFIC POSITION
+def vgmove(delta):
+    direction = 'UP' if delta > 0 else 'DOWN'
+    for i in range(abs(delta)):
+        bpy.ops.object.vertex_group_move(direction=direction)
 
-sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_FFXIV_DICTIONARY,"ffxiv")
+def move_vg_to_pos(mesh, vg_name, target_pos):
+    #search for vg_name in mesh
+    for vg in mesh.vertex_groups:
+        if vg.name == vg_name:
+            #set the active index to the matching criteria
+            mesh.vertex_groups.active_index = vg.index
+            #get delta from the current index position to the target position
+            delta = vg.index - min(target_pos, len(mesh.vertex_groups) - 1)
+            #call vgmove to set the vg to that specific position
+            vgmove(delta)        
 
-for bone_group_name, bone_names in sorted_bones.items():
-	for bone_name in bone_names:
-		add_bone_to_group(bone_name, bone_group_name)
+#mesh = bpy.data.objects['c1801b0002_top Part 9.0']        
+#vg_name = 'waist'
+#target_pos = 10
 
-print (sorted_bones)
-"""
+#move_vg_to_pos(mesh,vg_name,target_pos)    
+
 
 
 def main(context):
@@ -129,27 +141,7 @@ def main(context):
 		add_bone_to_group(row[1], row[0])
 
 
-	#for bone_group_name, bone_names in sorted_bones.items():
-	#	for bone_name in bone_names:
-	#		print (bone_group_name,":",bone_name)
-	#		add_bone_to_group(bone_name, bone_group_name)
 
-
-	"""
-	if bpy.context.scene.bone_panel_bone_type_options == 'MMD English':
-		print (bpy.context.scene.bone_panel_bone_type_options)
-		pass
-	if bpy.context.scene.bone_panel_bone_type_options == 'MMD Japanese':
-		print (bpy.context.scene.bone_panel_bone_type_options)
-		pass
-	if bpy.context.scene.bone_panel_bone_type_options == 'MMD Japanese LR':
-		print (bpy.context.scene.bone_panel_bone_type_options)
-		pass
-	if bpy.context.scene.bone_panel_bone_type_options == 'ffxiv':
-		print (bpy.context.scene.bone_panel_bone_type_options)
-		pass
-	"""
-		
 		
 @register_wrap
 class BoneGroups(bpy.types.Operator):

@@ -4,6 +4,7 @@ from . import model
 from . import import_csv
 import math
 from mmd_tools.operators.rigid_body import AddRigidBody
+from mmd_tools.core import model as mmd_model
 
 """
 @register_wrap
@@ -135,7 +136,8 @@ class AddJoints(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
 		main(context)

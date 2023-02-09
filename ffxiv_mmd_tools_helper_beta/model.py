@@ -115,6 +115,22 @@ def find_mmd_joints_list(root):
 		joints_list = list(joints.children)
 	return joints_list
 
+def is_mmd_english():
+	mmd_english = True
+	bpy.context.view_layer.objects.active  = findArmature(bpy.context.active_object)
+	mmd_english_test_bone_names = ['upper body', 'neck', 'head', 'shoulder_L', 'arm_L', 'elbow_L', 'wrist_L', 'leg_L', 'knee_L', 'ankle_L', 'shoulder_R', 'arm_R', 'elbow_R', 'wrist_R', 'leg_R', 'knee_R', 'ankle_R']
+	missing_mmd_english_test_bone_names = []
+	for b in mmd_english_test_bone_names:
+		if b not in bpy.context.active_object.data.bones.keys():
+			missing_mmd_english_test_bone_names.append(b)
+	if len(missing_mmd_english_test_bone_names) > 0:
+		print("Missing mmd_english test bone names = ", missing_mmd_english_test_bone_names)
+		print('\n')
+		print("This armature appears not to be an mmd_english armature")
+		mmd_english = False
+	return mmd_english
+
+
 def test():
 	if hasattr(bpy.context, "active_object"):
 		if bpy.context.active_object is not None:

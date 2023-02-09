@@ -22,7 +22,7 @@ class ReverseJapaneseEnglishPanel(bpy.types.Panel):
 		row = layout.row()
 """
 
-def main(context):
+def swap_japanese_english(context):
 	for m in bpy.data.materials:
 		name_j = m.mmd_material.name_j
 		name_e = m.mmd_material.name_e
@@ -68,5 +68,5 @@ class ReverseJapaneseEnglish(bpy.types.Operator):
 	bl_options = {'REGISTER', 'UNDO'}
 
 	def execute(self, context):
-		main(context)
+		swap_japanese_english(context)
 		return {'FINISHED'}

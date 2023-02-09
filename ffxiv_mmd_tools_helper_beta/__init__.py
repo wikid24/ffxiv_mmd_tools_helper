@@ -50,7 +50,8 @@ if "bpy" in locals():
 	importlib.reload(toon_modifier)
 	importlib.reload(reverse_japanese_english)
 	importlib.reload(miscellaneous_tools)
-	importlib.reload(blender_bone_names_to_japanese_bone_names)
+	importlib.reload(bone_tools)
+	#importlib.reload(blender_bone_names_to_japanese_bone_names)
 	importlib.reload(shape_keys)
 	importlib.reload(bone_groups)
 	importlib.reload(import_ffxiv_model)
@@ -58,16 +59,17 @@ if "bpy" in locals():
 	importlib.reload(joints)
 	importlib.reload(skirt)
 	importlib.reload(bone_morphs)
-	importlib.reload(panel_import_model)
-	importlib.reload(panel_language_translation)
-	importlib.reload(panel_misc)
-	importlib.reload(panel_bones_ik)
-	importlib.reload(panel_rigid_bodies_joints)
-	importlib.reload(panel_shape_keys_bone_morphs)
-	importlib.reload(panel_skirt)
-	importlib.reload(panel_camera_lighting)
-	importlib.reload(panel_shading_toon)
-	importlib.reload(panel_exportMMD)
+	importlib.reload(panels)
+	#importlib.reload(panel_import_model)
+	#importlib.reload(panel_language_translation)
+	#importlib.reload(panel_misc)
+	#importlib.reload(panel_bones_ik)
+	#importlib.reload(panel_rigid_bodies_joints)
+	#importlib.reload(panel_shape_keys_bone_morphs)
+	#importlib.reload(panel_skirt)
+	#importlib.reload(panel_camera_lighting)
+	#importlib.reload(panel_shading_toon)
+	#importlib.reload(panel_exportMMD)
 	
 	
 	
@@ -92,8 +94,8 @@ else:
 	from . import toon_textures_to_node_editor_shader
 	from . import toon_modifier
 	from . import reverse_japanese_english
-	from . import miscellaneous_tools
-	from . import blender_bone_names_to_japanese_bone_names
+	from . import bone_tools
+	#from . import blender_bone_names_to_japanese_bone_names
 	from . import shape_keys
 	from . import bone_groups
 	from . import import_ffxiv_model
@@ -101,16 +103,18 @@ else:
 	from . import joints
 	from . import bone_morphs
 	from . import skirt
-	from .panels import panel_import_model
-	from .panels import panel_language_translation
-	from .panels import panel_misc
-	from .panels import panel_bones_ik
-	from .panels import panel_rigid_bodies_joints
-	from .panels import panel_shape_keys_bone_morphs
-	from .panels import panel_skirt
-	from .panels import panel_camera_lighting
-	from .panels import panel_shading_toon
-	from .panels import panel_exportMMD
+	from . import miscellaneous_tools
+	from . import panels
+	#from .panels import panel_import_model
+	#from .panels import panel_language_translation
+	#from .panels import panel_misc
+	#from .panels import panel_bones_ik
+	#from .panels import panel_rigid_bodies_joints
+	#from .panels import panel_shape_keys_bone_morphs
+	#from .panels import panel_skirt
+	#from .panels import panel_camera_lighting
+	#from .panels import panel_shading_toon
+	#from .panels import panel_exportMMD
 	
 
 if bpy.app.version < (2, 80, 0):

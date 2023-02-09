@@ -103,7 +103,7 @@ def rename_finger_bones(boneMap1, boneMap2, FINGER_BONE_NAMES_DICTIONARY):
 	print_missing_bone_names()
 
 
-def main(context):
+def mass_bones_renamer(context):
 	bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 
 	#show the bone names
@@ -118,7 +118,7 @@ def main(context):
 
 
 @register_wrap
-class BonesRenamer(bpy.types.Operator):
+class MassBonesRenamer(bpy.types.Operator):
 	"""Mass bones renamer for armature conversion"""
 	bl_idname = "object.bones_renamer"
 	bl_label = "Bones Renamer"
@@ -180,27 +180,9 @@ class BonesRenamer(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
-		main(context)
+		mass_bones_renamer(context)
 		return {'FINISHED'}
 
-@register_wrap
-class ShowHideBoneNames(bpy.types.Operator):
-	"""Hide Bone Names"""
-	bl_idname = "object.bone_names_showhide"
-	bl_label = "Bone Names Show/Hide"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	@classmethod
-	def poll(cls, context):
-		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
-
-	def execute(self, context):
-		if bpy.context.object.data.show_names == True:
-			bpy.context.object.data.show_names = False
-		else:
-			bpy.context.object.data.show_names = True
-		return {'FINISHED'}
 
 def find_and_replace_bone_names(context):
 	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
@@ -235,4 +217,28 @@ class FindAndReplaceBoneNames(bpy.types.Operator):
 
 	def execute(self, context):
 		find_and_replace_bone_names(context)
+		return {'FINISHED'}
+
+
+def blender_to_japanese_bone_names(context):
+	armature = model.findArmature(bpy.context.active_object)
+	for b in armature.data.bones:
+		if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+			armature.pose.bones[b.name].mmd_bone.name_j = b.name
+
+
+@register_wrap
+class BlenderToJapaneseBoneNames(bpy.types.Operator):
+	"""Copy Blender bone names to Japanese bone names"""
+	bl_idname = "ffxiv_mmd_tools_helper.blender_to_japanese_bone_names"
+	bl_label = "Copy Blender bone names to Japanese bone names"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		blender_to_japanese_bone_names(context)
 		return {'FINISHED'}

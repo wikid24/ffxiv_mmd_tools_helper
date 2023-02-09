@@ -3,9 +3,11 @@ import math
 
 from . import register_wrap
 from . import import_csv
+from . import bone_tools
 
 import mmd_tools.core.model as mmd_model
 from mmd_tools.utils import ItemOp
+from mmd_tools.core import model as mmd_model
 
 
 
@@ -226,6 +228,18 @@ def read_bone_morphs_list_file():
 
 	return BONE_MORPHS_LIST
 
+def change_face_rotation_mode(rotation_mode):
+	armature = bpy.context.active_object
+
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	BONE_DICTIONARY = bone_tools.get_csv_bones_by_bone_group('blender_bone_group',target_columns)
+
+	for bone in armature.pose.bones:
+		for _bone in BONE_DICTIONARY:
+			if bone.name == _bone[1] and _bone[0] == 'face':
+				bone.rotation_mode = rotation_mode
+
+
 def main(context):
 	armature = bpy.context.active_object #model.find_MMD_Armature(bpy.context.object)
 	bpy.context.view_layer.objects.active = armature
@@ -263,13 +277,16 @@ class AddBoneMorphs(bpy.types.Operator):
 	, ("roegadyn", "Roegadyn","Import Roegadyn Bone Morphs") \
 	, ("lalafell", "Lalafell","Import Lalafell Bone Morphs") \
 	], name = "Race", default = 'hyur')
+
+
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
 		main(context)
@@ -287,6 +304,23 @@ class OpenBoneMorphsFile(bpy.types.Operator):
 		return {'FINISHED'}
 
 @register_wrap
+class ChangeFaceBoneRotationMode(bpy.types.Operator):
+	"""Changes all Face Bones to the selected Rotation Mode"""
+	bl_idname = "object.change_face_rotation_mode"
+	bl_label = "Change Face Rotation Mode"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	bpy.types.Scene.bone_morph_rotation_mode_list = bpy.props.EnumProperty(items = [\
+		  ("QUATERNION", "Quaternion (WXYZ)","Quaternion (WXYZ)") \
+		, ("XYZ", "XYZ Euler","XYZ Euler") \
+		], name = "", default = 'XYZ')
+
+	def execute(self, context):
+		change_face_rotation_mode(context.scene.bone_morph_rotation_mode_list)
+		return {'FINISHED'}
+
+"""
+@register_wrap
 class PopulateMMDBoneMorphsFile(bpy.types.Operator):
 	bl_idname = "object.populate_mmd_bone_morphs_file"
 	bl_label = "Open Bone Morphs CSV File"
@@ -297,3 +331,4 @@ class PopulateMMDBoneMorphsFile(bpy.types.Operator):
 		for bone_morph in bone_morphs:
 			create_bone_morph(bone_morph[0],bone_morph[1],bone_morph[2])
 		return {'FINISHED'}
+"""

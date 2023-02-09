@@ -2,75 +2,12 @@ import bpy
 
 from . import register_wrap
 from . import model
-from . import import_csv
-
+from . import bone_tools
 
 
 def __items(display_item_frame):
 	return getattr(display_item_frame, 'data', display_item_frame.items)
 
-"""
-@register_wrap
-class MmdToolsBoneGroupsPanel(bpy.types.Panel):
-	#Mass add bone groups
-	bl_idname = "OBJECT_PT_mmd_add_bone_groups"
-	bl_label = "Create Bone Groups"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="Add Bone Groups", icon="ARMATURE_DATA")
-		row = layout.row()
-		layout.prop (context.scene, "bone_panel_bone_type_options")
-		row = layout.row()
-		row.operator("object.add_bone_groups", text = "Add Blender bone groups")
-		row = layout.row()
-"""
-
-def read_bones_metadata_file():
-	BONES_METADATA_FFXIV_DICTIONARY = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
-	return BONES_METADATA_FFXIV_DICTIONARY
-
-def get_csv_bone_groups(BONES_METADATA_FFXIV):
-	# Create an empty set to store the unique values
-	bone_groups = set()
-
-	# Get the index of "blender_bone_group" column
-	header = BONES_METADATA_FFXIV[0]
-	blender_bone_group_index = header.index("blender_bone_group")
-
-	# Iterate over the list, starting from the second row
-	for row in BONES_METADATA_FFXIV[1:]:
-		# Get the value of the "blender_bone_group" column
-		bone_group = row[blender_bone_group_index]
-		# Add the value to the set
-		bone_groups.add(bone_group)
-
-	# Assign the set to a variable
-	bone_groups = list(bone_groups)
-	return bone_groups
-
-
-
-def get_csv_bones_by_bone_group(BONES_METADATA_FFXIV,target_column):
-	
-	header = BONES_METADATA_FFXIV[0]
-	blender_bone_group_index = header.index("blender_bone_group")
-	column_data = header.index(target_column)
-	
-	# Use a lambda function to filter out the rows where the target_column column is None
-	filtered_rows = filter(lambda row: row[column_data] != None, BONES_METADATA_FFXIV[1:])
-
-	
-
-	# Use a dictionary comprehension to group the rows by "blender_bone_group" and extract the target_column's data
-	#bones_in_bone_group = {row[blender_bone_group_index]: [row[column_data]] for row in filtered_rows}
-	bones_in_bone_group = [(row[blender_bone_group_index],row[column_data]) for row in filtered_rows]
-	return bones_in_bone_group
 
 def add_bone_to_group (bone_name,bone_group):
 	#create bone group if it doesn't exist
@@ -81,8 +18,6 @@ def add_bone_to_group (bone_name,bone_group):
 	if bone_name in bpy.context.active_object.pose.bones:
 		bone = bpy.context.active_object.pose.bones[bone_name]
 		bone.bone_group = bpy.context.active_object.pose.bone_groups[bone_group]
-	else:
-		print("bone: " +  bone_name + " does not exist in currently selected object")
 
 def delete_bone_groups():
 	# Get the currently selected armature
@@ -135,10 +70,11 @@ def main(context):
 	#mesh_objects_list = model.findMeshesList(bpy.context.active_object)
 	"""
 
-	BONES_METADATA_DICTIONARY = read_bones_metadata_file()
-	sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_DICTIONARY,bpy.context.scene.bone_panel_bone_type_options)
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	bone_groups_dictionary = bone_tools.get_csv_bones_by_bone_group("blender_bone_group", target_columns)
 
-	for row in sorted_bones:
+
+	for row in bone_groups_dictionary:
 		#print (row[1],":",row[0]) # bone_name, bone_group
 		add_bone_to_group(row[1], row[0])
 	
@@ -150,10 +86,9 @@ def main(context):
 		#if bone name starts with 'skirt_' then it belongs in the skirt category
 		elif bone.name.startswith('skirt_'):
 			add_bone_to_group(bone.name,'skirt')
+		elif bone.bone_group is None:
+			add_bone_to_group(bone.name,'other')
 	
-
-
-
 		
 @register_wrap
 class BoneGroups(bpy.types.Operator):
@@ -161,14 +96,6 @@ class BoneGroups(bpy.types.Operator):
 	bl_idname = "object.add_bone_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
 	bl_options = {'REGISTER', 'UNDO'}
-
-	bpy.types.Scene.bone_panel_bone_type_options = bpy.props.EnumProperty(items = \
-		[('mmd_english', 'MMD English', 'MMD English')\
-		, ('mmd_japanese', 'MMD Japanese', 'MMD Japanese')\
-		, ('mmd_japaneseLR', 'MMD Japanese LR', 'MMD Japanese LR')\
-		, ('ffxiv', 'FFXIV', 'FFXIV')\
-		], name = "Bone Type", default = 'ffxiv')
-
 
 	@classmethod
 	def poll(cls, context):

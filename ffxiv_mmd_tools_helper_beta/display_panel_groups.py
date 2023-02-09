@@ -5,7 +5,7 @@ from . import model
 from . import import_csv
 
 def __items(display_item_frame):
-    return getattr(display_item_frame, 'data', display_item_frame.items)
+	return getattr(display_item_frame, 'data', display_item_frame.items)
 
 """
 @register_wrap
@@ -134,39 +134,114 @@ MMD_Standard_Display_Panel_Groups=[
 ("Legs", "足"),
 ]
 
-My_Display_Panel_Groups =[
+Hogarth_Display_Panel_Groups =[
 ("Root", "Root"),
 ("Expressions", "表情"),
 ("IK", "ＩＫ"),
 ("Head", "頭"),
 ("Fingers", "指"),
 ("Hair", "髪"),
-("Skirt", "スカト"),
-("Body", "体"),
-("Other", "Other"),
+("Skirt", "ｽｶｰﾄ"),
+("Body", "体(上)"), #I changed it from body to Upper Body to prevent errors
+("Other", "その他"),
 ]
 
-# by name, children of head bone, IK constraint
+#https://learnmmd.com/http:/learnmmd.com/mmd-bone-reference-charts/
+LearnMMD_Display_Panel_Groups =[
+('Root', 'Root'),
+("Expressions", "表情"),
+("IK", "ＩＫ"),
+("Head", "頭"),
+('Upper Body', '体(上)'),
+('Arms', '腕'),
+("Fingers", "指"),
+('Center', 'センター'),
+('Lower Body', '体(下)'),
+('Legs', '足'),
+('Hair', '髪'),
+('Skirt', 'ｽｶｰﾄ'),
+("Other", "その他")
+]
+
+
+def get_csv_bones_by_bone_group(csv_data, target_columns):
+	#get the header column
+    header = csv_data[0]
+	#get the index of mmd_bone_group_eng
+    mmd_bone_group_index = header.index("mmd_bone_group_eng")
+	#get the index of the bone groups passed to it
+    column_data_indices = [header.index(target_column) for target_column in target_columns]
+    
+	#set() means it will not add something if it already is on the list
+    bone_list = set()
+    
+    for column_index in column_data_indices:
+        for row in csv_data[1:]:
+            #filter out any values where the column is None
+            if row[column_index] is not None:			
+                bone_list.add((row[mmd_bone_group_index],row[column_index]))
+
+    #sort the list by the first column
+    sorted_bone_list = sorted(bone_list, key=lambda x: x[0])
+    return sorted_bone_list
+    
+
+def create_bone_group_dictionary():
+    csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
+
+    target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+    bone_groups_dictionary = get_csv_bones_by_bone_group(csv_data, target_columns)
+
+    return bone_groups_dictionary
 
 def display_panel_groups_create(root, armature_object):
 
+	bpy.context.view_layer.objects.active  = armature_object
+
+
+	FFXIV_BONE_METADATA_DICTIONARY = create_bone_group_dictionary()
+	items_added = []
+	
+	#If the Groups from LearnMMD_Display_Panel_Groups does not exist, create it
+	bpy.context.view_layer.objects.active  = root
+	for group in LearnMMD_Display_Panel_Groups:
+		if group[1] not in bpy.context.active_object.mmd_root.display_item_frames.keys():
+			group_data = bpy.context.active_object.mmd_root.display_item_frames.add()
+			group_data.name = group[1]
+			group_data.name_e = group[0]
+	
+	
+	for bone in armature_object.data.bones.keys():
+		#get all the mmd bone groups
+		for mmd_group in LearnMMD_Display_Panel_Groups: 
+			#get all the data from FFXIV_BONE_METADATA_DICTIONARY
+			for bone_list in FFXIV_BONE_METADATA_DICTIONARY: 
+				#if the bone group and bone matches
+				if bone_list[0] == mmd_group[0] and bone_list[1]== bone:
+					#if the bone hasn't already been added
+					if bone not in __items(root.mmd_root.display_item_frames[mmd_group[1]]).keys():
+						item = __items(root.mmd_root.display_item_frames[mmd_group[1]]).add()
+						item.name = bone
+						items_added.append(bone)
+
+
+	########################START HOGARTH CODE#############################
+
+	bpy.context.view_layer.objects.active  = armature_object
 
 	BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_dictionary()
 	FINGER_BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_fingers_dictionary()
 
-	bpy.context.view_layer.objects.active  = armature_object
-
-	items_added = []
-
-	head_names = ["Head", "head", "頭", "eye", "nose", "tongue", "lip", "jaw", "brow", "cheek", "mouth", "nostril"]
-	hair_names = ["Hair", "hair", "髪"]
-	skirt_names = ["Skirt", "skirt", "スカト", "スカート"] # 
-	
 	root_names = BONE_NAMES_DICTIONARY[1] # + ["center", "Center", "センター"]
-	body_names = []
-	finger_names = []
 	ik_names = [] # ["IK", "ik", ＩＫ"]
+	head_names = ["Head", "head", "頭", "eye", "nose", "tongue", "lip", "jaw", "brow", "cheek", "mouth", "nostril"]
+	finger_names = []
+	# finger_names = ["finger", "Finger", "指", "thumb", "Thumb", "index", "Index", "mid", "Mid", "middle", "Middle", "Ring", "ring", "Pinky", "pinky", "Fore", "fore", "little", "Little", "Third", "third", "親指", "人指", "中指", "薬指", "小指", "palm"] #not forearm
 
+	hair_names = ["Hair", "hair",'j_ex_h' ,"髪"]
+	skirt_names = ["Skirt", "skirt", "スカト", "スカート"]
+	body_names = []
+	
 
 	#Get all bones from the bone_dictionary.csv and store them in a list
 	for b in BONE_NAMES_DICTIONARY:
@@ -187,39 +262,46 @@ def display_panel_groups_create(root, armature_object):
 					if c.subtarget not in ik_names:
 						ik_names.append(c.subtarget)
 
+	#this is used because it is fuzzy logic based on a partial string match
+	groups_names_1 = [("ＩＫ", ik_names), ("髪", hair_names), ("頭", head_names),  ("ｽｶｰﾄ", skirt_names)]
+	#this is used because it is based on the dictionary files
+	groups_names_2 = [("Root", root_names), ("指", finger_names),  ("体(上)", body_names)]
 
-	groups_names_1 = [("ＩＫ", ik_names), ("髪", hair_names), ("頭", head_names),  ("スカト", skirt_names)]
-	groups_names_2 = [("Root", root_names), ("指", finger_names),  ("体", body_names)]
-
-	#If the Groups from My_Display_Panel_Groups does not exist, create it
+	
+	#If the Groups from Hogarth_Display_Panel_Groups does not exist, create it
 	bpy.context.view_layer.objects.active  = root
-	for g in My_Display_Panel_Groups:
+	for g in Hogarth_Display_Panel_Groups:
 		if g[1] not in bpy.context.active_object.mmd_root.display_item_frames.keys():
 			group = bpy.context.active_object.mmd_root.display_item_frames.add()
 			group.name = g[1]
 			group.name_e = g[0]
-
-
-
-	for b in armature_object.data.bones.keys():
-		for g in groups_names_1:
-			for n in g[1]:
+	
+	#fuzzy string match based on names
+	for b in armature_object.data.bones.keys(): #get all the bones in the armature
+		for g in groups_names_1: #IK, hair, head, skirt
+			for n in g[1]: #list of ik_names, hair_names, head_names, skirt_names
+				#if fuzzy string match
 				if n in b:
+					#if bone is not already in a display group
 					if b not in __items(root.mmd_root.display_item_frames[g[0]]).keys():
+						#if bone has not already been added
 						if b not in items_added:
 							item = __items(root.mmd_root.display_item_frames[g[0]]).add()
 							item.name = b
 							items_added.append(b)
 
+	#hard-coded dictionary search
 	for b in armature_object.data.bones.keys():
-		for g in groups_names_2:
-			for n in g[1]:
-				if n == b:
-					if b not in __items(root.mmd_root.display_item_frames[g[0]]).keys():
-						item = __items(root.mmd_root.display_item_frames[g[0]]).add()
-						item.name = b
-						items_added.append(b)
+		if b not in items_added:
+			for g in groups_names_2: 
+				for n in g[1]: #list of root_names, finger_names, body_names
+					if n == b:
+						if b not in __items(root.mmd_root.display_item_frames[g[0]]).keys():
+							item = __items(root.mmd_root.display_item_frames[g[0]]).add()
+							item.name = b
+							items_added.append(b)
 
+	#add all other bones to the 'Other' display group
 	for b in armature_object.data.bones.keys():
 		if b not in items_added:
 			if "shadow" not in b and "dummy" not in b:
@@ -227,9 +309,9 @@ def display_panel_groups_create(root, armature_object):
 					item = __items(root.mmd_root.display_item_frames["Other"]).add()
 					item.name = b
 					items_added.append(b)
+	
 
-
-	# finger_names = ["finger", "Finger", "指", "thumb", "Thumb", "index", "Index", "mid", "Mid", "middle", "Middle", "Ring", "ring", "Pinky", "pinky", "Fore", "fore", "little", "Little", "Third", "third", "親指", "人指", "中指", "薬指", "小指", "palm"] #not forearm
+	########################END HOGARTH CODE#############################
 
 def main(context):
 	armature_object = model.findArmature(bpy.context.active_object)
@@ -239,24 +321,19 @@ def main(context):
 	root = model.findRoot(bpy.context.active_object)
 	mesh_objects_list = model.findMeshesList(bpy.context.active_object)
 
-	if bpy.context.scene.display_panel_options == 'no_change':
+	if bpy.context.scene.mmd_display_panel_options == 'no_change':
 		pass
-	if bpy.context.scene.display_panel_options == 'display_panel_groups_from_bone_groups':
+	if bpy.context.scene.mmd_display_panel_options == 'display_panel_groups_from_bone_groups':
 		clear_display_panel_groups(root)
 		display_panel_groups_from_bone_groups(root, armature_object)
 		display_panel_groups_from_shape_keys(mesh_objects_list)
 		display_panel_groups_non_vertex_morphs(root)
 		delete_empty_display_panel_groups(root)
-	if bpy.context.scene.display_panel_options == 'add_display_panel_groups':
-		print ("calling 1")
+	if bpy.context.scene.mmd_display_panel_options == 'add_display_panel_groups':
 		clear_display_panel_groups(root)
-		print ("calling 2")
 		display_panel_groups_create(root, armature_object)
-		print ("calling 3")
 		display_panel_groups_from_shape_keys(mesh_objects_list)
-		print ("calling 4")
 		display_panel_groups_non_vertex_morphs(root)
-		print ("calling 5")
 		#delete_empty_display_panel_groups(root)
 		#print ("calling 6")
 
@@ -264,10 +341,13 @@ def main(context):
 class MmdToolsDisplayPanelGroups(bpy.types.Operator):
 	"""Mass add bone names and shape key names to display panel groups"""
 	bl_idname = "object.add_display_panel_groups"
-	bl_label = "Create Display Panel Groups and Add Items"
+	bl_label = "Create Display Panel Groups"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	bpy.types.Scene.display_panel_options = bpy.props.EnumProperty(items = [('no_change', 'No Change', 'Make no changes to display panel groups'), ('display_panel_groups_from_bone_groups', 'Display Panel Groups from Bone Groups', 'Add Display Panel Groups from Bone Groups'), ('add_display_panel_groups', 'Add Display Panel Groups', 'Display panel groups and items are created and added by this add-on')], name = "MMD Display Panel Groups :", default = 'no_change')
+	bpy.types.Scene.mmd_display_panel_options = bpy.props.EnumProperty(items = [\
+				('add_display_panel_groups', 'Auto-Generate', 'Automatically Create All MMD Display Panel Groups')\
+				, ('display_panel_groups_from_bone_groups', 'Copy from Blender Bone Groups', 'Copy Display Panel Groups from Blender Bone Groups')\
+				], name = "", default = 'add_display_panel_groups')
 
 	@classmethod
 	def poll(cls, context):

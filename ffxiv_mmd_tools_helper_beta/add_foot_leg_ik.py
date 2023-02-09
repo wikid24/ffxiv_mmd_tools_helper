@@ -334,7 +334,7 @@ def main(context):
 	bone.use_connect = False
 
 	if 'j_asi_c_l' in [b.name for b in bpy.context.active_object.data.edit_bones]:
-		bone = bpy.context.active_object.data.edit_bones.new('j_asi_c_l_d')
+		bone = bpy.context.active_object.data.edit_bones.new('j_asi_c_l_D')
 		bone.head = bpy.context.active_object.data.edit_bones['j_asi_c_l'].head
 		bone.tail = bpy.context.active_object.data.edit_bones['j_asi_c_l'].head
 		bone.tail.z = bpy.context.active_object.data.edit_bones['j_asi_c_l'].head.z + HALF_LENGTH_OF_FOOT_BONE
@@ -343,7 +343,7 @@ def main(context):
 		bone.use_connect = False
 
 	if 'j_asi_c_r' in [b.name for b in bpy.context.active_object.data.edit_bones]:
-		bone = bpy.context.active_object.data.edit_bones.new('j_asi_c_r_d')
+		bone = bpy.context.active_object.data.edit_bones.new('j_asi_c_r_D')
 		bone.head = bpy.context.active_object.data.edit_bones['j_asi_c_r'].head
 		bone.tail = bpy.context.active_object.data.edit_bones['j_asi_c_r'].head
 		bone.tail.z = bpy.context.active_object.data.edit_bones['j_asi_c_r'].head.z + HALF_LENGTH_OF_FOOT_BONE
@@ -358,7 +358,7 @@ def main(context):
 	print('bone = ', bone)
 
 	if 'j_asi_c_l' in [b.name for b in bpy.context.active_object.data.edit_bones]:
-		bone.parent = bpy.context.active_object.data.edit_bones['j_asi_c_l_d']
+		bone.parent = bpy.context.active_object.data.edit_bones['j_asi_c_l_D']
 	else:
 		bone.parent = bpy.context.active_object.data.edit_bones[KNEE_LEFT_D]
 	bone.use_connect = False
@@ -370,7 +370,7 @@ def main(context):
 	print('bone = ', bone)
 
 	if 'j_asi_c_r' in [b.name for b in bpy.context.active_object.data.edit_bones]:
-		bone.parent = bpy.context.active_object.data.edit_bones['j_asi_c_r_d']
+		bone.parent = bpy.context.active_object.data.edit_bones['j_asi_c_r_D']
 	else:
 		bone.parent = bpy.context.active_object.data.edit_bones[KNEE_RIGHT_D]
 	bone.use_connect = False
@@ -433,9 +433,9 @@ def main(context):
 	transfer_vertex_groups(get_armature(),KNEE_LEFT,KNEE_LEFT_D)
 	transfer_vertex_groups(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D)
 	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		transfer_vertex_groups(get_armature(),'j_asi_c_l','j_asi_c_l_d')
+		transfer_vertex_groups(get_armature(),'j_asi_c_l','j_asi_c_l_D')
 	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		transfer_vertex_groups(get_armature(),'j_asi_c_r','j_asi_c_r_d')
+		transfer_vertex_groups(get_armature(),'j_asi_c_r','j_asi_c_r_D')
 	transfer_vertex_groups(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D)
 	transfer_vertex_groups(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D)
 	transfer_vertex_groups(get_armature(),TOE_LEFT,TOE_LEFT_EX)
@@ -447,9 +447,9 @@ def main(context):
 	apply_MMD_additional_rotation(get_armature(),KNEE_LEFT,KNEE_LEFT_D)
 	apply_MMD_additional_rotation(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D)
 	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		apply_MMD_additional_rotation(get_armature(),'j_asi_c_l','j_asi_c_l_d')
+		apply_MMD_additional_rotation(get_armature(),'j_asi_c_l','j_asi_c_l_D')
 	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		apply_MMD_additional_rotation(get_armature(),'j_asi_c_r','j_asi_c_r_d')
+		apply_MMD_additional_rotation(get_armature(),'j_asi_c_r','j_asi_c_r_D')
 	apply_MMD_additional_rotation(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D)
 	apply_MMD_additional_rotation(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D)
 	apply_MMD_additional_rotation(get_armature(),TOE_LEFT,TOE_LEFT_EX)

@@ -5,7 +5,7 @@ from .. import register_wrap
 @register_wrap
 class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 	#Miscellaneous Tools panel
-	bl_label = "Misc/Testing/Diagnostics"
+	bl_label = "Miscellaneous Tools"
 	bl_idname = "OBJECT_PT_MiscellaneousToolsPanel_MTH"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"

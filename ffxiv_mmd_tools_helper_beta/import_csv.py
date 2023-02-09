@@ -162,4 +162,4 @@ def open_bone_morphs_dictionary(ffxiv_race):
 	if BONE_MORPHS_DICTIONARY is not None:
 		open_csv(file_path)
 	else:
-		print('could not fine the file', file_path)
+		print('could not find the file', file_path)

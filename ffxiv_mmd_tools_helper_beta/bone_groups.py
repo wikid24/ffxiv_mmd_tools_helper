@@ -73,9 +73,11 @@ def get_csv_bones_by_bone_group(BONES_METADATA_FFXIV,target_column):
 	return bones_in_bone_group
 
 def add_bone_to_group (bone_name,bone_group):
+	#create bone group if it doesn't exist
 	if bone_group not in bpy.context.active_object.pose.bone_groups.keys():
 		bpy.context.active_object.pose.bone_groups.new(name=bone_group)
 		print(f"Bone group '{bone_group}' created")
+	#add bone to bone group
 	if bone_name in bpy.context.active_object.pose.bones:
 		bone = bpy.context.active_object.pose.bones[bone_name]
 		bone.bone_group = bpy.context.active_object.pose.bone_groups[bone_group]
@@ -137,8 +139,18 @@ def main(context):
 	sorted_bones = get_csv_bones_by_bone_group(BONES_METADATA_DICTIONARY,bpy.context.scene.bone_panel_bone_type_options)
 
 	for row in sorted_bones:
-		#print (row[1],":",row[0]) # bone_group, bone
+		#print (row[1],":",row[0]) # bone_name, bone_group
 		add_bone_to_group(row[1], row[0])
+	
+	#additional cleanup
+	for bone in bpy.context.active_object.pose.bones:
+		#if bone name starts with 'j_ex_h', then it belongs in the hair category
+		if bone.name.startswith('j_ex_h'):
+			add_bone_to_group(bone.name,'hair')
+		#if bone name starts with 'skirt_' then it belongs in the skirt category
+		elif bone.name.startswith('skirt_'):
+			add_bone_to_group(bone.name,'skirt')
+	
 
 
 

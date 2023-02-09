@@ -40,8 +40,8 @@ if "bpy" in locals():
 	importlib.reload(mmd_lamp_setup)
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(background_color_picker)
-	importlib.reload(boneMaps_renamer)
-	importlib.reload(replace_bones_renaming)
+	importlib.reload(bones_renamer)
+	#importlib.reload(replace_bones_renaming)
 	importlib.reload(armature_diagnostic)
 	importlib.reload(add_foot_leg_ik)
 	importlib.reload(add_hand_arm_ik)
@@ -60,7 +60,7 @@ if "bpy" in locals():
 	importlib.reload(bone_morphs)
 	importlib.reload(panel_import_model)
 	importlib.reload(panel_language_translation)
-	importlib.reload(panel_misc_testing_diagnostics)
+	importlib.reload(panel_misc)
 	importlib.reload(panel_bones_ik)
 	importlib.reload(panel_rigid_bodies_joints)
 	importlib.reload(panel_shape_keys_bone_morphs)
@@ -83,8 +83,8 @@ else:
 	from . import mmd_lamp_setup
 	from . import convert_to_blender_camera
 	from . import background_color_picker
-	from . import boneMaps_renamer
-	from . import replace_bones_renaming
+	from . import bones_renamer
+	#from . import replace_bones_renaming
 	from . import armature_diagnostic
 	from . import add_foot_leg_ik
 	from . import add_hand_arm_ik
@@ -103,7 +103,7 @@ else:
 	from . import skirt
 	from .panels import panel_import_model
 	from .panels import panel_language_translation
-	from .panels import panel_misc_testing_diagnostics
+	from .panels import panel_misc
 	from .panels import panel_bones_ik
 	from .panels import panel_rigid_bodies_joints
 	from .panels import panel_shape_keys_bone_morphs

@@ -15,11 +15,12 @@ class ExportMMD_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="Add MMD Display Panel Groups (not fixed yet)", icon="LONGDISPLAY")
-		row = layout.row()
-		layout.prop (context.scene, "display_panel_options")
-		row = layout.row()
-		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items (not fixed yet)", icon="LONGDISPLAY")
+		row.label(text="Create MMD Display Panel Groups", icon="LONGDISPLAY")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.prop (context.scene, "mmd_display_panel_options")
+		col = row.column(align=True)
+		col.operator("object.add_display_panel_groups", text = "Add", icon="LONGDISPLAY")
 		row = layout.row()
 		row.label(text="Hide Special & Physics Bones (TBD)", icon="LONGDISPLAY") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
 		row = layout.row()

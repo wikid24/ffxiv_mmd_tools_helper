@@ -4,7 +4,7 @@ import math
 from . import register_wrap
 from . import model
 from . import miscellaneous_tools
-from . import boneMaps_renamer
+from . import bones_renamer
 from . import add_foot_leg_ik
 from bpy.props import StringProperty
 
@@ -139,7 +139,7 @@ def main(context):
 		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
 		import_ffxiv_model(filepath)
 		miscellaneous_tools.fix_object_axis()
-		boneMaps_renamer.main(context)
+		bones_renamer.main(context)
 		miscellaneous_tools.correct_root_center()
 		miscellaneous_tools.correct_groove()
 		miscellaneous_tools.correct_waist()

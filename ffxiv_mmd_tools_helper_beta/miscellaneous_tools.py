@@ -3,7 +3,7 @@ import math
 import mathutils
 from . import register_wrap
 from . import model
-from . import boneMaps_renamer
+from . import bones_renamer
 from . import add_foot_leg_ik
 from . import skirt
 from mmd_tools.core.bone import FnBone
@@ -736,7 +736,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("add_eye_control_bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
 	, ("correct_arm_wrist_twist", "Correct Arm Twist Bones", "Correct Arm Twist Bones")\
 	, ("add_shoulder_control_bones", "Add Shoulder Control Bones", "Add Shoulder Control Bones")\
-	], name = "Function", default = 'none')
+	], name = "", default = 'none')
 
 	@classmethod
 	def poll(cls, context):

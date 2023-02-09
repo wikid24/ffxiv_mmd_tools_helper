@@ -2,32 +2,13 @@ import bpy
 
 from . import register_wrap
 from . import model
-from . import import_csv
+from mmd_tools.core import model as mmd_model
+from . import bone_tools
+
 
 def __items(display_item_frame):
 	return getattr(display_item_frame, 'data', display_item_frame.items)
 
-"""
-@register_wrap
-class MmdToolsDisplayPanelGroupsPanel(bpy.types.Panel):
-	#Mass add bone names and shape key names to display panel groups#
-	bl_idname = "OBJECT_PT_mmd_add_display_panel_groups"
-	bl_label = "Create Display Panel Groups and Add Items"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="Add MMD Display Panel Groups", icon="ARMATURE_DATA")
-		row = layout.row()
-		layout.prop (context.scene, "display_panel_options")
-		row = layout.row()
-		row.operator("object.add_display_panel_groups", text = "Add MMD display panel items")
-		row = layout.row()
-"""
 
 def delete_empty_display_panel_groups(root):
 	bpy.context.view_layer.objects.active  = root
@@ -164,42 +145,16 @@ LearnMMD_Display_Panel_Groups =[
 ]
 
 
-def get_csv_bones_by_bone_group(csv_data, target_columns):
-	#get the header column
-    header = csv_data[0]
-	#get the index of mmd_bone_group_eng
-    mmd_bone_group_index = header.index("mmd_bone_group_eng")
-	#get the index of the bone groups passed to it
-    column_data_indices = [header.index(target_column) for target_column in target_columns]
-    
-	#set() means it will not add something if it already is on the list
-    bone_list = set()
-    
-    for column_index in column_data_indices:
-        for row in csv_data[1:]:
-            #filter out any values where the column is None
-            if row[column_index] is not None:			
-                bone_list.add((row[mmd_bone_group_index],row[column_index]))
-
-    #sort the list by the first column
-    sorted_bone_list = sorted(bone_list, key=lambda x: x[0])
-    return sorted_bone_list
-    
-
-def create_bone_group_dictionary():
-    csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
-
-    target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
-    bone_groups_dictionary = get_csv_bones_by_bone_group(csv_data, target_columns)
-
-    return bone_groups_dictionary
 
 def display_panel_groups_create(root, armature_object):
 
 	bpy.context.view_layer.objects.active  = armature_object
 
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_bones_by_bone_group("mmd_bone_group_eng", target_columns)
 
-	FFXIV_BONE_METADATA_DICTIONARY = create_bone_group_dictionary()
+
 	items_added = []
 	
 	#If the Groups from LearnMMD_Display_Panel_Groups does not exist, create it
@@ -352,7 +307,8 @@ class MmdToolsDisplayPanelGroups(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
 		main(context)

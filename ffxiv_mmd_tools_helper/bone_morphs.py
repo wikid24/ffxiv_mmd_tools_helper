@@ -230,8 +230,8 @@ def read_bone_morphs_list_file():
 def change_face_rotation_mode(rotation_mode):
 	armature = bpy.context.active_object
 
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
-	BONE_DICTIONARY = bone_tools.get_csv_bones_by_bone_group('blender_bone_group',target_columns)
+	bone_type = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	BONE_DICTIONARY = bone_tools.get_csv_metadata_by_bone_type('blender_bone_group',bone_type)
 
 	for bone in armature.pose.bones:
 		for _bone in BONE_DICTIONARY:

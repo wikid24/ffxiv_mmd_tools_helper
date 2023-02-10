@@ -151,8 +151,8 @@ def display_panel_groups_create(root, armature_object):
 	bpy.context.view_layer.objects.active  = armature_object
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
-	FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_bones_by_bone_group("mmd_bone_group_eng", target_columns)
+	bone_types = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_metadata_by_bone_type("mmd_bone_group_eng", bone_types)
 
 
 	items_added = []
@@ -259,7 +259,7 @@ def display_panel_groups_create(root, armature_object):
 	#add all other bones to the 'Other' display group
 	for b in armature_object.data.bones.keys():
 		if b not in items_added:
-			if "shadow" not in b and "dummy" not in b:
+			if not str(b).startswith("_shadow") and not str(b).startswith("_dummy"):
 				if b not in __items(root.mmd_root.display_item_frames[g[0]]).keys():
 					item = __items(root.mmd_root.display_item_frames["Other"]).add()
 					item.name = b

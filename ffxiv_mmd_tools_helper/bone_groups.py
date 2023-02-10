@@ -34,31 +34,6 @@ def delete_bone_groups():
 
 
 
-#MOVE VERTEX GROUP / BONE ORDER TO A SPECIFIC POSITION
-def vgmove(delta):
-    direction = 'UP' if delta > 0 else 'DOWN'
-    for i in range(abs(delta)):
-        bpy.ops.object.vertex_group_move(direction=direction)
-
-def move_vg_to_pos(mesh, vg_name, target_pos):
-    #search for vg_name in mesh
-    for vg in mesh.vertex_groups:
-        if vg.name == vg_name:
-            #set the active index to the matching criteria
-            mesh.vertex_groups.active_index = vg.index
-            #get delta from the current index position to the target position
-            delta = vg.index - min(target_pos, len(mesh.vertex_groups) - 1)
-            #call vgmove to set the vg to that specific position
-            vgmove(delta)        
-
-#mesh = bpy.data.objects['c1801b0002_top Part 9.0']  #mesh that contains the bone order
-#vg_name = 'waist' #name of the vertex group I would like to move
-#target_pos = 10 #the bone order position I would like it to have
-
-#move_vg_to_pos(mesh,vg_name,target_pos)    
-
-
-
 def main(context):
 	"""
 	armature_object = model.findArmature(bpy.context.active_object)

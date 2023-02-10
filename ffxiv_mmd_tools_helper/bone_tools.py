@@ -4,6 +4,7 @@ from . import register_wrap
 from . import model
 from . import import_csv
 from mmd_tools.core.bone import FnBone
+import mmd_tools.core.model as mmd_model
 
 
 def correct_root_center():
@@ -342,7 +343,7 @@ def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bo
 
 
 def add_bone(armature, bone_name, length, head, tail, parent_bone):
-    
+	
 	new_bone = None
 
 	# Create a new bone
@@ -362,44 +363,44 @@ def add_bone(armature, bone_name, length, head, tail, parent_bone):
 
 def create_twist_support_bones(armature,source_bone,bone_1,bone_2,bone_3,additional_rotation_bone):
 
-    if armature:
-        # Get the armature in edit mode
-        bpy.ops.object.mode_set(mode='EDIT')
-        # Get the source bone
-        source_bone = armature.data.edit_bones.get(source_bone)
-        if source_bone:
-            # Get the length of the arm_L bone
-            length = source_bone.length
-            # Get the start and end points of the arm_L bone
-            start = source_bone.head
-            end = source_bone.tail
-            # Calculate the positions of the three new bones
-            pos1 = start + (end - start) * 0.25
-            pos2 = start + (end - start) * 0.5
-            pos3 = start + (end - start) * 0.75
-            # Add the three new bones
-            _bone_1 = add_bone(armature, bone_1, length * 0.30, pos1, pos1 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
-            _bone_2 = add_bone(armature, bone_2, length * 0.30, pos2, pos2 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
-            _bone_3 = add_bone(armature, bone_3, length * 0.30, pos3, pos3 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
-            
-            bpy.ops.object.mode_set(mode='POSE')
-            
-            # Select all bones in the armature
-            for bone in armature.pose.bones:
-                bone.bone.select = True
-            
-            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_1, 0.25)
-            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_2, 0.50)
-            setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_3, 0.75)
-            
-            
-            armature.data.edit_bones.active = source_bone
-            FnBone.apply_additional_transformation(armature)
-            
-            # Return to object mode
-            bpy.ops.object.mode_set(mode='OBJECT')
-    else:
-        print("Armature object not found")
+	if armature:
+		# Get the armature in edit mode
+		bpy.ops.object.mode_set(mode='EDIT')
+		# Get the source bone
+		source_bone = armature.data.edit_bones.get(source_bone)
+		if source_bone:
+			# Get the length of the arm_L bone
+			length = source_bone.length
+			# Get the start and end points of the arm_L bone
+			start = source_bone.head
+			end = source_bone.tail
+			# Calculate the positions of the three new bones
+			pos1 = start + (end - start) * 0.25
+			pos2 = start + (end - start) * 0.5
+			pos3 = start + (end - start) * 0.75
+			# Add the three new bones
+			_bone_1 = add_bone(armature, bone_1, length * 0.30, pos1, pos1 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+			_bone_2 = add_bone(armature, bone_2, length * 0.30, pos2, pos2 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+			_bone_3 = add_bone(armature, bone_3, length * 0.30, pos3, pos3 + mathutils.Vector((0, 0, length * 0.1)),source_bone)
+			
+			bpy.ops.object.mode_set(mode='POSE')
+			
+			# Select all bones in the armature
+			for bone in armature.pose.bones:
+				bone.bone.select = True
+			
+			setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_1, 0.25)
+			setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_2, 0.50)
+			setup_MMD_additional_rotation(armature,additional_rotation_bone,bone_3, 0.75)
+			
+			
+			armature.data.edit_bones.active = source_bone
+			FnBone.apply_additional_transformation(armature)
+			
+			# Return to object mode
+			bpy.ops.object.mode_set(mode='OBJECT')
+	else:
+		print("Armature object not found")
 
 def add_arm_wrist_twist():
 
@@ -449,17 +450,17 @@ def add_arm_wrist_twist():
 		print("Rename bones to MMD_English and then try again.")
 
 
-    
+	
 def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone, influence):
-    pose_bone = armature.pose.bones.get(target_bone)
-    pose_bone.mmd_bone.has_additional_rotation = True
-    pose_bone.mmd_bone.is_additional_transform_dirty = True
-    pose_bone.mmd_bone.additional_transform_influence = influence
-    pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
+	pose_bone = armature.pose.bones.get(target_bone)
+	pose_bone.mmd_bone.has_additional_rotation = True
+	pose_bone.mmd_bone.is_additional_transform_dirty = True
+	pose_bone.mmd_bone.additional_transform_influence = influence
+	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
 
-    #FnBone.apply_additional_transformation(armature)
-    #FnBone.clean_additional_transformation(armature)    
-    
+	#FnBone.apply_additional_transformation(armature)
+	#FnBone.clean_additional_transformation(armature)    
+	
 
 def add_shoulder_control_bones():
 
@@ -513,29 +514,148 @@ def add_shoulder_control_bones():
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
-def get_csv_bones_by_bone_group(bone_group_type, target_columns):
+def get_csv_metadata_by_bone_type(metadata_column, bone_types):
 
 	csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
 
 	#get the header column
 	header = csv_data[0]
-	#get the index of mmd_bone_group_eng
-	mmd_bone_group_index = header.index(bone_group_type)
-	#get the index of the bone groups passed to it
-	column_data_indices = [header.index(target_column) for target_column in target_columns]
+	#get the index of the column we need
+	metadata_index = header.index(metadata_column)
+	#get the index of the bone types passed to it
+	bone_type_indices = [header.index(target_column) for target_column in bone_types]
 	
 	#set() means it will not add something if it already is on the list
 	bone_list = set()
 	
-	for column_index in column_data_indices:
+	for bone_type in bone_type_indices:
 		for row in csv_data[1:]:
-			#filter out any values where the column is None
-			if row[column_index] is not None:			
-				bone_list.add((row[mmd_bone_group_index],row[column_index]))
+			#filter out any blank columns from the metadata_index column
+			if row[metadata_index] is not None:
+				#filter out any values where the bone type is None
+				if row[bone_type] is not None:			
+					bone_list.add((row[metadata_index],row[bone_type]))
 
 	#sort the list by the first column
 	sorted_bone_list = sorted(bone_list, key=lambda x: x[0])
 	return sorted_bone_list
+
+def hide_special_bones(armature):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("hidden", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+
+		for pbone in armature.pose.bones:
+			pbone.bone.select = False
+
+		for pbone in armature.pose.bones:
+			for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+				if pbone.name == metadata_bone[1]:
+					pbone.bone.select = True
+		
+		#hide all selected bones
+		bpy.ops.pose.hide()
+
+
+
+
+def get_csv_metadata_by_bone_type(metadata_column, bone_types):
+
+	csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
+
+	#get the header column
+	header = csv_data[0]
+	#get the index of the column we need
+	metadata_index = header.index(metadata_column)
+	#get the index of the bone types passed to it
+	bone_type_indices = [header.index(target_column) for target_column in bone_types]
+	
+	#set() means it will not add something if it already is on the list
+	bone_list = set()
+	
+	for bone_type in bone_type_indices:
+		for row in csv_data[1:]:
+			#filter out any blank columns from the metadata_index column
+			if row[metadata_index] is not None:
+				#filter out any values where the bone type is None
+				if row[bone_type] is not None:			
+					bone_list.add((row[metadata_index],row[bone_type]))
+
+	#sort the list by the first column
+	sorted_bone_list = sorted(bone_list, key=lambda x: x[0])
+	return sorted_bone_list
+
+#MOVE VERTEX GROUP / BONE ORDER TO A SPECIFIC POSITION
+def vgmove(delta):
+	direction = 'UP' if delta > 0 else 'DOWN'
+	for i in range(abs(delta)):
+		bpy.ops.object.vertex_group_move(direction=direction)
+
+def move_vg_to_pos(mesh, vg_name, target_pos):    
+	
+	bpy.ops.object.mode_set(mode='OBJECT')
+	bpy.context.view_layer.objects.active = mesh
+	#search for vg_name in mesh
+
+	for vg in mesh.vertex_groups:
+	
+		if vg.name == vg_name:
+			#set the active index to the matching criteria
+			print(mesh,'-', vg_name,'-', target_pos)
+			mesh.vertex_groups.active_index = vg.index
+			#get delta from the current index position to the target position
+			delta = vg.index - min(target_pos, len(mesh.vertex_groups) - 1)
+			#call vgmove to set the vg to that specific position
+			vgmove(delta)        
+
+def set_mmd_bone_order(armature):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_bone_order", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+
+		mmd_bone_order_list = []
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					#append it to the list as well as the bone order number
+					mmd_bone_order_list.append ((pbone.name,metadata_bone[0]))
+		
+		#sort the list according to the bone order number (cast to int first since bone order is treated as a string)
+		mmd_bone_order_list.sort(key=lambda x: int(x[1]))
+
+		sorted_mmd_bone_order_list = []        
+
+		#enumerate the list so gaps between the bone order numbers are ignored
+		for i,mmd_bone in enumerate(mmd_bone_order_list):
+			sorted_mmd_bone_order_list.append((mmd_bone[0],i))            
+		
+		#get the mesh that holds the bone_order_override modifier    
+		root_object = mmd_model.FnModel.find_root(bpy.context.active_object)
+		bone_order_mesh_object = mmd_model.FnModel.find_bone_order_mesh_object(root_object)
+	
+		bpy.ops.object.mode_set(mode='OBJECT')
+		bpy.context.view_layer.objects.active = bone_order_mesh_object
+	
+		#add missing vertex groups
+		mmd_model.FnModel.add_missing_vertex_groups_from_bones(root_object, bone_order_mesh_object, search_in_all_meshes=True)
+	
+		#since bones should have same name as vertex group in bone_order_override, can just call the function
+		for i,bone in enumerate(sorted_mmd_bone_order_list):
+			move_vg_to_pos(bone_order_mesh_object, bone[0],i)
+
 
 def main(context):
 	
@@ -578,6 +698,14 @@ def main(context):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_breast_tip_bones(armature)
+	if selected_bone_tool == "hide_special_bones":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		hide_special_bones(armature)
+	if selected_bone_tool == "set_mmd_bone_order":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		set_mmd_bone_order(armature)
 
 
 
@@ -600,6 +728,8 @@ class BoneTools(bpy.types.Operator):
 	, ("add_arm_wrist_twist", "Add Arm Twist Bones", "Add Arm Twist Bones")\
 	, ("add_shoulder_control_bones", "Add Shoulder Control Bones", "Add Shoulder Control Bones")\
 	, ("add_extra_finger_bones", "Add Extra Finger Bones", "Add Extra Finger Bones")\
+	, ("hide_special_bones", "Hide Special Bones", "Hide Special Bones")\
+	, ("set_mmd_bone_order", "Set MMD Bone Order", "Set MMD Bone Order")\
 	#, ("add_breast_tip_bones", "Add Breast Tip Bones", "Add Breast Tip Bones")\
 	], name = "", default = 'none')
 

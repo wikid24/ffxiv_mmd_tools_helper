@@ -81,7 +81,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 --------------
 
-# How to use (my new workflow:)
+# How to rig a character and get it dancing less than 60 seconds (my new workflow):
 
 On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**

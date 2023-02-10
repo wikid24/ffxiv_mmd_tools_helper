@@ -656,6 +656,26 @@ def set_mmd_bone_order(armature):
 		for i,bone in enumerate(sorted_mmd_bone_order_list):
 			move_vg_to_pos(bone_order_mesh_object, bone[0],i)
 
+	#Get deformation tier from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_deform_tier", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.context.view_layer.objects.active = armature
+
+		bpy.ops.object.mode_set(mode='POSE')
+
+		mmd_bone_order_list = []
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					pbone.mmd_bone.transform_order = int(metadata_bone[0])
+
+
 
 def main(context):
 	

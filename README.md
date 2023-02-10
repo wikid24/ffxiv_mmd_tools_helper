@@ -5,12 +5,18 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 
 # New Features (completed):
-  - 'Insert Bone Morphs from csv'. Working for Hyur in the CSVs now.
-  - 'Insert Rigid Bodies from csv'. Working but only partially completed.
-  - 'Insert Joints from csv'. Working but only partially completed.
-  - 'Insert Bone Groups from csv'. Working but it doesn't add ALL the various bones for hair/hats/accessories/earrings etc... Just the essentials.
-  - 'Insert Shape Keys from csv'. Working for Hyur, partially completed. 
-  - Auto skirt rig generator. Add new skirt bones + weight paint existing skirt meshes with a few clicks.
+  - Auto generate Bone Morphs from csv
+      - Working for Hyur (but can be used on other races)
+  - Auto generate Rigid Bodies from csv
+      - Working but only partially completed
+  - Auto generate Joints from csv
+      - Working but only partially completed
+  - Auto generate Bone Groups from csv
+  - Auto generate Shape Keys from csv
+      - Working for Hyur, partially completed
+  - Auto skirt rig generator
+      - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
+  - Auto generate MMD Display Panel groups from csv
   - A bunch of important useful stuff. Will list them later.
 
 # Conversion/upgrade to Blender 2.8+ (to do):

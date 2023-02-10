@@ -14,7 +14,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - Auto generate Bone Groups
   - Auto generate Shape Keys from csv
       - Working for Hyur, partially completed
-  - Auto skirt rig generator
+  - Skirt rig generator
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
   - Auto Sort the MMD Bone Order and Deformation Tiers

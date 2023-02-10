@@ -606,7 +606,7 @@ def move_vg_to_pos(mesh, vg_name, target_pos):
 	
 		if vg.name == vg_name:
 			#set the active index to the matching criteria
-			print(mesh,'-', vg_name,'-', target_pos)
+			print(mesh.name,'-', vg_name,'-', target_pos)
 			mesh.vertex_groups.active_index = vg.index
 			#get delta from the current index position to the target position
 			delta = vg.index - min(target_pos, len(mesh.vertex_groups) - 1)

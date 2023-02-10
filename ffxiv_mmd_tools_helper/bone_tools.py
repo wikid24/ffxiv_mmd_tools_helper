@@ -718,16 +718,6 @@ def main(context):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_breast_tip_bones(armature)
-	if selected_bone_tool == "hide_special_bones":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		armature = bpy.context.view_layer.objects.active
-		hide_special_bones(armature)
-	if selected_bone_tool == "set_mmd_bone_order":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		armature = bpy.context.view_layer.objects.active
-		set_mmd_bone_order(armature)
-
-
 
 @register_wrap
 class BoneTools(bpy.types.Operator):
@@ -741,16 +731,14 @@ class BoneTools(bpy.types.Operator):
 	, ("correct_root_center", "Correct MMD Root and Center bones", "Correct MMD root and center bones")\
 	, ("correct_groove", "Correct MMD Groove bone", "Correct MMD Groove bone")\
 	, ("correct_waist", "Correct MMD Waist bone", "Correct MMD Waist bone")\
-	, ("correct_waist_cancel", "Correct waist cancel left and right bones", "Correct waist cancel left and right bones")\
+	, ("correct_waist_cancel", "Correct Waist Cancel L/R bones", "Correct waist cancel left and right bones")\
 	, ("correct_view_cnt", "Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
 	, ("correct_bones_lengths", "Correct Bone Lengths and Roll", "Correct Bone Lengths and Roll")\
 	, ("add_eye_control_bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
 	, ("add_arm_wrist_twist", "Add Arm Twist Bones", "Add Arm Twist Bones")\
 	, ("add_shoulder_control_bones", "Add Shoulder Control Bones", "Add Shoulder Control Bones")\
 	, ("add_extra_finger_bones", "Add Extra Finger Bones", "Add Extra Finger Bones")\
-	, ("hide_special_bones", "Hide Special Bones", "Hide Special Bones")\
-	, ("set_mmd_bone_order", "Set MMD Bone Order", "Set MMD Bone Order")\
-	#, ("add_breast_tip_bones", "Add Breast Tip Bones", "Add Breast Tip Bones")\
+	, ("add_breast_tip_bones", "Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
 	], name = "", default = 'none')
 
 	@classmethod
@@ -780,4 +768,41 @@ class ShowHideBoneNames(bpy.types.Operator):
 			context.object.data.show_names = False
 		else:
 			context.object.data.show_names = True
+		return {'FINISHED'}
+
+@register_wrap
+class SortMMDBoneOrder(bpy.types.Operator):
+	"""Auto Sorts the MMD Bone Order & Deformation Tiers"""
+	bl_idname = "ffxiv_mmd_tools_helper.sort_mmd_bone_order"
+	bl_label = "Sort MMD Bone Order/Deformation Tiers"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		set_mmd_bone_order(armature)
+		return {'FINISHED'}
+
+@register_wrap
+class HideSpecial_Bones(bpy.types.Operator):
+	"""Hides Bones for Export to MMD"""
+	bl_idname = "ffxiv_mmd_tools_helper.hide_special_bones"
+	bl_label = "Hides Special/Physics Bones for Export to MMD"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		hide_special_bones(armature)
 		return {'FINISHED'}

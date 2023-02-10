@@ -71,9 +71,9 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row()
 		row.label(text="MMD Bone Conversion", icon="CONSTRAINT_BONE")
-		split = layout.split(factor=0.66)
+		split = layout.split( factor=0.80, align=True)
 		split.prop(context.scene, "selected_bone_tool")	
-		split.operator("ffxiv_mmd_tools_helper.bone_tools", text = "Execute", icon='ORIENTATION_NORMAL')
+		split.operator("ffxiv_mmd_tools_helper.bone_tools", text = "Run", icon='ORIENTATION_NORMAL')
 		row = layout.row()
 		col = row.column(align=True)
 		col.label(text="Find in name:")
@@ -82,19 +82,19 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.label(text="Replace with:")
 		col.prop(context.scene,"replace_bone_string")
-		col.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Find and Replace", icon='VIEWZOOM')
+		col.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Replace", icon='VIEWZOOM')
 		row = layout.row()
-		row.label(text="Inverse Kinematics", icon="CONSTRAINT_BONE")
-		row = layout.row()
-		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Add leg/foot IK", icon="CONSTRAINT_BONE" )
-		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Add hand/arm IK", icon="CONSTRAINT_BONE")
-		layout.separator()
-		row = layout.row()
-		row.label(text="Blender Bone Groups", icon="GROUP_BONE")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.add_bone_groups", text = "Auto-Generate Blender Bone Groups", icon="GROUP_BONE")
+		col = layout.column(align=True)
+		grid = col.grid_flow(row_major=True)
+		row = grid.row(align=True)
+		row.label(text="IK", icon="CONSTRAINT_BONE")
+		row.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Add Leg/Foot IK")
+		row.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Add Hand/Arm IK")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.label(text="Bone Groups", icon="GROUP_BONE")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd_tools_helper.add_bone_groups", text = "Auto-Generate")
 
 @register_wrap
 class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
@@ -120,7 +120,7 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 @register_wrap
 class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 	bl_idname = "OBJECT_PT_ShapeKeysBoneMorphsPanel_MTH"
-	bl_label = "Shape Keys / Bone Morphs"
+	bl_label = "Bone Morphs (Facial Expressions)"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "FFXIV MMD"
@@ -129,19 +129,29 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="Add Bone Morphs (Converted to MMD Model Only)", icon="SHAPEKEY_DATA")
+		row.label(text="Add Bone Morphs (MMD Model Only)", icon="SHAPEKEY_DATA")
+		"""
 		row = layout.row()
 		col = row.column(align=True)
-		col.column(align=True).prop(context.scene, "bone_morph_ffxiv_model_list")
-		col.column(align=True).operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Import Bone Morph from File",icon='SHAPEKEY_DATA')
-		col.column(align=True).operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text = "Open Bone Morph File",icon='FILE')
+		split = col.split(factor = 0.55,align=True)
+		split.prop(context.scene, "bone_morph_ffxiv_model_list")
+		split.operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Create",icon='SHAPEKEY_DATA')
+		split.operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text="File",icon='FILE')
+		"""
 		row = layout.row()
-		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")
+		col = layout.column(align=True)
+		grid = col.grid_flow(row_major=True)
+		row = grid.row(align=True)
+		row.prop(context.scene, "bone_morph_ffxiv_model_list")
+		row.operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Generate",icon='SHAPEKEY_DATA')
+		row.operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text="",icon='CURRENT_FILE')
+		#row = layout.row()
+		#layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.column(align=True).prop(context.scene,'bone_morph_rotation_mode_list')
 		col = row.column(align=True)
-		col.column(align=True).operator("ffxiv_mmd_tools_helper.change_face_rotation_mode")
+		col.column(align=True).operator("ffxiv_mmd_tools_helper.change_face_rotation_mode",text='Change Rotation Mode')
 		
 
 @register_wrap
@@ -169,7 +179,6 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		
 @register_wrap
 class CameraLightingPanel_MTH(bpy.types.Panel):
-	#Creates the Bones Renamer Panel in a VIEW_3D TOOLS tab
 	bl_label = "Camera and Lighting"
 	bl_idname = "OBJECT_PT_CameraLightingPanel_MTH"
 	bl_space_type = "VIEW_3D"
@@ -230,17 +239,17 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.label(text="Misc Tools (MMD English bones only)", icon='WORLD_DATA')
+		row.label(text="Misc Tools", icon='WORLD_DATA')
 		row = layout.row()
-		split = layout.split(factor=0.66)
+		split = layout.split(factor=0.80,align=True)
 		split.prop(context.scene, "selected_miscellaneous_tools")	
-		split.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Execute", icon='ORIENTATION_NORMAL')
+		split.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
 
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):
 	#Mass add bone groups
 	bl_idname = "OBJECT_PT_ExportMMD_MTH"
-	bl_label = "Export MMD"
+	bl_label = "Export MMD Preparation"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "FFXIV MMD"
@@ -249,26 +258,34 @@ class ExportMMD_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-		row = layout.row()
-		row.label(text="Create MMD Display Panel Groups", icon="LONGDISPLAY")
 		row = layout.row(align=True)
 		col = row.column(align=True)
-		col.prop (context.scene, "mmd_display_panel_options")
+		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Create Display Panels", icon="LONGDISPLAY")
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Create", icon="LONGDISPLAY")
+		col.prop (context.scene, "mmd_display_panel_options")
+		row.separator()
 		row = layout.row()
-		row.label(text="Hide Special & Physics Bones (To Do)", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
+		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort MMD Bone Order/Deformation Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
 		row = layout.row()
-		row.label(text="Populate MMD Bone Names (To Do)", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
+
 		row = layout.row()
-		row.label(text="Set Bone Export Order (To Do)", icon="MOD_ARRAY") #Set bone order & deformation tiers
+		row.label(text="**TODO** Populate MMD Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
 		row = layout.row()
-		row.label(text="Lock position / Rotation (To Do)", icon="LOCKED") 
+		row.label(text="**TODO** Lock position / Rotation", icon="LOCKED") 
 		row = layout.row()
-		row.label(text="Armature Diagnostic (broken)", icon='ARMATURE_DATA')
+		row.label(text="**TODO** Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
 		row = layout.row()
-		layout.prop(context.scene, "selected_armature_to_diagnose")
+		row.label(text="**TODO** Edit Config File", icon="CURRENT_FILE") 
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature",icon='ORPHAN_DATA')
+		row.label(text="**TODO** Restore Config Defaults", icon="FILE_TICK") 
+		
+		"""
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature (broken)",icon='ORPHAN_DATA')
+		col = row.column(align=True)
+		col.prop(context.scene, "selected_armature_to_diagnose")
 		row = layout.row()
+		"""
 

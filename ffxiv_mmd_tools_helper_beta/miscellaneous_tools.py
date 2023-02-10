@@ -1,11 +1,7 @@
 import bpy
 import math
-import mathutils
 from . import register_wrap
 from . import model
-from . import bones_renamer
-from . import add_foot_leg_ik
-from . import skirt
 from mmd_tools.core.bone import FnBone
 
 
@@ -188,6 +184,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd_tools_helper.miscellaneous_tools"
 	bl_label = "Miscellaneous Tools"
 	bl_options = {'REGISTER', 'UNDO'}
+	
 
 	bpy.types.Scene.selected_miscellaneous_tools = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\

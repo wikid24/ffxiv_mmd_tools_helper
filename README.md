@@ -135,7 +135,7 @@ On the **FFXIV MMD** tab
 
 20) On the Scene Outliner View, click on **.placeholder**, and click on **Motion Import** again
 
-![image](https://user-images.githubusercontent.com/19479648/217985266-02eaea14-34a8-4160-a3f0-94a14ca6d729.png)
+![image](https://user-images.githubusercontent.com/19479648/217985991-70de46c7-1fef-4804-b80b-38089e3aff4d.png)
 
 
 

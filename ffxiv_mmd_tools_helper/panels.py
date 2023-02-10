@@ -88,8 +88,8 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		grid = col.grid_flow(row_major=True)
 		row = grid.row(align=True)
 		row.label(text="IK", icon="CONSTRAINT_BONE")
-		row.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Add Leg/Foot IK")
-		row.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Add Hand/Arm IK")
+		row.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Leg/Foot IK")
+		row.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Hand/Arm IK")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.label(text="Bone Groups", icon="GROUP_BONE")
@@ -152,6 +152,10 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		col.column(align=True).prop(context.scene,'bone_morph_rotation_mode_list')
 		col = row.column(align=True)
 		col.column(align=True).operator("ffxiv_mmd_tools_helper.change_face_rotation_mode",text='Change Rotation Mode')
+		row = layout.row()
+		row.label(text='**TODO** Open Dictionary File')
+		row = layout.row()
+		row.label(text='**TODO** Restore Defaults')
 		
 
 @register_wrap
@@ -260,12 +264,12 @@ class ExportMMD_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row(align=True)
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Create Display Panels", icon="LONGDISPLAY")
+		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Add Display Panels", icon="LONGDISPLAY")
 		col = row.column(align=True)
 		col.prop (context.scene, "mmd_display_panel_options")
 		row.separator()
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort MMD Bone Order/Deformation Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
+		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort Bone Order/Deform Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
 

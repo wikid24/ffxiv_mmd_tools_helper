@@ -6,22 +6,7 @@ import math
 from mmd_tools.operators.rigid_body import AddRigidBody
 from mmd_tools.core import model as mmd_model
 
-"""
-@register_wrap
-class JointsPanel(bpy.types.Panel):
-	#Joints panel#
-	bl_label = "Joints panel"
-	bl_idname = "OBJECT_PT_joints_panel"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
 
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints to Rigid Bodies")
-		row = layout.row()
-"""
 def get_armature():
 	
 	if bpy.context.active_object.type == 'ARMATURE':

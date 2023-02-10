@@ -1,30 +1,7 @@
 import bpy
-
 from . import register_wrap
 from . import import_csv
 from . import model
-
-"""
-@register_wrap
-class ArmatureDiagnosticPanel(bpy.types.Panel):
-	#Armature Diagnostic panel
-	bl_label = "Armature Diagnostic Panel"
-	bl_idname = "OBJECT_PT_armature_diagnostic"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-		layout.prop(context.scene, "selected_armature_to_diagnose")
-		row = layout.row()
-		row.label(text="Armature Diagnostic", icon='ARMATURE_DATA')
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature")
-		row = layout.row()
-		row = layout.row()
-"""
 
 def main(context):
 	missing_bone_names = []

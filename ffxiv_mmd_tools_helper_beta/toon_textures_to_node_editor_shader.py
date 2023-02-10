@@ -8,25 +8,7 @@ from . import model
 # So the length of the list of pixels is 4 X number of pixels
 # pixels are in left-to-right rows from bottom left to top right of image
 
-"""
-@register_wrap
-class MMDToonTexturesToNodeEditorShaderPanel(bpy.types.Panel):
-	#Sets up nodes in Blender node editor for rendering toon textures
-	bl_idname = "OBJECT_PT_mmd_toon_render_node_editor"
-	bl_label = "MMD toon textures render using node editor "
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
 
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="MMD Render toon textures", icon="MATERIAL")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes")
-		row = layout.row()
-"""
 def toon_image_to_color_ramp(toon_texture_color_ramp, toon_image):
 	pixels_width = toon_image.size[0]
 	pixels_height = toon_image.size[1]
@@ -434,12 +416,6 @@ def toonify_material(mat):
 					
 			else:
 				print("No node connected to the base color input of the principled BSDF node")
-
-
-
-
-
-
 
 @register_wrap
 class MMDToonTexturesToNodeEditorShader(bpy.types.Operator):

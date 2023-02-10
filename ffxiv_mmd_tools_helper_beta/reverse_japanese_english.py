@@ -1,26 +1,6 @@
 import bpy
-
 from . import register_wrap
-
-"""
-@register_wrap
-class ReverseJapaneseEnglishPanel(bpy.types.Panel):
-	#Sets up nodes in Blender node editor for rendering toon textures
-	bl_idname = "OBJECT_PT_reverse_japanese_english"
-	bl_label = "Reverse Japanese English names"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="Reverse Japanese English names", icon="TEXT")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.reverse_japanese_english", text = "Reverse Japanese English names")
-		row = layout.row()
-"""
+from mmd_tools.core import model as mmd_model
 
 def swap_japanese_english(context):
 	for m in bpy.data.materials:
@@ -66,6 +46,13 @@ class ReverseJapaneseEnglish(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd_tools_helper.reverse_japanese_english"
 	bl_label = "Reverse Japanese English names of MMD model"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
+
 
 	def execute(self, context):
 		swap_japanese_english(context)

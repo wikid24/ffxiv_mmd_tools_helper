@@ -1,27 +1,6 @@
 import bpy
-import sys
-
 from . import register_wrap
 
-"""
-@register_wrap
-class MMDBackgroundColorPicker_Panel(bpy.types.Panel):
-	#Selects world background color and a contrasting text color#
-	bl_idname = "OBJECT_PT_mmd_background_color_picker"
-	bl_label = "MMD background color picker"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row = layout.row()
-		layout.prop(context.scene, "BackgroundColor")
-		row.operator("ffxiv_mmd_tools_helper.background_color_picker", text = "MMD background color picker")
-		row = layout.row()
-"""
 
 def main(context):
 

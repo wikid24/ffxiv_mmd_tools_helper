@@ -1,25 +1,5 @@
 import bpy
-
 from . import register_wrap
-
-"""
-@register_wrap
-class MMDCameraToBlenderCameraPanel(bpy.types.Panel):
-	#Convert MMD cameras back to Blender cameras
-	bl_idname = "OBJECT_PT_mmd_camera_to_blender_camera"
-	bl_label = "Convert MMD Cameras to Blender cameras"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras")
-		row = layout.row()
-"""
 
 def main(context):
 	for o in bpy.context.scene.objects:

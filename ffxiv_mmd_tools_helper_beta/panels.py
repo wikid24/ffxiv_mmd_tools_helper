@@ -16,7 +16,7 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("object.ffxiv_file_browser_operator", text="Import FFXIV Model from .fbx File", icon='IMPORT')
+		row.operator("ffxiv_mmd_tools_helper.ffxiv_file_browser_operator", text="Import FFXIV Model from .fbx File", icon='IMPORT')
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True, align=True)
@@ -47,9 +47,8 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		grid.column(align=True).prop(context.scene, "Origin_Armature_Type")
 		grid.column(align=True).prop(context.scene, "Destination_Armature_Type")
 		grid = col.grid_flow(row_major=True, align=True)
-		grid.column(align=True).operator("object.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
-		#grid.column(align=True).operator("object.bone_names_showhide", text = "Show/Hide",icon='HIDE_ON')
-		grid.column(align=True).prop(context.object.data, "show_names", text = "Show Names",icon='HIDE_OFF', toggle=True)
+		grid.column(align=True).operator("ffxiv_mmd_tools_helper.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
+		grid.column(align=True).operator("ffxiv_mmd_tools_helper.bone_names_showhide", text = "Show/Hide",icon='HIDE_ON')
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True, align=True)
@@ -88,14 +87,14 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		row.label(text="Inverse Kinematics", icon="CONSTRAINT_BONE")
 		row = layout.row()
 		col = row.column()
-		col.operator("object.add_foot_leg_ik", text = "Add leg/foot IK", icon="CONSTRAINT_BONE" )
+		col.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Add leg/foot IK", icon="CONSTRAINT_BONE" )
 		col = row.column()
-		col.operator("object.add_hand_arm_ik", text = "Add hand/arm IK", icon="CONSTRAINT_BONE")
+		col.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Add hand/arm IK", icon="CONSTRAINT_BONE")
 		layout.separator()
 		row = layout.row()
 		row.label(text="Blender Bone Groups", icon="GROUP_BONE")
 		row = layout.row()
-		row.operator("object.add_bone_groups", text = "Auto-Generate Blender Bone Groups", icon="GROUP_BONE")
+		row.operator("ffxiv_mmd_tools_helper.add_bone_groups", text = "Auto-Generate Blender Bone Groups", icon="GROUP_BONE")
 
 @register_wrap
 class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
@@ -134,15 +133,15 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		col = row.column(align=True)
 		col.column(align=True).prop(context.scene, "bone_morph_ffxiv_model_list")
-		col.column(align=True).operator("object.add_bone_morphs", text = "Import Bone Morph from File",icon='SHAPEKEY_DATA')
-		col.column(align=True).operator("object.open_bone_morphs_file", text = "Open Bone Morph File",icon='FILE')
+		col.column(align=True).operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Import Bone Morph from File",icon='SHAPEKEY_DATA')
+		col.column(align=True).operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text = "Open Bone Morph File",icon='FILE')
 		row = layout.row()
 		layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.column(align=True).prop(context.scene,'bone_morph_rotation_mode_list')
 		col = row.column(align=True)
-		col.column(align=True).operator("object.change_face_rotation_mode")
+		col.column(align=True).operator("ffxiv_mmd_tools_helper.change_face_rotation_mode")
 		
 
 @register_wrap
@@ -158,15 +157,15 @@ class SkirtPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("object.generate_skirt_modal", text = "Generate A New Skirt Object",icon='SHADERFX')
+		row.operator("ffxiv_mmd_tools_helper.generate_skirt_modal", text = "Generate A New Skirt Object",icon='SHADERFX')
 		row = layout.row()
-		row.operator("object.move_mesh_to_new_skirt_btn", text = "Move Mesh To New Skirt Object",icon='PASTEDOWN')
+		row.operator("ffxiv_mmd_tools_helper.move_mesh_to_new_skirt_btn", text = "Move Mesh To New Skirt Object",icon='PASTEDOWN')
 		row = layout.row()
-		row.operator("object.weight_paint_transfer_to_mesh_btn", text = "Weight Paint Transfer To Mesh",icon='MOD_VERTEX_WEIGHT')
+		row.operator("ffxiv_mmd_tools_helper.weight_paint_transfer_to_mesh_btn", text = "Weight Paint Transfer To Mesh",icon='MOD_VERTEX_WEIGHT')
 		row = layout.row()
-		row.operator("object.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
+		row.operator("ffxiv_mmd_tools_helper.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
 		row = layout.row()
-		row.operator("object.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Model",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Model",icon='AUTOMERGE_ON')
 		
 @register_wrap
 class CameraLightingPanel_MTH(bpy.types.Panel):
@@ -230,7 +229,6 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-		
 		row = layout.row()
 		row.label(text="Misc Tools (MMD English bones only)", icon='WORLD_DATA')
 		row = layout.row()
@@ -257,7 +255,7 @@ class ExportMMD_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.prop (context.scene, "mmd_display_panel_options")
 		col = row.column(align=True)
-		col.operator("object.add_display_panel_groups", text = "Create", icon="LONGDISPLAY")
+		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Create", icon="LONGDISPLAY")
 		row = layout.row()
 		row.label(text="Hide Special & Physics Bones (To Do)", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
 		row = layout.row()

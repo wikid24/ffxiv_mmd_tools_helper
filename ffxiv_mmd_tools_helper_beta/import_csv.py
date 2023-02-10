@@ -1,7 +1,6 @@
-import bpy
 import csv
 import os
-import subprocess
+
 
 def csv_cleanup (csv_data,keep_header,convert_str_to_float,convert_null_to_0, convert_null_to_none):
 

@@ -1,12 +1,8 @@
 import bpy
-#import math
 import mathutils
 from . import register_wrap
 from . import model
 from . import import_csv
-#from . import bones_renamer
-#from . import add_foot_leg_ik
-#from . import skirt
 from mmd_tools.core.bone import FnBone
 
 
@@ -610,8 +606,28 @@ class BoneTools(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object 
-		return obj is not None
+		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		main(context)
+		return {'FINISHED'}
+
+
+@register_wrap
+class ShowHideBoneNames(bpy.types.Operator):
+	"""Toggle Bone Name Display On or Off"""
+	bl_idname = "ffxiv_mmd_tools_helper.bone_names_showhide"
+	bl_label = "Show or Hide the Bone Name"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		if context.object.data.show_names == True:
+			context.object.data.show_names = False
+		else:
+			context.object.data.show_names = True
 		return {'FINISHED'}

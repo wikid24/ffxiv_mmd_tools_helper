@@ -1,34 +1,11 @@
 import bpy
-import math
-
 from . import register_wrap
-from . import model
 from . import miscellaneous_tools
 from . import bones_renamer
 from . import add_foot_leg_ik
 from bpy.props import StringProperty
 
 
-"""
-@register_wrap
-class ImportFFXIVTestModelPanel(bpy.types.Panel):
-	#Import FFXIV Test Model panel
-	bl_label = "Import FFXIV Test Model Panel"
-	bl_idname = "OBJECT_PT_import_ffxiv_model"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-
-		row = layout.row()
-		layout.prop(context.scene, "selected_ffxiv_test_model")
-		row = layout.row()
-		row.label(text="Import FFXIV Model", icon='WORLD_DATA')
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.import_ffxiv_model", text = "Execute Function")
-"""
 
 def get_test_model_file_path(ffxiv_model):
 
@@ -124,18 +101,19 @@ def import_ffxiv_model(file_path):
 		# Set the armature as the object to which the modifier applies
 		mmd_bone_order_override_modifier.object = armature
 	
-	
-
+	#set the last selected armature as the active object
+	x = bpy.data.objects[armature.name]
+	x.select_set(True)
 
 def main(context):
 
 	if bpy.context.scene.selected_ffxiv_test_model == "import_nala":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
 		import_ffxiv_model(filepath)
 
 	elif bpy.context.scene.selected_ffxiv_test_model == "import_nala_deluxe":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
 		import_ffxiv_model(filepath)
 		miscellaneous_tools.fix_object_axis()
@@ -153,7 +131,7 @@ from bpy_extras.io_utils import ImportHelper
 @register_wrap
 class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	"""Operator that opens the file browser dialog"""
-	bl_idname = "object.ffxiv_file_browser_operator"
+	bl_idname = "ffxiv_mmd_tools_helper.ffxiv_file_browser_operator"
 	bl_label = "File Browser Operator"
 	bl_options = {'REGISTER', 'UNDO'}
 

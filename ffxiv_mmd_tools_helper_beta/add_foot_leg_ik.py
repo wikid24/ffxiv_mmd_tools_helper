@@ -38,25 +38,6 @@ from mmd_tools.core.bone import FnBone
 		# if b in bpy.context.active_object.data.bones.keys():
 			# print('This armature appears to already have IK bones. This bone seems to be an IK bone:', '\n', b)
 
-"""
-#@register_wrap
-class Add_MMD_foot_leg_IK_Panel(bpy.types.Panel):
-	#Add foot and leg IK bones and constraints to MMD model
-	bl_idname = "OBJECT_PT_mmd_add_foot_leg_ik"
-	bl_label = "Add foot leg IK to MMD model"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-		row.label(text="Add leg and foot IK to MMD model", icon="ARMATURE_DATA")
-		row = layout.row()
-		row.operator("object.add_foot_leg_ik", text = "Add leg and foot IK to MMD model")
-		row = layout.row()
-		row = layout.row()
-"""
 
 def clear_IK(context):
 	IK_target_bones = []
@@ -703,7 +684,7 @@ def get_armature():
 @register_wrap
 class Add_MMD_foot_leg_IK(bpy.types.Operator):
 	"""Add foot and leg IK bones and constraints to MMD model"""
-	bl_idname = "object.add_foot_leg_ik"
+	bl_idname = "ffxiv_mmd_tools_helper.add_foot_leg_ik"
 	bl_label = "Add foot leg IK to MMD model"
 	bl_options = {'REGISTER', 'UNDO'}
 

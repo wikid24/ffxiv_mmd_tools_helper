@@ -1,8 +1,5 @@
 import bpy
-import math
-
 from . import register_wrap
-#from .panels.bones_ik import Add_MMD_Hand_Arm_IK_Panel
 from . import model
 from mmd_tools.core.bone import FnBone
 
@@ -37,26 +34,6 @@ def armature_diagnostic():
 		if b in bpy.context.active_object.data.bones.keys():
 			print('This armature appears to already have hand IK bones. This bone seems to be a hand IK bone:', '\n', b)
 
-
-"""
-@register_wrap
-class Add_MMD_Hand_Arm_IK_Panel(bpy.types.Panel):
-	#Add hand and arm IK bones and constraints to active MMD model
-	bl_idname = "OBJECT_PT_ffxiv_mmd_add_hand_arm_ik"
-	bl_label = "Add Hand Arm IK to MMD model"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="Add hand arm IK to MMD model", icon="ARMATURE_DATA")
-		row = layout.row()
-		row.operator("object.add_hand_arm_ik", text = "Add hand_arm IK to MMD model")
-		row = layout.row()
-"""
 
 def clear_IK(context):
 	IK_target_bones = []
@@ -444,7 +421,7 @@ def get_armature():
 @register_wrap
 class Add_MMD_Hand_Arm_IK(bpy.types.Operator):
 	"""Add hand and arm IK bones and constraints to active MMD model"""
-	bl_idname = "object.add_hand_arm_ik"
+	bl_idname = "ffxiv_mmd_tools_helper.add_hand_arm_ik"
 	bl_label = "Add Hand Arm IK to MMD model"
 	bl_options = {'REGISTER', 'UNDO'}
 

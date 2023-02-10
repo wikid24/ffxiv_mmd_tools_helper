@@ -1,5 +1,4 @@
 import bpy
-
 from . import register_wrap
 from . import model
 from . import bone_tools
@@ -93,7 +92,7 @@ def main(context):
 @register_wrap
 class BoneGroups(bpy.types.Operator):
 	"""Mass add bone names to blender bone groups"""
-	bl_idname = "object.add_bone_groups"
+	bl_idname = "ffxiv_mmd_tools_helper.add_bone_groups"
 	bl_label = "Create Display Panel Groups and Add Items"
 	bl_options = {'REGISTER', 'UNDO'}
 

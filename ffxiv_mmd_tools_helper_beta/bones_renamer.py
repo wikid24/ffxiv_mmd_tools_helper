@@ -1,36 +1,8 @@
 import bpy
-
 from . import register_wrap
 from . import model
 from . import import_csv
-
-
-"""
-@register_wrap
-class BonesRenamerPanel_MTH(bpy.types.Panel):
-	#Creates the Bones Renamer Panel in a VIEW_3D TOOLS tab
-	bl_label = "Bones Renamer"
-	bl_idname = "OBJECT_PT_bones_renamer_MTH"
-	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
-	bl_category = "ffxiv_mmd_tools_helper"
-
-	def draw(self, context):
-		layout = self.layout
-		row = layout.row()
-
-		row.label(text="Mass Rename Bones", icon="ARMATURE_DATA")
-		row = layout.row()
-		row = layout.row()
-		layout.prop(context.scene, "Origin_Armature_Type")
-		row = layout.row()
-		layout.prop(context.scene, "Destination_Armature_Type")
-		row = layout.row()
-		row.operator("object.bones_renamer", text = "Mass Rename Bones")
-		row = layout.row()
-"""
-
-
+from mmd_tools.core import model as mmd_model
 
 
 def unhide_all_armatures():
@@ -120,7 +92,7 @@ def mass_bones_renamer(context):
 @register_wrap
 class MassBonesRenamer(bpy.types.Operator):
 	"""Mass bones renamer for armature conversion"""
-	bl_idname = "object.bones_renamer"
+	bl_idname = "ffxiv_mmd_tools_helper.bones_renamer"
 	bl_label = "Bones Renamer"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -237,8 +209,10 @@ class BlenderToJapaneseBoneNames(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
 		blender_to_japanese_bone_names(context)
 		return {'FINISHED'}
+

@@ -4,7 +4,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 ------------
 
-# New Features (completed):
+# New Features:
   - Auto generate Bone Morphs
       - working for Hyur (but can be used on other races)
   - Auto generate Rigid Bodies

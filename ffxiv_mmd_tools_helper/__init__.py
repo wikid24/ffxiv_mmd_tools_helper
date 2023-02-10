@@ -78,11 +78,9 @@ else:
 	from . import bones_renamer
 	from . import convert_to_blender_camera
 	from . import display_panel_groups
-
 	from . import import_ffxiv_model
 	from . import joints
 	from . import miscellaneous_tools
-
 	from . import mmd_lamp_setup
 	#from . import mmd_view
 	from . import panels
@@ -92,18 +90,6 @@ else:
 	from . import skirt
 	from . import toon_textures_to_node_editor_shader
 	from . import toon_modifier
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

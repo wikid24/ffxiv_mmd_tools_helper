@@ -4,19 +4,20 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 ------------
 
-# New Features (completed):
-  - Auto generate Bone Morphs from csv
-      - Working for Hyur (but can be used on other races)
-  - Auto generate Rigid Bodies from csv
-      - Working but only partially completed
-  - Auto generate Joints from csv
-      - Working but only partially completed
-  - Auto generate Bone Groups from csv
+# New Features:
+  - Auto generate Bone Morphs
+      - working for Hyur (but can be used on other races)
+  - Auto generate Rigid Bodies
+      - working but only partially completed
+  - Auto generate Joints
+      - working but only partially completed
+  - Auto generate Bone Groups
   - Auto generate Shape Keys from csv
       - Working for Hyur, partially completed
-  - Auto skirt rig generator
+  - Skirt rig generator
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
-  - Auto generate MMD Display Panel groups from csv
+  - Auto generate MMD Display Panel groups
+  - Auto Sort the MMD Bone Order and Deformation Tiers
   - A bunch of important useful stuff. Will list them later.
 
 # Conversion/upgrade to Blender 2.8+ (to do):

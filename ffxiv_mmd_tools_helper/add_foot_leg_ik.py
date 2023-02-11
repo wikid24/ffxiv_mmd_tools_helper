@@ -574,7 +574,7 @@ def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_l
 		bone.constraints["Limit Rotation"].owner_space = owner_space
 		bone.constraints["Limit Rotation"].name = "mmd_ik_limit_override"
 
-
+		#fixes axis issue on bone roll
 		bpy.ops.object.mode_set(mode='EDIT')
 		bpy.context.active_object.data.edit_bones[bone_name].roll = 0
 		bpy.ops.object.mode_set(mode='POSE')

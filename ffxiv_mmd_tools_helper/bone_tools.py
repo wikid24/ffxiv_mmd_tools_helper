@@ -5,6 +5,7 @@ from . import model
 from . import import_csv
 from mmd_tools.core.bone import FnBone
 import mmd_tools.core.model as mmd_model
+from . import miscellaneous_tools
 
 
 def correct_root_center():
@@ -530,6 +531,57 @@ def add_shoulder_control_bones():
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
+
+def merge_double_jointed_knee(armature):
+
+	
+	if model.is_mmd_english() == True:
+
+		bpy.ops.object.mode_set(mode='POSE')
+
+		#get the bones
+		knee_L = bpy.context.active_object.pose.bones['knee_L']
+		knee_R = bpy.context.active_object.pose.bones['knee_R']
+		j_asi_c_l = bpy.context.active_object.pose.bones['j_asi_c_l']
+		j_asi_c_r = bpy.context.active_object.pose.bones['j_asi_c_r']
+
+		for pbone in armature.pose.bones:
+			pbone.bone.select = False
+
+		knee_L.bone.select = True
+		j_asi_c_l.bone.select = True
+
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		parent_bone_name, child_bone_name = miscellaneous_tools.analyze_selected_parent_child_bone_pair()
+		if parent_bone_name is not None:
+			if child_bone_name is not None:
+				miscellaneous_tools.combine_2_vg_1_vg(parent_bone_name, child_bone_name)
+				miscellaneous_tools.combine_2_bones_1_bone(parent_bone_name, child_bone_name)
+
+		bpy.ops.object.mode_set(mode='POSE')
+
+		for pbone in armature.pose.bones:
+			pbone.bone.select = False
+
+		knee_R.bone.select = True
+		j_asi_c_r.bone.select = True
+
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		parent_bone_name, child_bone_name = miscellaneous_tools.analyze_selected_parent_child_bone_pair()
+		if parent_bone_name is not None:
+			if child_bone_name is not None:
+				miscellaneous_tools.combine_2_vg_1_vg(parent_bone_name, child_bone_name)
+				miscellaneous_tools.combine_2_bones_1_bone(parent_bone_name, child_bone_name)
+
+
+
+
+	
+	else:
+		print("Rename bones to MMD_English and then try again.")
+
+
+
 def get_csv_metadata_by_bone_type(metadata_column, bone_types):
 
 	csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
@@ -852,6 +904,10 @@ def main(context):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_breast_tip_bones(armature)
+	if selected_bone_tool == "merge_double_jointed_knee":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		merge_double_jointed_knee(armature)
 
 @register_wrap
 class BoneTools(bpy.types.Operator):
@@ -873,6 +929,7 @@ class BoneTools(bpy.types.Operator):
 	, ("add_shoulder_control_bones", "Add Shoulder Control Bones", "Add Shoulder Control Bones")\
 	, ("add_extra_finger_bones", "Add Extra Finger Bones", "Add Extra Finger Bones")\
 	, ("add_breast_tip_bones", "Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
+	, ("merge_double_jointed_knee", "Merge Double-Jointed Knee (FFXIV PMX Export Only)", "Merge Double-Jointed Knee (FFXIV PMX Export Only)")\
 	], name = "", default = 'none')
 
 	@classmethod

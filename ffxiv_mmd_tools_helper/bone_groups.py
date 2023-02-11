@@ -45,7 +45,7 @@ def main(context):
 	"""
 
 	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
-	bone_groups_dictionary = bone_tools.get_csv_bones_by_bone_group("blender_bone_group", target_columns)
+	bone_groups_dictionary = bone_tools.get_csv_metadata_by_bone_type("blender_bone_group", target_columns)
 
 
 	for row in bone_groups_dictionary:

@@ -272,13 +272,13 @@ class ExportMMD_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort Bone Order/Deform Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
-
+		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.lock_position_rotation_bones",text="Lock Position & Rotation", icon="LOCKED") 
+		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.set_fixed_axis_local_axis_bones",text="Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
 		row = layout.row()
 		row.label(text="**TODO** Populate MMD Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
-		row = layout.row()
-		row.label(text="**TODO** Lock position / Rotation", icon="LOCKED") 
-		row = layout.row()
-		row.label(text="**TODO** Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
+		
 		row = layout.row()
 		row.label(text="**TODO** Edit Config File", icon="CURRENT_FILE") 
 		row = layout.row()

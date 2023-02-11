@@ -136,6 +136,22 @@ def correct_waist_cancel():
 
 		if "leg_R" in bpy.context.active_object.data.edit_bones.keys():
 			bpy.context.active_object.data.edit_bones["leg_R"].parent = bpy.context.active_object.data.edit_bones["waist_cancel_R"]
+	
+
+
+		#make shoulder_C a control bone for shoulder_P
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		armature = bpy.context.view_layer.objects.active
+		
+		# Select all bones in the armature
+		for bone in armature.pose.bones:
+			bone.bone.select = True
+		
+		setup_MMD_additional_rotation (armature,'waist', 'waist_cancel_L', -1.0)
+		setup_MMD_additional_rotation (armature,'waist', 'waist_cancel_R', -1.0)
+		FnBone.apply_additional_transformation(armature)
+
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 	else:
@@ -675,6 +691,87 @@ def set_mmd_bone_order(armature):
 				if pbone.name == metadata_bone[1]:
 					pbone.mmd_bone.transform_order = int(metadata_bone[0])
 
+def lock_position_rotation_bones(armature):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_rotate", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					pbone.lock_rotation[0] = True
+					pbone.lock_rotation[1] = True
+					pbone.lock_rotation[2] = True
+					pbone.lock_rotation_w = True
+
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_move", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					pbone.lock_location[0] = True
+					pbone.lock_location[1] = True
+					pbone.lock_location[2] = True			
+
+
+def set_fixed_axis_local_axis_bones(armature):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("fixed_axis", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					print("fixed axis:",pbone.name)
+					pbone.mmd_bone.enabled_fixed_axis = True
+					bpy.context.active_object.data.bones.active = armature.data.bones[pbone.name]
+					bpy.ops.mmd_tools.bone_fixed_axis_setup(type='LOAD')
+					#bpy.ops.mmd_tools.bone_fixed_axis_setup(type='APPLY')
+
+
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("local_axis", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for pbone in armature.pose.bones:
+				#if it finds a match
+				if pbone.name == metadata_bone[1]:
+					print("local axis:",pbone.name)
+					pbone.mmd_bone.enabled_local_axes = True
+					bpy.context.active_object.data.bones.active = armature.data.bones[pbone.name]
+					bpy.ops.mmd_tools.bone_local_axes_setup(type='LOAD')
+					#bpy.ops.mmd_tools.bone_local_axes_setup(type='APPLY')
+
 
 
 def main(context):
@@ -805,4 +902,40 @@ class HideSpecial_Bones(bpy.types.Operator):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		hide_special_bones(armature)
+		return {'FINISHED'}
+
+@register_wrap
+class LockPositionRotation_Bones(bpy.types.Operator):
+	"""Locks Position & Rotation of Bones for Export to MMD"""
+	bl_idname = "ffxiv_mmd_tools_helper.lock_position_rotation_bones"
+	bl_label = "Hides Special/Physics Bones for Export to MMD"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		lock_position_rotation_bones(armature)
+		return {'FINISHED'}
+
+@register_wrap
+class SetFixedAxisLocalAxis_Bones(bpy.types.Operator):
+	"""Sets Fixed Axis/Local Axis for Export to MMD"""
+	bl_idname = "ffxiv_mmd_tools_helper.set_fixed_axis_local_axis_bones"
+	bl_label = "Hides Special/Physics Bones for Export to MMD"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		set_fixed_axis_local_axis_bones(armature)
 		return {'FINISHED'}

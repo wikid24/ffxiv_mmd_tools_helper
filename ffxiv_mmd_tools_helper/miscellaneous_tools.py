@@ -50,6 +50,8 @@ def combine_2_vg_1_vg(parent_vg_name, child_vg_name):
 def analyze_selected_parent_child_bone_pair():
 	selected_bones = []
 
+	bpy.ops.object.mode_set(mode='POSE')
+
 	for b in bpy.context.active_object.pose.bones:
 		if b.bone.select == True:
 			selected_bones.append(b.bone.name)

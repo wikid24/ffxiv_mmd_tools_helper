@@ -143,7 +143,7 @@ def correct_waist_cancel():
 		bpy.ops.object.mode_set(mode='POSE')
 		
 		armature = bpy.context.view_layer.objects.active
-		
+
 		# Select all bones in the armature
 		for bone in armature.pose.bones:
 			bone.bone.select = True
@@ -772,6 +772,43 @@ def set_fixed_axis_local_axis_bones(armature):
 					bpy.ops.mmd_tools.bone_local_axes_setup(type='LOAD')
 					#bpy.ops.mmd_tools.bone_local_axes_setup(type='APPLY')
 
+def auto_fix_mmd_bone_names(armature):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_J = get_csv_metadata_by_bone_type("mmd_japanese", target_columns)
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY_MMD_J is not None:
+
+		bpy.ops.object.mode_set(mode='POSE')
+		
+		#run through the MMD Japanese bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_J:
+			for pbone in armature.pose.bones:
+				#if MMD Japanese bone name is empty, set it to the blender bone name
+				if pbone.mmd_bone.name_j.strip() == '':
+					pbone.mmd_bone.name_j = pbone.name
+				
+				#if it finds a match with any of the bones from the csv, set it to the MMD Japanese name
+				if pbone.mmd_bone.name_j.strip() == metadata_bone[1]:
+					pbone.mmd_bone.name_j = metadata_bone[0]
+
+		#run through the MMD English bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_E:
+			for pbone in armature.pose.bones:
+				#if MMD English bone name is empty, set it to the blender bone name
+				if pbone.mmd_bone.name_e.strip() == '':
+					pbone.mmd_bone.name_e = pbone.name
+				
+				#if it finds a match with any of the bones from the csv, set it to the MMD English name
+				if pbone.mmd_bone.name_e.strip() == metadata_bone[1]:
+					pbone.mmd_bone.name_e = metadata_bone[0]
+		
+					
+				
+
+
 
 
 def main(context):
@@ -938,4 +975,23 @@ class SetFixedAxisLocalAxis_Bones(bpy.types.Operator):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		set_fixed_axis_local_axis_bones(armature)
+		return {'FINISHED'}
+
+
+@register_wrap
+class AutoFixMMDBoneNames(bpy.types.Operator):
+	"""If MMD bone name is empty, sets to Blender Bone name, then if it matches a bone on metadata dictionary, sets it to the MMD Japanese/English equivalent"""
+	bl_idname = "ffxiv_mmd_tools_helper.auto_fix_mmd_bone_names"
+	bl_label = "If MMD bone name is empty, sets to Blender Bone name, then if it matches a bone on metadata dictionary, sets it to the MMD Japanese/English equivalent"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		auto_fix_mmd_bone_names(armature)
 		return {'FINISHED'}

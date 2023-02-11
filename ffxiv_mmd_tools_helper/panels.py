@@ -262,6 +262,8 @@ class ExportMMD_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
+		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.auto_fix_mmd_bone_names",text="Auto-Fix MMD Japanese/English Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Add Display Panels", icon="LONGDISPLAY")
@@ -271,18 +273,15 @@ class ExportMMD_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort Bone Order/Deform Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)
-		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.lock_position_rotation_bones",text="Lock Position & Rotation", icon="LOCKED") 
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.set_fixed_axis_local_axis_bones",text="Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
 		row = layout.row()
-		row.label(text="**TODO** Populate MMD Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
-		
+		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)		
 		row = layout.row()
-		row.label(text="**TODO** Edit Config File", icon="CURRENT_FILE") 
+		row.label(text="**TODO** Edit Metadata Dictionary File", icon="CURRENT_FILE") 
 		row = layout.row()
-		row.label(text="**TODO** Restore Config Defaults", icon="FILE_TICK") 
+		row.label(text="**TODO** Restore Metadata Dictionary Defaults", icon="FILE_TICK") 
 		
 		"""
 		row = layout.row(align=True)

@@ -6,7 +6,36 @@ import mmd_tools.core.model as mmd_model
 
 
 
+def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None,use_connect=None):
+	
+	new_bone = None
 
+	# Create a new bone
+	if (bone_name) not in bpy.context.active_object.data.edit_bones.keys():
+		new_bone = armature.data.edit_bones.new(bone_name)
+	else:
+		new_bone = bpy.context.active_object.data.edit_bones[bone_name]
+	# Set the length of the bone
+	if head is not None:
+		new_bone.head = head
+	if tail is not None:
+		new_bone.tail = tail
+	if length is not None:
+		new_bone.length = length
+	# Point the bone directly upwards
+	new_bone.roll = 0
+	msg = 'added bone ' + bone_name
+
+	if parent_bone.name in bpy.context.active_object.data.edit_bones.keys():
+		new_bone.parent = parent_bone
+		msg += ' parented to ' + parent_bone.name
+
+	if use_connect is not None:
+		new_bone.use_connect = use_connect
+	
+	print(msg)
+	
+	return new_bone
 
 
 

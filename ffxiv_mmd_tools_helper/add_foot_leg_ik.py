@@ -584,7 +584,10 @@ def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_l
 
 def duplicate_bone(bone_name,prefix,parent_name):
 	bpy.ops.object.mode_set(mode='EDIT')
+	edit_bones = bpy.context.active_object.data.edit_bones
+
 	bone = bpy.context.active_object.data.bones[bone_name]
+	
 	print ("new bone name:"+prefix+bone.name)
 	copy_bone = edit_bones.new(prefix+bone.name)
 	copy_bone.parent = edit_bones[parent_name]

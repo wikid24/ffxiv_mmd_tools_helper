@@ -87,6 +87,7 @@ def mass_bones_renamer(context):
 	rename_finger_bones(bpy.context.scene.Origin_Armature_Type, bpy.context.scene.Destination_Armature_Type, FINGER_BONE_NAMES_DICTIONARY)
 	bpy.ops.object.mode_set(mode='POSE')
 	bpy.ops.pose.select_all(action='SELECT')
+	bpy.ops.object.mode_set(mode='OBJECT')
 
 
 @register_wrap

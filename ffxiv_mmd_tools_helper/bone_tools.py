@@ -161,34 +161,6 @@ def hide_special_bones(armature):
 		bpy.ops.pose.hide()
 
 
-
-
-def get_csv_metadata_by_bone_type(metadata_column, bone_types):
-
-	csv_data = import_csv.use_csv_bone_metadata_ffxiv_dictionary()
-
-	#get the header column
-	header = csv_data[0]
-	#get the index of the column we need
-	metadata_index = header.index(metadata_column)
-	#get the index of the bone types passed to it
-	bone_type_indices = [header.index(target_column) for target_column in bone_types]
-	
-	#set() means it will not add something if it already is on the list
-	bone_list = set()
-	
-	for bone_type in bone_type_indices:
-		for row in csv_data[1:]:
-			#filter out any blank columns from the metadata_index column
-			if row[metadata_index] is not None:
-				#filter out any values where the bone type is None
-				if row[bone_type] is not None:			
-					bone_list.add((row[metadata_index],row[bone_type]))
-
-	#sort the list by the first column
-	sorted_bone_list = sorted(bone_list, key=lambda x: x[0])
-	return sorted_bone_list
-
 #MOVE VERTEX GROUP / BONE ORDER TO A SPECIFIC POSITION
 def vgmove(delta):
 	direction = 'UP' if delta > 0 else 'DOWN'
@@ -387,8 +359,54 @@ def auto_fix_mmd_bone_names(armature):
 				#if it finds a match with any of the bones from the csv, set it to the MMD English name
 				if pbone.mmd_bone.name_e.strip() == metadata_bone[1]:
 					pbone.mmd_bone.name_e = metadata_bone[0]
-		
-					
+
+#checks if bone is in armature, and if it is, returns equivalent mmd bone name in armature
+def get_armature_bone_name_by_mmd_english_bone_name(armature,mmd_e_bone_name):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
+
+		#run through the MMD English bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_E:
+			for bone in armature.data.bones.keys():
+				#if it finds a match with any of the bones from the csv, and it matches the MMD_English bone name, return the bone name
+				if bone.strip() == metadata_bone[1] and metadata_bone[0]==mmd_e_bone_name:
+					#print(mmd_e_bone_name,'found:',metadata_bone[1])
+					return metadata_bone[1]
+
+#doesn't check the armature, just returns equivalent mmd bone name
+def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
+
+	#Get bones from the metadata dictionary
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", [bone_type])
+
+	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
+		#run through the MMD English bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_E:
+			#if it finds a match with any of the bones from the csv, and it matches the MMD_English bone name, return the bone name
+			if metadata_bone[0]==mmd_e_bone_name:
+				#print(mmd_e_bone_name,'found:',metadata_bone[1])
+				return metadata_bone[1]
+
+def is_bone_bone_type(armature,bone_name,bone_type):
+
+	#Get bones from the metadata dictionary
+	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type(bone_type, [bone_type])
+	isbone_bonetype=False
+	
+	if FFXIV_BONE_METADATA_DICTIONARY is not None:
+		#run through the bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+			for bone in armature.data.bones.keys():
+				#if it finds a match with any of the bones from the csv, and it matches the MMD_English bone name, return the bone name
+				if bone.strip() == metadata_bone[1] and metadata_bone[1]==bone_name:
+					print(bone_name,'is bone type',bone_type)
+					isbone_bonetype = True
+		return isbone_bonetype
+				
 				
 
 @register_wrap

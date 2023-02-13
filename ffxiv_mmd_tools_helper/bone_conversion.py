@@ -173,6 +173,8 @@ def add_extra_finger_bones(armature,hand_mesh):
 		correct_finger(armature,hand_mesh,'third2_R','third3_R')
 		correct_finger(armature,hand_mesh,'middle2_R','middle3_R')
 		print('added third finger bones')
+
+		bpy.ops.object.mode_set(mode='OBJECT')
 	
 	else:
 		print("Rename bones to MMD_English and then try again.")

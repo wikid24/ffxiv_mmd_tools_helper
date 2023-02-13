@@ -15,11 +15,15 @@ def read_rigid_body_file():
 
 	#convert the values in 'collision_group_mask' into a boolean list
 	for row in RIGID_BODY_DICTIONARY:
-		if (row['collision_group_mask'] == 0.0):
-			row['collision_group_mask'] = str('')
+		#print(row['collision_group_mask'])
+		#if (row['collision_group_mask']) == 0.0:
+			#row['collision_group_mask'] = str('0')
+		if isinstance(row['collision_group_mask'], float):
+			row['collision_group_mask'] = str(int(row['collision_group_mask']))
 		index_values = str(row['collision_group_mask']).split('/')
 		bool_list = [str(i) in index_values for i in range(16)]
 		row['collision_group_mask'] = bool_list
+		#print('converted to',row['collision_group_mask'])
 
 	return RIGID_BODY_DICTIONARY
 

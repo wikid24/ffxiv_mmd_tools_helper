@@ -95,6 +95,8 @@ def main(context):
 	ANKLE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'ankle_R')
 	TOE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_L')
 	TOE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_R')
+	KNEE2_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_L')
+	KNEE2_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_R')
 
 	bones = [ROOT,LOWER_BODY,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT]
 	bone_check_english = []
@@ -140,6 +142,9 @@ def main(context):
 		ANKLE_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("ankle_R_D",mmd_bone_type)
 		TOE_LEFT_EX = bone_tools.get_bone_name_by_mmd_english_bone_name("toe_L_EX",mmd_bone_type)
 		TOE_RIGHT_EX = bone_tools.get_bone_name_by_mmd_english_bone_name("toe_R_EX",mmd_bone_type)
+		KNEE2_LEFT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_2_L_D",mmd_bone_type)
+		KNEE2_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_2_R_D",mmd_bone_type)
+		
 
 
 	print('\n')
@@ -156,13 +161,13 @@ def main(context):
 		create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT)
 
 		#Add IK constraints
-		create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE)
+		create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE,KNEE2_LEFT,KNEE2_RIGHT)
 		
 		#create an 'IK' bone group and add the IK bones to it
 		create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE)
 
 		#create control bones
-		create_control_bones(armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX)
+		create_control_bones(armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX,KNEE2_LEFT,KNEE2_RIGHT,KNEE2_LEFT_D,KNEE2_RIGHT_D)
 
 		bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
 	else:
@@ -207,32 +212,32 @@ def create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,L
 	bone.tail.z = edit_bones[TOE_RIGHT].head.z - HALF_LENGTH_OF_FOOT_BONE
 
 
-def create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE):
+def create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE,KNEE2_LEFT,KNEE2_RIGHT):
 		
 	bpy.ops.object.mode_set(mode='POSE')
 	pose_bones = bpy.context.object.pose.bones
 
 	#LEFT KNEE
 	bone_tools.create_ik_constraint(KNEE_LEFT, LEG_IK_LEFT_BONE, 2, True, 50, 0,180,0,0,0,0)
-	if 'j_asi_c_r' in [b.name for b in pose_bones]:
+	if KNEE2_LEFT in [b.name for b in pose_bones]:
 		pose_bones[KNEE_LEFT].constraints["IK"].iterations = 7
 	bone_tools.create_MMD_limit_rotation_constraint(KNEE_LEFT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 	#RIGHT KNEE
 	bone_tools.create_ik_constraint(KNEE_RIGHT, LEG_IK_RIGHT_BONE, 2, True, 50, 0,180,0,0,0,0)
-	if 'j_asi_c_r' in [b.name for b in pose_bones]:
+	if KNEE2_RIGHT in [b.name for b in pose_bones]:
 		pose_bones[KNEE_RIGHT].constraints["IK"].iterations = 7
 	bone_tools.create_MMD_limit_rotation_constraint(KNEE_RIGHT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 	#j_asi_c_l
-	if 'j_asi_c_l' in [b.name for b in pose_bones]:
-		bone_tools.create_ik_constraint('j_asi_c_l', LEG_IK_LEFT_BONE, 3, True, 48, 0,180,0,0,0,0)
-		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_l',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	if KNEE2_LEFT in [b.name for b in pose_bones]:
+		bone_tools.create_ik_constraint(KNEE2_LEFT, LEG_IK_LEFT_BONE, 3, True, 48, 0,180,0,0,0,0)
+		bone_tools.create_MMD_limit_rotation_constraint(KNEE2_LEFT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 	#j_asi_c_r
-	if 'j_asi_c_r' in [b.name for b in pose_bones]:
-		bone_tools.create_ik_constraint('j_asi_c_r', LEG_IK_RIGHT_BONE, 3, True, 48, 0,180,0,0,0,0)
-		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_r',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	if KNEE2_RIGHT in [b.name for b in pose_bones]:
+		bone_tools.create_ik_constraint(KNEE2_RIGHT, LEG_IK_RIGHT_BONE, 3, True, 48, 0,180,0,0,0,0)
+		bone_tools.create_MMD_limit_rotation_constraint(KNEE2_RIGHT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 	
 	#ANKLE LEFT
 	bone_tools.create_ik_constraint(ANKLE_LEFT, TOE_IK_LEFT_BONE, 1, True, 6, None, None, None, None, None, None)
@@ -247,7 +252,7 @@ def create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BON
 		pose_bones[ANKLE_LEFT].mmd_bone.ik_rotation_constraint = 4 # 180*4/math.pi
 
 
-def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX):
+def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX,KNEE2_LEFT,KNEE2_RIGHT,KNEE2_LEFT_D,KNEE2_RIGHT_D):
 
 	#measurements of the length of the foot bone which will used to calculate the lengths of the IK bones.
 	HALF_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.5
@@ -274,26 +279,26 @@ def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE
 	bone.tail.z = edit_bones[KNEE_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
 
 	#j_asi_c_l_D
-	if 'j_asi_c_l' in [b.name for b in edit_bones]:
-		bone = bone_tools.add_bone(armature,'j_asi_c_l_D',parent_bone=edit_bones[KNEE_LEFT_D],head=edit_bones['j_asi_c_l'].head,tail=edit_bones['j_asi_c_l'].head)
-		bone.tail.z = edit_bones['j_asi_c_l'].head.z + HALF_LENGTH_OF_FOOT_BONE
+	if KNEE2_LEFT in [b.name for b in edit_bones]:
+		bone = bone_tools.add_bone(armature,KNEE2_LEFT_D,parent_bone=edit_bones[KNEE_LEFT_D],head=edit_bones[KNEE2_LEFT].head,tail=edit_bones[KNEE2_LEFT].head)
+		bone.tail.z = edit_bones[KNEE2_LEFT].head.z + HALF_LENGTH_OF_FOOT_BONE
 
 	#j_asi_c_r_D
-	if 'j_asi_c_r' in [b.name for b in edit_bones]:
-		bone = bone_tools.add_bone(armature,'j_asi_c_r_D',parent_bone=edit_bones[KNEE_RIGHT_D],head=edit_bones['j_asi_c_r'].head,tail=edit_bones['j_asi_c_r'].head)
-		bone.tail.z = edit_bones['j_asi_c_r'].head.z + HALF_LENGTH_OF_FOOT_BONE
+	if KNEE2_RIGHT in [b.name for b in edit_bones]:
+		bone = bone_tools.add_bone(armature,KNEE2_RIGHT_D,parent_bone=edit_bones[KNEE_RIGHT_D],head=edit_bones[KNEE2_RIGHT].head,tail=edit_bones[KNEE2_RIGHT].head)
+		bone.tail.z = edit_bones[KNEE2_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
 
 	#ANKLE_LEFT_D
 	bone = bone_tools.add_bone(armature,ANKLE_LEFT_D,parent_bone=edit_bones[KNEE_LEFT_D],head=edit_bones[ANKLE_LEFT].head,tail=edit_bones[ANKLE_LEFT].head)
 	bone.tail.z = edit_bones[ANKLE_LEFT].head.z + HALF_LENGTH_OF_FOOT_BONE
-	if 'j_asi_c_l' in [b.name for b in edit_bones]:
-		bone.parent = edit_bones['j_asi_c_l_D']
+	if KNEE2_LEFT in [b.name for b in edit_bones]:
+		bone.parent = edit_bones[KNEE2_LEFT_D]
 
 	#ANKLE_RIGHT_D
 	bone = bone_tools.add_bone(armature,ANKLE_RIGHT_D,parent_bone=edit_bones[KNEE_RIGHT_D],head=edit_bones[ANKLE_RIGHT].head,tail=edit_bones[ANKLE_RIGHT].head)
 	bone.tail.z = edit_bones[ANKLE_RIGHT].head.z + HALF_LENGTH_OF_FOOT_BONE
-	if 'j_asi_c_r' in [b.name for b in edit_bones]:
-		bone.parent = edit_bones['j_asi_c_r_D']
+	if KNEE2_RIGHT in [b.name for b in edit_bones]:
+		bone.parent = edit_bones[KNEE2_RIGHT_D]
 	
 	#TOE_LEFT_EX
 	bone = bone_tools.add_bone(armature,TOE_LEFT_EX,parent_bone=edit_bones[ANKLE_LEFT_D],head=edit_bones[TOE_LEFT].head,tail=edit_bones[TOE_LEFT].tail)
@@ -314,10 +319,10 @@ def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE
 	bone_tools.transfer_vertex_groups(get_armature(),LEG_RIGHT,LEG_RIGHT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),KNEE_LEFT,KNEE_LEFT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D)
-	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		bone_tools.transfer_vertex_groups(get_armature(),'j_asi_c_l','j_asi_c_l_D')
-	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		bone_tools.transfer_vertex_groups(get_armature(),'j_asi_c_r','j_asi_c_r_D')
+	if KNEE2_LEFT in [b.name for b in bpy.context.object.pose.bones]:
+		bone_tools.transfer_vertex_groups(get_armature(),KNEE2_LEFT,KNEE2_LEFT_D)
+	if KNEE2_RIGHT in [b.name for b in bpy.context.object.pose.bones]:
+		bone_tools.transfer_vertex_groups(get_armature(),KNEE2_RIGHT,KNEE2_RIGHT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),TOE_LEFT,TOE_LEFT_EX)
@@ -328,10 +333,10 @@ def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE
 	bone_tools.apply_MMD_additional_rotation(get_armature(),LEG_RIGHT,LEG_RIGHT_D,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE_LEFT,KNEE_LEFT_D,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D,1)
-	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		bone_tools.apply_MMD_additional_rotation(get_armature(),'j_asi_c_l','j_asi_c_l_D',1)
-	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		bone_tools.apply_MMD_additional_rotation(get_armature(),'j_asi_c_r','j_asi_c_r_D',1)
+	if KNEE2_LEFT in [b.name for b in bpy.context.object.pose.bones]:
+		bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE2_LEFT,KNEE2_LEFT_D,1)
+	if KNEE2_RIGHT in [b.name for b in bpy.context.object.pose.bones]:
+		bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE2_RIGHT,KNEE2_RIGHT_D,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),TOE_LEFT,TOE_LEFT_EX,1)

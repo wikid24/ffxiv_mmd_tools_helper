@@ -3,8 +3,8 @@ root, root ground, , root, auskel, , , , ,全ての親,全ての親,gblctr,root,
 neck, head neck lower, neck, spine.004, neck, Neck, Neck, Neck, neck,首,首,kl_kubi,neck,neck02,b__Neck__,MOT15_Neck,Bip001 Neck,Neck,bip_neck,ValveBiped.Bip01_Neck,NeckTwist01,j_kubi
 head, head neck upper, head, spine.005, head, Head, Head, Head, head,頭,頭,cl_kao,head,head,b__Head__,MOT01_Head,Bip001 Head,Head,bip_head,ValveBiped.Bip01_Head,Head,j_kao
 center, root hips, hip, spine, root_rot, Hips, Hips, Hip, ,センター,センター,n_hara_cp,pelvis,root,b__ROOT_bind__,MOT00_Hips,Bip001 Pelvis,Pelvis,bip_pelvis,ValveBiped.Bip01_Pelvis,Hip,
-upper body 2, spine upper, chest, spine.002, spine2, Spine2, Chest3, , chest,上半身2,上半身2,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,j_sebo_b
 upper body, spine lower, abdomen, Spine.001 , spine0, chest, Chest, Chest1, spine,上半身,上半身,j_mune_wj,spine01,spine04,b__Spine0__,MOT16_Waist,Bip001 Spine1,Spine1,bip_spine_1,ValveBiped.Bip01_Spine1,Waist,j_sebo_a
+upper body 2, spine upper, chest, spine.002, spine2, Spine2, Chest3, , chest,上半身2,上半身2,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,j_sebo_b
 lower body, pelvis, , hips, , , , , hips,下半身,下半身,kl_kosi_etc_wj,,,b__Pelvis__,,,,,,Pelvis,j_kosi
 shoulder_L, arm left shoulder 1, lCollar, shoulder.L, l_clavicle, LeftShoulder, LeftCollar, Left Collar, shoulder.L,左肩,肩.L,kl_waki_l_wj,clavicle_L,shoulder01.L,b__L_Clavicle__,MOT_*Shoulder.1.L,Bip001 L Clavicle,L Clavicle,bip_collar_L,ValveBiped.Bip01_L_Clavicle,L_Clavicle,j_sako_l
 arm_L, arm left shoulder 2, lShldr, upper_arm.L, l_upperarm, LeftUpArm, LeftShoulder, Left Shoulder, uparm.L,左腕,腕.L,j_kata_l_wj_cu,upperarm_L,upperarm02.L,b__L_UpperArm__,MOT_*Arm.1.L,Bip001 L UpperArm,L UpperArm,bip_upperArm_L,ValveBiped.Bip01_L_UpperArm,L_Upperarm,j_ude_a_l
@@ -44,21 +44,21 @@ waist_cancel_L,,,,,,,,,腰キャンセル左,腰キャンセル.L,,,,,,,,,,,
 waist_cancel_R,,,,,,,,,腰キャンセル右,腰キャンセル.R,,,,,,,,,,,
 eyes,,,,,,,,,両目,両目,,,,,,,,,,,
 arm_twist_L,,,,,,,,,左腕捩,腕捩.L,,,,,,,,,,,n_hkata_l
-arm_twist_1_L,,,,,,,,,左腕捩1,腕捩1.L,,,,,,,,,,,
-arm_twist_2_L,,,,,,,,,左腕捩2,腕捩2.L,,,,,,,,,,,
-arm_twist_3_L,,,,,,,,,左腕捩3,腕捩3.L,,,,,,,,,,,
+arm_twist_1_L,,,,,,,,, 左腕捩1, 腕捩1.L,,,,,,,,,,,
+arm_twist_2_L,,,,,,,,, 左腕捩2, 腕捩2.L,,,,,,,,,,,
+arm_twist_3_L,,,,,,,,, 左腕捩3, 腕捩3.L,,,,,,,,,,,
 arm_twist_R,,,,,,,,,右腕捩,腕捩.R,,,,,,,,,,,n_hkata_r
-arm_twist_1_R,,,,,,,,,右腕捩1,腕捩1.R,,,,,,,,,,,
-arm_twist_2_R,,,,,,,,,右腕捩2,腕捩2.R,,,,,,,,,,,
-arm_twist_3_R,,,,,,,,,右腕捩3,腕捩3.R,,,,,,,,,,,
+arm_twist_1_R,,,,,,,,, 右腕捩1, 腕捩1.R,,,,,,,,,,,
+arm_twist_2_R,,,,,,,,, 右腕捩2, 腕捩2.R,,,,,,,,,,,
+arm_twist_3_R,,,,,,,,, 右腕捩3, 腕捩3.R,,,,,,,,,,,
 wrist_twist_L,,,,,,,,,左手捩,手捩.L,,,,,,,,,,,n_hte_l
-wrist_twist_1_L,,,,,,,,,左手捩1,手捩1.L,,,,,,,,,,,
-wrist_twist_2_L,,,,,,,,,左手捩2,手捩2.L,,,,,,,,,,,
-wrist_twist_3_L,,,,,,,,,左手捩3,手捩3.L,,,,,,,,,,,
+wrist_twist_1_L,,,,,,,,, 左手捩1, 手捩1.L,,,,,,,,,,,
+wrist_twist_2_L,,,,,,,,, 左手捩2, 手捩2.L,,,,,,,,,,,
+wrist_twist_3_L,,,,,,,,, 左手捩3, 手捩3.L,,,,,,,,,,,
 wrist_twist_R,,,,,,,,,右手捩,手捩.R,,,,,,,,,,,n_hte_r
-wrist_twist_1_R,,,,,,,,,右手捩1,手捩1.R,,,,,,,,,,,
-wrist_twist_2_R,,,,,,,,,右手捩2,手捩2.R,,,,,,,,,,,
-wrist_twist_3_R,,,,,,,,,右手捩3,手捩3.R,,,,,,,,,,,
+wrist_twist_1_R,,,,,,,,, 右手捩1, 手捩1.R,,,,,,,,,,,
+wrist_twist_2_R,,,,,,,,, 右手捩2, 手捩2.R,,,,,,,,,,,
+wrist_twist_3_R,,,,,,,,, 右手捩3, 手捩3.R,,,,,,,,,,,
 shoulder_P_L,,,,,,,,,左肩P,肩P.L,,,,,,,,,,,
 shoulder_P_R,,,,,,,,,右肩P,肩P.R,,,,,,,,,,,
 shoulder_C_L,,,,,,,,,左肩C,肩C.L,,,,,,,,,,,

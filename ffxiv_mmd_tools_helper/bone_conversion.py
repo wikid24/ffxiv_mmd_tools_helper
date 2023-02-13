@@ -207,6 +207,37 @@ def correct_finger(armature, hand_mesh,source_bone_name,new_bone_name):
 		# rename the new bone
 		armature.data.bones[source_bone_name + ".001"].name = new_bone_name
 
+		#armature.select_set(True)
+		#hand_mesh.select_set(True)
+		#bpy.context.view_layer.objects.active = armature
+		
+		
+
+		####AUTOMATIC WEIGHT PAINTING METHOD####
+		# Deselect all objects
+		bpy.ops.object.select_all(action='DESELECT')
+
+		for o in bpy.context.view_layer.objects:
+			o.select_set(False)
+
+		bpy.data.objects[armature.name].select_set(True)
+		bpy.data.objects[hand_mesh.name].select_set(True)
+		bpy.context.view_layer.objects.active = bpy.data.objects[hand_mesh.name]
+		bpy.ops.object.mode_set(mode='WEIGHT_PAINT')
+
+		#deselect all bones
+		for b in bpy.data.armatures[armature.name].bones:
+			b.select = False
+
+		bpy.data.armatures[armature.name].bones[source_bone_name].select=True
+		bpy.data.armatures[armature.name].bones[new_bone_name].select=True
+
+		bpy.ops.paint.weight_from_bones(type='AUTOMATIC')
+		
+		
+
+		"""
+		### Manual Method###
 		# get the vertex group
 		mesh_vertex_groups = hand_mesh.vertex_groups[source_bone_name]
 
@@ -237,6 +268,10 @@ def correct_finger(armature, hand_mesh,source_bone_name,new_bone_name):
 			for group in vertex.groups:
 				if group.group == mesh_vertex_groups.index and group.weight == 0.0:
 					hand_mesh.vertex_groups.remove(mesh_vertex_groups)
+		"""
+
+
+		
 
 
 def fix_bone_length(armature,source_bone_name,target_bone_name):
@@ -382,7 +417,7 @@ def add_arm_wrist_twist():
 		create_twist_support_bones(armature,'elbow_L','wrist_twist_1_L','wrist_twist_2_L','wrist_twist_3_L','wrist_twist_L')
 		create_twist_support_bones(armature,'elbow_R','wrist_twist_1_R','wrist_twist_2_R','wrist_twist_3_R','wrist_twist_R')
 
-		    
+		#used to move the wrist_twist to elbow's tail
 		offset_bone_by_parents_tail('elbow_L','wrist_twist_L', 0.33)
 		offset_bone_by_parents_tail('elbow_R','wrist_twist_R', 0.33)
 
@@ -390,7 +425,7 @@ def add_arm_wrist_twist():
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
-#used to move the wrist_twist to elbow's tail
+
 def offset_bone_by_parents_tail(parent,child,percentage_of_parent):
     
     bpy.ops.object.mode_set(mode='EDIT')

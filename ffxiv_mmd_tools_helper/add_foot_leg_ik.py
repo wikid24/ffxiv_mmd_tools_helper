@@ -107,7 +107,6 @@ def main(context):
 
 	assert(ik_bones == False), "This armature already has MMD IK bone names."
 
-
 	if english_bones == True:
 		LEG_IK_ROOT_LEFT_BONE = "leg IK_root_L"
 		LEG_IK_ROOT_RIGHT_BONE = "leg IK_root_R"
@@ -173,8 +172,6 @@ def main(context):
 	WAIST_CANCEL_L_BONES = ["waist_cancel_L","左腰キャンセル","腰キャンセル.L"]
 	WAIST_CANCEL_R_BONES = ["waist_cancel_R","右腰キャンセル","腰キャンセル.R"]
 
-
-
 	print('\n')
 	#Searches through the bones of the active armature and finds the knee, ankle and toe bones.
 	bpy.ops.object.mode_set(mode='EDIT')
@@ -222,17 +219,32 @@ def main(context):
 	bpy.context.active_object.pose.bones[KNEE_LEFT].use_ik_limit_x = True
 	bpy.context.active_object.pose.bones[KNEE_RIGHT].use_ik_limit_x = True
 
+	#The IK bones are created
+	create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT)
+
+	#Add IK constraints
+	create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE)
+	
+	#create an 'IK' bone group and add the IK bones to it
+	create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE)
+
+	#create control bones
+	create_control_bones(armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX)
+
+	bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
+
+def create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT):
+
 	#measurements of the length of the foot bone which will used to calculate the lengths of the IK bones.
 	LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length
 	TWO_THIRDS_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.66
 	HALF_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.5
-	QUARTER_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.25
+	#QUARTER_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.25
 
 	#The IK bones are created
 	bpy.ops.object.mode_set(mode='EDIT')
 
 	edit_bones = bpy.context.active_object.data.edit_bones
-
 
 	#LEG_IK_ROOT_LEFT_BONE
 	bone = bone_tools.add_bone(armature,LEG_IK_ROOT_LEFT_BONE,parent_bone=edit_bones[ROOT],head=edit_bones[ANKLE_LEFT].head,tail=edit_bones[ANKLE_LEFT].head)
@@ -259,9 +271,10 @@ def main(context):
 	bone.tail.z = edit_bones[TOE_RIGHT].head.z - HALF_LENGTH_OF_FOOT_BONE
 
 
+def create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE):
+		
 	bpy.ops.object.mode_set(mode='POSE')
 	pose_bones = bpy.context.object.pose.bones
-	#Adds IK constraints
 
 	#LEFT KNEE
 	bone_tools.create_ik_constraint(KNEE_LEFT, LEG_IK_LEFT_BONE, 2, True, 50, 0,180,0,0,0,0)
@@ -275,18 +288,15 @@ def main(context):
 		pose_bones[KNEE_RIGHT].constraints["IK"].iterations = 7
 	bone_tools.create_MMD_limit_rotation_constraint(KNEE_RIGHT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
-
 	#j_asi_c_l
 	if 'j_asi_c_l' in [b.name for b in pose_bones]:
 		bone_tools.create_ik_constraint('j_asi_c_l', LEG_IK_LEFT_BONE, 3, True, 48, 0,180,0,0,0,0)
 		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_l',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
-
 	#j_asi_c_r
 	if 'j_asi_c_r' in [b.name for b in pose_bones]:
 		bone_tools.create_ik_constraint('j_asi_c_r', LEG_IK_RIGHT_BONE, 3, True, 48, 0,180,0,0,0,0)
 		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_r',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
-
 	
 	#ANKLE LEFT
 	bone_tools.create_ik_constraint(ANKLE_LEFT, TOE_IK_LEFT_BONE, 1, True, 6, None, None, None, None, None, None)
@@ -294,23 +304,21 @@ def main(context):
 	#ANKLE RIGHT
 	bone_tools.create_ik_constraint(ANKLE_RIGHT, TOE_IK_RIGHT_BONE, 1, True, 6, None, None, None, None, None, None)
 
-	
 	if hasattr(bpy.context.object.pose.bones[KNEE_RIGHT], "mmd_bone"):
 		pose_bones[KNEE_RIGHT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
 		pose_bones[KNEE_LEFT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
 		pose_bones[ANKLE_RIGHT].mmd_bone.ik_rotation_constraint = 4 #180*4/math.pi
 		pose_bones[ANKLE_LEFT].mmd_bone.ik_rotation_constraint = 4 # 180*4/math.pi
 
-	
-	#create an 'IK' bone group and add the IK bones to it
-	create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE)
 
+def create_control_bones (armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX):
 
-	bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
+	#measurements of the length of the foot bone which will used to calculate the lengths of the IK bones.
+	HALF_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.5
+	QUARTER_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones[ANKLE_LEFT].length * 0.25
 
+	edit_bones = bpy.context.active_object.data.edit_bones
 
-	#The D bones are created
-	########## START D BONE CREATION HERE #######
 	bpy.ops.object.mode_set(mode='EDIT')
 
 	#LEG_LEFT_D
@@ -365,7 +373,6 @@ def main(context):
 	bone.head.y = bone.head.y + QUARTER_LENGTH_OF_FOOT_BONE
 	bone.tail.y = bone.tail.y + QUARTER_LENGTH_OF_FOOT_BONE
 
-
 	#transfer weight to D and EX bones
 	bone_tools.transfer_vertex_groups(get_armature(),LEG_LEFT,LEG_LEFT_D)
 	bone_tools.transfer_vertex_groups(get_armature(),LEG_RIGHT,LEG_RIGHT_D)
@@ -394,7 +401,6 @@ def main(context):
 	bone_tools.apply_MMD_additional_rotation(get_armature(),TOE_LEFT,TOE_LEFT_EX,1)
 	bone_tools.apply_MMD_additional_rotation(get_armature(),TOE_RIGHT,TOE_RIGHT_EX,1)
 
-	########## END D BONE CREATION HERE #######
 
 def create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE):
 

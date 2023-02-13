@@ -3,7 +3,7 @@ from . import register_wrap
 from . import model
 from . import import_csv
 import mmd_tools.core.model as mmd_model
-
+from mmd_tools.core.bone import FnBone
 
 
 def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None,use_connect=None):
@@ -37,6 +37,80 @@ def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None
 	
 	return new_bone
 
+def create_ik_constraint(bone_name, subtarget, chain_count, use_tail, iterations, 
+						ik_min_x=None, ik_max_x=None, ik_min_y=None, ik_max_y=None, ik_min_z=None, ik_max_z=None):
+
+	bone = bpy.context.object.pose.bones[bone_name]
+
+	bone.constraints.new("IK")
+	bone.constraints["IK"].target = bpy.context.active_object
+	bone.constraints["IK"].subtarget = subtarget
+	bone.constraints["IK"].chain_count = chain_count
+	bone.constraints["IK"].use_tail = use_tail
+	bone.constraints["IK"].iterations = iterations
+
+	if ik_min_x is not None:
+		bone.ik_min_x = ik_min_x
+	if ik_max_x is not None:
+		bone.ik_max_x = ik_max_x
+	if ik_min_y is not None:
+		bone.ik_min_y = ik_min_y
+	if ik_max_y is not None:
+		bone.ik_max_y = ik_max_y
+	if ik_min_z is not None:
+		bone.ik_min_z = ik_min_z
+	if ik_max_z is not None:
+		bone.ik_max_z = ik_max_z
+
+
+def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_limit_z,min_x,max_x,min_y,max_y,min_z,max_z,owner_space):
+
+		bone = bpy.context.object.pose.bones[bone_name]
+		bone.constraints.new("LIMIT_ROTATION")
+		bone.constraints["Limit Rotation"].use_limit_x = use_limit_x
+		bone.constraints["Limit Rotation"].use_limit_y = use_limit_y
+		bone.constraints["Limit Rotation"].use_limit_z = use_limit_z
+		bone.constraints["Limit Rotation"].min_x = min_x
+		bone.constraints["Limit Rotation"].max_x = max_x
+		bone.constraints["Limit Rotation"].min_y = min_y
+		bone.constraints["Limit Rotation"].max_y = max_y
+		bone.constraints["Limit Rotation"].min_z = min_z
+		bone.constraints["Limit Rotation"].max_z = max_z
+		bone.constraints["Limit Rotation"].owner_space = owner_space
+		bone.constraints["Limit Rotation"].name = "mmd_ik_limit_override"
+
+		#fixes axis issue on bone roll
+		bpy.ops.object.mode_set(mode='EDIT')
+		bpy.context.active_object.data.edit_bones[bone_name].roll = 0
+		bpy.ops.object.mode_set(mode='POSE')
+
+
+
+
+def transfer_vertex_groups(armature,source_bone_name, target_bone_name):
+	bpy.ops.object.mode_set(mode='OBJECT')
+	
+	if armature and armature.type == 'ARMATURE':
+		meshes = [obj for obj in bpy.data.objects if obj.type == 'MESH' and (obj.parent == armature or obj.parent.parent == armature) ]
+		for mesh in meshes:
+			for vg in mesh.vertex_groups:
+				#print(vg.name)
+				if vg.name == source_bone_name:
+					vg.name = target_bone_name
+					print('transferred vertex groups for',mesh.name,'from',source_bone_name,'to',target_bone_name)
+
+
+def apply_MMD_additional_rotation (armature,additional_transform_bone_name, target_bone_name,influence):
+
+	bpy.ops.object.mode_set(mode='POSE')
+
+	pose_bone = armature.pose.bones[target_bone_name]
+	pose_bone.mmd_bone.has_additional_rotation = True
+	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone_name
+	pose_bone.mmd_bone.additional_transform_influence = influence
+	FnBone.apply_additional_transformation(armature)
+	#FnBone.clean_additional_transformation(armature)
+	print ('set additional rotation for',target_bone_name,'to',additional_transform_bone_name,'influence:',influence)
 
 
 def get_csv_metadata_by_bone_type(metadata_column, bone_types):

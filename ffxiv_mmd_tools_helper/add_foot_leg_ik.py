@@ -159,7 +159,8 @@ def main(context):
 		WAIST_CANCEL_L = "左腰キャンセル"
 		WAIST_CANCEL_R = "右腰キャンセル"
 
-		#Lists of possible names of knee, ankle and toe bones
+	#Lists of possible names of knee, ankle and toe bones
+	ROOT_BONES = ["root"," 全ての親"," 全ての親"]
 	LOWER_BODY_BONES = ["lower body"," 下半身"," 下半身"]
 	LEG_LEFT_BONES = ["leg_L", "左足", "足.L"]
 	LEG_RIGHT_BONES = ["leg_R", "右足", "足.R"]
@@ -172,9 +173,17 @@ def main(context):
 	WAIST_CANCEL_L_BONES = ["waist_cancel_L","左腰キャンセル","腰キャンセル.L"]
 	WAIST_CANCEL_R_BONES = ["waist_cancel_R","右腰キャンセル","腰キャンセル.R"]
 
+
+
 	print('\n')
 	#Searches through the bones of the active armature and finds the knee, ankle and toe bones.
+	bpy.ops.object.mode_set(mode='EDIT')
+
 	for b in bpy.context.active_object.data.bones:
+		if b.name in ROOT_BONES:
+			ROOT = b.name
+			print('ROOT = ', ROOT)
+		
 		if b.name in LOWER_BODY_BONES:
 			LOWER_BODY = b.name
 			print('LOWER_BODY = ', LOWER_BODY)
@@ -251,46 +260,46 @@ def main(context):
 
 
 	bpy.ops.object.mode_set(mode='POSE')
-
+	pose_bones = bpy.context.object.pose.bones
 	#Adds IK constraints
 
 	#LEFT KNEE
-	create_ik_constraint(KNEE_LEFT, LEG_IK_LEFT_BONE, 2, True, 50, 0,180,0,0,0,0)
-	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		bpy.context.object.pose.bones[KNEE_LEFT].constraints["IK"].iterations = 7
-	create_MMD_limit_rotation_constraint(KNEE_LEFT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	bone_tools.create_ik_constraint(KNEE_LEFT, LEG_IK_LEFT_BONE, 2, True, 50, 0,180,0,0,0,0)
+	if 'j_asi_c_r' in [b.name for b in pose_bones]:
+		pose_bones[KNEE_LEFT].constraints["IK"].iterations = 7
+	bone_tools.create_MMD_limit_rotation_constraint(KNEE_LEFT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 	#RIGHT KNEE
-	create_ik_constraint(KNEE_RIGHT, LEG_IK_RIGHT_BONE, 2, True, 50, 0,180,0,0,0,0)
-	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		bpy.context.object.pose.bones[KNEE_RIGHT].constraints["IK"].iterations = 7
-	create_MMD_limit_rotation_constraint(KNEE_RIGHT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	bone_tools.create_ik_constraint(KNEE_RIGHT, LEG_IK_RIGHT_BONE, 2, True, 50, 0,180,0,0,0,0)
+	if 'j_asi_c_r' in [b.name for b in pose_bones]:
+		pose_bones[KNEE_RIGHT].constraints["IK"].iterations = 7
+	bone_tools.create_MMD_limit_rotation_constraint(KNEE_RIGHT,True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 
 	#j_asi_c_l
-	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		create_ik_constraint('j_asi_c_l', LEG_IK_LEFT_BONE, 3, True, 48, 0,180,0,0,0,0)
-		create_MMD_limit_rotation_constraint('j_asi_c_l',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	if 'j_asi_c_l' in [b.name for b in pose_bones]:
+		bone_tools.create_ik_constraint('j_asi_c_l', LEG_IK_LEFT_BONE, 3, True, 48, 0,180,0,0,0,0)
+		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_l',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 
 	#j_asi_c_r
-	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		create_ik_constraint('j_asi_c_r', LEG_IK_RIGHT_BONE, 3, True, 48, 0,180,0,0,0,0)
-		create_MMD_limit_rotation_constraint('j_asi_c_r',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
+	if 'j_asi_c_r' in [b.name for b in pose_bones]:
+		bone_tools.create_ik_constraint('j_asi_c_r', LEG_IK_RIGHT_BONE, 3, True, 48, 0,180,0,0,0,0)
+		bone_tools.create_MMD_limit_rotation_constraint('j_asi_c_r',True,True,True,math.pi/360,math.pi,0,0,0,0,"LOCAL")
 
 	
 	#ANKLE LEFT
-	create_ik_constraint(ANKLE_LEFT, TOE_IK_LEFT_BONE, 1, True, 6, None, None, None, None, None, None)
+	bone_tools.create_ik_constraint(ANKLE_LEFT, TOE_IK_LEFT_BONE, 1, True, 6, None, None, None, None, None, None)
 
 	#ANKLE RIGHT
-	create_ik_constraint(ANKLE_RIGHT, TOE_IK_RIGHT_BONE, 1, True, 6, None, None, None, None, None, None)
+	bone_tools.create_ik_constraint(ANKLE_RIGHT, TOE_IK_RIGHT_BONE, 1, True, 6, None, None, None, None, None, None)
 
 	
 	if hasattr(bpy.context.object.pose.bones[KNEE_RIGHT], "mmd_bone"):
-		bpy.context.object.pose.bones[KNEE_RIGHT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
-		bpy.context.object.pose.bones[KNEE_LEFT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
-		bpy.context.object.pose.bones[ANKLE_RIGHT].mmd_bone.ik_rotation_constraint = 4 #180*4/math.pi
-		bpy.context.object.pose.bones[ANKLE_LEFT].mmd_bone.ik_rotation_constraint = 4 # 180*4/math.pi
+		pose_bones[KNEE_RIGHT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
+		pose_bones[KNEE_LEFT].mmd_bone.ik_rotation_constraint = 2 # 180*2/math.pi
+		pose_bones[ANKLE_RIGHT].mmd_bone.ik_rotation_constraint = 4 #180*4/math.pi
+		pose_bones[ANKLE_LEFT].mmd_bone.ik_rotation_constraint = 4 # 180*4/math.pi
 
 	
 	#create an 'IK' bone group and add the IK bones to it
@@ -358,32 +367,32 @@ def main(context):
 
 
 	#transfer weight to D and EX bones
-	transfer_vertex_groups(get_armature(),LEG_LEFT,LEG_LEFT_D)
-	transfer_vertex_groups(get_armature(),LEG_RIGHT,LEG_RIGHT_D)
-	transfer_vertex_groups(get_armature(),KNEE_LEFT,KNEE_LEFT_D)
-	transfer_vertex_groups(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),LEG_LEFT,LEG_LEFT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),LEG_RIGHT,LEG_RIGHT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),KNEE_LEFT,KNEE_LEFT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D)
 	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		transfer_vertex_groups(get_armature(),'j_asi_c_l','j_asi_c_l_D')
+		bone_tools.transfer_vertex_groups(get_armature(),'j_asi_c_l','j_asi_c_l_D')
 	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		transfer_vertex_groups(get_armature(),'j_asi_c_r','j_asi_c_r_D')
-	transfer_vertex_groups(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D)
-	transfer_vertex_groups(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D)
-	transfer_vertex_groups(get_armature(),TOE_LEFT,TOE_LEFT_EX)
-	transfer_vertex_groups(get_armature(),TOE_RIGHT,TOE_RIGHT_EX)
+		bone_tools.transfer_vertex_groups(get_armature(),'j_asi_c_r','j_asi_c_r_D')
+	bone_tools.transfer_vertex_groups(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D)
+	bone_tools.transfer_vertex_groups(get_armature(),TOE_LEFT,TOE_LEFT_EX)
+	bone_tools.transfer_vertex_groups(get_armature(),TOE_RIGHT,TOE_RIGHT_EX)
 
 	#apply_additional_MMD_rotation
-	apply_MMD_additional_rotation(get_armature(),LEG_LEFT,LEG_LEFT_D,1)
-	apply_MMD_additional_rotation(get_armature(),LEG_RIGHT,LEG_RIGHT_D,1)
-	apply_MMD_additional_rotation(get_armature(),KNEE_LEFT,KNEE_LEFT_D,1)
-	apply_MMD_additional_rotation(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),LEG_LEFT,LEG_LEFT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),LEG_RIGHT,LEG_RIGHT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE_LEFT,KNEE_LEFT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),KNEE_RIGHT,KNEE_RIGHT_D,1)
 	if 'j_asi_c_l' in [b.name for b in bpy.context.object.pose.bones]:
-		apply_MMD_additional_rotation(get_armature(),'j_asi_c_l','j_asi_c_l_D',1)
+		bone_tools.apply_MMD_additional_rotation(get_armature(),'j_asi_c_l','j_asi_c_l_D',1)
 	if 'j_asi_c_r' in [b.name for b in bpy.context.object.pose.bones]:
-		apply_MMD_additional_rotation(get_armature(),'j_asi_c_r','j_asi_c_r_D',1)
-	apply_MMD_additional_rotation(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D,1)
-	apply_MMD_additional_rotation(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D,1)
-	apply_MMD_additional_rotation(get_armature(),TOE_LEFT,TOE_LEFT_EX,1)
-	apply_MMD_additional_rotation(get_armature(),TOE_RIGHT,TOE_RIGHT_EX,1)
+		bone_tools.apply_MMD_additional_rotation(get_armature(),'j_asi_c_r','j_asi_c_r_D',1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),ANKLE_LEFT,ANKLE_LEFT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),ANKLE_RIGHT,ANKLE_RIGHT_D,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),TOE_LEFT,TOE_LEFT_EX,1)
+	bone_tools.apply_MMD_additional_rotation(get_armature(),TOE_RIGHT,TOE_RIGHT_EX,1)
 
 	########## END D BONE CREATION HERE #######
 
@@ -405,92 +414,6 @@ def create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEF
 	print('added bones to IK bone group')
 
 
-
-def create_ik_constraint(bone_name, subtarget, chain_count, use_tail, iterations, 
-						ik_min_x=None, ik_max_x=None, ik_min_y=None, ik_max_y=None, ik_min_z=None, ik_max_z=None):
-
-	bone = bpy.context.object.pose.bones[bone_name]
-
-	bone.constraints.new("IK")
-	bone.constraints["IK"].target = bpy.context.active_object
-	bone.constraints["IK"].subtarget = subtarget
-	bone.constraints["IK"].chain_count = chain_count
-	bone.constraints["IK"].use_tail = use_tail
-	bone.constraints["IK"].iterations = iterations
-
-	if ik_min_x is not None:
-		bone.ik_min_x = ik_min_x
-	if ik_max_x is not None:
-		bone.ik_max_x = ik_max_x
-	if ik_min_y is not None:
-		bone.ik_min_y = ik_min_y
-	if ik_max_y is not None:
-		bone.ik_max_y = ik_max_y
-	if ik_min_z is not None:
-		bone.ik_min_z = ik_min_z
-	if ik_max_z is not None:
-		bone.ik_max_z = ik_max_z
-
-
-def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_limit_z,min_x,max_x,min_y,max_y,min_z,max_z,owner_space):
-
-		bone = bpy.context.object.pose.bones[bone_name]
-		bone.constraints.new("LIMIT_ROTATION")
-		bone.constraints["Limit Rotation"].use_limit_x = use_limit_x
-		bone.constraints["Limit Rotation"].use_limit_y = use_limit_y
-		bone.constraints["Limit Rotation"].use_limit_z = use_limit_z
-		bone.constraints["Limit Rotation"].min_x = min_x
-		bone.constraints["Limit Rotation"].max_x = max_x
-		bone.constraints["Limit Rotation"].min_y = min_y
-		bone.constraints["Limit Rotation"].max_y = max_y
-		bone.constraints["Limit Rotation"].min_z = min_z
-		bone.constraints["Limit Rotation"].max_z = max_z
-		bone.constraints["Limit Rotation"].owner_space = owner_space
-		bone.constraints["Limit Rotation"].name = "mmd_ik_limit_override"
-
-		#fixes axis issue on bone roll
-		bpy.ops.object.mode_set(mode='EDIT')
-		bpy.context.active_object.data.edit_bones[bone_name].roll = 0
-		bpy.ops.object.mode_set(mode='POSE')
-
-
-
-
-def duplicate_bone(bone_name,prefix,parent_name):
-	bpy.ops.object.mode_set(mode='EDIT')
-	edit_bones = bpy.context.active_object.data.edit_bones
-
-	bone = bpy.context.active_object.data.bones[bone_name]
-	
-	print ("new bone name:"+prefix+bone.name)
-	copy_bone = edit_bones.new(prefix+bone.name)
-	copy_bone.parent = edit_bones[parent_name]
-	return copy_bone
-
-
-def transfer_vertex_groups(armature,source_bone_name, target_bone_name):
-	bpy.ops.object.mode_set(mode='OBJECT')
-	
-	if armature and armature.type == 'ARMATURE':
-		meshes = [obj for obj in bpy.data.objects if obj.type == 'MESH' and (obj.parent == armature or obj.parent.parent == armature) ]
-		for mesh in meshes:
-			for vg in mesh.vertex_groups:
-				#print(vg.name)
-				if vg.name == source_bone_name:
-					vg.name = target_bone_name
-					print('transferred vertex groups for',mesh.name,'from',source_bone_name,'to',target_bone_name)
-
-
-def apply_MMD_additional_rotation (armature,additional_transform_bone_name, target_bone_name,influence):
-
-	pose_bone = armature.pose.bones[target_bone_name]
-	pose_bone.mmd_bone.has_additional_rotation = True
-	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone_name
-	pose_bone.mmd_bone.additional_transform_influence = influence
-	FnBone.apply_additional_transformation(armature)
-	#FnBone.clean_additional_transformation(armature)
-	print ('set additional rotation for',target_bone_name,'to',additional_transform_bone_name,'influence:',influence)
-	
 def get_armature():
 	
 	if bpy.context.selected_objects[0].type == 'ARMATURE':

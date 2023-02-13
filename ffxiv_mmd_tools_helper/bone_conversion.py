@@ -110,48 +110,31 @@ def correct_waist_cancel():
 	if model.is_mmd_english() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
 		#measurements of the length of the foot bone which will used to calculate the lengths of the new bones.
-		LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length
 		HALF_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.5
-		QUARTER_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.25
-		TWENTIETH_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.05
-		FOURTIETH_LENGTH_OF_FOOT_BONE = bpy.context.active_object.data.bones["ankle_L"].length * 0.025
+
+		edit_bones = bpy.context.active_object.data.edit_bones
+		armature = bpy.context.active_object
 
 		if "waist_cancel_L" not in bpy.context.active_object.data.bones.keys():
-			waist_cancel_L = bpy.context.active_object.data.edit_bones.new("waist_cancel_L")
-			waist_cancel_L.head = bpy.context.active_object.data.edit_bones["leg_L"].head
-			waist_cancel_L.tail = bpy.context.active_object.data.edit_bones["leg_L"].head
-			waist_cancel_L.parent = bpy.context.active_object.data.edit_bones["lower body"]
-			waist_cancel_L.tail.z = bpy.context.active_object.data.edit_bones["leg_L"].head.z + HALF_LENGTH_OF_FOOT_BONE
-			print("Added waist_cancel_L bone.")
+			bone = bone_tools.add_bone(armature,'waist_cancel_L',parent_bone=edit_bones["lower body"],head=edit_bones['leg_L'].head,tail=edit_bones['leg_L'].head)
+			bone.tail.z = edit_bones["leg_L"].head.z + HALF_LENGTH_OF_FOOT_BONE
 
 		if "leg_L" in bpy.context.active_object.data.edit_bones.keys():
-			bpy.context.active_object.data.edit_bones["leg_L"].parent = bpy.context.active_object.data.edit_bones["waist_cancel_L"]
+			edit_bones["leg_L"].parent = edit_bones["waist_cancel_L"]
 
 		if "waist_cancel_R" not in bpy.context.active_object.data.bones.keys():
-			waist_cancel_R = bpy.context.active_object.data.edit_bones.new("waist_cancel_R")
-			waist_cancel_R.head = bpy.context.active_object.data.edit_bones["leg_R"].head
-			waist_cancel_R.tail = bpy.context.active_object.data.edit_bones["leg_R"].head
-			waist_cancel_R.tail.z = bpy.context.active_object.data.edit_bones["leg_R"].head.z + HALF_LENGTH_OF_FOOT_BONE
-			waist_cancel_R.parent = bpy.context.active_object.data.edit_bones["lower body"]
-			print("Added waist_cancel_R bone.")
+			bone = bone_tools.add_bone(armature,'waist_cancel_R',parent_bone=edit_bones["lower body"],head=edit_bones['leg_R'].head,tail=edit_bones['leg_R'].head)
+			bone.tail.z = edit_bones["leg_L"].head.z + HALF_LENGTH_OF_FOOT_BONE
 
 		if "leg_R" in bpy.context.active_object.data.edit_bones.keys():
-			bpy.context.active_object.data.edit_bones["leg_R"].parent = bpy.context.active_object.data.edit_bones["waist_cancel_R"]
+			edit_bones["leg_R"].parent = edit_bones["waist_cancel_R"]
 	
-
-
-		#make shoulder_C a control bone for shoulder_P
+		#make waist_cancel a control bone for waist
 		bpy.ops.object.mode_set(mode='POSE')
-		
 		armature = bpy.context.view_layer.objects.active
-
-		# Select all bones in the armature
-		for bone in armature.pose.bones:
-			bone.bone.select = True
-		
-		setup_MMD_additional_rotation (armature,'waist', 'waist_cancel_L', -1.0)
-		setup_MMD_additional_rotation (armature,'waist', 'waist_cancel_R', -1.0)
-		FnBone.apply_additional_transformation(armature)
+		bone_tools.apply_MMD_additional_rotation (armature,'waist', 'waist_cancel_L', -1.0)
+		bone_tools.apply_MMD_additional_rotation (armature,'waist', 'waist_cancel_R', -1.0)
+		#FnBone.apply_additional_transformation(armature)
 
 		bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -180,7 +163,6 @@ def add_extra_finger_bones(armature,hand_mesh):
 	print('\nadd_extra_finger_bones(armature,hand_mesh):')
 	if model.is_mmd_english() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
-
 
 		correct_finger(armature,hand_mesh,'fore2_L','fore3_L')
 		correct_finger(armature,hand_mesh,'little2_L','little3_L')
@@ -258,10 +240,8 @@ def correct_finger(armature, hand_mesh,source_bone_name,new_bone_name):
 
 
 def fix_bone_length(armature,source_bone_name,target_bone_name):
-
 	source_bone = armature.data.edit_bones[source_bone_name]
 	target_bone = armature.data.edit_bones[target_bone_name]
-
 	source_bone.tail = target_bone.head
 
 def correct_bones_length():
@@ -281,38 +261,22 @@ def correct_bones_length():
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
-
-
 def add_breast_tip_bones(armature):
 	print('\nadd_breast_tip_bones(armature):')
 	armature = bpy.context.view_layer.objects.active
 	bpy.ops.object.mode_set(mode='EDIT')
 
 	breast = armature.data.edit_bones['j_mune_l']
-
 	if (breast.name + "_tip") not in bpy.context.active_object.data.edit_bones.keys():
-		duplicate_bone = armature.data.edit_bones.new(breast.name + "_tip")
-		duplicate_bone.head = breast.head
-		duplicate_bone.tail = breast.tail
-		duplicate_bone.length = breast.length * 1.25
-		duplicate_bone.head = breast.tail
-		duplicate_bone.roll = breast.roll
-		duplicate_bone.parent = breast
-
-		print('added left breast tip')
+		bone = bone_tools.add_bone(armature,breast.name + "_tip",parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
+		bone.head = breast.tail
+		bone.roll = breast.roll
 
 	breast = armature.data.edit_bones['j_mune_r']
-
 	if (breast.name + "_tip") not in bpy.context.active_object.data.edit_bones.keys():
-		duplicate_bone = armature.data.edit_bones.new(breast.name + "_tip")
-		duplicate_bone.head = breast.head
-		duplicate_bone.tail = breast.tail
-		duplicate_bone.length = breast.length * 1.25
-		duplicate_bone.head = breast.tail
-		duplicate_bone.roll = breast.roll
-		duplicate_bone.parent = breast
-
-		print('added right breast tip')
+		bone = bone_tools.add_bone(armature,breast.name + "_tip",parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
+		bone.head = breast.tail
+		bone.roll = breast.roll
 
 def add_eye_control_bone():
 	print('\nadd_eye_control_bone():')
@@ -327,11 +291,9 @@ def add_eye_control_bone():
 		eyes_bone = None
 		if armature.data.edit_bones.get("eyes") is None:
 			eyes_bone = armature.data.edit_bones.new("eyes")
-			
 			eyes_bone.head = 0.5 * (eye_L_bone.head + eye_R_bone.head)
 			eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
 			eyes_bone.length = eye_L_bone.length
-				
 			eyes_bone.parent = head_bone
 			
 			#flip the orientation of the bone
@@ -344,11 +306,9 @@ def add_eye_control_bone():
 				
 		else:
 			eyes_bone = armature.data.edit_bones.get("eyes")
-
-
 		
-		setup_MMD_additional_rotation(armature,'eyes','eye_L',1)
-		setup_MMD_additional_rotation(armature,'eyes','eye_R',1)	
+		bone_tools.apply_MMD_additional_rotation(armature,'eyes','eye_L',1)
+		bone_tools.apply_MMD_additional_rotation(armature,'eyes','eye_R',1)	
 
 
 		bpy.ops.object.mode_set(mode='EDIT')
@@ -356,39 +316,6 @@ def add_eye_control_bone():
 	else:
 		print("Rename bones to MMD_English and then try again.")
 	
-
-"""
-def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None,use_connect=None):
-	
-	new_bone = None
-
-	# Create a new bone
-	if (bone_name) not in bpy.context.active_object.data.edit_bones.keys():
-		new_bone = armature.data.edit_bones.new(bone_name)
-	else:
-		new_bone = bpy.context.active_object.data.edit_bones[bone_name]
-	# Set the length of the bone
-	if head is not None:
-		new_bone.head = head
-	if tail is not None:
-		new_bone.tail = tail
-	if length is not None:
-		new_bone.length = length
-	# Point the bone directly upwards
-	new_bone.roll = 0
-	msg = 'added bone ' + bone_name
-
-	if parent_bone.name in bpy.context.active_object.data.edit_bones.keys():
-		new_bone.parent = parent_bone
-		msg += ' parented to ' + parent_bone.name
-
-	if use_connect is not None:
-		new_bone.use_connect = use_connect
-	
-	print(msg)
-	
-	return new_bone
-"""
 
 def create_twist_support_bones(armature,source_bone_name,bone_1_name,bone_2_name,bone_3_name,additional_rotation_bone_name):
 	if armature:
@@ -412,18 +339,9 @@ def create_twist_support_bones(armature,source_bone_name,bone_1_name,bone_2_name
 			_bone_3 = bone_tools.add_bone(armature, bone_3_name,parent_bone=source_bone,length= length * 0.30,head= pos3,tail= pos3 + mathutils.Vector((0, 0, length * 0.1)))
 			
 			bpy.ops.object.mode_set(mode='POSE')
-			
-			# Select all bones in the armature
-			for bone in armature.pose.bones:
-				bone.bone.select = True
-			
-			setup_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_1_name, 0.25)
-			setup_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_2_name, 0.50)
-			setup_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_3_name, 0.75)
-			
-			
-			#armature.data.edit_bones.active = source_bone
-			#FnBone.apply_additional_transformation(armature)
+			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_1_name, 0.25)
+			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_2_name, 0.50)
+			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_3_name, 0.75)
 			
 			# Return to object mode
 			bpy.ops.object.mode_set(mode='OBJECT')
@@ -454,20 +372,10 @@ def add_arm_wrist_twist():
 		wrist_L.parent = wrist_twist_L
 		wrist_R.parent = wrist_twist_R
 		
-		#rename the bones
-		#arm_twist_L.name = 'arm_twist_L'
-		#arm_twist_R.name = 'arm_twist_R'
-		#wrist_twist_L.name = 'wrist_twist_L'
-		#wrist_twist_R.name = 'wrist_twist_R'
-		
-		#bpy.ops.object.mode_set(mode='POSE')
-		#lock rotation to the Y axis only
-		
 		armature.pose.bones.get(arm_twist_L.name).lock_rotation = [True,False,True]
 		armature.pose.bones.get(arm_twist_R.name).lock_rotation = [True,False,True]
 		armature.pose.bones.get(wrist_twist_L.name).lock_rotation = [True,False,True]
 		armature.pose.bones.get(wrist_twist_R.name).lock_rotation = [True,False,True]
-
 
 		create_twist_support_bones(armature,'arm_L','arm_twist_1_L','arm_twist_2_L','arm_twist_3_L','arm_twist_L')
 		create_twist_support_bones(armature,'arm_R','arm_twist_1_R','arm_twist_2_R','arm_twist_3_R','arm_twist_R')
@@ -478,27 +386,6 @@ def add_arm_wrist_twist():
 		print("Rename bones to MMD_English and then try again.")
 
 
-	
-def setup_MMD_additional_rotation (armature,additional_transform_bone, target_bone_name, influence):
-
-	bpy.ops.object.mode_set(mode='POSE')
-
-	# Select all bones in the armature
-	for bone in armature.pose.bones:
-		bone.bone.select = True
-
-	pose_bone = armature.pose.bones.get(target_bone_name)
-	pose_bone.mmd_bone.has_additional_rotation = True
-	pose_bone.mmd_bone.is_additional_transform_dirty = True
-	pose_bone.mmd_bone.additional_transform_influence = influence
-	pose_bone.mmd_bone.additional_transform_bone = additional_transform_bone
-
-	FnBone.apply_additional_transformation(armature)
-	print ('set additional rotation for',target_bone_name,'to',additional_transform_bone,'influence:',influence)
-
-	#FnBone.apply_additional_transformation(armature)
-	#FnBone.clean_additional_transformation(armature)    
-	
 
 def add_shoulder_control_bones():
 	print('\nadd_shoulder_control_bones():')
@@ -518,16 +405,12 @@ def add_shoulder_control_bones():
 		#create new bones
 		shoulder_P_L = bone_tools.add_bone(armature, 'shoulder_P_L',parent_bone=j_sebo_c,length=shoulder_L.length,head=shoulder_L.head ,tail=shoulder_L.head)
 		shoulder_P_R = bone_tools.add_bone(armature, 'shoulder_P_R',parent_bone=j_sebo_c,length=shoulder_R.length,head=shoulder_R.head ,tail=shoulder_R.head)
-
 		shoulder_C_L = bone_tools.add_bone(armature, 'shoulder_C_L',parent_bone=shoulder_L,length=shoulder_L.length,head=shoulder_L.tail ,tail=shoulder_L.tail)
 		shoulder_C_R = bone_tools.add_bone(armature, 'shoulder_C_R',parent_bone=shoulder_R,length=shoulder_R.length,head=shoulder_R.tail ,tail=shoulder_R.tail)
-
-		#add_bone(armature, bone_name, length, head, tail, parent_bone)
 
 		#set the new bone's positions vertical
 		shoulder_P_L.tail.z = shoulder_P_L.tail.z - (shoulder_P_L.length * 0.25)
 		shoulder_P_R.tail.z = shoulder_P_R.tail.z - (shoulder_P_R.length * 0.25)
-
 		shoulder_C_L.tail.z = shoulder_C_L.tail.z - (shoulder_C_L.length * 0.25)
 		shoulder_C_R.tail.z = shoulder_C_R.tail.z - (shoulder_C_R.length * 0.25)
 
@@ -545,9 +428,9 @@ def add_shoulder_control_bones():
 		for bone in armature.pose.bones:
 			bone.bone.select = True
 		
-		setup_MMD_additional_rotation (armature,'shoulder_P_L', 'shoulder_C_L', -1.0)
-		setup_MMD_additional_rotation (armature,'shoulder_P_R', 'shoulder_C_R', -1.0)
-		FnBone.apply_additional_transformation(armature)
+		bone_tools.apply_MMD_additional_rotation (armature,'shoulder_P_L', 'shoulder_C_L', -1.0)
+		bone_tools.apply_MMD_additional_rotation (armature,'shoulder_P_R', 'shoulder_C_R', -1.0)
+		#FnBone.apply_additional_transformation(armature)
 	
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -593,10 +476,6 @@ def merge_double_jointed_knee(armature):
 			if child_bone_name is not None:
 				miscellaneous_tools.combine_2_vg_1_vg(parent_bone_name, child_bone_name)
 				miscellaneous_tools.combine_2_bones_1_bone(parent_bone_name, child_bone_name)
-
-
-
-
 	
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -687,15 +566,11 @@ class BoneTools(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-
 		obj = context.active_object 
-
 		if bpy.context.scene.selected_bone_tool  == 'add_extra_finger_bones':
 			return obj is not None and obj.type == 'MESH'
-
 		else:
 			return obj is not None and obj.type == 'ARMATURE'
-
 
 	def execute(self, context):
 		main(context)

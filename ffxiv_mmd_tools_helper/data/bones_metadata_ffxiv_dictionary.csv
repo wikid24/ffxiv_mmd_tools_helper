@@ -94,12 +94,12 @@
 93,little3_R, 右小指３, 小指３.R, f_pinky.03.R,,finger_pinky_r_c,,,92,,,,,,,y,,,fingers,指,Fingers,,,,,,,
 94,leg_L_D, 左足D, 足D.L,,,leg_L_D,y,,93,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
 95,knee_L_D, 左ひざD, ひざD.L,,,knee_L_D,y,,94,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
-96,j_asi_c_l_D,,,,,j_asi_c_l_D,,,95,1,y,,,,,y,,,D,足,Legs,,,,,,,
+96,knee_2_L_D, 左ひざ２D, ひざ２D.L,,,j_asi_c_l_D,,,95,1,y,,,,,y,,,D,足,Legs,,,,,,,
 97,ankle_L_D, 左足首D, 足首D.L,,,ankle_L_D,y,,96,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
 98,toe_L_EX, 左足先EX,足先EX.L,,,toe_L_EX,y,,97,1,,,,,,y,,,D,足,Legs,,,,,,,Y
 99,leg_R_D, 右足D, 足D.R,,,leg_R_D,y,,98,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
 100,knee_R_D, 右ひざD, ひざD.R,,,knee_R_D,y,,99,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
-101,j_asi_c_r_D,,,,,j_asi_c_r_D,,,100,1,y,,,,,y,,,D,足,Legs,,,,,,,
+101,knee_2_R_D,右ひざ２D, ひざ２D.R,,,j_asi_c_r_D,,,100,1,y,,,,,y,,,D,足,Legs,,,,,,,
 102,ankle_R_D, 右足首D, 足首D.R,,,ankle_R_D,y,,101,1,y,,,,,y,,,D,足,Legs,,,,,,,Y
 103,toe_R_EX, 右足先EX,足先EX.R,,,toe_R_EX,y,,102,1,,,,,,y,,,D,足,Legs,,,,,,,Y
 104,eye_L, 左目, 目.L, eye.L,j_f_eye_l,eye_L,,,103,2,,,y,,,y,,,face,頭,Head,,,,,,,

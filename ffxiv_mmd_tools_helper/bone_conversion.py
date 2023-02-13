@@ -382,9 +382,29 @@ def add_arm_wrist_twist():
 		create_twist_support_bones(armature,'elbow_L','wrist_twist_1_L','wrist_twist_2_L','wrist_twist_3_L','wrist_twist_L')
 		create_twist_support_bones(armature,'elbow_R','wrist_twist_1_R','wrist_twist_2_R','wrist_twist_3_R','wrist_twist_R')
 
+		    
+		offset_bone_by_parents_tail('elbow_L','wrist_twist_L', 0.33)
+		offset_bone_by_parents_tail('elbow_R','wrist_twist_R', 0.33)
+
+
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
+#used to move the wrist_twist to elbow's tail
+def offset_bone_by_parents_tail(parent,child,percentage_of_parent):
+    
+    bpy.ops.object.mode_set(mode='EDIT')
+
+
+    parent = bpy.context.active_object.data.edit_bones[parent]
+    child = bpy.context.active_object.data.edit_bones[child]
+
+    child.head = parent.head
+    child.tail = parent.tail    
+    child.length = (parent.length * percentage_of_parent)
+    child.head = child.tail
+    child.tail = parent.tail
+        
 
 
 def add_shoulder_control_bones():

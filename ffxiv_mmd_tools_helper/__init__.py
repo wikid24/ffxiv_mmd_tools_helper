@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "Hogarth-MMD, UuuNyaa, wikid24",
-	"version": (0, 815),
+	"version": (0, 816),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "fork of MMDToolsHelper for FFXIV & Blender 2.8+",

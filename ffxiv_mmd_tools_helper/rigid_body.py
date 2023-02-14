@@ -245,25 +245,20 @@ def transform_rigid_body(obj=None
 						,collision_group_number=None, collision_group_mask=None, friction=None
 						,linear_damping=None,angular_damping=None):
 
+	
 	if obj is None:
 		if bpy.context.active_object.mmd_type == 'RIGID_BODY':
 			obj=bpy.context.active_object
-	"""
-	#set the size to match what the MMD Rigid Body Panel displays as the size
-	if rigid_shape == 'SPHERE':
-		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),0,0] #radius,y,z
-	elif rigid_shape == 'BOX':
-		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1] , 1e-3),max(size[2] , 1e-3)] #x,y,z
-	elif rigid_shape == 'CAPSULE':
-		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1], 1e-3),0] #radius,diameter,z
-	"""
-	if rotation_x:
-		obj.rotation_euler[0] = rotation_x
-	if rotation_y:
-		obj.rotation_euler[1] = rotation_y
-	if rotation_z:
-		obj.rotation_euler[2] = rotation_z
-	if rigid_body_shape:
+	#obj.rotation_mode
+
+
+	if rotation_x is not None:
+		obj.rotation_euler.x = rotation_x
+	if rotation_y is not None:
+		obj.rotation_euler.y = rotation_y
+	if rotation_z is not None:
+		obj.rotation_euler.z = rotation_z
+	if rigid_body_shape is not None:
 		#BOX
 		#SPHERE
 		#CAPSULE
@@ -276,26 +271,26 @@ def transform_rigid_body(obj=None
 		if size_z is None:
 			size_z = obj.mmd_rigid.size[2] 
 		obj.mmd_rigid.size = [max(size_x, 1e-3),max(size_y , 1e-3),max(size_z, 1e-3)]
-	if rigid_body_type:
+	if rigid_body_type is not None:
 		obj.mmd_rigid.type = rigid_body_type
 		#'0' = bone
 		#'1' = physics
 		#'2' = physics+bone
 
-	if mass:
+	if mass is not None:
 		obj.rigid_body.mass = mass
-	if restitution:
+	if restitution is not None:
 		obj.rigid_body.restitution = restitution 
-	if collision_group_number:
+	if collision_group_number is not None:
 		obj.mmd_rigid.collision_group_number = collision_group_number
-	if collision_group_mask:
+	if collision_group_mask is not None:
 		obj.mmd_rigid.collision_group_mask = collision_group_mask
 		#collision_group_mask = [True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True]
-	if friction:
+	if friction is not None:
 		obj.rigid_body.friction = friction
-	if linear_damping:
+	if linear_damping is not None:
 		obj.rigid_body.linear_damping = linear_damping
-	if angular_damping:
+	if angular_damping is not None:
 		obj.rigid_body.angular_damping 
 
 
@@ -392,28 +387,14 @@ def _transform_rigid_body(self,context):
 
 	obj = context.active_object
 
-	x = None
-	y = None
-	z = None
-
-	if self.rigid_body_type == 'SPHERE':
-		x = self.size_radius
-	if self.rigid_body_type == 'CAPSULE':
-		x = self.size_radius
-		y = self.size_height
-	if self.rigid_body_type == 'BOX':
-		x = self.size_x
-		y = self.size_y
-		z = self.size_z
-	
 	transform_rigid_body(
 				obj=obj,
 				rotation_x=self.rotation_x if self.rotation_x is not None else None,
 				rotation_y=self.rotation_y if self.rotation_y is not None else None,
 				rotation_z=self.rotation_z if self.rotation_z is not None else None,
-				size_x=x if x is not None else None,
-				size_y=y if y is not None else None,
-				size_z=z if z is not None else None,
+				size_x=self.size_x if self.size_x is not None else None,
+				size_y=self.size_y if self.size_y is not None else None,
+				size_z=self.size_z if self.size_z is not None else None,
 				rigid_body_type=self.rigid_body_type if self.rigid_body_type is not None else None,
 				rigid_body_shape=self.rigid_body_shape if self.rigid_body_shape is not None else None,
 				mass=self.mass if self.mass is not None else None,
@@ -432,19 +413,12 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	bl_label = "Batch Update Rigid Bodies"
 	bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
 
-	#obj = bpy.context.active_object
-
-	properties = ['rotation_x','rotation_y','rotation_z','size_x','size_y','size_z','size_radius','size_height','rigid_body_type','rigid_body_shape','mass','restitution','collision_group_number','collision_group_mask','friction','linear_damping','angular_damping']
-
-	#edit_rotation_x: bpy.props.BoolProperty(name='Rotation X')
 	rotation_x: bpy.props.FloatProperty(min =0,unit='ROTATION',update=_transform_rigid_body)
 	rotation_y: bpy.props.FloatProperty(min=0,unit='ROTATION',update=_transform_rigid_body)
 	rotation_z: bpy.props.FloatProperty(min =0,unit='ROTATION',update=_transform_rigid_body)
 	size_x: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
 	size_y: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
 	size_z: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
-	size_radius: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
-	size_height: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
 	rigid_body_type: bpy.props.EnumProperty(items=[\
 			('0','Bone','Bone')\
 			,('1','Physics','Physics')\
@@ -463,14 +437,12 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	linear_damping: bpy.props.FloatProperty(min=0, max=1,update=_transform_rigid_body)
 	angular_damping: bpy.props.FloatProperty(min=0,max = 1,update=_transform_rigid_body)
 
-	__RIGID_SIZE_MAP = {
-	'SPHERE': ('radius',),
-	'BOX': ('x', 'y', 'z'),
-	'CAPSULE': ('radius', 'height'),
-	}
-
 	def draw(self, context):
 		layout = self.layout
+
+		row = layout.row()
+		row.label(text='Active Object:'+ context.active_object.name)
+		row.label(text='Bone:'+ context.active_object.constraints['mmd_tools_rigid_parent'].subtarget)
 
 		c = layout.column(align=True)
 		row = c.row(align=True)
@@ -486,11 +458,17 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c.row(align=True).prop(self, 'rigid_body_shape', expand=True)
 
 		col = c.column(align=True)
-		for i, name in enumerate(self.__RIGID_SIZE_MAP[self.rigid_body_shape]):
-			col.prop(self, 'size_' + name, text=name)
-		
+		if self.rigid_body_shape == 'BOX':
+			c.prop(self,'size_x',text = 'Size X')
+			c.prop(self,'size_y',text = 'Size Y')
+			c.prop(self,'size_z',text = 'Size Z')
+		elif self.rigid_body_shape == 'CAPSULE':
+			c.prop(self,'size_x',text='Radius')
+			c.prop(self,'size_y',text='Height')
+		elif self.rigid_body_shape == 'SPHERE':
+			c.prop(self,'size_x',text='Radius')
+				
 		row = layout.row()
-
 		c = row.column()
 		c.prop(self, 'mass')
 		c.prop(self, 'restitution')
@@ -523,20 +501,6 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	def execute(self, context):
 
 		bpy.ops.object.mode_set(mode='OBJECT')
-
-		x = None
-		y = None
-		z = None
-
-		if self.rigid_body_type == 'SPHERE':
-			x = self.size_radius
-		if self.rigid_body_type == 'CAPSULE':
-			x = self.size_radius
-			y = self.size_height
-		if self.rigid_body_type == 'BOX':
-			x = self.size_x
-			y = self.size_y
-			z = self.size_z
 		
 
 		# Call the function and only pass the non-None parameters
@@ -544,9 +508,9 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 					rotation_x=self.rotation_x if self.rotation_x is not None else None,
 					rotation_y=self.rotation_y if self.rotation_y is not None else None,
 					rotation_z=self.rotation_z if self.rotation_z is not None else None,
-					size_x=x if x is not None else None,
-					size_y=y if y is not None else None,
-					size_z=z if z is not None else None,
+					size_x=self.size_x if self.size_x is not None else None,
+					size_y=self.size_y if self.size_y is not None else None,
+					size_z=self.size_z if self.size_z is not None else None,
 					rigid_body_type=self.rigid_body_type if self.rigid_body_type is not None else None,
 					rigid_body_shape=self.rigid_body_shape if self.rigid_body_shape is not None else None,
 					mass=self.mass if self.mass is not None else None,
@@ -566,14 +530,12 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		obj = context.active_object
 
 		#self.edit_rotation_x: bpy.props.BoolProperty(name='Rotation X')
-		self.rotation_x= obj.rotation_euler[0]
-		self.rotation_y= obj.rotation_euler[1]
-		self.rotation_z= obj.rotation_euler[2]
+		self.rotation_x= obj.rotation_euler.x
+		self.rotation_y= obj.rotation_euler.y
+		self.rotation_z= obj.rotation_euler.z
 		self.size_x = obj.mmd_rigid.size[0]
 		self.size_y = obj.mmd_rigid.size[1]
 		self.size_z = obj.mmd_rigid.size[2]
-		self.size_radius = obj.mmd_rigid.size[0]
-		self.size_height = obj.mmd_rigid.size[1]
 		self.rigid_body_type = obj.mmd_rigid.type
 		self.rigid_body_shape =  obj.mmd_rigid.shape
 		self.mass = obj.rigid_body.mass

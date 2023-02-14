@@ -440,9 +440,14 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	def draw(self, context):
 		layout = self.layout
 
+		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		
+
 		row = layout.row()
 		row.label(text='Active Object:'+ context.active_object.name)
-		row.label(text='Bone:'+ context.active_object.constraints['mmd_tools_rigid_parent'].subtarget)
+		
+		row.label(text='Bone:'+ bone_name)
 
 		c = layout.column(align=True)
 		row = c.row(align=True)

@@ -34,7 +34,7 @@ def read_joints_file():
 	
 	return JOINTS_DICTIONARY
 
-def create_joint(armature,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular):
+def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular):
 
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
@@ -79,6 +79,7 @@ def create_joint(armature,rigid_body_1,rigid_body_2,use_bone_rotation,limit_line
 		)
 		
 		joint = bpy.context.view_layer.objects.active
+		joint.name = joint_name
 		#joint.rotation_euler[0] = 0 #sets x rotation to 0
 		bpy.context.view_layer.objects.active = joint
 		print ('created joint: ',joint.name)
@@ -91,6 +92,7 @@ def apply_all_joints(armature,joints_data):
 	
 	if joints_data: 
 		for joint in joints_data:
+			joint_name = joint['joint_name']
 			rigid_body_1 = joint['rigid_body_1']
 			rigid_body_2 = joint['rigid_body_2']
 			use_bone_rotation = joint['use_bone_rotation']
@@ -101,7 +103,7 @@ def apply_all_joints(armature,joints_data):
 			spring_linear = [joint['linear_spring_x'],joint['linear_spring_y'],joint['linear_spring_z']]
 			spring_angular= [joint['angular_spring_x'],joint['angular_spring_y'],joint['angular_spring_z']]
 
-			create_joint(armature,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
+			create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
 			
 def main(context):
 	bpy.context.view_layer.objects.active = get_armature()

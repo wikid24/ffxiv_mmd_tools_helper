@@ -169,7 +169,7 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     #removes the new skirt object before creating a new one and stores the children in a list
     skirt_obj_children = reset_skirt_obj()
     
-   # Make the armature the active object
+# Make the armature the active object
     bpy.context.view_layer.objects.active = bpy.context.view_layer.objects[-1]    
     
     """
@@ -253,7 +253,7 @@ def transfer_mesh_to_new_skirt(mesh_obj, skirt_obj):
     else:
         print('create the skirt_obj before running this command')
         
-  
+
 def clean_up_weight_paint(mesh_obj,armature_obj):
 
     # Make sure the armature object is in pose mode
@@ -353,7 +353,7 @@ def weight_paint_transfer (mesh_obj,new_skirt_shape):
     bpy.ops.object.mode_set(mode='OBJECT')
     bpy.context.view_layer.objects.active = mesh_obj
     bpy.ops.object.mode_set(mode='WEIGHT_PAINT')
-  
+
 
 def delete_ffxiv_skirt_vertex_groups(mesh_obj):
     
@@ -493,7 +493,7 @@ class GenerateSkirtModal(bpy.types.Operator):
         wm = context.window_manager
         return wm.invoke_props_dialog(self, width=400)
 
-      
+    
 
 
 @register_wrap
@@ -550,9 +550,11 @@ class MergeBonesAndMeshToFFXIVModel(bpy.types.Operator):
     bl_label = "Delete FFXIV Skirt Vertex Groups"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # @classmethod
-    # def poll(cls, context):
-        # return context.active_object is not None
+    @classmethod
+    def poll(cls, context):
+        obj = context.active_object
+        #skirt_obj = bpy.data.armatures['new_skirt_arm']
+        return obj is not None and obj.type == 'ARMATURE' and obj.name != 'new_skirt_arm'
 
     def execute(self, context):
         armature = bpy.context.view_layer.objects.active

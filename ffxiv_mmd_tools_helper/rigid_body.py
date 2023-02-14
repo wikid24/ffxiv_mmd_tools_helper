@@ -20,7 +20,7 @@ def read_rigid_body_file():
 			#row['collision_group_mask'] = str('0')
 		if isinstance(row['collision_group_mask'], float):
 			row['collision_group_mask'] = str(int(row['collision_group_mask']))
-		index_values = str(row['collision_group_mask']).split('/')
+		index_values = str(row['collision_group_mask']).split('\\')
 		bool_list = [str(i) in index_values for i in range(16)]
 		row['collision_group_mask'] = bool_list
 		#print('converted to',row['collision_group_mask'])
@@ -146,7 +146,190 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		print ('bone ',bone,' does not exist')
  
 
-def main(context):
+import bpy
+import re
+import math
+
+#string = "skirt_8_12"
+
+
+def get_skirt_rigid_vertical_objects(obj):
+    
+    bpy.ops.object.mode_set(mode='OBJECT')
+    
+    if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
+
+        #get the skirt chain number (first number after skirt_)
+        result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
+        if result:
+            chain_number = int(result.group(1))
+            print("Captured value:", chain_number )
+        else:
+            print("No match found.")
+            
+        rb_obj_chain = []
+                
+        armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+        bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+        rigid_bodies = None
+
+        #get the 'rigidbodies' object
+        for object in armature.parent.children:
+            if object.name == 'rigidbodies':
+                rigid_bodies = object
+        
+        if rigid_bodies is not None:
+            #get all rigid bodies that have the same chain number as object that was passed
+            for rigid_body in rigid_bodies.children:
+                
+                #if it finds it, add it to the rb_obj_chain list
+                if rigid_body.name.startswith('skirt_'+str(chain_number)+'_') and rigid_body.mmd_type == 'RIGID_BODY':
+                    rb_obj_chain.append(rigid_body)
+        
+        if rb_obj_chain is not None:
+            # Deselect all objects
+            bpy.ops.object.select_all(action='DESELECT')
+            #select all in chain    
+            for rb_obj in rb_obj_chain:
+                rb_obj.select_set(True)
+                
+            return rb_obj_chain
+                
+def get_skirt_rigid_horizontal_objects(obj):
+    
+    bpy.ops.object.mode_set(mode='OBJECT')
+    
+    if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
+        #get the skirt chain number (last number after skirt_)
+        result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
+        if result:
+            chain_number = int(result.group(2))
+            print("Captured value:", chain_number )
+        else:
+            print("No match found.")
+            
+        rb_obj_chain = []
+        
+        armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+        bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+        rigid_bodies = None
+
+        #get the 'rigidbodies' object
+        for object in armature.parent.children:
+            if object.name == 'rigidbodies':
+                rigid_bodies = object
+        
+        if rigid_bodies is not None:
+            #get all rigid bodies that have the same chain number as object that was passed
+            for rigid_body in rigid_bodies.children:
+                
+                #if it finds it, add it to the rb_obj_chain list
+                if rigid_body.name.endswith('_'+str(chain_number)) and rigid_body.mmd_type == 'RIGID_BODY':
+                    rb_obj_chain.append(rigid_body)        
+                
+        if rb_obj_chain is not None:
+            
+            # Deselect all objects
+            bpy.ops.object.select_all(action='DESELECT')
+        
+            #select all in chain    
+            for rb_obj in rb_obj_chain:
+                rb_obj.select_set(True)
+        
+            return rb_obj_chain
+
+def transform_rigid_body(obj=None
+						,rotation_x = None,rotation_y=None,rotation_z=None
+						,size_x=None,size_y=None,size_z=None
+						,rigid_body_type=None, rigid_body_shape=None,mass=None,restitution=None
+						,collision_group_number=None, collision_group_mask=None, friction=None
+						,linear_damping=None,angular_damping=None):
+
+	if obj is None:
+		if bpy.context.active_object.mmd_type == 'RIGID_BODY':
+			obj=bpy.context.active_object
+	"""
+	#set the size to match what the MMD Rigid Body Panel displays as the size
+	if rigid_shape == 'SPHERE':
+		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),0,0] #radius,y,z
+	elif rigid_shape == 'BOX':
+		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1] , 1e-3),max(size[2] , 1e-3)] #x,y,z
+	elif rigid_shape == 'CAPSULE':
+		rigid_body.mmd_rigid.size = [max(size[0], 1e-3),max(size[1], 1e-3),0] #radius,diameter,z
+	"""
+	if rotation_x:
+		obj.rotation_euler[0] = rotation_x
+	if rotation_y:
+		obj.rotation_euler[1] = rotation_y
+	if rotation_z:
+		obj.rotation_euler[2] = rotation_z
+	if rigid_body_shape:
+		#BOX
+		#SPHERE
+		#CAPSULE
+		obj.mmd_rigid.shape = rigid_body_shape
+	if (size_x or size_y or size_z):
+		if size_x is None:
+			size_x = obj.mmd_rigid.size[0]    
+		if size_y is None:
+			size_y = obj.mmd_rigid.size[1]    
+		if size_z is None:
+			size_z = obj.mmd_rigid.size[2] 
+		obj.mmd_rigid.size = [max(size_x, 1e-3),max(size_y , 1e-3),max(size_z, 1e-3)]
+	if rigid_body_type:
+		obj.mmd_rigid.type = rigid_body_type
+		#'0' = bone
+		#'1' = physics
+		#'2' = physics+bone
+
+	if mass:
+		obj.rigid_body.mass = mass
+	if restitution:
+		obj.rigid_body.restitution = restitution 
+	if collision_group_number:
+		obj.mmd_rigid.collision_group_number = collision_group_number
+	if collision_group_mask:
+		obj.mmd_rigid.collision_group_mask = collision_group_mask
+		#collision_group_mask = [True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True]
+	if friction:
+		obj.rigid_body.friction = friction
+	if linear_damping:
+		obj.rigid_body.linear_damping = linear_damping
+	if angular_damping:
+		obj.rigid_body.angular_damping 
+
+
+
+def transform_selected_rigid_bodies(rotation_x = None,rotation_y=None,rotation_z=None
+									,size_x=None,size_y=None,size_z=None
+									,rigid_body_type=None, rigid_body_shape=None,mass=None,restitution=None
+									,collision_group_number=None, collision_group_mask=None, friction=None
+									,linear_damping=None,angular_damping=None):
+	
+	selected_objects = bpy.context.selected_objects
+	
+	is_all_rigid_bodies = True
+	
+	for sel_objs in selected_objects:
+		if sel_objs.mmd_type != 'RIGID_BODY':
+			is_all_rigid_bodies = False
+			
+	if is_all_rigid_bodies:        
+		for obj in selected_objects:
+
+			transform_rigid_body(obj
+								,rotation_x,rotation_y,rotation_z
+								,size_x,size_y,size_z
+								,rigid_body_type, rigid_body_shape,mass,restitution
+								,collision_group_number, collision_group_mask, friction
+								,linear_damping,angular_damping)
+
+	else: 
+		print('Not all selected objects are rigid bodies. Select only rigid bodies')
+    
+
+
+def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = get_armature()
 	armature = get_armature()
 
@@ -159,7 +342,7 @@ def main(context):
 class AddRigidBody(bpy.types.Operator):
 	"""Add Rigid Bodies to a FFXIV Model (Converted to an MMD Model)"""
 	bl_idname = "ffxiv_mmd_tools_helper.add_rigid_body"
-	bl_label = "Replace bones renaming"
+	bl_label = "Add Rigid Bodies from CSV"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	@classmethod
@@ -169,5 +352,236 @@ class AddRigidBody(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
-		main(context)
+		create_rigid_bodies_from_csv(context)
 		return {'FINISHED'}
+
+
+@register_wrap
+class SelectVerticalSkirtRigidBodies(bpy.types.Operator):
+	"""Select All Rigid Bodies in the vertical rigid body skirt chain"""
+	bl_idname = "ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies"
+	bl_label = "Replace bones renaming"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_')
+
+	def execute(self, context):
+		get_skirt_rigid_vertical_objects(context.active_object)
+		return {'FINISHED'}
+
+@register_wrap
+class SelectHorizontalSkirtRigidBodies(bpy.types.Operator):
+	"""Select All Rigid Bodies in the horizontal rigid body skirt chain with the same number"""
+	bl_idname = "ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies"
+	bl_label = "Replace bones renaming"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_')
+
+	def execute(self, context):
+		get_skirt_rigid_horizontal_objects(context.active_object)
+		return {'FINISHED'}
+
+def _transform_rigid_body(self,context):
+
+	obj = context.active_object
+
+	x = None
+	y = None
+	z = None
+
+	if self.rigid_body_type == 'SPHERE':
+		x = self.size_radius
+	if self.rigid_body_type == 'CAPSULE':
+		x = self.size_radius
+		y = self.size_height
+	if self.rigid_body_type == 'BOX':
+		x = self.size_x
+		y = self.size_y
+		z = self.size_z
+	
+	transform_rigid_body(
+				obj=obj,
+				rotation_x=self.rotation_x if self.rotation_x is not None else None,
+				rotation_y=self.rotation_y if self.rotation_y is not None else None,
+				rotation_z=self.rotation_z if self.rotation_z is not None else None,
+				size_x=x if x is not None else None,
+				size_y=y if y is not None else None,
+				size_z=z if z is not None else None,
+				rigid_body_type=self.rigid_body_type if self.rigid_body_type is not None else None,
+				rigid_body_shape=self.rigid_body_shape if self.rigid_body_shape is not None else None,
+				mass=self.mass if self.mass is not None else None,
+				restitution=self.restitution if self.restitution is not None else None,
+				collision_group_number=self.collision_group_number if self.collision_group_number is not None else None,
+				collision_group_mask=self.collision_group_mask if self.collision_group_mask is not None else None,
+				friction=self.friction if self.friction is not None else None,
+				linear_damping=self.linear_damping if self.linear_damping is not None else None,
+				angular_damping=self.angular_damping if self.angular_damping is not None else None,
+			)
+
+
+@register_wrap
+class BatchUpdateRigidBodies(bpy.types.Operator):
+	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
+	bl_label = "Batch Update Rigid Bodies"
+	bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
+
+	#obj = bpy.context.active_object
+
+	properties = ['rotation_x','rotation_y','rotation_z','size_x','size_y','size_z','size_radius','size_height','rigid_body_type','rigid_body_shape','mass','restitution','collision_group_number','collision_group_mask','friction','linear_damping','angular_damping']
+
+	#edit_rotation_x: bpy.props.BoolProperty(name='Rotation X')
+	rotation_x: bpy.props.FloatProperty(min =0,unit='ROTATION',update=_transform_rigid_body)
+	rotation_y: bpy.props.FloatProperty(min=0,unit='ROTATION',update=_transform_rigid_body)
+	rotation_z: bpy.props.FloatProperty(min =0,unit='ROTATION',update=_transform_rigid_body)
+	size_x: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
+	size_y: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
+	size_z: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
+	size_radius: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
+	size_height: bpy.props.FloatProperty(min=0,update=_transform_rigid_body)
+	rigid_body_type: bpy.props.EnumProperty(items=[\
+			('0','Bone','Bone')\
+			,('1','Physics','Physics')\
+			,('2','Physics + Bone','Physics + Bone')\
+			],update=_transform_rigid_body)
+	rigid_body_shape: bpy.props.EnumProperty(items=[\
+			('SPHERE','Sphere','Sphere')\
+			,('BOX','Box','Box')\
+			,('CAPSULE','Capsule','Capsule')\
+			],update=_transform_rigid_body)
+	mass: bpy.props.FloatProperty(min=0.001, unit='MASS',update=_transform_rigid_body)
+	restitution: bpy.props.FloatProperty(min=0,max=1,update=_transform_rigid_body)
+	collision_group_number: bpy.props.IntProperty(min=0, max=15,update=_transform_rigid_body)
+	collision_group_mask: bpy.props.BoolVectorProperty(size=16,update=_transform_rigid_body)
+	friction: bpy.props.FloatProperty(min=0,max=1,update=_transform_rigid_body)
+	linear_damping: bpy.props.FloatProperty(min=0, max=1,update=_transform_rigid_body)
+	angular_damping: bpy.props.FloatProperty(min=0,max = 1,update=_transform_rigid_body)
+
+	__RIGID_SIZE_MAP = {
+	'SPHERE': ('radius',),
+	'BOX': ('x', 'y', 'z'),
+	'CAPSULE': ('radius', 'height'),
+	}
+
+	def draw(self, context):
+		layout = self.layout
+
+		c = layout.column(align=True)
+		row = c.row(align=True)
+		row.prop(self, 'rotation_x')
+		row.prop(self, 'rotation_y')
+		row.prop(self, 'rotation_z')
+
+		c = layout.column(align=True)
+		row = c.row(align=True)
+		row.prop(self, 'rigid_body_type', expand=True)
+
+		c = layout.column(align=True)
+		c.row(align=True).prop(self, 'rigid_body_shape', expand=True)
+
+		col = c.column(align=True)
+		for i, name in enumerate(self.__RIGID_SIZE_MAP[self.rigid_body_shape]):
+			col.prop(self, 'size_' + name, text=name)
+		
+		row = layout.row()
+
+		c = row.column()
+		c.prop(self, 'mass')
+		c.prop(self, 'restitution')
+
+		c = row.column()
+		c.prop(self, 'friction')
+		c.prop(self, 'linear_damping')
+		c.prop(self, 'angular_damping')
+		
+		c = layout.column(align=True)
+		row = c.row(align=True)
+		row.prop(self, 'collision_group_number')
+		
+		c = layout.column()
+        #c.prop(obj.mmd_rigid, 'collision_group_mask')
+		c.label(text='Collision Group Mask:')
+		row = c.row(align=True)
+		for i in range(0, 8):
+			row.prop(self, 'collision_group_mask', index=i, text=str(i), toggle=True)
+		row = c.row(align=True)
+		for i in range(8, 16):
+			row.prop(self, 'collision_group_mask', index=i, text=str(i), toggle=True)
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object 
+		return obj is not None and obj.mmd_type == 'RIGID_BODY'
+
+
+	def execute(self, context):
+
+		bpy.ops.object.mode_set(mode='OBJECT')
+
+		x = None
+		y = None
+		z = None
+
+		if self.rigid_body_type == 'SPHERE':
+			x = self.size_radius
+		if self.rigid_body_type == 'CAPSULE':
+			x = self.size_radius
+			y = self.size_height
+		if self.rigid_body_type == 'BOX':
+			x = self.size_x
+			y = self.size_y
+			z = self.size_z
+		
+
+		# Call the function and only pass the non-None parameters
+		transform_selected_rigid_bodies(
+					rotation_x=self.rotation_x if self.rotation_x is not None else None,
+					rotation_y=self.rotation_y if self.rotation_y is not None else None,
+					rotation_z=self.rotation_z if self.rotation_z is not None else None,
+					size_x=x if x is not None else None,
+					size_y=y if y is not None else None,
+					size_z=z if z is not None else None,
+					rigid_body_type=self.rigid_body_type if self.rigid_body_type is not None else None,
+					rigid_body_shape=self.rigid_body_shape if self.rigid_body_shape is not None else None,
+					mass=self.mass if self.mass is not None else None,
+					restitution=self.restitution if self.restitution is not None else None,
+					collision_group_number=self.collision_group_number if self.collision_group_number is not None else None,
+					collision_group_mask=self.collision_group_mask if self.collision_group_mask is not None else None,
+					friction=self.friction if self.friction is not None else None,
+					linear_damping=self.linear_damping if self.linear_damping is not None else None,
+					angular_damping=self.angular_damping if self.angular_damping is not None else None,
+				)
+		
+		return {'FINISHED'}
+
+	def invoke(self, context, event):
+		wm = context.window_manager
+
+		obj = context.active_object
+
+		#self.edit_rotation_x: bpy.props.BoolProperty(name='Rotation X')
+		self.rotation_x= obj.rotation_euler[0]
+		self.rotation_y= obj.rotation_euler[1]
+		self.rotation_z= obj.rotation_euler[2]
+		self.size_x = obj.mmd_rigid.size[0]
+		self.size_y = obj.mmd_rigid.size[1]
+		self.size_z = obj.mmd_rigid.size[2]
+		self.size_radius = obj.mmd_rigid.size[0]
+		self.size_height = obj.mmd_rigid.size[1]
+		self.rigid_body_type = obj.mmd_rigid.type
+		self.rigid_body_shape =  obj.mmd_rigid.shape
+		self.mass = obj.rigid_body.mass
+		self.restitution = obj.rigid_body.restitution
+		self.collision_group_number = obj.mmd_rigid.collision_group_number
+		self.collision_group_mask = obj.mmd_rigid.collision_group_mask
+		self.friction =obj.rigid_body.friction
+		self.linear_damping = obj.rigid_body.linear_damping
+		self.angular_damping = obj.rigid_body.angular_damping
+
+		return wm.invoke_props_dialog(self, width=400)

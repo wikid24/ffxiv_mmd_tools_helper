@@ -115,7 +115,15 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		col.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies", icon="RIGID_BODY")
 		col = row.column()
 		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints", icon = "RIGID_BODY_CONSTRAINT")
-
+		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Batch Update Rigid Bodies', icon='PRESET')
+		row = layout.row()
+		row.label(text="Skirt Rigid Bodies", icon='MESH_CONE')
+		row = layout.row()
+		col = row.column()
+		col.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vertical Chain", icon="SORT_DESC")
+		col = row.column()
+		col.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horizontal Chain", icon="CENTER_ONLY")
 
 @register_wrap
 class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):

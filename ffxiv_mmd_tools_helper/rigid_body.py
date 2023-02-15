@@ -238,7 +238,7 @@ def get_skirt_rigid_horizontal_objects(obj):
         
             return rb_obj_chain
 
-def find_rigid_bodies(startswith=None,endswith=None):
+def find_rigid_bodies(startswith=None,endswith=None,contains=None):
 	
 	obj = bpy.context.active_object
 	if obj.type == 'ARMATURE':
@@ -252,9 +252,11 @@ def find_rigid_bodies(startswith=None,endswith=None):
 		startswith = ''
 	if endswith is None:
 		endswith = ''
+	if contains is None:
+		contains = ''
 		
 	for obj in search_scope:
-		if obj.mmd_type=='RIGID_BODY' and obj.name.startswith(str(startswith)) and obj.name.endswith(str(endswith)):
+		if obj.mmd_type=='RIGID_BODY' and obj.name.startswith(str(startswith)) and obj.name.endswith(str(endswith)) and contains in obj.name:
 			obj.select_set(True)
 	
 	if bpy.context.selected_objects:
@@ -270,9 +272,12 @@ def transform_rigid_body(obj=None
 						,collision_group_number=None, collision_group_mask=None, friction=None
 						,linear_damping=None,angular_damping=None):
 
+	
+
 	if obj is None:
 		if bpy.context.active_object.mmd_type == 'RIGID_BODY':
 			obj=bpy.context.active_object
+
 
 	if location_x:
 		obj.location.x = location_x
@@ -284,20 +289,29 @@ def transform_rigid_body(obj=None
 	if rotation_mode:
 		obj.rotation_mode = rotation_mode
 	if rotation_w:
-		obj.rotation_quaternion.w = rotation_w
+		if obj.rotation_mode == 'QUATERNION':
+			obj.rotation_quaternion.w = rotation_w
+		elif obj.rotation_mode == 'AXIS_ANGLE':
+			obj.rotation_axis_angle.w = rotation_w
 	if rotation_x:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.x = rotation_x
+		elif obj.rotation_mode == 'AXIS_ANGLE':
+			obj.rotation_axis_angle.x = rotation_x
 		else:
 			obj.rotation_euler.x = rotation_x
 	if rotation_y:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.y = rotation_y
+		elif obj.rotation_mode == 'AXIS_ANGLE':
+			obj.rotation_axis_angle.y = rotation_y
 		else:
 			obj.rotation_euler.y = rotation_y
 	if rotation_z:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.z = rotation_z
+		elif obj.rotation_mode == 'AXIS_ANGLE':
+			obj.rotation_axis_angle.z = rotation_z
 		else:
 			obj.rotation_euler.z = rotation_z
 	if rigid_body_shape:
@@ -449,13 +463,12 @@ class SelectSkirtRigidBodies(bpy.types.Operator):
 class FindRigidBodies(bpy.types.Operator):
 	"""Find Rigid Bodies """
 	bl_idname = "ffxiv_mmd_tools_helper.find_rigid_bodies"
-	bl_label = "Replace bones renaming"
+	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.rigidbody_startswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_endswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
-	#startswith: bpy.props.StringProperty(name='Starts with',default='')
-	#endswith: bpy.props.StringProperty(name='Ends with',default='')
+	bpy.types.Scene.rigidbody_contains = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 
 	@classmethod
 	def poll(cls, context):
@@ -463,8 +476,21 @@ class FindRigidBodies(bpy.types.Operator):
 		return obj is not None
 
 	def execute(self, context):
-		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith)
+		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains)
 		return {'FINISHED'}
+
+@register_wrap
+class ClearFindRigidBodies(bpy.types.Operator):
+	"""Clear Find Rigid Bodies """
+	bl_idname = "ffxiv_mmd_tools_helper.clear_find_rigid_bodies"
+	bl_label = "Clear Find Rigid Bodies"
+
+	def execute(self, context):
+		context.scene.rigidbody_startswith = ''
+		context.scene.rigidbody_endswith = ''
+		context.scene.rigidbody_contains = ''
+		return {'FINISHED'}
+
 
 
 @register_wrap
@@ -595,6 +621,20 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			row = g.row(align=True)
 			row.prop(obj,"rotation_quaternion",index=2,text="Z")
 			row.prop(self, "rotation_z_edit", text="")
+		elif obj.rotation_mode == 'AXIS_ANGLE':	
+			g = c.grid_flow(row_major=True, align=True,columns=4)
+			row = g.row(align=True)
+			row.prop(obj,"rotation_axis_angle",index=0,text="W")
+			row.prop(self, "rotation_w_edit", text="")
+			row = g.row(align=True)
+			row.prop(obj,"rotation_axis_angle",index=1,text="X")
+			row.prop(self, "rotation_x_edit", text="")
+			row = g.row(align=True)
+			row.prop(obj,"rotation_axis_angle",index=2,text="Y")
+			row.prop(self, "rotation_y_edit", text="")
+			row = g.row(align=True)
+			row.prop(obj,"rotation_axis_angle",index=2,text="Z")
+			row.prop(self, "rotation_z_edit", text="")
 		else:
 			g = c.grid_flow(row_major=True, align=True,columns=3)
 			row = g.row(align=True)
@@ -707,11 +747,16 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		y=None
 		z=None
 
-		if obj.rotation_mode=='QUATERNION':
+		if obj.rotation_mode == ('QUATERNION'):
 			w=obj.rotation_quaternion.w
 			x=obj.rotation_quaternion.x
 			y=obj.rotation_quaternion.y
-			z=obj.rotation_quaternion.y
+			z=obj.rotation_quaternion.z
+		elif obj.rotation_mode == ('AXIS_ANGLE'):
+			w=obj.rotation_axis_angle.w
+			x=obj.rotation_axis_angle.x
+			y=obj.rotation_axis_angle.y
+			z=obj.rotation_axis_angle.z
 		else:
 			x=obj.rotation_euler.x
 			y=obj.rotation_euler.x

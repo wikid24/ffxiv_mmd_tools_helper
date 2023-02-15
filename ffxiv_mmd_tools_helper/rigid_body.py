@@ -265,74 +265,127 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 		bpy.context.view_layer.objects.active =  bpy.context.selected_objects[0]
 		return bpy.context.selected_objects
 
-def get_rigid_body_bone_chain_origin(obj):
-
-	if obj.mmd_type == 'RIGID_BODY':
-
-		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
-		#store all rigid bodies and their associated bone for the armature in a list
-		for child in armature.parent.children:
-			if child.name.startswith('rigidbodies'):
-				rigidbodies_obj = child
-				break
-
-		rigid_body_bone_list = []
-
-		for rigid_body_obj in rigidbodies_obj.children:
-			rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
-
-		#get the bone for the currently selected rigid body
-		obj = bpy.context.active_object
-
-		current_rigid_body_obj = obj
-		current_rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
-		current_rigid_body_bone = armature.pose.bones[current_rigid_body_bone_name]
-
-		rigid_body_bone_origin = current_rigid_body_bone   
-
-		##Arbitrary number to make sure the while loop definitely exits at some point         
-		i = 100
-		while i >= 0:
-			
-			has_rigid_body = False
-			has_only_one_child_bone = True
-			has_use_connect_false = True
-			
-			#check if bone has a rigid body
-			for bone in rigid_body_bone_list:
-				if current_rigid_body_bone.name == bone[2]:
-					has_rigid_body = True    
-					break
-				
-			###TO DO - check if bone has only ONE rigid body
-				
-			#check if bone's parent has only one child
-			for siblings in current_rigid_body_bone.parent.children:
-				if siblings.name != current_rigid_body_bone.name:
-					has_only_one_child_bone = False
-					break
-					
-			#check if bone is not connected physically to another bone
-			if (bpy.data.armatures[armature.name].bones[current_rigid_body_bone.name].use_connect) == False:
-				has_use_connect_false = False
-			
-			current_rigid_body_bone = current_rigid_body_bone.parent
-			
-			if has_rigid_body == True and has_only_one_child_bone == True and has_use_connect_false == True:
-				rigid_body_bone_origin = current_rigid_body_bone
-			else:
-				break           
-			i = i-1
-
-		return rigid_body_bone_origin
-	
-def get_rigid_body_chain_from_bone_origin(rigid_body_bone_origin):
+def get_bone_from_rigid_body (obj = None):
     
-    armature_name = rigid_body_bone_origin.id_data.name
-    armature = bpy.data.objects[armature_name]
+    if obj is None and bpy.context.active_object is not None:
+        obj = bpy.context.active_object
+    
+    if obj.mmd_type == 'RIGID_BODY':
+
+       armature_obj_name = obj.constraints['mmd_tools_rigid_parent'].target.data.name   
+       armature = bpy.data.armatures[armature_obj_name]
+       
+       rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+       
+       for bone in bpy.data.armatures[armature.name].bones:
+           if bone.name == rigid_body_bone_name:
+                return bone	
+
+def get_rigid_body_bone_chain_origin(bone_obj):
+    
+    rigid_body_bone = bone_obj        
+    
+    armature_obj = None
+    armature = None
+        
+    if rigid_body_bone is not None:
+        armature_name = rigid_body_bone.id_data.name
+        
+        obj = bpy.data.objects.get(armature_name)
+        
+        if obj.type == 'ARMATURE':
+            armature_obj = obj
+        else:
+            for child in obj.children_recursive:
+                if child.type == 'ARMATURE':
+                    armature_obj = child
+                    armature = armature_obj.data
+                    break
+                
+    
+    
+    #armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
     
     #store all rigid bodies and their associated bone for the armature in a list
-    for child in armature.parent.children:
+    for child in armature_obj.parent.children:
+        if child.name.startswith('rigidbodies'):
+            rigidbodies_obj = child
+            break
+
+    rigid_body_bone_list = []
+
+    for rigid_body_obj in rigidbodies_obj.children:
+        rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
+    
+    """
+    #get the bone for the currently selected rigid body
+    obj = bpy.context.active_object
+
+    current_rigid_body_obj = obj
+    current_rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+    current_rigid_body_bone = armature_obj.pose.bones[current_rigid_body_bone_name]
+    """
+    rigid_body_bone_origin = rigid_body_bone   
+    
+    #print (rigid_body_bone_origin)
+    
+    
+    ##Arbitrary number to make sure the while loop definitely exits at some point         
+    i = 100
+    while i >= 0:
+        
+        has_rigid_body = False
+        has_only_one_child_bone = True
+        has_use_connect_false = True
+        
+        #check if bone has a rigid body
+        for bone in rigid_body_bone_list:
+            if rigid_body_bone.name == bone[2]:
+                has_rigid_body = True    
+                break
+            
+        ###TO DO - check if bone has only ONE rigid body
+            
+        #check if bone's parent has only one child
+        for siblings in rigid_body_bone.parent.children:
+            if siblings.name != rigid_body_bone.name:
+                has_only_one_child_bone = False
+                break
+                
+        #check if bone is not connected physically to another bone
+        if (bpy.data.armatures[armature.name].bones[rigid_body_bone.name].use_connect) == False:
+            has_use_connect_false = False
+        
+        rigid_body_bone = rigid_body_bone.parent
+        
+        if has_rigid_body == True and has_only_one_child_bone == True and has_use_connect_false == True:
+            rigid_body_bone_origin = rigid_body_bone
+        else:
+            break           
+        i = i-1
+
+    return rigid_body_bone_origin   
+
+
+def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
+    
+    armature_name = rigid_body_bone_origin.id_data.name
+    
+    obj = bpy.data.objects.get(armature_name)
+    armature_obj = None
+    
+    if obj.type == 'ARMATURE':
+        armature_obj = obj
+    else:
+        for child in obj.children_recursive:
+            if child.type == 'ARMATURE':
+                armature_obj = child
+                break
+            
+    ##armature_obj = bpy.data.objects.get(armature_name)
+    
+    #store all rigid bodies and their associated bone for the armature in a list
+    for child in armature_obj.parent.children:
         if child.name.startswith('rigidbodies'):
             rigidbodies_obj = child
             break
@@ -381,20 +434,6 @@ def get_rigid_body_chain_from_bone_origin(rigid_body_bone_origin):
         #print(i,item[0],item[1])
                 
     return sorted_rigid_body_bone_chain
-
-def get_bone_from_rigid_body (obj = None):
-    
-    if obj is None and bpy.context.active_object is not None:
-        obj = bpy.context.active_object
-    
-    if obj.mmd_type == 'RIGID_BODY':
-
-       armature = obj.constraints['mmd_tools_rigid_parent'].target       
-       rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
-       
-       for bone in bpy.data.armatures[armature.name].bones:
-           if bone.name == rigid_body_bone_name:
-                return bone	
 	
 
 

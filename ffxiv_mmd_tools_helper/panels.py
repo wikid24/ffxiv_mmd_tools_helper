@@ -116,7 +116,21 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		col = row.column()
 		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints", icon = "RIGID_BODY_CONSTRAINT")
 		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		row = grid.row(align=True)
+		row.label(text='Starts With')
+		row.label(text='Ends With')
+		row.label(text='')
+		row = grid.row(align=True)
+		#row.prop(self, "startswith", text="Starts With")
+		row.prop(context.scene,"rigidbody_startswith", text = "")
+		#row.prop(self, "startswith", text="Starts With")
+		row.prop(context.scene,"rigidbody_endswith", text = "")
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='ZOOM_IN')
+		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Batch Update Rigid Bodies', icon='PRESET')
+		
 		row = layout.row()
 		row.label(text="Skirt Rigid Bodies", icon='MESH_CONE')
 		row = layout.row()
@@ -124,6 +138,10 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		col.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vertical Chain", icon="SORT_DESC")
 		col = row.column()
 		col.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horizontal Chain", icon="CENTER_ONLY")
+		row = layout.row()
+		col = row.column()
+		col.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "All", icon="CONE")
+				
 
 @register_wrap
 class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):

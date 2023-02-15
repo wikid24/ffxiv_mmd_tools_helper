@@ -266,20 +266,20 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 		return bpy.context.selected_objects
 
 def get_bone_from_rigid_body (obj = None):
-    
-    if obj is None and bpy.context.active_object is not None:
-        obj = bpy.context.active_object
-    
-    if obj.mmd_type == 'RIGID_BODY':
+	
+	if obj is None and bpy.context.active_object is not None:
+		obj = bpy.context.active_object
+	
+	if obj.mmd_type == 'RIGID_BODY':
 
-       armature_obj_name = obj.constraints['mmd_tools_rigid_parent'].target.data.name   
-       armature = bpy.data.armatures[armature_obj_name]
-       
-       rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
-       
-       for bone in bpy.data.armatures[armature.name].bones:
-           if bone.name == rigid_body_bone_name:
-                return bone	
+		armature_obj_name = obj.constraints['mmd_tools_rigid_parent'].target.data.name   
+		armature = bpy.data.armatures[armature_obj_name]
+		
+		rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+		
+		for bone in bpy.data.armatures[armature.name].bones:
+			if bone.name == rigid_body_bone_name:
+					return bone	
 
 def get_rigid_body_bone_chain_origin(bone_obj):
 	
@@ -418,86 +418,97 @@ def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
 	
 def is_selected_rigid_bodies_in_a_bone_chain ():
 
-    is_selected_a_bone_chain = True
-    selected_objs = None
+	is_selected_a_bone_chain = True
+	selected_objs = None
 
-    if bpy.context.selected_objects is not None:
-        selected_objs = bpy.context.selected_objects
-    
-    #check if all selected are rigid bodies
-    if selected_objs is not None:
-        for obj in selected_objs:
-            if obj.mmd_type != 'RIGID_BODY':
-                print ('selected obj:',obj.name,' is not a rigid body')
-                is_selected_a_bone_chain = False
-                return False
+	if bpy.context.selected_objects is not None:
+		selected_objs = bpy.context.selected_objects
+	
+	#check if all selected are rigid bodies
+	if selected_objs is not None:
+		for obj in selected_objs:
+			if obj.mmd_type != 'RIGID_BODY':
+				print ('selected obj:',obj.name,' is not a rigid body')
+				is_selected_a_bone_chain = False
+				return False
 
-    bone_list = []
+	bone_list = []
 
-    #check if all selected objects have an associated bone
-    for obj in selected_objs:			
-        bone = None
-        bone = get_bone_from_rigid_body(obj)
-        if bone is None:
-            print ('selected obj:',obj.name,' does is not attached to a bone')
-            is_selected_a_bone_chain = False
-            return False
-        else:
-            bone_list.append(bone)
-            
-    #check if there is at least two bones in bone list
-    if len(bone_list) < 2:
-        print ('at least two bones from rigid bodies must be selected')
-        is_selected_a_bone_chain = False
-        return False
+	#check if all selected objects have an associated bone
+	for obj in selected_objs:			
+		bone = None
+		bone = get_bone_from_rigid_body(obj)
+		if bone is None:
+			print ('selected obj:',obj.name,' does is not attached to a bone')
+			is_selected_a_bone_chain = False
+			return False
+		else:
+			if bone not in bone_list:
+				bone_list.append(bone)
+			
+	#check if there is at least two bones in bone list
+	if len(bone_list) < 2:
+		print ('at least two bones from rigid bodies must be selected')
+		is_selected_a_bone_chain = False
+		return False
 
-    #check if all the bones are in a parent/child relationship
-    for i in range(len(bone_list)-1):
-        if bone_list[i+1].parent != bone_list[i]:
-            print ('rigid body:', selected_objs[i+1].name, ' bone:', bone_list[i+1].name, ' is not in a bone chain')
-            is_selected_a_bone_chain = False
-            return False
+	#check if all the bones are in a parent/child relationship
+	for i in range(len(bone_list)-1):
+		if bone_list[i+1].parent != bone_list[i]:
+			print ('rigid body:', selected_objs[i+1].name, ' bone:', bone_list[i+1].name, ' is not in a bone chain')
+			is_selected_a_bone_chain = False
+			return False
 
-    return is_selected_a_bone_chain
+	return is_selected_a_bone_chain
 
 def get_selected_rigid_bodies_in_bone_chain ():
 
-    if(is_selected_rigid_bodies_in_a_bone_chain()):
-        print('here')
+	if(is_selected_rigid_bodies_in_a_bone_chain()):
 
-        selected_objs = None
+		selected_objs = None
 
-        if bpy.context.selected_objects is not None:
-            selected_objs = bpy.context.selected_objects
+		if bpy.context.selected_objects is not None:
+			selected_objs = bpy.context.selected_objects
 
-        bone_list = []
-        
-        #check if all selected objects have an associated bone
-        for obj in selected_objs:			
-            bone = None
-            bone = get_bone_from_rigid_body(obj)
-            if bone is None:
-                print ('selected obj:',obj.name,' does is not attached to a bone')
-                is_selected_a_bone_chain = False
-                return False
-            else:
-                bone_list.append(bone)
+		bone_list = []
+		rigid_body_bone_chain = []
+		
+		#check if all selected objects have an associated bone
+		for obj in selected_objs:			
+			bone = None
+			bone = get_bone_from_rigid_body(obj)
+			rigid_body = obj
+			if bone is None:
+				print ('selected obj:',obj.name,'  is not attached to a bone')
+				is_selected_a_bone_chain = False
+				return False
+			else:
+				bone_list.append(bone)
+				rigid_body_bone_chain.append((rigid_body,bone.name))
 
-        # Sort bone_list from parent to child
-        sorted_bone_list = [bone_list[0]]
-        current_bone = bone_list[0]
-        while current_bone.children:
-            current_bone = current_bone.children[0]
-            sorted_bone_list.append(current_bone)
+		# Sort bone_list from parent to child
+		sorted_bone_list = [bone_list[0]]
+		current_bone = bone_list[0]
+		while current_bone.children:
+			current_bone = current_bone.children[0]
+			sorted_bone_list.append(current_bone)
+		
+		#enumerate the bone list
+		enumerated_bone_list = []
+		for i,bone in enumerate(sorted_bone_list):
+			enumerated_bone_list.append((i,bone.name))    
+
+		#append the bone order to the rigid body list
+		sorted_rigid_body_bone_chain = []
+		for bone in enumerated_bone_list:
+			for rigid_body in rigid_body_bone_chain:
+				if rigid_body[1] == bone[1]:
+					sorted_rigid_body_bone_chain.append((bone[0],bone[1],rigid_body[0]))
+					
+		return sorted_rigid_body_bone_chain
         
-        enumerated_bone_list = []
-        
-        for i,bone in enumerate(sorted_bone_list):
-            enumerated_bone_list.append((i,bone.name))    
-                
-        
-                
-        return enumerated_bone_list
+
+		
 
 
 	
@@ -526,6 +537,8 @@ def transform_rigid_body(obj=None
 		obj.location.y = location_y
 	if location_z is not None:
 		obj.location.z = location_z
+	if rotation_mode is not None:
+		obj.rotation_mode = rotation_mode
 	if rotation_w is not None:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.w = rotation_w

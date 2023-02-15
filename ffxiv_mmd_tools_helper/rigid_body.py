@@ -146,95 +146,95 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		return rigid_body
 	else:
 		print ('bone ',bone,' does not exist')
- 
+
 
 
 
 
 def get_skirt_rigid_vertical_objects(obj):
-    
-    bpy.ops.object.mode_set(mode='OBJECT')
-    
-    if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
+	
+	bpy.ops.object.mode_set(mode='OBJECT')
+	
+	if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
 
-        #get the skirt chain number (first number after skirt_)
-        result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
-        if result:
-            chain_number = int(result.group(1))
-            print("Captured value:", chain_number )
-        else:
-            print("No match found.")
-            
-        rb_obj_chain = []
-                
-        armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
-        bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
-        rigid_bodies = None
+		#get the skirt chain number (first number after skirt_)
+		result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
+		if result:
+			chain_number = int(result.group(1))
+			print("Captured value:", chain_number )
+		else:
+			print("No match found.")
+			
+		rb_obj_chain = []
+				
+		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		rigid_bodies = None
 
-        #get the 'rigidbodies' object
-        for object in armature.parent.children:
-            if object.name == 'rigidbodies':
-                rigid_bodies = object
-        
-        if rigid_bodies is not None:
-            #get all rigid bodies that have the same chain number as object that was passed
-            for rigid_body in rigid_bodies.children:
-                
-                #if it finds it, add it to the rb_obj_chain list
-                if rigid_body.name.startswith('skirt_'+str(chain_number)+'_') and rigid_body.mmd_type == 'RIGID_BODY':
-                    rb_obj_chain.append(rigid_body)
-        
-        if rb_obj_chain is not None:
-            # Deselect all objects
-            bpy.ops.object.select_all(action='DESELECT')
-            #select all in chain    
-            for rb_obj in rb_obj_chain:
-                rb_obj.select_set(True)
-                
-            return rb_obj_chain
-                
+		#get the 'rigidbodies' object
+		for object in armature.parent.children:
+			if object.name == 'rigidbodies':
+				rigid_bodies = object
+		
+		if rigid_bodies is not None:
+			#get all rigid bodies that have the same chain number as object that was passed
+			for rigid_body in rigid_bodies.children:
+				
+				#if it finds it, add it to the rb_obj_chain list
+				if rigid_body.name.startswith('skirt_'+str(chain_number)+'_') and rigid_body.mmd_type == 'RIGID_BODY':
+					rb_obj_chain.append(rigid_body)
+		
+		if rb_obj_chain is not None:
+			# Deselect all objects
+			bpy.ops.object.select_all(action='DESELECT')
+			#select all in chain    
+			for rb_obj in rb_obj_chain:
+				rb_obj.select_set(True)
+				
+			return rb_obj_chain
+				
 def get_skirt_rigid_horizontal_objects(obj):
-    
-    bpy.ops.object.mode_set(mode='OBJECT')
-    
-    if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
-        #get the skirt chain number (last number after skirt_)
-        result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
-        if result:
-            chain_number = int(result.group(2))
-            print("Captured value:", chain_number )
-        else:
-            print("No match found.")
-            
-        rb_obj_chain = []
-        
-        armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
-        bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
-        rigid_bodies = None
+	
+	bpy.ops.object.mode_set(mode='OBJECT')
+	
+	if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
+		#get the skirt chain number (last number after skirt_)
+		result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
+		if result:
+			chain_number = int(result.group(2))
+			print("Captured value:", chain_number )
+		else:
+			print("No match found.")
+			
+		rb_obj_chain = []
+		
+		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		rigid_bodies = None
 
-        #get the 'rigidbodies' object
-        for object in armature.parent.children:
-            if object.name == 'rigidbodies':
-                rigid_bodies = object
-        
-        if rigid_bodies is not None:
-            #get all rigid bodies that have the same chain number as object that was passed
-            for rigid_body in rigid_bodies.children:
-                
-                #if it finds it, add it to the rb_obj_chain list
-                if rigid_body.name.endswith('_'+str(chain_number)) and rigid_body.mmd_type == 'RIGID_BODY':
-                    rb_obj_chain.append(rigid_body)        
-                
-        if rb_obj_chain is not None:
-            
-            # Deselect all objects
-            bpy.ops.object.select_all(action='DESELECT')
-        
-            #select all in chain    
-            for rb_obj in rb_obj_chain:
-                rb_obj.select_set(True)
-        
-            return rb_obj_chain
+		#get the 'rigidbodies' object
+		for object in armature.parent.children:
+			if object.name == 'rigidbodies':
+				rigid_bodies = object
+		
+		if rigid_bodies is not None:
+			#get all rigid bodies that have the same chain number as object that was passed
+			for rigid_body in rigid_bodies.children:
+				
+				#if it finds it, add it to the rb_obj_chain list
+				if rigid_body.name.endswith('_'+str(chain_number)) and rigid_body.mmd_type == 'RIGID_BODY':
+					rb_obj_chain.append(rigid_body)        
+				
+		if rb_obj_chain is not None:
+			
+			# Deselect all objects
+			bpy.ops.object.select_all(action='DESELECT')
+		
+			#select all in chain    
+			for rb_obj in rb_obj_chain:
+				rb_obj.select_set(True)
+		
+			return rb_obj_chain
 
 def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 	
@@ -328,7 +328,8 @@ def get_rigid_body_bone_chain_origin(obj):
 	
 def get_rigid_body_chain_from_bone_origin(rigid_body_bone_origin):
 	
-	armature = rigid_body_bone_origin.id_data
+	armature_name = rigid_body_bone_origin.id_data.name
+	armature = bpy.data.objects[armature_name]
 	
 	#store all rigid bodies and their associated bone for the armature in a list
 	for child in armature.parent.children:
@@ -364,7 +365,20 @@ def get_rigid_body_chain_from_bone_origin(rigid_body_bone_origin):
 		sorted_rigid_body_bone_chain.append((i,item[0],item[1]))
 				
 	return sorted_rigid_body_bone_chain
+
+def get_bone_from_rigid_body (obj = None):
     
+    if obj is None and bpy.context.active_object is not None:
+        obj = bpy.context.active_object
+    
+    if obj.mmd_type == 'RIGID_BODY':
+
+       armature = obj.constraints['mmd_tools_rigid_parent'].target       
+       rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+       
+       for bone in bpy.data.armatures[armature.name].bones:
+           if bone.name == rigid_body_bone_name:
+                return bone	
 	
 
 
@@ -482,7 +496,7 @@ def transform_selected_rigid_bodies(
 
 	else: 
 		print('Not all selected objects are rigid bodies. Select only rigid bodies')
-    
+	
 
 
 def create_rigid_bodies_from_csv(context):

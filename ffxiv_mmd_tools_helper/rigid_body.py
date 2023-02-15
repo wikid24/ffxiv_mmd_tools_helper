@@ -653,14 +653,19 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 	bl_label = "Get Rigid Bodies From Bone Chain"
 
 	direction: bpy.props.EnumProperty(items = \
-	[('UP', 'UP', 'UP')\
+	[('ALL', 'ALL', 'ALL')\
 		,('DOWN', 'DOWN', 'DOWN')\
 	], name = "", default = 'DOWN')
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'RIGID_BODY'
 
 	def execute(self, context):
 		bone = get_bone_from_rigid_body(context.active_object)
 		bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
-		if self.direction == 'UP':
+		if self.direction == 'ALL':
 			get_rigid_body_chain_from_bone(bone_chain_origin)
 		elif self.direction == 'DOWN':
 			get_rigid_body_chain_from_bone(bone)

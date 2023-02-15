@@ -238,22 +238,26 @@ def get_skirt_rigid_horizontal_objects(obj):
         
             return rb_obj_chain
 
-def find_rigid_bodies(startswith=None,endswith=None,contains=None):
+def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 	
 	obj = bpy.context.active_object
 	if obj.type == 'ARMATURE':
 		search_scope = bpy.context.object.parent.children_recursive
 	else:
 		search_scope = bpy.context.object.parent.parent.children_recursive
-		
-	bpy.ops.object.select_all(action='DESELECT')
-	
+
 	if startswith is None:
 		startswith = ''
 	if endswith is None:
 		endswith = ''
 	if contains is None:
 		contains = ''
+	if append is None:
+		append = False
+
+	if append==False:
+		bpy.ops.object.select_all(action='DESELECT')
+
 		
 	for obj in search_scope:
 		if obj.mmd_type=='RIGID_BODY' and obj.name.startswith(str(startswith)) and obj.name.endswith(str(endswith)) and contains in obj.name:
@@ -466,6 +470,8 @@ class FindRigidBodies(bpy.types.Operator):
 	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	append = bpy.props.BoolProperty(name="Append", default=False)
+
 	bpy.types.Scene.rigidbody_startswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_endswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_contains = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
@@ -476,7 +482,7 @@ class FindRigidBodies(bpy.types.Operator):
 		return obj is not None
 
 	def execute(self, context):
-		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains)
+		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains,append=self.append)
 		return {'FINISHED'}
 
 @register_wrap
@@ -495,6 +501,7 @@ class ClearFindRigidBodies(bpy.types.Operator):
 
 @register_wrap
 class BatchUpdateRigidBodies(bpy.types.Operator):
+	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
 	bl_label = "Batch Update Rigid Bodies"
 	bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
@@ -521,6 +528,29 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	linear_damping_edit: bpy.props.BoolProperty(default=False)
 	angular_damping_edit: bpy.props.BoolProperty(default=False)
 
+	#original values
+	location_x_original = None
+	location_y_original = None
+	location_z_original = None
+	rotation_mode_original = None
+	rotation_w_original = None
+	rotation_x_original = None
+	rotation_y_original = None
+	rotation_z_original = None
+	size_x_original = None
+	size_y_original = None
+	size_z_original = None
+	rigid_body_type_original = None
+	rigid_body_shape_original = None
+	mass_original = None
+	restitution_original = None
+	collision_group_number_original = None
+	collision_group_mask_original = None
+	friction_original = None
+	linear_damping_original = None
+	angular_damping_original = None
+
+
 
 	def invoke(self, context, event):
 
@@ -545,6 +575,41 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		self.linear_damping_edit = False
 		self.angular_damping_edit = False
 
+		obj = context.active_object 
+
+
+		self.location_x_original = obj.location[0]
+		self.location_y_original = obj.location[1]
+		self.location_z_original = obj.location[2]
+		self.rotation_mode_original = obj.rotation_mode
+		if obj.rotation_mode == 'QUATERNION':
+			self.rotation_w_original = obj.rotation_quaternion.w
+			self.rotation_x_original = obj.rotation_quaternion.x
+			self.rotation_y_original = obj.rotation_quaternion.y
+			self.rotation_z_original = obj.rotation_quaternion.z
+		if obj.rotation_mode == 'AXIS_ANGLE':
+			self.rotation_w_original = obj.rotation_axis_angle.w
+			self.rotation_x_original = obj.rotation_axis_angle.x
+			self.rotation_y_original = obj.rotation_axis_angle.y
+			self.rotation_z_original = obj.rotation_axis_angle.z
+		else:
+			self.rotation_w_original = 0
+			self.rotation_x_original = obj.rotation_euler.x
+			self.rotation_y_original = obj.rotation_euler.y
+			self.rotation_z_original = obj.rotation_euler.z
+		self.size_x_original = obj.mmd_rigid.size[0]
+		self.size_y_original = obj.mmd_rigid.size[1]
+		self.size_z_original = obj.mmd_rigid.size[2]
+		self.rigid_body_type_original = obj.mmd_rigid.type
+		self.rigid_body_shape_original = obj.mmd_rigid.shape
+		self.mass_original = obj.rigid_body.mass
+		self.restitution_original = obj.rigid_body.restitution
+		self.collision_group_number_original = obj.mmd_rigid.collision_group_number
+		self.collision_group_mask_original = obj.mmd_rigid.collision_group_mask
+		self.friction_original = obj.rigid_body.friction
+		self.linear_damping_original = obj.rigid_body.linear_damping
+		self.angular_damping_original = obj.rigid_body.angular_damping
+
 
 		wm = context.window_manager		
 		return wm.invoke_props_dialog(self, width=400)
@@ -554,6 +619,41 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		layout = self.layout
 
 		obj = context.active_object 
+
+		#if user changes the value while this window is open, flag the checkbox as true
+		# Compare object properties with _original_ values and set corresponding edit flag to true or false
+		"""
+		self.location_x_edit = obj.location[0] != self.location_x_original
+		self.location_y_edit = obj.location[1] != self.location_y_original
+		self.location_z_edit = obj.location[2] != self.location_z_original
+		self.rotation_mode_edit = obj.rotation_mode != self.rotation_mode_original
+		if obj.rotation_mode == 'QUATERNION':
+			self.rotation_w_edit = obj.rotation_quaternion.w != self.rotation_w_original
+			self.rotation_x_edit = obj.rotation_quaternion.x != self.rotation_x_original
+			self.rotation_y_edit = obj.rotation_quaternion.y != self.rotation_y_original
+			self.rotation_z_edit = obj.rotation_quaternion.z != self.rotation_z_original
+		elif obj.rotation_mode == 'AXIS_ANGLE':
+			self.rotation_w_edit = obj.rotation_axis_angle.w != self.rotation_w_original
+			self.rotation_x_edit = obj.rotation_axis_angle.x != self.rotation_x_original
+			self.rotation_y_edit = obj.rotation_axis_angle.y != self.rotation_y_original
+			self.rotation_z_edit = obj.rotation_axis_angle.z != self.rotation_z_original
+		else:
+			self.rotation_x_edit = obj.rotation_euler.x != self.rotation_x_original
+			self.rotation_y_edit = obj.rotation_euler.y != self.rotation_y_original
+			self.rotation_z_edit = obj.rotation_euler.z != self.rotation_z_original
+		self.size_x_edit = obj.mmd_rigid.size[0] != self.size_x_original
+		self.size_y_edit = obj.mmd_rigid.size[1] != self.size_y_original
+		self.size_z_edit = obj.mmd_rigid.size[2] != self.size_z_original
+		self.rigid_body_type_edit = obj.mmd_rigid.type != self.rigid_body_type_original
+		self.rigid_body_shape_edit = obj.mmd_rigid.shape != self.rigid_body_shape_original
+		self.mass_edit = obj.rigid_body.mass != self.mass_original
+		self.restitution_edit = obj.rigid_body.restitution != self.restitution_original
+		self.collision_group_number_edit = obj.mmd_rigid.collision_group_number != self.collision_group_number_original
+		self.collision_group_mask_edit = obj.mmd_rigid.collision_group_mask != self.collision_group_mask_original
+		self.friction_edit = obj.rigid_body.friction != self.friction_original
+		self.linear_damping_edit = obj.rigid_body.linear_damping != self.linear_damping_original
+		self.angular_damping_edit = obj.rigid_body.angular_damping != self.angular_damping_original
+		"""
 
 		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
 		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget

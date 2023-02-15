@@ -127,7 +127,8 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"rigidbody_contains", text = "")
 		row.prop(context.scene,"rigidbody_endswith", text = "")
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find Rigid Bodies', icon='ZOOM_IN')
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append=False
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append=True
 		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Batch Update Rigid Bodies', icon='PRESET')

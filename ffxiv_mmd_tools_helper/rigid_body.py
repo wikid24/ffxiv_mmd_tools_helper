@@ -4,7 +4,8 @@ from . import model
 from mmd_tools.operators.rigid_body import AddRigidBody
 from . import import_csv
 from mmd_tools.core import model as mmd_model
-import mathutils
+import re
+
 
 def read_rigid_body_file():
 	
@@ -147,11 +148,7 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		print ('bone ',bone,' does not exist')
  
 
-import bpy
-import re
-import math
 
-#string = "skirt_8_12"
 
 
 def get_skirt_rigid_vertical_objects(obj):
@@ -267,6 +264,109 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 	if bpy.context.selected_objects:
 		bpy.context.view_layer.objects.active =  bpy.context.selected_objects[0]
 		return bpy.context.selected_objects
+
+def get_rigid_body_bone_chain_origin(obj):
+
+	if obj.mmd_type == 'RIGID_BODY':
+
+		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+		#store all rigid bodies and their associated bone for the armature in a list
+		for child in armature.parent.children:
+			if child.name.startswith('rigidbodies'):
+				rigidbodies_obj = child
+				break
+
+		rigid_body_bone_list = []
+
+		for rigid_body_obj in rigidbodies_obj.children:
+			rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
+
+		#get the bone for the currently selected rigid body
+		obj = bpy.context.active_object
+
+		current_rigid_body_obj = obj
+		current_rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+		current_rigid_body_bone = armature.pose.bones[current_rigid_body_bone_name]
+
+		rigid_body_bone_origin = current_rigid_body_bone   
+
+		##Arbitrary number to make sure the while loop definitely exits at some point         
+		i = 100
+		while i >= 0:
+			
+			has_rigid_body = False
+			has_only_one_child_bone = True
+			has_use_connect_false = True
+			
+			#check if bone has a rigid body
+			for bone in rigid_body_bone_list:
+				if current_rigid_body_bone.name == bone[2]:
+					has_rigid_body = True    
+					break
+				
+			###TO DO - check if bone has only ONE rigid body
+				
+			#check if bone has only one child
+			for siblings in current_rigid_body_bone.parent.children:
+				if siblings.name != current_rigid_body_bone.name:
+					has_only_one_child_bone = False
+					break
+					
+			#check if bone is not connected physically to another bone
+			if (bpy.data.armatures[armature.name].bones[current_rigid_body_bone.name].use_connect) == False:
+				has_use_connect_false = False
+			
+			current_rigid_body_bone = current_rigid_body_bone.parent
+			
+			if has_rigid_body == True and has_only_one_child_bone == True and has_use_connect_false == True:
+				rigid_body_bone_origin = current_rigid_body_bone
+			else:
+				break           
+			i = i-1
+
+		return rigid_body_bone_origin
+	
+def get_rigid_body_chain_from_bone_origin(rigid_body_bone_origin):
+	
+	armature = rigid_body_bone_origin.id_data
+	
+	#store all rigid bodies and their associated bone for the armature in a list
+	for child in armature.parent.children:
+		if child.name.startswith('rigidbodies'):
+			rigidbodies_obj = child
+			break
+		
+	rigid_body_bone_list = []
+	
+	for rigid_body_obj in rigidbodies_obj.children:
+		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
+
+	rigid_body_bone_chain = []
+	
+
+	#set the first in the rigid body bone chain list to the bone origin
+	for rigid_body in rigid_body_bone_list:
+			if rigid_body[2] == rigid_body_bone_origin.name:
+				rigid_body_bone_chain.append((rigid_body[0],rigid_body_bone_origin))
+				rigid_body[0].select_set(True)
+				break
+
+	#add all children to the bone chain        
+	for bone_child in rigid_body_bone_origin.children_recursive:
+		for rigid_body in rigid_body_bone_list:
+			if rigid_body[2] == bone_child.name:
+				rigid_body_bone_chain.append((rigid_body[0],bone_child))                
+				rigid_body[0].select_set(True)
+
+	sorted_rigid_body_bone_chain = []
+
+	for i,item in enumerate(rigid_body_bone_chain):
+		sorted_rigid_body_bone_chain.append((i,item[0],item[1]))
+				
+	return sorted_rigid_body_bone_chain
+    
+	
+
 
 
 def transform_rigid_body(obj=None

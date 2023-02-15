@@ -4,6 +4,7 @@ from . import model
 from mmd_tools.operators.rigid_body import AddRigidBody
 from . import import_csv
 from mmd_tools.core import model as mmd_model
+import mathutils
 
 def read_rigid_body_file():
 	
@@ -278,52 +279,50 @@ def transform_rigid_body(obj=None
 
 	
 
-	if obj is None:
+	if obj is None and bpy.context.active_object is not None:
 		if bpy.context.active_object.mmd_type == 'RIGID_BODY':
 			obj=bpy.context.active_object
 
 
-	if location_x:
+	if location_x is not None:
 		obj.location.x = location_x
-	if location_y:
+	if location_y is not None:
 		obj.location.y = location_y
-	if location_z:
+	if location_z is not None:
 		obj.location.z = location_z
-
-	if rotation_mode:
-		obj.rotation_mode = rotation_mode
-	if rotation_w:
+	if rotation_w is not None:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.w = rotation_w
 		elif obj.rotation_mode == 'AXIS_ANGLE':
 			obj.rotation_axis_angle.w = rotation_w
-	if rotation_x:
+	if rotation_x is not None:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.x = rotation_x
 		elif obj.rotation_mode == 'AXIS_ANGLE':
 			obj.rotation_axis_angle.x = rotation_x
 		else:
 			obj.rotation_euler.x = rotation_x
-	if rotation_y:
+	if rotation_y is not None:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.y = rotation_y
 		elif obj.rotation_mode == 'AXIS_ANGLE':
 			obj.rotation_axis_angle.y = rotation_y
 		else:
 			obj.rotation_euler.y = rotation_y
-	if rotation_z:
+	if rotation_z is not None:
 		if obj.rotation_mode == 'QUATERNION':
 			obj.rotation_quaternion.z = rotation_z
 		elif obj.rotation_mode == 'AXIS_ANGLE':
 			obj.rotation_axis_angle.z = rotation_z
 		else:
 			obj.rotation_euler.z = rotation_z
-	if rigid_body_shape:
+
+	if rigid_body_shape is not None:
 		#BOX
 		#SPHERE
 		#CAPSULE
 		obj.mmd_rigid.shape = rigid_body_shape
-	if (size_x or size_y or size_z):
+	if (size_x is not None or size_y is not None or size_z is not None):
 		if size_x is None:
 			size_x = obj.mmd_rigid.size[0]    
 		if size_y is None:
@@ -331,26 +330,26 @@ def transform_rigid_body(obj=None
 		if size_z is None:
 			size_z = obj.mmd_rigid.size[2] 
 		obj.mmd_rigid.size = [max(size_x, 1e-3),max(size_y , 1e-3),max(size_z, 1e-3)]
-	if rigid_body_type:
+	if rigid_body_type is not None:
 		obj.mmd_rigid.type = rigid_body_type
 		#'0' = bone
 		#'1' = physics
 		#'2' = physics+bone
-	if mass:
+	if mass is not None:
 		obj.rigid_body.mass = mass
-	if restitution:
+	if restitution is not None:
 		obj.rigid_body.restitution = restitution 
-	if collision_group_number:
+	if collision_group_number is not None:
 		obj.mmd_rigid.collision_group_number = collision_group_number
-	if collision_group_mask:
+	if collision_group_mask is not None:
 		obj.mmd_rigid.collision_group_mask = collision_group_mask
 		#collision_group_mask = [True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True]
-	if friction:
+	if friction is not None:
 		obj.rigid_body.friction = friction
-	if linear_damping:
+	if linear_damping is not None:
 		obj.rigid_body.linear_damping = linear_damping
-	if angular_damping:
-		obj.rigid_body.angular_damping 
+	if angular_damping is not None:
+		obj.rigid_body.angular_damping = angular_damping
 
 
 
@@ -504,7 +503,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
 	bl_label = "Batch Update Rigid Bodies"
-	bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
+	bl_options = {'REGISTER','UNDO','PRESET'} 
 
 	#checkbox to bulk edit
 	location_x_edit: bpy.props.BoolProperty(default=False)
@@ -528,6 +527,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	linear_damping_edit: bpy.props.BoolProperty(default=False)
 	angular_damping_edit: bpy.props.BoolProperty(default=False)
 
+	
 	#original values
 	location_x_original = None
 	location_y_original = None
@@ -549,7 +549,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	friction_original = None
 	linear_damping_original = None
 	angular_damping_original = None
-
+	
 
 
 	def invoke(self, context, event):
@@ -577,7 +577,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		obj = context.active_object 
 
-
+		
 		self.location_x_original = obj.location[0]
 		self.location_y_original = obj.location[1]
 		self.location_z_original = obj.location[2]
@@ -609,7 +609,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		self.friction_original = obj.rigid_body.friction
 		self.linear_damping_original = obj.rigid_body.linear_damping
 		self.angular_damping_original = obj.rigid_body.angular_damping
-
+		
 
 		wm = context.window_manager		
 		return wm.invoke_props_dialog(self, width=400)
@@ -847,6 +847,10 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		y=None
 		z=None
 
+		print('in execute: object x:',obj.location.x)
+
+
+
 		if obj.rotation_mode == ('QUATERNION'):
 			w=obj.rotation_quaternion.w
 			x=obj.rotation_quaternion.x
@@ -859,7 +863,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			z=obj.rotation_axis_angle.z
 		else:
 			x=obj.rotation_euler.x
-			y=obj.rotation_euler.x
+			y=obj.rotation_euler.y
 			z=obj.rotation_euler.z
 
 		# Call the function and only pass the non-None parameters

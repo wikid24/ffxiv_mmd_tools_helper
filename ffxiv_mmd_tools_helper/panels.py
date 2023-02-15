@@ -131,6 +131,9 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append=True
 		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'UP', icon='ZOOM_IN').direction='UP'
+		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'DOWN', icon='ZOOM_IN').direction='DOWN'
+		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Batch Update Rigid Bodies', icon='PRESET')
 		row = layout.row()
 		row.label(text="Skirt Rigid Bodies", icon='MESH_CONE')

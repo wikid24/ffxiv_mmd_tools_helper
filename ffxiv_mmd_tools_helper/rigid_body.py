@@ -679,6 +679,77 @@ def transform_rigid_body_bone_chain_property(rigid_body_bone_chain,prop,start_va
 					transform_rigid_body(obj=rigid_body[2], **{prop: bone[2]})
 					break
 
+
+def reset_rigid_body_location_to_bone(rigid_body_obj):
+
+		if rigid_body_obj.mmd_type == 'RIGID_BODY':
+
+			active_obj = bpy.context.active_object
+			
+			bone = get_bone_from_rigid_body(rigid_body_obj)
+			armature_obj = bpy.data.objects[bone.id_data.name]
+			bpy.context.view_layer.objects.active= armature_obj
+			
+			bpy.ops.object.mode_set(mode='EDIT')
+			
+			ebone = armature_obj.data.edit_bones[bone.name]
+			#print(bone.type)
+
+			transform_rigid_body(obj=rigid_body_obj
+								,location_x=(ebone.head.x + ebone.tail.x) /2
+								,location_y=(ebone.head.y + ebone.tail.y) /2
+								,location_z=(ebone.head.z + ebone.tail.z) /2
+								)
+								
+			bpy.ops.object.mode_set(mode='OBJECT')
+			armature_obj.select_set(False)
+			
+			bpy.context.view_layer.objects.active = active_obj
+
+def reset_rigid_body_rotation_to_bone(rigid_body_obj):
+
+		if rigid_body_obj.mmd_type == 'RIGID_BODY':
+
+			active_obj = bpy.context.active_object
+			
+			bone = get_bone_from_rigid_body(rigid_body_obj)
+			armature_obj = bpy.data.objects[bone.id_data.name]
+			bpy.context.view_layer.objects.active= armature_obj
+			
+			bpy.ops.object.mode_set(mode='EDIT')
+			
+			pbone = bpy.data.objects[bone.id_data.name].pose.bones[bone.name]
+			#print(ebone.rotation_mode)
+			
+			if pbone.rotation_mode == 'QUATERNION':
+				rotation_w = pbone.rotation_quaternion.w
+				rotation_x = pbone.rotation_quaternion.x
+				rotation_y = pbone.rotation_quaternion.y
+				rotation_z = pbone.rotation_quaternion.z
+			elif pbone.rotation_mode == 'AXIS_ANGLE':
+				rotation_w = pbone.rotation_axis_angle.w
+				rotation_x = pbone.rotation_axis_angle.x
+				rotation_y = pbone.rotation_axis_angle.y
+				rotation_z = pbone.rotation_axis_angle.z
+			else:
+				rotation_w = None
+				rotation_x = pbone.rotation_euler.x
+				rotation_y = pbone.rotation_euler.y
+				rotation_z = pbone.rotation_euler.z
+			
+			transform_rigid_body(obj=rigid_body_obj
+								,rotation_mode=pbone.rotation_mode
+								,rotation_w=rotation_w
+								,rotation_x=rotation_x
+								,rotation_y=rotation_y
+								,rotation_z=rotation_z
+								)
+								
+			bpy.ops.object.mode_set(mode='OBJECT')
+			armature_obj.select_set(False)
+			
+			bpy.context.view_layer.objects.active = active_obj
+
 def _transform_rigid_body_bone_chain(self,context):
 
 	rigid_body_bone_chain = get_selected_rigid_bodies_in_bone_chain()
@@ -774,6 +845,42 @@ class SelectSkirtRigidBodies(bpy.types.Operator):
 
 	def execute(self, context):
 		find_rigid_bodies(startswith='skirt_')
+		return {'FINISHED'}
+
+@register_wrap
+class ResetLocationRigidBodies(bpy.types.Operator):
+	"""Reset Location of selected Rigid Bodies back to match bone """
+	bl_idname = "ffxiv_mmd_tools_helper.reset_location_rigid_bodies"
+	bl_label = "Reset the Location of Rigid Bodies back to bone"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'RIGID_BODY'
+
+	def execute(self, context):
+		selected_objs = bpy.context.selected_objects
+		for obj in selected_objs:
+			reset_rigid_body_location_to_bone(obj)
+		return {'FINISHED'}
+
+@register_wrap
+class ResetRotationRigidBodies(bpy.types.Operator):
+	"""Reset Rotation of selected Rigid Bodies back to match bone """
+	bl_idname = "ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies"
+	bl_label = "Reset the Rotation of Rigid Bodies back to bone"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'RIGID_BODY'
+
+	def execute(self, context):
+		selected_objs = bpy.context.selected_objects
+		for obj in selected_objs:
+			reset_rigid_body_rotation_to_bone(obj)
 		return {'FINISHED'}
 
 @register_wrap
@@ -978,14 +1085,19 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c.label(text='Location:')
 		c.label(text="")
 		c.label(text="")
+		c.label(text="")
 		c = row.column(align=True)
 		c.prop(obj,"location",index=0,text="",toggle=False)
 		c.prop(obj,"location",index=1,text="",toggle=False)
 		c.prop(obj,"location",index=2,text="",toggle=False)
+		c.operator("ffxiv_mmd_tools_helper.reset_location_rigid_bodies",text="Reset")
 		c = row.column(align=True)
 		c.prop(self, "location_x_edit", text="")
 		c.prop(self, "location_y_edit", text="")
 		c.prop(self, "location_z_edit", text="")
+		
+
+		
 
 		#checkbox logic for rotation_mode
 		if (self.rotation_w_edit or self.rotation_x_edit or self.rotation_y_edit or self.rotation_z_edit):
@@ -1007,6 +1119,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			c.prop(obj,"rotation_quaternion",index=1,text="X")
 			c.prop(obj,"rotation_quaternion",index=2,text="Y")
 			c.prop(obj,"rotation_quaternion",index=3,text="Z")
+			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset")
 			c = row.column(align=True)
 			c.prop(self, "rotation_w_edit", text="")
 			c.prop(self, "rotation_x_edit", text="")
@@ -1023,6 +1136,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			c.prop(obj,"rotation_axis_angle",index=1,text="X")
 			c.prop(obj,"rotation_axis_angle",index=2,text="Y")
 			c.prop(obj,"rotation_axis_angle",index=3,text="Z")
+			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset")
 			c = row.column(align=True)
 			c.prop(self, "rotation_w_edit", text="")
 			c.prop(self, "rotation_x_edit", text="")
@@ -1037,6 +1151,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			c.prop(obj, "rotation_euler", index=0, text="X")
 			c.prop(obj, "rotation_euler", index=1, text="Y")
 			c.prop(obj, "rotation_euler", index=2, text="Z")
+			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset")
 			c = row.column(align=True)
 			c.prop(self, "rotation_x_edit", text="")
 			c.prop(self, "rotation_y_edit", text="")

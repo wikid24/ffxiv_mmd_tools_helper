@@ -158,17 +158,46 @@ class MassBonesRenamer(bpy.types.Operator):
 
 
 def find_and_replace_bone_names(context):
+	
 	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
 	if bpy.context.scene.bones_all_or_selected == True:
 		for b in bpy.context.active_object.data.bones:
 			if b.select == True:
-				if 'dummy' not in b.name and 'shadow' not in b.name:
+				if '_dummy' not in b.name and '_shadow' not in b.name:
 					b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
 	if bpy.context.scene.bones_all_or_selected == False:
 		for b in bpy.context.active_object.data.bones:
-			if 'dummy' not in b.name and 'shadow' not in b.name:
+			if '_dummy' not in b.name and '_shadow' not in b.name:
 				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
 
+def find_bone_names(search_string):
+	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
+	armature = bpy.context.view_layer.objects.active
+
+	if bpy.context.mode == 'OBJECT':
+		bpy.ops.object.mode_set(mode='EDIT')
+
+	if bpy.context.mode == 'EDIT_ARMATURE':
+		#deselect all bones
+		bpy.ops.armature.select_all(action='DESELECT')
+		
+		for b in bpy.data.objects[armature.name].data.edit_bones:
+			print (b)
+			if search_string in b.name:
+				if '_dummy' not in b.name and '_shadow' not in b.name:
+					b.select = True
+
+	if bpy.context.mode == 'POSE':
+		#deselect all bones
+		for b in bpy.context.active_object.pose.bones:
+			b.bone.select = False
+		
+		for b in bpy.context.active_object.pose.bones:
+			if search_string in b.name:
+				if '_dummy' not in b.name and '_shadow' not in b.name:
+					b.bone.select = True
+                
+	
 
 @register_wrap
 class FindAndReplaceBoneNames(bpy.types.Operator):
@@ -190,6 +219,22 @@ class FindAndReplaceBoneNames(bpy.types.Operator):
 
 	def execute(self, context):
 		find_and_replace_bone_names(context)
+		return {'FINISHED'}
+
+@register_wrap
+class FindBoneNames(bpy.types.Operator):
+	"""Find bones that match earch string"""
+	bl_idname = "ffxiv_mmd_tools_helper.find_bones"
+	bl_label = "Find bones that match search string"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		find_bone_names(bpy.context.scene.find_bone_string)
 		return {'FINISHED'}
 
 

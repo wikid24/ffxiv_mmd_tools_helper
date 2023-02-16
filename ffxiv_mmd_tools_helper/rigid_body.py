@@ -5,6 +5,7 @@ from mmd_tools.operators.rigid_body import AddRigidBody
 from . import import_csv
 from mmd_tools.core import model as mmd_model
 import re
+import math
 
 
 def read_rigid_body_file():
@@ -719,31 +720,15 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 			
 			bpy.ops.object.mode_set(mode='EDIT')
 			
-			pbone = bpy.data.objects[bone.id_data.name].pose.bones[bone.name]
-			#print(ebone.rotation_mode)
+			rot = bone.matrix_local.to_euler('YXZ')
+			rot.rotate_axis('X', math.pi/2)
 			
-			if pbone.rotation_mode == 'QUATERNION':
-				rotation_w = pbone.rotation_quaternion.w
-				rotation_x = pbone.rotation_quaternion.x
-				rotation_y = pbone.rotation_quaternion.y
-				rotation_z = pbone.rotation_quaternion.z
-			elif pbone.rotation_mode == 'AXIS_ANGLE':
-				rotation_w = pbone.rotation_axis_angle.w
-				rotation_x = pbone.rotation_axis_angle.x
-				rotation_y = pbone.rotation_axis_angle.y
-				rotation_z = pbone.rotation_axis_angle.z
-			else:
-				rotation_w = None
-				rotation_x = pbone.rotation_euler.x
-				rotation_y = pbone.rotation_euler.y
-				rotation_z = pbone.rotation_euler.z
 			
 			transform_rigid_body(obj=rigid_body_obj
-								,rotation_mode=pbone.rotation_mode
-								,rotation_w=rotation_w
-								,rotation_x=rotation_x
-								,rotation_y=rotation_y
-								,rotation_z=rotation_z
+								,rotation_mode="YXZ"
+								,rotation_x=rot[0]
+								,rotation_y=rot[1]
+								,rotation_z=rot[2]
 								)
 								
 			bpy.ops.object.mode_set(mode='OBJECT')

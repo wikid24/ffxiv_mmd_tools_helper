@@ -237,6 +237,8 @@ def get_skirt_rigid_horizontal_objects(obj):
 			return rb_obj_chain
 
 def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_selected=None):
+
+	bpy.ops.object.mode_set(mode='OBJECT')
 	
 	obj = bpy.context.active_object
 	if obj.type == 'ARMATURE':
@@ -250,12 +252,11 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_sele
 		endswith = ''
 	if contains is None:
 		contains = ''
-	if append is None:
-		append = False
+	if append_to_selected is None:
+		append_to_selected = False
 
 	if append_to_selected==False:
 		bpy.ops.object.select_all(action='DESELECT')
-
 		
 	for obj in search_scope:
 		if obj.mmd_type=='RIGID_BODY' and obj.name.startswith(str(startswith)) and obj.name.endswith(str(endswith)) and contains in obj.name:
@@ -902,7 +903,7 @@ class FindRigidBodies(bpy.types.Operator):
 		return obj is not None
 
 	def execute(self, context):
-		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains,append=self.append_to_selected)
+		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains,append_to_selected=self.append_to_selected)
 		return {'FINISHED'}
 
 @register_wrap

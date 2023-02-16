@@ -170,7 +170,7 @@ def find_and_replace_bone_names(context):
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
 
-def find_bone_names(search_string,append_to_selected):
+def find_bone_names(search_string,append_to_selected=None):
 	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
 	armature = bpy.context.view_layer.objects.active
 

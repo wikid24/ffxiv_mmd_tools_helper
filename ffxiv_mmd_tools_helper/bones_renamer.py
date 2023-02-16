@@ -179,7 +179,7 @@ def find_bone_names(search_string):
 
 	if bpy.context.mode == 'EDIT_ARMATURE':
 		#deselect all bones
-		bpy.ops.armature.select_all(action='DESELECT')
+		#bpy.ops.armature.select_all(action='DESELECT')
 		
 		for b in bpy.data.objects[armature.name].data.edit_bones:
 			print (b)
@@ -189,8 +189,8 @@ def find_bone_names(search_string):
 
 	if bpy.context.mode == 'POSE':
 		#deselect all bones
-		for b in bpy.context.active_object.pose.bones:
-			b.bone.select = False
+		#for b in bpy.context.active_object.pose.bones:
+		#	b.bone.select = False
 		
 		for b in bpy.context.active_object.pose.bones:
 			if search_string in b.name:

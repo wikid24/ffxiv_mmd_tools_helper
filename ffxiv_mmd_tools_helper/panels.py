@@ -131,13 +131,15 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append=True
 		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply', icon='PRESET')
+		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
 		row.label(text='Bone Chain',icon='LINK_BLEND')
 		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
 		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Batch Update Rigid Bodies', icon='PRESET')
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Apply Start / End to Bone Chain')
 		row = layout.row()
 		row.label(text="Skirt Rigid Bodies", icon='MESH_CONE')
 		row = layout.row()

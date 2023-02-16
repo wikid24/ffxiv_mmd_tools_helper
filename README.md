@@ -5,9 +5,9 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 ------------
 
 # New Features:
-  - Auto generate Bone Morphs
+  - Auto generate Bone Morphs (Facial Expressions)
       - working for Hyur so far (but can be used on other races)
-  - Auto generate Rigid Bodies
+  - Auto generate Rigid Bodies (Physics blocks)
       - working but only partially completed (so far)
   - Auto generate Joints
       - working but only partially completed (so far)
@@ -18,6 +18,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
   - Auto Sort the MMD Bone Order and Deformation Tiers
+  - Auto-fix MMD Bone Names
   - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
   - A bunch of important useful stuff. Will list them later.
 

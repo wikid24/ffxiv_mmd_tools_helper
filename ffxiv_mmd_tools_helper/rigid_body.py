@@ -633,6 +633,9 @@ def transform_selected_rigid_bodies(
 		print('Not all selected objects are rigid bodies. Select only rigid bodies')
 	
 def transform_rigid_body_bone_chain(rigid_body_bone_chain
+									,size_x_start=None,size_x_end=None
+									,size_y_start=None,size_y_end=None
+									,size_z_start=None,size_z_end=None
 									,mass_start=None,mass_end=None
 									,restitution_start=None,restitution_end=None
 									,friction_start=None,friction_end=None
@@ -640,7 +643,9 @@ def transform_rigid_body_bone_chain(rigid_body_bone_chain
 									,angular_damping_start=None,angular_damping_end=None
 									):
 	
-	
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_x',size_x_start,size_x_end)
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_y',size_y_start,size_y_end)
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_z',size_z_start,size_z_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'mass',mass_start,mass_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'restitution',restitution_start,restitution_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'friction',friction_start,friction_end)
@@ -674,6 +679,25 @@ def transform_rigid_body_bone_chain_property(rigid_body_bone_chain,prop,start_va
 					transform_rigid_body(obj=rigid_body[2], **{prop: bone[2]})
 					break
 
+def _transform_rigid_body_bone_chain(self,context):
+
+	rigid_body_bone_chain = get_selected_rigid_bodies_in_bone_chain()
+
+	"""
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_x',self.size_x_start,self.size_x_end)
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_y',self.size_y_start,self.size_y_end)
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_z',self.size_z_start,self.size_z_end)
+	"""
+	
+	transform_rigid_body_bone_chain(
+						rigid_body_bone_chain=rigid_body_bone_chain,
+						size_x_start=self.size_x_start if self.size_x_edit else None,
+						size_x_end=self.size_x_end if self.size_x_edit else None,
+						size_y_start=self.size_y_start if self.size_y_edit else None,
+						size_y_end=self.size_y_end if self.size_y_edit else None,
+						size_z_start=self.size_z_start if self.size_z_edit else None,
+	)
+	
 
 def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = get_armature()
@@ -817,7 +841,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
 	bl_label = "Batch Update Rigid Bodies"
-	bl_options = {'REGISTER','UNDO','PRESET'} 
+	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 
 	#checkbox to bulk edit
 	location_x_edit: bpy.props.BoolProperty(default=False)
@@ -1172,9 +1196,12 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 	""" Update Rigid Bodies in a Bone Chain with Start and End values """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain"
 	bl_label = "Update Rigid Bodies by Bone Chain"
-	bl_options = {'REGISTER','UNDO','PRESET'} 
+	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 
 	#checkbox to bulk edit
+	size_x_edit:bpy.props.BoolProperty(default=False)
+	size_y_edit:bpy.props.BoolProperty(default=False)
+	size_z_edit:bpy.props.BoolProperty(default=False)
 	mass_edit: bpy.props.BoolProperty(default=False)
 	restitution_edit: bpy.props.BoolProperty(default=False)
 	collision_group_number_edit: bpy.props.BoolProperty(default=False)
@@ -1182,12 +1209,19 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 	friction_edit: bpy.props.BoolProperty(default=False)
 	linear_damping_edit: bpy.props.BoolProperty(default=False)
 	angular_damping_edit: bpy.props.BoolProperty(default=False)
+	
 
 	#original values
 	rigid_body_bone_chain = None
 	bone_head = None
 	bone_tail = None
 	rigid_body_length = None
+	size_x_start:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
+	size_x_end:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
+	size_y_start:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
+	size_y_end:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
+	size_z_start:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
+	size_z_end:bpy.props.FloatProperty(default=0,min=0,precision=6,update=_transform_rigid_body_bone_chain)
 	mass_start: bpy.props.FloatProperty(default=0,min=0,precision=6,unit='MASS')
 	mass_end = bpy.props.FloatProperty(default=0,min=0,precision=6,unit='MASS')
 	restitution_start = bpy.props.FloatProperty(default=0,min=0,max=1,precision=6)
@@ -1211,6 +1245,9 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		self.bone_tail = self.rigid_body_bone_chain[len(self.rigid_body_bone_chain)-1][1]
 		self.rigid_body_length = str(len(self.rigid_body_bone_chain))
 		
+		self.size_x_edit = False
+		self.size_y_edit = False
+		self.size_z_edit = False
 		self.mass_edit = False
 		self.restitution_edit = False
 		self.friction_edit = False
@@ -1220,6 +1257,12 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		starting_rigid_body = self.rigid_body_bone_chain[0][2]
 		ending_rigid_body = self.rigid_body_bone_chain[len(self.rigid_body_bone_chain)-1][2]
 
+		self.size_x_start = starting_rigid_body.mmd_rigid.size[0]
+		self.size_x_end = ending_rigid_body.mmd_rigid.size[0]
+		self.size_y_start = starting_rigid_body.mmd_rigid.size[1]
+		self.size_y_end = ending_rigid_body.mmd_rigid.size[1]
+		self.size_z_start = starting_rigid_body.mmd_rigid.size[2]
+		self.size_z_end = ending_rigid_body.mmd_rigid.size[2]
 		self.mass_start= starting_rigid_body.rigid_body.mass
 		self.mass_end= ending_rigid_body.rigid_body.mass
 		self.restitution_start = starting_rigid_body.rigid_body.restitution
@@ -1239,6 +1282,8 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 	def draw(self, context):
 		layout = self.layout
 
+		starting_rigid_body = self.rigid_body_bone_chain[0][2]
+		ending_rigid_body = self.rigid_body_bone_chain[len(self.rigid_body_bone_chain)-1][2]
 
 		row = layout.row()
 		row.label(text='# Rigid Bodies in Bone Chain: '+ self.rigid_body_length)
@@ -1256,6 +1301,41 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		row.label(text="Bone Chain")
 		row.label(text=self.bone_head)
 		row.label(text=self.bone_tail)
+		row = c.row()
+		#g = c.grid_flow(row_major=True, align=True,columns=1)
+		if starting_rigid_body.mmd_rigid.shape == 'SPHERE' and ending_rigid_body.mmd_rigid.shape == 'SPHERE':	
+			row = c.row()
+			row.label(text='Radius')
+			row.prop(self, 'size_x_start',expand=True, text="")
+			row.prop(self, 'size_x_end',expand=True, text="")
+			row.prop(self, "size_x_edit", text="")
+		elif starting_rigid_body.mmd_rigid.shape == 'BOX' and ending_rigid_body.mmd_rigid.shape == 'BOX':	
+			row = c.row()
+			row.label(text='Size X')
+			row.prop(self, 'size_x_start', expand=True, text="")
+			row.prop(self, 'size_x_end', expand=True, text="")
+			row.prop(self, "size_x_edit", text="")
+			row = c.row()
+			row.label(text='Size Y')
+			row.prop(self, 'size_y_start', expand=True, text="")
+			row.prop(self, 'size_y_end',expand=True, text="")
+			row.prop(self, "size_y_edit", text="")
+			row = c.row()
+			row.label(text='Size Z')
+			row.prop(self, 'size_z_start', expand=True, text="")
+			row.prop(self, 'size_z_end', expand=True, text="")
+			row.prop(self, "size_z_edit", text="")
+		elif starting_rigid_body.mmd_rigid.shape == 'CAPSULE' and ending_rigid_body.mmd_rigid.shape == 'CAPSULE':	
+			row = c.row()
+			row.label(text='Radius')
+			row.prop(self, 'size_x_start', expand=True, text="")
+			row.prop(self, 'size_x_end', expand=True, text="")
+			row.prop(self, "size_x_edit", text="")
+			row = c.row()
+			row.label(text='Height')
+			row.prop(self, 'size_y_start', expand=True, text="")
+			row.prop(self, 'size_y_end', expand=True, text="")
+			row.prop(self, "size_y_edit", text="")
 		row = c.row()
 		row.label(text="Mass")
 		row.prop(self, 'mass_start',text="")
@@ -1301,6 +1381,12 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		# Call the function and only pass the non-None parameters
 		transform_rigid_body_bone_chain(
 					rigid_body_bone_chain=self.rigid_body_bone_chain,
+					size_x_start=self.size_x_start if self.size_x_edit else None,
+					size_x_end=self.size_x_end if self.size_x_edit else None,
+					size_y_start=self.size_y_start if self.size_y_edit else None,
+					size_y_end=self.size_y_end if self.size_y_edit else None,
+					size_z_start=self.size_z_start if self.size_z_edit else None,
+					size_z_end=self.size_z_end if self.size_z_edit else None,
 					mass_start=self.mass_start if self.mass_edit else None,
 					mass_end=self.mass_end if self.mass_edit else None,
 					restitution_start=self.restitution_start if self.restitution_edit else None,

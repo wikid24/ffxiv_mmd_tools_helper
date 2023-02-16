@@ -102,7 +102,20 @@ def create_skirt_bones(num_bone_parents, radius_tail, radius_head, height,floor_
         bone = obj.data.edit_bones.new(f"skirt_{i}_0")
         bone.head = head
         bone.tail = tail
+        
         bone.roll = math.atan2(tail[1] - head[1], tail[0] - head[0])
+        #bone.roll = math.atan2(y_tail, x_tail) # Set bone roll to match orientation
+        # Calculate the offset to the bone roll
+        #if x_scale == 0:
+            #offset = math.pi / 2.0
+       # else:
+           # offset = math.atan(y_scale / x_scale)
+
+        # Apply the offset to the bone roll
+        #bone.roll += offset
+
+
+
         sub_bone_list.append(bone)
         
         parent_bone = bone
@@ -128,6 +141,13 @@ def create_skirt_bones(num_bone_parents, radius_tail, radius_head, height,floor_
             sub_bone.roll = parent_bone.roll
             sub_bone_list.append(sub_bone) 
         parent_bone.tail = sub_bone_list[1].head
+
+
+
+    #select all bones and recalculate bone roll to the global z axis
+    bpy.ops.armature.select_all(action='SELECT')
+    bpy.ops.armature.calculate_roll(type='GLOBAL_POS_Z')
+
     
     # Search all objects for one that uses this mesh
     for obj in bpy.data.objects:

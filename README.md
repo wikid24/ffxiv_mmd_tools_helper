@@ -32,15 +32,11 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - Populate the csv files with data. 
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'
-- display_panel_groups.py - Updated to Match the ffxiv bone structure
-- Automate Bone Order for PMX export
-- Create 'bulk-add Rigid Bodies' with min/max values ([example plugin](https://github.com/12funkeys/rigid_bodys_gen) - [Video Tutorial](https://www.youtube.com/watch?v=0haYapQ7l_U) )
-    - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
+- Add presets for skirt/hair for bulk-update to Rigid Bodies (skirts heaviest on the bottom, hair heaviest on the top?)
 - Create 'bulk-add joints' with min/max values:
     - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Automate MMD Tools material sorter
 - Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) )
-- Add skirt physics module (the default skirt from FFXIV sucks for physics)
 ------------
 
 # In order to use this tool, you need:

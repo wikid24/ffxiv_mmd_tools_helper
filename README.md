@@ -1,23 +1,28 @@
-# this is a fork of Hogarth-MMD's [mmd_tools_helper](https://github.com/Hogarth-MMD/mmd_tools_helper), updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
+# FFXIV MMD Tools Helper
+## This is a fork of Hogarth-MMD's [mmd_tools_helper](https://github.com/Hogarth-MMD/mmd_tools_helper), massively updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
 
-Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now, just check the simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial below
+Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now, just check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-install) and simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial below
 
 ------------
+While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
 
 # New Features:
-  - Auto generate Bone Morphs
-      - working for Hyur (but can be used on other races)
-  - Auto generate Rigid Bodies
-      - working but only partially completed
+  - Auto-convert the FFXIV bone structure to match MMD Models
+  - Auto generate Bone Morphs (Facial Expressions)
+      - working for Hyur so far (but can be used on other races)
+  - Auto generate Rigid Bodies (Physics blocks)
+      - working but only partially completed (so far)
   - Auto generate Joints
-      - working but only partially completed
+      - working but only partially completed (so far)
   - Auto generate Bone Groups
   - Auto generate Shape Keys from csv
-      - Working for Hyur, partially completed
-  - Skirt rig generator
+      - Working for Hyur, partially completed (so far)
+  - Skirt rig bone + weight painting generator (for physics)
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
   - Auto Sort the MMD Bone Order and Deformation Tiers
+  - Auto-fix MMD Bone Names
+  - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
   - A bunch of important useful stuff. Will list them later.
 
 # Conversion/upgrade to Blender 2.8+ (to do):
@@ -30,15 +35,11 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - Populate the csv files with data. 
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'
-- display_panel_groups.py - Updated to Match the ffxiv bone structure
-- Automate Bone Order for PMX export
-- Create 'bulk-add Rigid Bodies' with min/max values ([example plugin](https://github.com/12funkeys/rigid_bodys_gen) - [Video Tutorial](https://www.youtube.com/watch?v=0haYapQ7l_U) )
-    - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
+- Add presets for skirt/hair for bulk-update to Rigid Bodies (skirts heaviest on the bottom, hair heaviest on the top?)
 - Create 'bulk-add joints' with min/max values:
     - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Automate MMD Tools material sorter
 - Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) )
-- Add skirt physics module (the default skirt from FFXIV sucks for physics)
 ------------
 
 # In order to use this tool, you need:
@@ -67,7 +68,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 - [MMD Skirt Rigging Tutorial: Video Tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
 - [UuuNyaa's Physics Adjuster: Video Tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
 - [MMD Tools wiki](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)
-- [Animation Retargeting Video Tutorial](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) - An alternative approach to animating MMD using FFXIV characters
+- [XAT Animation Retargeting Guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) - An alternative approach to animating FFXIV characters using MMD motion files
 
 ------------
 

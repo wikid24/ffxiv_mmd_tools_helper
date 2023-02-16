@@ -4,8 +4,10 @@
 Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now, just check the simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial below
 
 ------------
+While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
 
 # New Features:
+  - Auto-convert the FFXIV bone structure to match MMD Models
   - Auto generate Bone Morphs (Facial Expressions)
       - working for Hyur so far (but can be used on other races)
   - Auto generate Rigid Bodies (Physics blocks)
@@ -15,7 +17,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
   - Auto generate Bone Groups
   - Auto generate Shape Keys from csv
       - Working for Hyur, partially completed (so far)
-  - Skirt rig generator
+  - Skirt rig bone + weight painting generator (for physics)
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
   - Auto Sort the MMD Bone Order and Deformation Tiers

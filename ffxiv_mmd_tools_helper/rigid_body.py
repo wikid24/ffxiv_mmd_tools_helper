@@ -236,7 +236,7 @@ def get_skirt_rigid_horizontal_objects(obj):
 		
 			return rb_obj_chain
 
-def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
+def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_selected=None):
 	
 	obj = bpy.context.active_object
 	if obj.type == 'ARMATURE':
@@ -253,7 +253,7 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append=None):
 	if append is None:
 		append = False
 
-	if append==False:
+	if append_to_selected==False:
 		bpy.ops.object.select_all(action='DESELECT')
 
 		
@@ -890,7 +890,7 @@ class FindRigidBodies(bpy.types.Operator):
 	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	append = bpy.props.BoolProperty(name="Append", default=False)
+	append_to_selected = bpy.props.BoolProperty(name="Append", default=False)
 
 	bpy.types.Scene.rigidbody_startswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_endswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
@@ -902,7 +902,7 @@ class FindRigidBodies(bpy.types.Operator):
 		return obj is not None
 
 	def execute(self, context):
-		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains,append=self.append)
+		find_rigid_bodies(startswith=context.scene.rigidbody_startswith,endswith=context.scene.rigidbody_endswith,contains=context.scene.rigidbody_contains,append=self.append_to_selected)
 		return {'FINISHED'}
 
 @register_wrap

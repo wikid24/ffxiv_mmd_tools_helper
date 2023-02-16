@@ -170,7 +170,7 @@ def find_and_replace_bone_names(context):
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
 
-def find_bone_names(search_string):
+def find_bone_names(search_string,append_to_selected):
 	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
 	armature = bpy.context.view_layer.objects.active
 
@@ -178,8 +178,9 @@ def find_bone_names(search_string):
 		bpy.ops.object.mode_set(mode='EDIT')
 
 	if bpy.context.mode == 'EDIT_ARMATURE':
-		#deselect all bones
-		#bpy.ops.armature.select_all(action='DESELECT')
+		if append_to_selected == False:
+			#deselect all bones
+			bpy.ops.armature.select_all(action='DESELECT')
 		
 		for b in bpy.data.objects[armature.name].data.edit_bones:
 			print (b)
@@ -188,9 +189,10 @@ def find_bone_names(search_string):
 					b.select = True
 
 	if bpy.context.mode == 'POSE':
-		#deselect all bones
-		#for b in bpy.context.active_object.pose.bones:
-		#	b.bone.select = False
+		if append_to_selected == False:
+			#deselect all bones
+			for b in bpy.context.active_object.pose.bones:
+				b.bone.select = False
 		
 		for b in bpy.context.active_object.pose.bones:
 			if search_string in b.name:
@@ -228,13 +230,15 @@ class FindBoneNames(bpy.types.Operator):
 	bl_label = "Find bones that match search string"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	append_to_selected = bpy.props.BoolProperty(name="Append", default=False)
+
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
 		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
-		find_bone_names(bpy.context.scene.find_bone_string)
+		find_bone_names(bpy.context.scene.find_bone_string,append_to_selected=self.append_to_selected)
 		return {'FINISHED'}
 
 

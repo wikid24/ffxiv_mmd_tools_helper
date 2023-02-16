@@ -78,7 +78,7 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.label(text="Find in name:")
 		col.prop(context.scene,"find_bone_string")
-		col.operator("ffxiv_mmd_tools_helper.find_bones", text = "Find", icon='VIEWZOOM')
+		col.operator("ffxiv_mmd_tools_helper.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=True
 		col = row.column(align=True)
 		col.label(text="Replace with:")
 		col.prop(context.scene,"replace_bone_string")
@@ -128,8 +128,8 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"rigidbody_contains", text = "")
 		row.prop(context.scene,"rigidbody_endswith", text = "")
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append=False
-		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append=True
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append_to_selected=False
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
 		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply', icon='PRESET')

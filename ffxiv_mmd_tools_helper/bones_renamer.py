@@ -183,7 +183,6 @@ def find_bone_names(search_string,append_to_selected=None):
 			bpy.ops.armature.select_all(action='DESELECT')
 		
 		for b in bpy.data.objects[armature.name].data.edit_bones:
-			print (b)
 			if search_string in b.name:
 				if '_dummy' not in b.name and '_shadow' not in b.name:
 					b.select = True

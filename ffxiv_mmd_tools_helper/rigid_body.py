@@ -526,7 +526,6 @@ def transform_rigid_body(obj=None
 						,collision_group_number=None, collision_group_mask=None, friction=None
 						,linear_damping=None,angular_damping=None):
 
-	
 
 	if obj is None and bpy.context.active_object is not None:
 		if bpy.context.active_object.mmd_type == 'RIGID_BODY':
@@ -689,23 +688,33 @@ def reset_rigid_body_location_to_bone(rigid_body_obj):
 			active_obj = bpy.context.active_object
 			
 			bone = get_bone_from_rigid_body(rigid_body_obj)
-			armature_obj = bpy.data.objects[bone.id_data.name]
-			bpy.context.view_layer.objects.active= armature_obj
-			
-			bpy.ops.object.mode_set(mode='EDIT')
-			
-			ebone = armature_obj.data.edit_bones[bone.name]
-			#print(bone.type)
 
-			transform_rigid_body(obj=rigid_body_obj
-								,location_x=(ebone.head.x + ebone.tail.x) /2
-								,location_y=(ebone.head.y + ebone.tail.y) /2
-								,location_z=(ebone.head.z + ebone.tail.z) /2
-								)
-								
-			bpy.ops.object.mode_set(mode='OBJECT')
-			armature_obj.select_set(False)
-			
+			if bpy.data.objects[bone.id_data.name].type != 'ARMATURE':
+				for obj in bpy.data.objects[bone.id_data.name].children_recursive:
+					if obj.type == 'ARMATURE':
+						armature_obj = obj
+						break
+			else:
+				armature_obj = bpy.data.objects[bone.id_data.name]
+
+			if (armature_obj.type == 'ARMATURE'):
+
+				bpy.context.view_layer.objects.active= armature_obj
+				
+				bpy.ops.object.mode_set(mode='EDIT')
+				
+				ebone = armature_obj.data.edit_bones[bone.name]
+				#print(bone.type)
+
+				transform_rigid_body(obj=rigid_body_obj
+									,location_x=(ebone.head.x + ebone.tail.x) /2
+									,location_y=(ebone.head.y + ebone.tail.y) /2
+									,location_z=(ebone.head.z + ebone.tail.z) /2
+									)
+									
+				bpy.ops.object.mode_set(mode='OBJECT')
+				armature_obj.select_set(False)
+				
 			bpy.context.view_layer.objects.active = active_obj
 
 def reset_rigid_body_rotation_to_bone(rigid_body_obj):
@@ -713,27 +722,45 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 		if rigid_body_obj.mmd_type == 'RIGID_BODY':
 
 			active_obj = bpy.context.active_object
+
 			
 			bone = get_bone_from_rigid_body(rigid_body_obj)
-			armature_obj = bpy.data.objects[bone.id_data.name]
-			bpy.context.view_layer.objects.active= armature_obj
 			
-			bpy.ops.object.mode_set(mode='EDIT')
+			if bpy.data.objects[bone.id_data.name].type != 'ARMATURE':
+				for obj in bpy.data.objects[bone.id_data.name].children_recursive:
+					if obj.type == 'ARMATURE':
+						armature_obj = obj
+						break
+			else:
+				armature_obj = bpy.data.objects[bone.id_data.name]
+
+			if (armature_obj.type == 'ARMATURE'):
+				
+
+				bpy.context.view_layer.objects.active= armature_obj
+				
+				bpy.ops.object.mode_set(mode='EDIT')
+				
+				rot = bone.matrix_local.to_euler('YXZ')
+				rot.rotate_axis('X', math.pi/2)
+				
+				
+				transform_rigid_body(obj=rigid_body_obj
+									,rotation_mode="YXZ"
+									,rotation_x=rot[0]
+									,rotation_y=rot[1]
+									,rotation_z=rot[2]
+									)
+									
+				bpy.ops.object.mode_set(mode='OBJECT')
+				armature_obj.select_set(False)
 			
-			rot = bone.matrix_local.to_euler('YXZ')
-			rot.rotate_axis('X', math.pi/2)
+			else:
+				print(armature_obj)
+				print(armature_obj.type)
+				print('this is not an armature!')
 			
-			
-			transform_rigid_body(obj=rigid_body_obj
-								,rotation_mode="YXZ"
-								,rotation_x=rot[0]
-								,rotation_y=rot[1]
-								,rotation_z=rot[2]
-								)
-								
-			bpy.ops.object.mode_set(mode='OBJECT')
-			armature_obj.select_set(False)
-			
+
 			bpy.context.view_layer.objects.active = active_obj
 
 def _transform_rigid_body_bone_chain(self,context):
@@ -1051,6 +1078,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		obj = context.active_object 
 
+		
 		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
 		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
 		

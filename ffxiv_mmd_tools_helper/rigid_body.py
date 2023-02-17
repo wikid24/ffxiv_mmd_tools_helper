@@ -623,12 +623,12 @@ def transform_selected_rigid_bodies(
 		for obj in selected_objects:
 
 			transform_rigid_body(obj
-								,location_x,location_y,location_z
-								,rotation_mode,rotation_w,rotation_x,rotation_y,rotation_z
-								,size_x,size_y,size_z
-								,rigid_body_type, rigid_body_shape,mass,restitution
-								,collision_group_number, collision_group_mask, friction
-								,linear_damping,angular_damping)
+								,location_x=location_x,location_y=location_y,location_z=location_z
+								,rotation_mode=rotation_mode,rotation_w=rotation_w,rotation_x=rotation_x,rotation_y=rotation_y,rotation_z=rotation_z
+								,size_x=size_x,size_y=size_y,size_z=size_z
+								,rigid_body_type=rigid_body_type, rigid_body_shape=rigid_body_shape,mass=mass,restitution=restitution
+								,collision_group_number=collision_group_number, collision_group_mask=collision_group_mask, friction=friction
+								,linear_damping=linear_damping,angular_damping=angular_damping)
 
 	else: 
 		print('Not all selected objects are rigid bodies. Select only rigid bodies')
@@ -653,7 +653,7 @@ def transform_rigid_body_bone_chain(rigid_body_bone_chain
 	
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_x',location_x_start,location_x_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_y',location_y_start,location_y_end)
-	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_x',location_z_start,location_z_end)
+	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_z',location_z_start,location_z_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_w',rotation_w_start,rotation_w_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_x',rotation_x_start,rotation_x_end)
 	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_y',rotation_y_start,rotation_y_end)
@@ -809,7 +809,27 @@ def _transform_rigid_body_bone_chain(self,context):
 						size_y_end=self.size_y_end if self.size_y_edit else None,
 						size_z_start=self.size_z_start if self.size_z_edit else None,
 	)
-	
+
+
+def _transform_selected_rigid_bodies(self,context):
+
+	#obj = context.active_object 
+
+
+	transform_selected_rigid_bodies(
+		location_x=self.location_x if self.location_x_edit else None,
+		location_y=self.location_y if self.location_y_edit else None,
+		location_z=self.location_z if self.location_z_edit else None,
+		rotation_mode=self.rotation_mode if self.rotation_mode_edit else None,
+		rotation_w=self.rotation_w if self.rotation_w_edit else None,
+		rotation_x=self.rotation_x if self.rotation_x_edit else None,
+		rotation_y=self.rotation_y if self.rotation_y_edit else None,
+		rotation_z=self.rotation_z if self.rotation_z_edit else None,
+		size_x=self.size_x if self.size_x_edit else None,
+		size_y=self.size_y if self.size_y_edit else None,
+		size_z=self.size_z if self.size_z_edit else None,
+	)
+
 
 def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = get_armature()
@@ -984,6 +1004,8 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 		return {'FINISHED'}
 
 
+
+
 @register_wrap
 class BatchUpdateRigidBodies(bpy.types.Operator):
 	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
@@ -1015,27 +1037,38 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 	
 	#original values
-	location_x_original = None
-	location_y_original = None
-	location_z_original = None
-	rotation_mode_original = None
-	rotation_w_original = None
-	rotation_x_original = None
-	rotation_y_original = None
-	rotation_z_original = None
-	size_x_original = None
-	size_y_original = None
-	size_z_original = None
-	rigid_body_type_original = None
-	rigid_body_shape_original = None
-	mass_original = None
-	restitution_original = None
-	collision_group_number_original = None
-	collision_group_mask_original = None
-	friction_original = None
-	linear_damping_original = None
-	angular_damping_original = None
-	
+	location_x: bpy.props.FloatProperty(name='location_x',default=0,unit='LENGTH',update=_transform_selected_rigid_bodies)
+	location_y: bpy.props.FloatProperty(name='location_y',default=0,unit='LENGTH',update=_transform_selected_rigid_bodies)
+	location_z:  bpy.props.FloatProperty(name='location_z',default=0,unit='LENGTH',update=_transform_selected_rigid_bodies)
+	rotation_mode: bpy.props.EnumProperty(items = [\
+			('QUATERNION', 'Quaternion(WXYZ)', 'Quaternion(WXYZ)')\
+			,('XYZ', 'XYZ Euler', 'XYZ Euler')\
+			,('XZY', 'XZY Euler', 'XZY Euler')\
+			,('YXZ', 'YXZ Euler', 'YXZ Euler')\
+			,('YZX', 'YZX Euler', 'YZX Euler')\
+			,('ZXY', 'ZXY Euler', 'ZXY Euler')\
+			,('ZYX', 'ZYX Euler', 'ZYX Euler')\
+			,('AXIS_ANGLE', 'Axis Angle', 'Axis Angle')\
+			],update=_transform_selected_rigid_bodies)
+
+	rotation_w: bpy.props.FloatProperty(name='rotation_w',default=0,unit='ROTATION',update=_transform_selected_rigid_bodies)
+	rotation_x: bpy.props.FloatProperty(name='rotation_x',default=0,unit='ROTATION',update=_transform_selected_rigid_bodies)
+	rotation_y: bpy.props.FloatProperty(name='rotation_y',default=0,unit='ROTATION',update=_transform_selected_rigid_bodies)
+	rotation_z: bpy.props.FloatProperty(name='rotation_z',default=0,unit='ROTATION',update=_transform_selected_rigid_bodies)
+	size_x: bpy.props.FloatProperty(name='size_x',default=0,min=0,precision=6,update=_transform_selected_rigid_bodies)
+	size_y: bpy.props.FloatProperty(name='size_y',default=0,min=0,precision=6,update=_transform_selected_rigid_bodies)
+	size_z: bpy.props.FloatProperty(name='size_z',default=0,min=0,precision=6,update=_transform_selected_rigid_bodies)
+	rigid_body_type: None
+	rigid_body_shape: None
+	mass: None
+	restitution: None
+	collision_group_number: None
+	collision_group_mask: None
+	friction: None
+	linear_damping: None
+	angular_damping: None
+
+
 
 
 	def invoke(self, context, event):
@@ -1063,38 +1096,37 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		obj = context.active_object 
 
-		
-		self.location_x_original = obj.location[0]
-		self.location_y_original = obj.location[1]
-		self.location_z_original = obj.location[2]
-		self.rotation_mode_original = obj.rotation_mode
+		self.location_x = obj.location.x
+		self.location_y = obj.location.y
+		self.location_z = obj.location.z
+		self.rotation_mode = obj.rotation_mode
 		if obj.rotation_mode == 'QUATERNION':
-			self.rotation_w_original = obj.rotation_quaternion.w
-			self.rotation_x_original = obj.rotation_quaternion.x
-			self.rotation_y_original = obj.rotation_quaternion.y
-			self.rotation_z_original = obj.rotation_quaternion.z
+			self.rotation_w = obj.rotation_quaternion.w
+			self.rotation_x = obj.rotation_quaternion.x
+			self.rotation_y = obj.rotation_quaternion.y
+			self.rotation_z = obj.rotation_quaternion.z
 		elif obj.rotation_mode == 'AXIS_ANGLE':
-			self.rotation_w_original = obj.rotation_axis_angle.w
-			self.rotation_x_original = obj.rotation_axis_angle.x
-			self.rotation_y_original = obj.rotation_axis_angle.y
-			self.rotation_z_original = obj.rotation_axis_angle.z
+			self.rotation_w = obj.rotation_axis_angle.w
+			self.rotation_x = obj.rotation_axis_angle.x
+			self.rotation_y = obj.rotation_axis_angle.y
+			self.rotation_z = obj.rotation_axis_angle.z
 		else:
-			self.rotation_w_original = 0
-			self.rotation_x_original = obj.rotation_euler.x
-			self.rotation_y_original = obj.rotation_euler.y
-			self.rotation_z_original = obj.rotation_euler.z
-		self.size_x_original = obj.mmd_rigid.size[0]
-		self.size_y_original = obj.mmd_rigid.size[1]
-		self.size_z_original = obj.mmd_rigid.size[2]
-		self.rigid_body_type_original = obj.mmd_rigid.type
-		self.rigid_body_shape_original = obj.mmd_rigid.shape
-		self.mass_original = obj.rigid_body.mass
-		self.restitution_original = obj.rigid_body.restitution
-		self.collision_group_number_original = obj.mmd_rigid.collision_group_number
-		self.collision_group_mask_original = obj.mmd_rigid.collision_group_mask
-		self.friction_original = obj.rigid_body.friction
-		self.linear_damping_original = obj.rigid_body.linear_damping
-		self.angular_damping_original = obj.rigid_body.angular_damping
+			self.rotation_w = 0
+			self.rotation_x = obj.rotation_euler.x
+			self.rotation_y = obj.rotation_euler.y
+			self.rotation_z = obj.rotation_euler.z
+		self.size_x = obj.mmd_rigid.size[0]
+		self.size_y = obj.mmd_rigid.size[1]
+		self.size_z = obj.mmd_rigid.size[2]
+		self.rigid_body_type = obj.mmd_rigid.type
+		self.rigid_body_shape = obj.mmd_rigid.shape
+		self.mass = obj.rigid_body.mass
+		self.restitution = obj.rigid_body.restitution
+		self.collision_group_number = obj.mmd_rigid.collision_group_number
+		self.collision_group_mask = obj.mmd_rigid.collision_group_mask
+		self.friction = obj.rigid_body.friction
+		self.linear_damping = obj.rigid_body.linear_damping
+		self.angular_damping = obj.rigid_body.angular_damping
 		
 
 		wm = context.window_manager		
@@ -1129,17 +1161,14 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c.label(text="")
 		c.label(text="")
 		c = row.column(align=True)
-		c.prop(obj,"location",index=0,text="",toggle=False)
-		c.prop(obj,"location",index=1,text="",toggle=False)
-		c.prop(obj,"location",index=2,text="",toggle=False)
+		c.prop(self,"location_x",text="",toggle=False)
+		c.prop(self,"location_y",text="",toggle=False)
+		c.prop(self,"location_z",text="",toggle=False)
 		c.operator("ffxiv_mmd_tools_helper.reset_location_rigid_bodies",text="Reset to bone")
 		c = row.column(align=True)
 		c.prop(self, "location_x_edit", text="")
 		c.prop(self, "location_y_edit", text="")
-		c.prop(self, "location_z_edit", text="")
-		
-
-		
+		c.prop(self, "location_z_edit", text="")	
 
 		#checkbox logic for rotation_mode
 		if (self.rotation_w_edit or self.rotation_x_edit or self.rotation_y_edit or self.rotation_z_edit):
@@ -1150,34 +1179,17 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		row = layout.row()
 		row = layout.row()
 		c = row.column(align=True)
-		if obj.rotation_mode == 'QUATERNION':
+		if self.rotation_mode in('QUATERNION','AXIS_ANGLE'):
 			c = row.column(align=True)
 			c.label(text='Rotation')
 			c.label(text='')
 			c.label(text='')
 			c.label(text='')
 			c = row.column(align=True)
-			c.prop(obj,"rotation_quaternion",index=0,text="W")
-			c.prop(obj,"rotation_quaternion",index=1,text="X")
-			c.prop(obj,"rotation_quaternion",index=2,text="Y")
-			c.prop(obj,"rotation_quaternion",index=3,text="Z")
-			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset to bone")
-			c = row.column(align=True)
-			c.prop(self, "rotation_w_edit", text="")
-			c.prop(self, "rotation_x_edit", text="")
-			c.prop(self, "rotation_y_edit", text="")
-			c.prop(self, "rotation_z_edit", text="")
-		elif obj.rotation_mode == 'AXIS_ANGLE':	
-			c = row.column(align=True)
-			c.label(text='Rotation')
-			c.label(text='')
-			c.label(text='')
-			c.label(text='')
-			c = row.column(align=True)
-			c.prop(obj,"rotation_axis_angle",index=0,text="W")
-			c.prop(obj,"rotation_axis_angle",index=1,text="X")
-			c.prop(obj,"rotation_axis_angle",index=2,text="Y")
-			c.prop(obj,"rotation_axis_angle",index=3,text="Z")
+			c.prop(self,"rotation_w",index=0,text="W")
+			c.prop(self,"rotation_x",index=1,text="X")
+			c.prop(self,"rotation_y",index=2,text="Y")
+			c.prop(self,"rotation_z",index=3,text="Z")
 			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset to bone")
 			c = row.column(align=True)
 			c.prop(self, "rotation_w_edit", text="")
@@ -1190,9 +1202,9 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			c.label(text='')
 			c.label(text='')
 			c = row.column(align=True)
-			c.prop(obj, "rotation_euler", index=0, text="X")
-			c.prop(obj, "rotation_euler", index=1, text="Y")
-			c.prop(obj, "rotation_euler", index=2, text="Z")
+			c.prop(self,"rotation_x",index=1,text="X")
+			c.prop(self,"rotation_y",index=2,text="Y")
+			c.prop(self,"rotation_z",index=3,text="Z")
 			c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset to bone")
 			c = row.column(align=True)
 			c.prop(self, "rotation_x_edit", text="")
@@ -1202,7 +1214,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c = row.column(align=True)
 		c.label(text='Rotation Mode')
 		c = row.column(align=True)
-		c.prop(obj,"rotation_mode",text="")
+		c.prop(self,"rotation_mode",text="")
 		c = row.column(align=True)
 		c.prop(self, "rotation_mode_edit", text="")
 		row = layout.row()
@@ -1224,25 +1236,24 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		g = c.grid_flow(row_major=True, align=True,columns=1)
 		if obj.mmd_rigid.shape == 'SPHERE':	
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=0,text='Radius', expand=True)
+			row.prop(self, 'size_x',text='Radius', expand=True)
 			row.prop(self, "size_x_edit", text="")
-		
 		elif obj.mmd_rigid.shape == 'BOX':	
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=0,text='Size X', expand=True)
+			row.prop(self, 'size_x',text='Size X', expand=True)
 			row.prop(self, "size_x_edit", text="")
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=1,text='Size Y', expand=True)
+			row.prop(self, 'size_y',text='Size Y', expand=True)
 			row.prop(self, "size_y_edit", text="")
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=2,text='Size Z', expand=True)
+			row.prop(self, 'size_z',text='Size Z', expand=True)
 			row.prop(self, "size_z_edit", text="")
 		elif obj.mmd_rigid.shape == 'CAPSULE':	
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=0,text='Radius', expand=True)
+			row.prop(self, 'size_x',text='Radius', expand=True)
 			row.prop(self, "size_x_edit", text="")
 			row = g.row(align=True)
-			row.prop(obj.mmd_rigid, 'size',index=1,text='Height', expand=True)
+			row.prop(self, 'size_y',text='Height', expand=True)
 			row.prop(self, "size_y_edit", text="")
 
 		row = layout.row() 
@@ -1307,7 +1318,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		z=None
 
 		if obj.rotation_mode == ('QUATERNION'):
-			w=obj.rotation_quaternion.w
+			w=self.rotation_quaternion.w
 			x=obj.rotation_quaternion.x
 			y=obj.rotation_quaternion.y
 			z=obj.rotation_quaternion.z
@@ -1323,17 +1334,17 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		# Call the function and only pass the non-None parameters
 		transform_selected_rigid_bodies(
-					location_x=obj.location.x if self.location_x_edit else None,
-					location_y=obj.location.y if self.location_y_edit else None,
-					location_z=obj.location.z if self.location_z_edit else None,
+					location_x=self.location.x if self.location_x_edit else None,
+					location_y=self.location.y if self.location_y_edit else None,
+					location_z=self.location.z if self.location_z_edit else None,
 					rotation_mode=obj.rotation_mode if self.rotation_mode_edit else None,
-					rotation_w=w if self.rotation_w_edit else None,
-					rotation_x=x if self.rotation_x_edit else None,
-					rotation_y=y if self.rotation_y_edit else None,
-					rotation_z=z if self.rotation_z_edit else None,
-					size_x=obj.mmd_rigid.size[0] if self.size_x_edit else None,
-					size_y=obj.mmd_rigid.size[1] if self.size_y_edit else None,
-					size_z=obj.mmd_rigid.size[2] if self.size_z_edit else None,
+					rotation_w=self.rotation_w if self.rotation_w_edit else None,
+					rotation_x=self.rotation_x if self.rotation_x_edit else None,
+					rotation_y=self.rotation_y if self.rotation_y_edit else None,
+					rotation_z=self.rotation_z if self.rotation_z_edit else None,
+					size_x=self.size_x if self.size_x_edit else None,
+					size_y=self.size_y if self.size_y_edit else None,
+					size_z=self.size_z if self.size_z_edit else None,
 					rigid_body_type=obj.mmd_rigid.type if self.rigid_body_type_edit else None,
 					rigid_body_shape=obj.mmd_rigid.shape if self.rigid_body_shape_edit else None,
 					mass=obj.rigid_body.mass if self.mass_edit else None,

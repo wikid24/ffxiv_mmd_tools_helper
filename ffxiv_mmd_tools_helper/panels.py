@@ -148,6 +148,8 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		col.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vertical Chain", icon="SORT_DESC")
 		col = row.column()
 		col.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horizontal Chain", icon="CENTER_ONLY")
+		col = row.column()
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'Bulk Apply', icon='PRESET')
 		row = layout.row()
 		col = row.column()
 		col.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "All", icon="CONE")

@@ -770,122 +770,40 @@ def transform_rigid_body_bone_chain_by_delta(rigid_body_bone_chain
 	for prop, var, start, end in [('location.x','location_x', location_x_start, location_x_end),
 								('location.y','location_y', location_y_start, location_y_end),
 								('location.z','location_z', location_z_start, location_z_end),
+								('w','rotation_w', rotation_w_start, rotation_w_end),
+								('x','rotation_x', rotation_x_start, rotation_x_end),
+								('y','rotation_y', rotation_y_start, rotation_y_end),
+								('z','rotation_z', rotation_z_start, rotation_z_end),
 								('mmd_rigid.size[0]','size_x', size_x_start, size_x_end),
 								('mmd_rigid.size[1]','size_y', size_y_start, size_y_end),
 								('mmd_rigid.size[2]','size_z', size_z_start, size_z_end),
-								('mass','mass', mass_start, mass_end),
-								('restitution','restitution', restitution_start, restitution_end),
-								('friction','friction', friction_start, friction_end),
-								('linear_damping','linear_damping', linear_damping_start, linear_damping_end),
-								('angular_damping','angular_damping', angular_damping_start, angular_damping_end)]:
+								('rigid_body.mass','mass', mass_start, mass_end),
+								('rigid_body.restitution','restitution', restitution_start, restitution_end),
+								('rigid_body.friction','friction', friction_start, friction_end),
+								('rigid_body.linear_damping','linear_damping', linear_damping_start, linear_damping_end),
+								('rigid_body.angular_damping','angular_damping', angular_damping_start, angular_damping_end)]:
 		if start is not None and end is not None:
-			start_value = get_attribute(starting_rigid_body, prop) + start
-			end_value = get_attribute(ending_rigid_body, prop) + end
+
+			if var in ['rotation_w','rotation_x','rotation_y','rotation_z']:
+				if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
+					start_value =  get_attribute(starting_rigid_body,'rotation_quaternion.' + prop) + start
+					end_value =  get_attribute(ending_rigid_body,'rotation_quaternion.' + prop) + end
+				elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
+					start_value =  get_attribute(starting_rigid_body,'rotation_axis_angle.' + prop) + start
+					end_value =  get_attribute(ending_rigid_body,'rotation_axis_angle.' + prop) + end
+				else:
+					start_value =  get_attribute(starting_rigid_body,'rotation_euler.' + prop) + start
+					end_value =  get_attribute(ending_rigid_body,'rotation_euler.' + prop) + end
+
+			else:
+				start_value = get_attribute(starting_rigid_body, prop) + start
+				end_value = get_attribute(ending_rigid_body, prop) + end
+				
 			if var in ['size_x', 'size_y', 'size_z', 'mass', 'restitution', 'friction', 'linear_damping', 'angular_damping']:
 				start_value = max(0, start_value)
 				end_value = max(0, end_value)
 			transform_rigid_body_bone_chain_property(rigid_body_bone_chain, var, start_value, end_value)
 	
-	"""
-
-	if location_x_start is not None and location_x_end is not None:
-		location_x_start = starting_rigid_body.location.x + location_x_start
-		location_x_end = ending_rigid_body.location.x + location_x_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_x',location_x_start,location_x_end)
-
-	if location_y_start is not None and location_y_end is not None:
-		location_y_start = starting_rigid_body.location.y + location_y_start
-		location_y_end = ending_rigid_body.location.y + location_y_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_y',location_y_start,location_y_end)
-
-	if location_z_start is not None and location_z_end is not None:
-		location_z_start = starting_rigid_body.location.z + location_z_start
-		location_z_end = ending_rigid_body.location.z + location_z_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'location_z',location_z_start,location_z_end)
-	
-	if rotation_w_start is not None and rotation_w_end is not None: 
-		if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
-			rotation_w_start = starting_rigid_body.rotation_quaternion.w + rotation_w_start
-			rotation_w_end = ending_rigid_body.rotation_quaternion.w + rotation_w_end
-		elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
-			rotation_w_start = starting_rigid_body.rotation_axis_angle.w + rotation_w_start
-			rotation_w_end = ending_rigid_body.rotation_axis_angle.w + rotation_w_end
-		else:
-			rotation_w_start = 0
-			rotation_w_end = 0
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_w',rotation_w_start,rotation_w_end)
-
-	if rotation_x_start is not None and rotation_x_end is not None:
-		if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
-			rotation_x_start = starting_rigid_body.rotation_quaternion.x + rotation_x_start
-			rotation_x_end = ending_rigid_body.rotation_quaternion.x + rotation_x_end
-		elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
-			rotation_x_start = starting_rigid_body.rotation_axis_angle.x + rotation_x_start
-			rotation_x_end = ending_rigid_body.rotation_axis_angle.x + rotation_x_end
-		else:
-			rotation_x_start = starting_rigid_body.rotation_euler.x + rotation_x_start
-			rotation_x_end = ending_rigid_body.rotation_euler.x + rotation_x_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_x',rotation_x_start,rotation_x_end)
-	if rotation_y_start is not None and rotation_y_end is not None:
-		if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
-			rotation_y_start = starting_rigid_body.rotation_quaternion.y + rotation_y_start
-			rotation_y_end = ending_rigid_body.rotation_quaternion.y + rotation_y_end
-		elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
-			rotation_y_start = starting_rigid_body.rotation_axis_angle.y + rotation_y_start
-			rotation_y_end = ending_rigid_body.rotation_axis_angle.y + rotation_y_end
-		else:
-			rotation_y_start = starting_rigid_body.rotation_euler.y + rotation_y_start
-			rotation_y_end = ending_rigid_body.rotation_euler.y + rotation_y_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_y',rotation_y_start,rotation_y_end)
-	if rotation_z_start is not None and rotation_z_end is not None:
-		if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
-			rotation_z_start = starting_rigid_body.rotation_quaternion.z + rotation_z_start
-			rotation_z_end = ending_rigid_body.rotation_quaternion.z + rotation_z_end
-		elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
-			rotation_z_start = starting_rigid_body.rotation_axis_angle.z + rotation_z_start
-			rotation_z_end = ending_rigid_body.rotation_axis_angle.z + rotation_z_end
-		else:
-			rotation_z_start = starting_rigid_body.rotation_euler.z + rotation_z_start
-			rotation_z_end = ending_rigid_body.rotation_euler.z + rotation_z_end
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'rotation_z',rotation_z_start,rotation_z_end)
-
-	
-	if size_x_start is not None and size_x_end is not None:
-		size_x_start = max(0,starting_rigid_body.mmd_rigid.size[0] + size_x_start)
-		size_x_end = max(0,ending_rigid_body.mmd_rigid.size[0] + size_x_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_x',size_x_start,size_x_end)
-	if size_y_start is not None and size_y_end is not None:
-		size_y_start = max(0,starting_rigid_body.mmd_rigid.size[1] + size_y_start)
-		size_y_end = max(0,ending_rigid_body.mmd_rigid.size[1] + size_y_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_y',size_y_start,size_y_end)
-	if size_z_start is not None and size_z_end is not None:
-		size_z_start = max(0,starting_rigid_body.mmd_rigid.size[2] + size_z_start)
-		size_z_end = max(0,ending_rigid_body.mmd_rigid.size[2] + size_z_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_z',size_z_start,size_z_end)
-	if mass_start is not None and mass_end  is not None:
-		mass_start= max(0,starting_rigid_body.rigid_body.mass + mass_start)
-		mass_end= max(0,ending_rigid_body.rigid_body.mass + mass_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'mass',mass_start,mass_end)
-	if restitution_start is not None and restitution_end is not None:	
-		restitution_start = max(0,starting_rigid_body.rigid_body.restitution + restitution_start)
-		restitution_end = max(0,ending_rigid_body.rigid_body.restitution + restitution_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'restitution',restitution_start,restitution_end)
-	if friction_start is not None and friction_end is not None:	
-		friction_start = max(0,starting_rigid_body.rigid_body.friction + friction_start)
-		friction_end = max(0,ending_rigid_body.rigid_body.friction + friction_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'friction',friction_start,friction_end)
-	if linear_damping_start is not None and linear_damping_end is not None:	
-		linear_damping_start = max(0,starting_rigid_body.rigid_body.linear_damping + linear_damping_start)
-		linear_damping_end = max(0,ending_rigid_body.rigid_body.linear_damping + linear_damping_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'linear_damping',linear_damping_start,linear_damping_end)
-	if angular_damping_start is not None and angular_damping_end is not None:	
-		angular_damping_start = max(0,starting_rigid_body.rigid_body.angular_damping + angular_damping_start)
-		angular_damping_end = max(0,ending_rigid_body.rigid_body.angular_damping + angular_damping_end)
-		transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'angular_damping',angular_damping_start,angular_damping_end)
-	"""
-	#print (bone_head)
-	#print (bone_tail)
-	#print (rigid_body_length)
 	
 	
 	

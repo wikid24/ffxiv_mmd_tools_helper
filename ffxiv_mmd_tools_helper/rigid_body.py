@@ -2207,6 +2207,8 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	def poll(cls, context):
 		obj = context.active_object 
 		
+		selected_objs = None
+
 		is_all_selected_rigid_bodies = True
 		
 		if context.selected_objects:

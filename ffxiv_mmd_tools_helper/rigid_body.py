@@ -1979,8 +1979,8 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	rigid_body_bone_chains = []
 	rigid_body_bone_chains_data = {}
 
-	rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
-	rigid_body_bone_chains_data = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
+	rigid_body_bone_chains = None #= get_all_rigid_body_chains_from_selected()
+	rigid_body_bone_chains_data = None # = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
 
 
 	number_of_bone_chains = None
@@ -2259,7 +2259,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 						restitution_start=self.restitution_start + self.rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
 						restitution_end=self.restitution_end + self.rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
 						friction_start=self.friction_start + self.rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
-						friction_end=self.friction_edit + self.rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
+						friction_end=self.friction_end + self.rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
 						linear_damping_start=self.linear_damping_start + self.rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
 						linear_damping_end=self.linear_damping_end + self.rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
 						angular_damping_start=self.angular_damping_start + self.rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,

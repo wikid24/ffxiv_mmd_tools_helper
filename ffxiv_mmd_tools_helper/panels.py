@@ -132,27 +132,27 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
 		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply', icon='PRESET')
-		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
 		row.label(text='Bone Chain',icon='LINK_BLEND')
 		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
 		row.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Apply Start / End to Bone Chain')
-		row = layout.row()
-		row.label(text="Skirt Rigid Bodies", icon='MESH_CONE')
-		row = layout.row()
 		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vertical Chain", icon="SORT_DESC")
-		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horizontal Chain", icon="CENTER_ONLY")
-		col = row.column()
-		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'Bulk Apply', icon='PRESET')
+		row.label(text="Skirt", icon='MESH_CONE')
+		row.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
+		row.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
+		row.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "All", icon="CONE")
 		row = layout.row()
 		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "All", icon="CONE")
+		row.label(text="Transform", icon='CON_CLAMPTO')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply', icon='PARTICLE_DATA')
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain',icon='CURVE_PATH')
+		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Chains', icon='EMPTY_ARROWS')
+		
 				
 
 @register_wrap

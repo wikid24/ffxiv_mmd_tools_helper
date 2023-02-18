@@ -1031,24 +1031,6 @@ def _transform_rigid_body_bone_chain(self,context):
 	)
 
 
-def _transform_selected_rigid_bodies(self,context):
-
-	#obj = context.active_object 
-
-
-	transform_selected_rigid_bodies(
-		location_x=self.location_x if self.location_x_edit else None,
-		location_y=self.location_y if self.location_y_edit else None,
-		location_z=self.location_z if self.location_z_edit else None,
-		rotation_mode=self.rotation_mode if self.rotation_mode_edit else None,
-		rotation_w=self.rotation_w if self.rotation_w_edit else None,
-		rotation_x=self.rotation_x if self.rotation_x_edit else None,
-		rotation_y=self.rotation_y if self.rotation_y_edit else None,
-		rotation_z=self.rotation_z if self.rotation_z_edit else None,
-		size_x=self.size_x if self.size_x_edit else None,
-		size_y=self.size_y if self.size_y_edit else None,
-		size_z=self.size_z if self.size_z_edit else None,
-	)
 
 	
 
@@ -1228,6 +1210,25 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 			get_rigid_body_chain_from_bone(bone)
 		return {'FINISHED'}
 
+
+def _transform_selected_rigid_bodies(self,context):
+
+	#obj = context.active_object 
+
+
+	transform_selected_rigid_bodies(
+		location_x=self.location_x if self.location_x_edit else None,
+		location_y=self.location_y if self.location_y_edit else None,
+		location_z=self.location_z if self.location_z_edit else None,
+		rotation_mode=self.rotation_mode if self.rotation_mode_edit else None,
+		rotation_w=self.rotation_w if self.rotation_w_edit else None,
+		rotation_x=self.rotation_x if self.rotation_x_edit else None,
+		rotation_y=self.rotation_y if self.rotation_y_edit else None,
+		rotation_z=self.rotation_z if self.rotation_z_edit else None,
+		size_x=self.size_x if self.size_x_edit else None,
+		size_y=self.size_y if self.size_y_edit else None,
+		size_z=self.size_z if self.size_z_edit else None,
+	)
 
 
 
@@ -2014,7 +2015,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 
 		rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
 		BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
-		rigid_body_bone_chains_data = BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data
+		self.rigid_body_bone_chains_data = BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data
 
 		for property,prop_type in self.props_init:
 			setattr(self,property+'_start',0)
@@ -2205,7 +2206,22 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object 
-		return obj is not None 
+		
+		is_all_selected_rigid_bodies = True
+		
+		if context.selected_objects:
+			selected_objs = context.selected_objects
+		else:
+			is_all_selected_rigid_bodies = False
+		
+		if len(selected_objs) < 2:
+			is_all_selected_rigid_bodies = False
+		else:
+			for i in selected_objs:
+				if i.mmd_type != 'RIGID_BODY':
+					is_all_selected_rigid_bodies = False
+
+		return obj is not None and obj.mmd_type == 'RIGID_BODY' and is_all_selected_rigid_bodies == True
 
 
 	def execute(self, context):

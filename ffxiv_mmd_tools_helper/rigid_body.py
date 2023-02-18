@@ -553,29 +553,26 @@ def get_all_rigid_body_chains_from_selected():
 
 	return rigid_body_bone_chains
 
-	"""
-	selected_bones_working_list = selected_bones.copy()
-	#initialize the bone order list
-	for bone in selected_parent_bones:
-		rigid_body_bone_chains.append([bone])
-		selected_bones_working_list.remove(bone)
-		
+def get_all_rigid_body_chains_dictionary(rigid_body_bone_chains):
 
-	#append the children to the parent bone on the bone order list
-	for i,bone_chain in enumerate(rigid_body_bone_chains):
-		for parent_bone in bone_chain:
-			for child in parent_bone.children:
-				if child in selected_bones:
-					rigid_body_bone_chains[i].append(child)
-					selected_bones_working_list.remove(child)
+	rigid_body_bone_chains_data = {}
 
-	#double checking to see if we have no orphans
-	if len(selected_bones_working_list) != 0:
-		for i in selected_bones_working_list:
-			print ('orphan bone found that is not on a rigid body chain: ',i.name)
+	#for each rigid body bone chain, get the head and tail metadata
+	for i, chain in enumerate(rigid_body_bone_chains):
+		start_rigid_body = chain[0][2] # get the data for the first rigid body in the chain
+		start_rigid_body_data = get_rigid_body_transform_data(start_rigid_body)
+		end_rigid_body = chain[-1][2]  # get the data for the last rigid body in the chain
+		end_rigid_body_data = get_rigid_body_transform_data(end_rigid_body)
+		chain_length = len(chain)
+		chain_data = {
+			"head": start_rigid_body_data,
+			"tail": end_rigid_body_data,
+			"chain_length": chain_length,
+			"chain_data": chain
+		}
+		rigid_body_bone_chains_data[i] = chain_data
 
-	return rigid_body_bone_chains
-	"""
+	return rigid_body_bone_chains_data
 		
 def get_rigid_body_transform_data(obj):
 	
@@ -733,20 +730,20 @@ def transform_rigid_body(obj=None
 		#'1' = physics
 		#'2' = physics+bone
 	if mass is not None:
-		obj.rigid_body.mass = mass
+		obj.rigid_body.mass = max(0,mass)
 	if restitution is not None:
-		obj.rigid_body.restitution = restitution 
+		obj.rigid_body.restitution = max(0,restitution)
 	if collision_group_number is not None:
 		obj.mmd_rigid.collision_group_number = collision_group_number
 	if collision_group_mask is not None:
 		obj.mmd_rigid.collision_group_mask = collision_group_mask
 		#collision_group_mask = [True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,True]
 	if friction is not None:
-		obj.rigid_body.friction = friction
+		obj.rigid_body.friction = max(0,friction)
 	if linear_damping is not None:
-		obj.rigid_body.linear_damping = linear_damping
+		obj.rigid_body.linear_damping = max(0,linear_damping)
 	if angular_damping is not None:
-		obj.rigid_body.angular_damping = angular_damping
+		obj.rigid_body.angular_damping = max(0,angular_damping)
 
 
 
@@ -816,7 +813,7 @@ def transform_rigid_body_bone_chain(rigid_body_bone_chain
 
 
 		
-
+"""
 
 def transform_rigid_body_bone_chains_by_delta(rigid_body_bone_chain
 									,location_x_start=None,location_x_start_delta=None,location_x_end=None,location_x_end_delta=None
@@ -887,7 +884,7 @@ def transform_rigid_body_bone_chains_by_delta(rigid_body_bone_chain
 				start_value = max(0, start_value)
 				end_value = max(0, end_value)
 			transform_rigid_body_bone_chain_property(rigid_body_bone_chain, var, start_value, end_value)
-	
+"""
 	
 	
 	
@@ -1004,47 +1001,10 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 
 
 
-def _transform_rigid_body_bone_chains_by_delta(self,context):
-
-	rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
-
-	for rigid_body_bone_chain in rigid_body_bone_chains:
-
-		transform_rigid_body_bone_chains_by_delta(
-			rigid_body_bone_chain=rigid_body_bone_chain,
-			location_x_start=self.location_x_start if self.location_x_edit else None,
-			location_x_end=self.location_x_end if self.location_x_edit else None,
-			location_y_start=self.location_y_start if self.location_y_edit else None,
-			location_y_end=self.location_y_end if self.location_y_edit else None,
-			location_z_start=self.location_z_start if self.location_z_edit else None,
-			location_z_end=self.location_z_end if self.location_z_edit else None,
-			rotation_w_start=self.rotation_w_start if self.rotation_w_edit else None,
-			rotation_w_end=self.rotation_w_end if self.rotation_w_edit else None,
-			rotation_x_start=self.rotation_x_start if self.rotation_x_edit else None,
-			rotation_x_end=self.rotation_x_end if self.rotation_x_edit else None,
-			rotation_y_start=self.rotation_y_start if self.rotation_y_edit else None,
-			rotation_y_end=self.rotation_y_end if self.rotation_y_edit else None,
-			rotation_z_start=self.rotation_z_start if self.rotation_z_edit else None,
-			rotation_z_end=self.rotation_z_end if self.rotation_z_edit else None,
-			size_x_start=self.size_x_start if self.size_x_edit else None,
-			size_x_end=self.size_x_end if self.size_x_edit else None,
-			size_y_start=self.size_y_start if self.size_y_edit else None,
-			size_y_end=self.size_y_end if self.size_y_edit else None,
-			size_z_start=self.size_z_start if self.size_z_edit else None,
-		)
-
-
-
-
 def _transform_rigid_body_bone_chain(self,context):
 
 	rigid_body_bone_chain = get_selected_rigid_bodies_in_bone_chain()
 
-	"""
-	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_x',self.size_x_start,self.size_x_end)
-	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_y',self.size_y_start,self.size_y_end)
-	transform_rigid_body_bone_chain_property(rigid_body_bone_chain,'size_z',self.size_z_start,self.size_z_end)
-	"""
 	
 	transform_rigid_body_bone_chain(
 						rigid_body_bone_chain=rigid_body_bone_chain,
@@ -1361,8 +1321,6 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		obj = context.active_object 
 
-		rigid_body_data = get_rigid_body_transform_data(obj)
-
 		self.location_x = obj.location.x
 		self.location_y = obj.location.y
 		self.location_z = obj.location.z
@@ -1394,40 +1352,6 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		self.friction = obj.rigid_body.friction
 		self.linear_damping = obj.rigid_body.linear_damping
 		self.angular_damping = obj.rigid_body.angular_damping
-
-		"""
-		self.location_x = obj.location.x
-		self.location_y = obj.location.y
-		self.location_z = obj.location.z
-		self.rotation_mode = obj.rotation_mode
-		if obj.rotation_mode == 'QUATERNION':
-			self.rotation_w = obj.rotation_quaternion.w
-			self.rotation_x = obj.rotation_quaternion.x
-			self.rotation_y = obj.rotation_quaternion.y
-			self.rotation_z = obj.rotation_quaternion.z
-		elif obj.rotation_mode == 'AXIS_ANGLE':
-			self.rotation_w = obj.rotation_axis_angle.w
-			self.rotation_x = obj.rotation_axis_angle.x
-			self.rotation_y = obj.rotation_axis_angle.y
-			self.rotation_z = obj.rotation_axis_angle.z
-		else:
-			self.rotation_w = 0
-			self.rotation_x = obj.rotation_euler.x
-			self.rotation_y = obj.rotation_euler.y
-			self.rotation_z = obj.rotation_euler.z
-		self.size_x = obj.mmd_rigid.size[0]
-		self.size_y = obj.mmd_rigid.size[1]
-		self.size_z = obj.mmd_rigid.size[2]
-		self.rigid_body_type = obj.mmd_rigid.type
-		self.rigid_body_shape = obj.mmd_rigid.shape
-		self.mass = obj.rigid_body.mass
-		self.restitution = obj.rigid_body.restitution
-		self.collision_group_number = obj.mmd_rigid.collision_group_number
-		self.collision_group_mask = obj.mmd_rigid.collision_group_mask
-		self.friction = obj.rigid_body.friction
-		self.linear_damping = obj.rigid_body.linear_damping
-		self.angular_damping = obj.rigid_body.angular_damping
-		"""
 
 		wm = context.window_manager		
 		return wm.invoke_props_dialog(self, width=400)
@@ -2001,161 +1925,113 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		
 		return {'FINISHED'}
 
+def _transform_rigid_body_bone_chains_by_delta(self,context):
+
+	rigid_body_bone_chains_data = BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data
+
+	for i in rigid_body_bone_chains_data:
+	
+		# Call the function and only pass the non-None parameters
+		transform_rigid_body_bone_chain(
+					rigid_body_bone_chain= rigid_body_bone_chains_data[i]['chain_data'],
+					location_x_start=self.location_x_start + rigid_body_bone_chains_data[i]['head']['location_x'] if self.location_x_edit else None,
+					location_x_end=self.location_x_end + rigid_body_bone_chains_data[i]['tail']['location_x'] if self.location_x_edit else None,
+					location_y_start=self.location_y_start + rigid_body_bone_chains_data[i]['head']['location_y'] if self.location_y_edit else None,
+					location_y_end=self.location_y_end + rigid_body_bone_chains_data[i]['tail']['location_y'] if self.location_y_edit else None,
+					location_z_start=self.location_z_start + rigid_body_bone_chains_data[i]['head']['location_z'] if self.location_z_edit else None,
+					location_z_end=self.location_z_end + rigid_body_bone_chains_data[i]['tail']['location_z'] if self.location_z_edit else None,
+					rotation_w_start=self.rotation_w_start + rigid_body_bone_chains_data[i]['head']['rotation_w'] if self.rotation_w_edit else None,
+					rotation_w_end=self.rotation_w_end + rigid_body_bone_chains_data[i]['tail']['rotation_w'] if self.rotation_w_edit else None,
+					rotation_x_start=self.rotation_x_start + rigid_body_bone_chains_data[i]['head']['rotation_x'] if self.rotation_x_edit else None,
+					rotation_x_end=self.rotation_x_end + rigid_body_bone_chains_data[i]['tail']['rotation_x'] if self.rotation_x_edit else None,
+					rotation_y_start=self.rotation_y_start + rigid_body_bone_chains_data[i]['head']['rotation_y'] if self.rotation_y_edit else None,
+					rotation_y_end=self.rotation_y_end + rigid_body_bone_chains_data[i]['tail']['rotation_y'] if self.rotation_y_edit else None,
+					rotation_z_start=self.rotation_z_start + rigid_body_bone_chains_data[i]['head']['rotation_z'] if self.rotation_z_edit else None,
+					rotation_z_end=self.rotation_z_end + rigid_body_bone_chains_data[i]['tail']['rotation_z'] if self.rotation_z_edit else None,
+					size_x_start=self.size_x_start + rigid_body_bone_chains_data[i]['head']['size_x'] if self.size_x_edit else None,
+					size_x_end=self.size_x_end + rigid_body_bone_chains_data[i]['tail']['size_x'] if self.size_x_edit else None,
+					size_y_start=self.size_y_start + rigid_body_bone_chains_data[i]['head']['size_y'] if self.size_y_edit else None,
+					size_y_end=self.size_y_end + rigid_body_bone_chains_data[i]['tail']['size_y'] if self.size_y_edit else None,
+					size_z_start=self.size_z_start + rigid_body_bone_chains_data[i]['head']['size_z'] if self.size_z_edit else None,
+					size_z_end=self.size_z_end + rigid_body_bone_chains_data[i]['tail']['size_z'] if self.size_z_edit else None,
+					mass_start=self.mass_start + rigid_body_bone_chains_data[i]['head']['mass'] if self.mass_edit else None,
+					mass_end=self.mass_end + rigid_body_bone_chains_data[i]['tail']['mass'] if self.mass_edit else None,
+					restitution_start=self.restitution_start + rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
+					restitution_end=self.restitution_end + rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
+					friction_start=self.friction_start + rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
+					friction_end=self.friction_edit + rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
+					linear_damping_start=self.linear_damping_start + rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
+					linear_damping_end=self.linear_damping_end + rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
+					angular_damping_start=self.angular_damping_start + rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,
+					angular_damping_end=self.angular_damping_end + rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
+				)
+		
+
 
 @register_wrap
 class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
-	""" Update Multiple Rigid Bodies in a Bone Chain with by delta of start and end values """
+	""" Update Multiple Rigid Bodies in a Bone Chain by delta of start and end values """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains"
-	bl_label = "Update Multiple Rigid Bodies by Bone Chain by delta"
+	bl_label = "Update Multiple Rigid Bodies in Bone Chains by delta"
 	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
+	
+	rigid_body_bone_chains = []
+	rigid_body_bone_chains_data = {}
+
+	rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
+	rigid_body_bone_chains_data = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
+
+
+	number_of_bone_chains = None
+	number_of_rigid_bodies = None
 
 	#create property_start, property_end, and property_edit values
 	props_init = [
-			('location_x','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')'),
-			('location_y', 'bpy.props.FloatProperty(default=0,unit=\'LENGTH\')'),
-			('location_z', 'bpy.props.FloatProperty(default=0,unit=\'LENGTH\')'),
-			('rotation_w', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\')'),
-			('rotation_x', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\')'),
-			('rotation_y', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\')'),
-			('rotation_z', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\')'),
-			('size_x', 'bpy.props.FloatProperty(default=0,min=0,precision=6)'),
-			('size_y', 'bpy.props.FloatProperty(default=0,min=0,precision=6)'),
-			('size_z', 'bpy.props.FloatProperty(default=0,min=0,precision=6)'),
-			('mass', 'bpy.props.FloatProperty(default=0,min=0,precision=6,unit=\'MASS\')'),
-			('restitution', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6)'),
-			('friction', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6)'),
-			('linear_damping', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6)'),
-			('angular_damping', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6)'),
+			('location_x','bpy.props.FloatProperty(default=0,unit=\'LENGTH\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('location_y', 'bpy.props.FloatProperty(default=0,unit=\'LENGTH\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('location_z', 'bpy.props.FloatProperty(default=0,unit=\'LENGTH\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('rotation_w', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('rotation_x', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('rotation_y', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('rotation_z', 'bpy.props.FloatProperty(default=0,unit=\'ROTATION\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('size_x', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('size_y', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('size_z', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('mass', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,unit=\'MASS\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('restitution', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('friction', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('linear_damping', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('angular_damping', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
 		]
 
 	for property,prop_type in props_init:
 		exec(f'{property}_start = {prop_type}')
 		exec(f'{property}_end = {prop_type}')
 		exec(f'{property}_edit = bpy.props.BoolProperty(default=False)')
-		
+
 
 	def invoke(self, context, event):
 
+		rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
+		BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
+		rigid_body_bone_chains_data = BatchUpdateMultipleRigidBodyBoneChain.rigid_body_bone_chains_data
+
+		for property,prop_type in self.props_init:
+			setattr(self,property+'_start',0)
+			setattr(self,property+'_end',0)
+			setattr(self,property+'_edit',False)
+
 		#selected_objs = context.selected_objects
 		
-		self.rigid_body_bone_chains = get_all_rigid_body_chains_from_selected()
 
-		#for each rigid body bone chain, get the head and tail
-		
-		rigid_body_bone_chain = {}
-		for i, chain in enumerate(self.rigid_body_bone_chains):
-			start_bone_name = chain[0][1]  # get the data for the first bone in the chain
-			start_rigid_body = chain[0][2] # get the data for the first rigid body in the chain
-			end_bone_name = chain[-1][1]   # get the data for the last bone in the chain
-			end_rigid_body = chain[-1][2]  # get the data for the first rigid body in the chain
-			chain_length = len(chain)
-			chain_data = {
-				"bone_head": {
-					"bone": start_bone_name,
-					"rigid_body": start_rigid_body,
-					#"location_x": "1",
-					#"location_y": "2",
-					#"location_z": "3",
-					#"rotation_w": "4",
-					#"rotation_x": "5",
-					#"rotation_y": "6",
-					#"rotation_z": "7",
-					#"mass": "8"
-				},
-				"bone_tail": {
-					"bone": end_bone_name,
-					"rigid_body": end_rigid_body,
-					#"location_x": "1",
-					#"location_y": "2",
-					#"location_z": "3",
-					#"rotation_w": "4",
-					#"rotation_x": "5",
-					#"rotation_y": "6",
-					#"rotation_z": "7",
-					#"mass": "8"
-				},
-				"chain_length": chain_length
-			}
-			rigid_body_bone_chain[i] = chain_data
+		for i in self.rigid_body_bone_chains_data:
+			print('chain: ', str(i),' head: ',self.rigid_body_bone_chains_data[i]['head']['bone'], 'tail: ',self.rigid_body_bone_chains_data[i]['tail']['bone'])
 
-		print(rigid_body_bone_chain)
 
-		self.bone_head = self.rigid_body_bone_chains[0][0][1]
-		self.bone_tail = self.rigid_body_bone_chains[0][-1][1]
-		self.rigid_body_length = str(len(self.rigid_body_bone_chains[0]))
-		
-		#checkbox to know whether or not to apply changes
-		starting_rigid_body = self.rigid_body_bone_chains[0][0][2]
-		ending_rigid_body = self.rigid_body_bone_chains[0][-1][2]
-
-		
-		# list of tuples defining each property
-
-		#properties[0] = internal property name
-		#properties[1] = external property name
-		#properties[2] = external property suffix
-		
-		#properties[3] = starting rigid body variable to pull external property from 
-		#properties[4] = ending rigid body variable to pull external property from 
-
-		#external property name + suffix
-		#starting variable to initialize + internal property name
-		#ending variable to initialize + internal property name
-		properties = [
-					('location_x','location','.x', starting_rigid_body, ending_rigid_body),
-					('location_y','location','.y', starting_rigid_body, ending_rigid_body),
-					('location_z', 'location','.z',starting_rigid_body, ending_rigid_body),
-					#('rotation_mode','rotation_mode','', starting_rigid_body, ending_rigid_body),
-					('rotation_w','rotation_quaternion','.w', starting_rigid_body, ending_rigid_body),
-					('rotation_x','rotation_quaternion','.x', starting_rigid_body, ending_rigid_body),
-					('rotation_y','rotation_quaternion','.y', starting_rigid_body, ending_rigid_body),
-					('rotation_z','rotation_quaternion','.z', starting_rigid_body, ending_rigid_body),
-					('rotation_w','rotation_axis_angle','[0]', starting_rigid_body, ending_rigid_body),
-					('rotation_x','rotation_axis_angle','[1]', starting_rigid_body, ending_rigid_body),
-					('rotation_y','rotation_axis_angle','[2]', starting_rigid_body, ending_rigid_body),
-					('rotation_z','rotation_axis_angle','[3]', starting_rigid_body, ending_rigid_body),
-					('rotation_w','rotation_euler','.w', starting_rigid_body, ending_rigid_body),
-					('rotation_x','rotation_euler','.x', starting_rigid_body, ending_rigid_body),
-					('rotation_y','rotation_euler','.y', starting_rigid_body, ending_rigid_body),
-					('rotation_z','rotation_euler','.z', starting_rigid_body, ending_rigid_body),
-					('size_x','mmd_rigid.size','[0]', starting_rigid_body, ending_rigid_body),
-					('size_y','mmd_rigid.size','[1]', starting_rigid_body, ending_rigid_body),
-					('size_z','mmd_rigid.size','[2]', starting_rigid_body, ending_rigid_body),
-					('mass','rigid_body.mass','', starting_rigid_body, ending_rigid_body),
-					('restitution','rigid_body.restitution','', starting_rigid_body, ending_rigid_body),
-					('friction','rigid_body.friction','', starting_rigid_body, ending_rigid_body),
-					('linear_damping','rigid_body.linear_damping','', starting_rigid_body, ending_rigid_body),
-					('angular_damping','rigid_body.angular_damping','', starting_rigid_body, ending_rigid_body)]
-
-		# loop through properties and initialize the variables
-
-		#equivalent to writing
-		#self.[internal property name]_start = [starting rigid body variable name].([external property name]+[external property suffix]
-		#self.[internal property name]_end = [ending rigid body variable name].([external property name]+[external property suffix]
-
-		for int_prop,ext_prop,ext_prop_suffix,starting_rigid,ending_rigid in properties:
-			
-			if int_prop in ['rotation_w','rotation_x','rotation_y','rotation_z']:
-				if get_attribute(starting_rigid,'rotation_mode') == 'QUATERNION' and get_attribute(ending_rigid,'rotation_mode') == 'QUATERNION':
-					setattr(self,int_prop + '_start', get_attribute(starting_rigid,ext_prop+ext_prop_suffix))
-					setattr(self,int_prop + '_end', get_attribute(ending_rigid,ext_prop+ext_prop_suffix))
-				elif get_attribute(starting_rigid,'rotation_mode') == 'AXIS_ANGLE' and get_attribute(ending_rigid,'rotation_mode') == 'AXIS_ANGLE':
-					setattr(self,int_prop + '_start', get_attribute(starting_rigid,ext_prop+ext_prop_suffix))
-					setattr(self,int_prop + '_end', get_attribute(ending_rigid,ext_prop+ext_prop_suffix))
-				else: 
-					if int_prop == 'rotation_w' and ext_prop=='rotation_euler':
-						self.rotation_w_start = 0
-						self.rotation_w_end = 0
-					else:
-						setattr(self,int_prop + '_start', get_attribute(starting_rigid,ext_prop+ext_prop_suffix))
-						setattr(self,int_prop + '_end', get_attribute(ending_rigid,ext_prop+ext_prop_suffix))
-			else:
-				setattr(self,int_prop + '_start', get_attribute(starting_rigid,ext_prop+ext_prop_suffix))
-				setattr(self,int_prop + '_end', get_attribute(ending_rigid,ext_prop+ext_prop_suffix))
-			
-			#set all the edit flags to false
-			setattr(self,int_prop+'_edit',False)
-
+		self.number_of_bone_chains = len(self.rigid_body_bone_chains_data)
+		self.number_of_rigid_bodies = 0
+		for i in self.rigid_body_bone_chains_data:
+			self.number_of_rigid_bodies += self.rigid_body_bone_chains_data[i]['chain_length']
 			
 
 
@@ -2167,11 +2043,19 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	def draw(self, context):
 		layout = self.layout
 
-		starting_rigid_body = self.rigid_body_bone_chains[0][0][2]
-		ending_rigid_body = self.rigid_body_bone_chains[0][-1][2]
+		
+		starting_rigid_body = self.rigid_body_bone_chains_data[0]['head']
+		ending_rigid_body = self.rigid_body_bone_chains_data[0]['tail']
+
+		self.number_of_bone_chains = len(self.rigid_body_bone_chains_data)
+		self.number_of_rigid_bodies = 0
+		for i in self.rigid_body_bone_chains_data:
+			self.number_of_rigid_bodies += self.rigid_body_bone_chains_data[i]['chain_length']
 
 		row = layout.row()
-		row.label(text='# Rigid Bodies in Bone Chain: '+ self.rigid_body_length)
+		row.label(text='Rigid Body Bone Chains: ' + str(self.number_of_bone_chains))
+		row = layout.row()
+		row.label(text='Total Selected Rigid Bodies: '+ str(self.number_of_rigid_bodies))
 
 		row = layout.row()
 		row.label(text='Checkmark to apply to all rigid bodies in bone chain')
@@ -2180,14 +2064,9 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 		c = layout.column(align=True)
 		row = c.row()
 		row.label(text="Property")
-		row.label(text="Start Value")
-		row.label(text="End Value")
+		row.label(text="Bone Head Delta")
+		row.label(text="Bone Tail Delta")
 		row = c.row()
-		row.label(text="Bone Chain")
-		row.label(text=self.bone_head)
-		row.label(text=self.bone_tail)
-		row = c.row()
-		#g = c.grid_flow(row_major=True, align=True,columns=1)
 		row.label(text='Location X')
 		row.prop(self, 'location_x_start',expand=True, text="")
 		row.prop(self, 'location_x_end',expand=True, text="")
@@ -2203,7 +2082,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 		row.prop(self, 'location_z_end',expand=True, text="")
 		row.prop(self, "location_z_edit", text="")
 		row = c.row()
-		if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':	
+		if starting_rigid_body['rotation_mode'] == 'QUATERNION' and ending_rigid_body['rotation_mode'] == 'QUATERNION':	
 			row = c.row()
 			row.label(text='Rotation W')
 			row.prop(self, 'rotation_w_start',expand=True, text="")
@@ -2224,7 +2103,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row.prop(self, 'rotation_z_start',expand=True, text="")
 			row.prop(self, 'rotation_z_end',expand=True, text="")
 			row.prop(self, "rotation_z_edit", text="")
-		elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':	
+		elif starting_rigid_body['rotation_mode'] == 'AXIS_ANGLE' and ending_rigid_body['rotation_mode'] == 'AXIS_ANGLE':	
 			row = c.row()
 			row.label(text='Rotation W')
 			row.prop(self, 'rotation_w_start',expand=True, text="")
@@ -2262,13 +2141,13 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row.prop(self, 'rotation_z_end',expand=True, text="")
 			row.prop(self, "rotation_z_edit", text="")
 		row = c.row()
-		if starting_rigid_body.mmd_rigid.shape == 'SPHERE' and ending_rigid_body.mmd_rigid.shape == 'SPHERE':	
+		if starting_rigid_body['rigid_body_shape'] == 'SPHERE' and ending_rigid_body['rigid_body_shape'] == 'SPHERE':		
 			row = c.row()
 			row.label(text='Radius')
 			row.prop(self, 'size_x_start',expand=True, text="")
 			row.prop(self, 'size_x_end',expand=True, text="")
 			row.prop(self, "size_x_edit", text="")
-		elif starting_rigid_body.mmd_rigid.shape == 'BOX' and ending_rigid_body.mmd_rigid.shape == 'BOX':	
+		elif starting_rigid_body['rigid_body_shape'] == 'BOX' and ending_rigid_body['rigid_body_shape'] == 'BOX':		
 			row = c.row()
 			row.label(text='Size X')
 			row.prop(self, 'size_x_start', expand=True, text="")
@@ -2284,7 +2163,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row.prop(self, 'size_z_start', expand=True, text="")
 			row.prop(self, 'size_z_end', expand=True, text="")
 			row.prop(self, "size_z_edit", text="")
-		elif starting_rigid_body.mmd_rigid.shape == 'CAPSULE' and ending_rigid_body.mmd_rigid.shape == 'CAPSULE':	
+		elif starting_rigid_body['rigid_body_shape'] == 'CAPSULE' and ending_rigid_body['rigid_body_shape'] == 'CAPSULE':		
 			row = c.row()
 			row.label(text='Radius')
 			row.prop(self, 'size_x_start', expand=True, text="")
@@ -2332,43 +2211,43 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	def execute(self, context):
 
 		bpy.ops.object.mode_set(mode='OBJECT')
+			
 		
-		
-		for rigid_body_bone_chain in self.rigid_body_bone_chains:
+		for i in self.rigid_body_bone_chains_data:
 		
 			# Call the function and only pass the non-None parameters
-			transform_rigid_body_bone_chains_by_delta(
-						rigid_body_bone_chain=rigid_body_bone_chain,
-						location_x_start=self.location_x_start if self.location_x_edit else None,
-						location_x_end=self.location_x_end if self.location_x_edit else None,
-						location_y_start=self.location_y_start if self.location_y_edit else None,
-						location_y_end=self.location_y_end if self.location_y_edit else None,
-						location_z_start=self.location_z_start if self.location_z_edit else None,
-						location_z_end=self.location_z_end if self.location_z_edit else None,
-						rotation_w_start=self.rotation_w_start if self.rotation_w_edit else None,
-						rotation_w_end=self.rotation_w_end if self.rotation_w_edit else None,
-						rotation_x_start=self.rotation_x_start if self.rotation_x_edit else None,
-						rotation_x_end=self.rotation_x_end if self.rotation_x_edit else None,
-						rotation_y_start=self.rotation_y_start if self.rotation_y_edit else None,
-						rotation_y_end=self.rotation_y_end if self.rotation_y_edit else None,
-						rotation_z_start=self.rotation_z_start if self.rotation_z_edit else None,
-						rotation_z_end=self.rotation_z_end if self.rotation_z_edit else None,
-						size_x_start=self.size_x_start if self.size_x_edit else None,
-						size_x_end=self.size_x_end if self.size_x_edit else None,
-						size_y_start=self.size_y_start if self.size_y_edit else None,
-						size_y_end=self.size_y_end if self.size_y_edit else None,
-						size_z_start=self.size_z_start if self.size_z_edit else None,
-						size_z_end=self.size_z_end if self.size_z_edit else None,
-						mass_start=self.mass_start if self.mass_edit else None,
-						mass_end=self.mass_end if self.mass_edit else None,
-						restitution_start=self.restitution_start if self.restitution_edit else None,
-						restitution_end=self.restitution_end if self.restitution_edit else None,
-						friction_start=self.friction_start if self.friction_edit else None,
-						friction_end=self.friction_edit if self.friction_edit else None,
-						linear_damping_start=self.linear_damping_start if self.linear_damping_edit else None,
-						linear_damping_end=self.linear_damping_end if self.linear_damping_edit else None,
-						angular_damping_start=self.angular_damping_start if self.angular_damping_edit else None,
-						angular_damping_end=self.angular_damping_end if self.angular_damping_edit else None
+			transform_rigid_body_bone_chain(
+						rigid_body_bone_chain=self.rigid_body_bone_chains_data[i]['chain_data'],
+						location_x_start=self.location_x_start + self.rigid_body_bone_chains_data[i]['head']['location_x'] if self.location_x_edit else None,
+						location_x_end=self.location_x_end + self.rigid_body_bone_chains_data[i]['tail']['location_x'] if self.location_x_edit else None,
+						location_y_start=self.location_y_start + self.rigid_body_bone_chains_data[i]['head']['location_y'] if self.location_y_edit else None,
+						location_y_end=self.location_y_end + self.rigid_body_bone_chains_data[i]['tail']['location_y'] if self.location_y_edit else None,
+						location_z_start=self.location_z_start + self.rigid_body_bone_chains_data[i]['head']['location_z'] if self.location_z_edit else None,
+						location_z_end=self.location_z_end + self.rigid_body_bone_chains_data[i]['tail']['location_z'] if self.location_z_edit else None,
+						rotation_w_start=self.rotation_w_start + self.rigid_body_bone_chains_data[i]['head']['rotation_w'] if self.rotation_w_edit else None,
+						rotation_w_end=self.rotation_w_end + self.rigid_body_bone_chains_data[i]['tail']['rotation_w'] if self.rotation_w_edit else None,
+						rotation_x_start=self.rotation_x_start + self.rigid_body_bone_chains_data[i]['head']['rotation_x'] if self.rotation_x_edit else None,
+						rotation_x_end=self.rotation_x_end + self.rigid_body_bone_chains_data[i]['tail']['rotation_x'] if self.rotation_x_edit else None,
+						rotation_y_start=self.rotation_y_start + self.rigid_body_bone_chains_data[i]['head']['rotation_y'] if self.rotation_y_edit else None,
+						rotation_y_end=self.rotation_y_end + self.rigid_body_bone_chains_data[i]['tail']['rotation_y'] if self.rotation_y_edit else None,
+						rotation_z_start=self.rotation_z_start + self.rigid_body_bone_chains_data[i]['head']['rotation_z'] if self.rotation_z_edit else None,
+						rotation_z_end=self.rotation_z_end + self.rigid_body_bone_chains_data[i]['tail']['rotation_z'] if self.rotation_z_edit else None,
+						size_x_start=self.size_x_start + self.rigid_body_bone_chains_data[i]['head']['size_x'] if self.size_x_edit else None,
+						size_x_end=self.size_x_end + self.rigid_body_bone_chains_data[i]['tail']['size_x'] if self.size_x_edit else None,
+						size_y_start=self.size_y_start + self.rigid_body_bone_chains_data[i]['head']['size_y'] if self.size_y_edit else None,
+						size_y_end=self.size_y_end + self.rigid_body_bone_chains_data[i]['tail']['size_y'] if self.size_y_edit else None,
+						size_z_start=self.size_z_start + self.rigid_body_bone_chains_data[i]['head']['size_z'] if self.size_z_edit else None,
+						size_z_end=self.size_z_end + self.rigid_body_bone_chains_data[i]['tail']['size_z'] if self.size_z_edit else None,
+						mass_start=self.mass_start + self.rigid_body_bone_chains_data[i]['head']['mass'] if self.mass_edit else None,
+						mass_end=self.mass_end + self.rigid_body_bone_chains_data[i]['tail']['mass'] if self.mass_edit else None,
+						restitution_start=self.restitution_start + self.rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
+						restitution_end=self.restitution_end + self.rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
+						friction_start=self.friction_start + self.rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
+						friction_end=self.friction_edit + self.rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
+						linear_damping_start=self.linear_damping_start + self.rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
+						linear_damping_end=self.linear_damping_end + self.rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
+						angular_damping_start=self.angular_damping_start + self.rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,
+						angular_damping_end=self.angular_damping_end + self.rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
 					)
 			
 		return {'FINISHED'}

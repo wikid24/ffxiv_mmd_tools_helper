@@ -2216,12 +2216,15 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 		else:
 			is_all_selected_rigid_bodies = False
 		
-		if len(selected_objs) < 2:
+		if selected_objs is None:
 			is_all_selected_rigid_bodies = False
 		else:
-			for i in selected_objs:
-				if i.mmd_type != 'RIGID_BODY':
-					is_all_selected_rigid_bodies = False
+			if len(selected_objs) < 2:
+				is_all_selected_rigid_bodies = False
+			else:
+				for i in selected_objs:
+					if i.mmd_type != 'RIGID_BODY':
+						is_all_selected_rigid_bodies = False
 
 		return obj is not None and obj.mmd_type == 'RIGID_BODY' and is_all_selected_rigid_bodies == True
 

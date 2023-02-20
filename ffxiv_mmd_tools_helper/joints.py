@@ -131,6 +131,8 @@ def is_joint_horizontal(joint_obj):
 			return False
 		else:
 			return True
+	else:
+		return False
 
 
 def is_joint_vertical(joint_obj):
@@ -145,6 +147,8 @@ def is_joint_vertical(joint_obj):
 			return True
 		else:
 			return False
+	else:
+		return False
 
 #returns a list of joints from the rigid body 
 def get_joints_from_rigid_body(rigid_body_obj):
@@ -301,6 +305,7 @@ def get_joints_from_selected_rigid_bodies():
 		if joint_list_sorted is not None:
 			return joint_list_sorted
 
+
 def select_joints_from_selected_rigid_bodies(append_to_selected=False):
 
 	joints_list = get_joints_from_selected_rigid_bodies()
@@ -326,7 +331,26 @@ def select_joints_from_selected_rigid_bodies(append_to_selected=False):
 			joint.select_set(True)
 	else:
 		print('there are no joints to select')
-		
+
+def select_horizontal_joints_from_selected_joints():
+	
+	selected_objs = None
+
+	if bpy.context.selected_objects is not None:
+		selected_objs = bpy.context.selected_objects
+		for selected_obj in selected_objs:
+			if is_joint_horizontal(selected_obj) == False:
+				selected_obj.select_set(False)
+
+def select_vertical_joints_from_selected_joints():
+	
+	selected_objs = None
+
+	if bpy.context.selected_objects is not None:
+		selected_objs = bpy.context.selected_objects
+		for selected_obj in selected_objs:
+			if is_joint_vertical(selected_obj) == False:
+				selected_obj.select_set(False)
 
 
 
@@ -368,18 +392,58 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 		selected_objs = context.selected_objects
 
 		is_all_rigid_bodies_and_joints = True
+		is_atleast_one_rigid_body = False
 
 		if selected_objs is not None:
 			if len(selected_objs) > 1:
 				for selected_obj in selected_objs:
 					if selected_obj.mmd_type not in ['RIGID_BODY','JOINT']:
 						is_all_rigid_bodies_and_joints = False		
+					if selected_obj.mmd_type == 'RIGID_BODY':
+						is_atleast_one_rigid_body = True
 
 			else:
 				is_all_rigid_bodies_and_joints = False
 
-		return is_all_rigid_bodies_and_joints #obj is not None and obj.mmd_type == 'RIGID_BODY'
+		return is_all_rigid_bodies_and_joints and is_atleast_one_rigid_body #obj is not None and obj.mmd_type == 'RIGID_BODY'
 
 	def execute(self, context):
 		select_joints_from_selected_rigid_bodies(append_to_selected=True)
 		return {'FINISHED'}
+
+@register_wrap
+class SelectVerticalHorizontalJoints(bpy.types.Operator):
+	"""Select Vertical or Horizontal Joints from Selected Joints"""
+	bl_idname = "ffxiv_mmd_tools_helper.select_vertical_horizontal_joints"
+	bl_label = "Select Vertical or Horizontal Joints from Selected Joints"
+
+	direction: bpy.props.EnumProperty(items = \
+	[('VERTICAL', 'VERTICAL', 'VERTICAL')\
+		,('HORIZONTAL', 'HORIZONTAL', 'HORIZONTAL')\
+	], name = "", default = None)
+
+	@classmethod
+	def poll(cls, context):
+		#obj = context.active_object
+		selected_objs = context.selected_objects
+
+		is_all_joints = True
+
+		if selected_objs is not None:
+			for selected_obj in selected_objs:
+				if selected_obj.mmd_type != 'JOINT':
+					is_all_joints = False		
+
+		else:
+			is_all_joints = False
+
+		return is_all_joints #obj is not None and obj.mmd_type == 'RIGID_BODY'
+
+	def execute(self, context):
+		if self.direction == 'VERTICAL':
+			select_vertical_joints_from_selected_joints()
+		elif self.direction == 'HORIZONTAL':
+			select_horizontal_joints_from_selected_joints()
+		return {'FINISHED'}
+
+

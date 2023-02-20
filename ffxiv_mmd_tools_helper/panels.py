@@ -175,7 +175,12 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
-		row.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Selected Rigid Bodies', icon='PARTICLE_DATA')
+		row.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies', icon='PARTICLE_DATA')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		row.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Vert Joints Only', icon="SORT_DESC").direction='VERTICAL'
+		row.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horiz Joints Only', icon="CENTER_ONLY").direction='HORIZONTAL'
 	
 		
 				

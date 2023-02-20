@@ -187,7 +187,7 @@ def get_joint_transform_data(joint_obj):
 		,'rigid_body_1': None
 		,'rigid_body_2': None
 		,'joint_type':None
-		,'limit_linear_lower':()
+		,'limit_linear_lower':None
 		,'limit_linear_upper':None
 		,'limit_angular_lower':None
 		,'limit_angular_upper':None
@@ -451,3 +451,128 @@ class SelectVerticalHorizontalJoints(bpy.types.Operator):
 		return {'FINISHED'}
 
 
+@register_wrap
+class BatchUpdateJoints(bpy.types.Operator):
+	""" Bulk Update all Selected Joints using the Active Joint """
+	bl_idname = "ffxiv_mmd_tools_helper.batch_update_joints"
+	bl_label = "Batch Update Joints"
+	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
+
+
+	joints = None #= get_all_rigid_body_chains_from_selected()
+	joints_data = None # = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
+
+	number_of_joints = None
+
+	#create property,and property_edit 
+
+	props_init = {
+	
+		#,'use_bone_rotation'
+		('limit_linear','_lower','bpy.props.FloatProperty(default=0,precision=2)')
+		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,precision=2)')
+		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
+		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
+		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2)')
+		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2)')
+
+		}
+	for prop,prop_suffix,prop_type in props_init:
+
+		#create all the properties
+		if prop in ('limit_linear_lower','limit_linear_upper','limit_angular_lower','limit_angular_upper','spring_linear','spring_angular'):
+			exec(f'{prop}_x{prop_suffix} = {prop_type}')
+			exec(f'{prop}_x{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
+			exec(f'{prop}_y{prop_suffix} = {prop_type}')
+			exec(f'{prop}_y{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
+			exec(f'{prop}_z{prop_suffix} = {prop_type}')
+			exec(f'{prop}_z{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
+
+
+
+	def invoke(self, context, event):
+		
+		self.joints = []
+
+		selected_objs = None
+
+		#get all joints from selected objects
+		if context.selected_objects is not None:
+			selected_objs = context.selected_objects
+			for selected_obj in  selected_objs:
+				if selected_obj.mmd_type =='JOINT':
+					self.joints.append(selected_obj)
+		
+
+		for joint in self.joints:
+			self.joints_data.append( get_joint_transform_data(joint))
+		
+		#initialize all properties with the first object in joints_data
+		for prop,prop_suffix,prop_type in self.props_init:
+			if prop in ('limit_linear_lower','limit_linear_upper','limit_angular_lower','limit_angular_upper','spring_linear','spring_angular'):
+				setattr(self,prop + '_x' + prop_suffix,self.joints_data[0][prop][0])
+				setattr(self,prop + '_x' + prop_suffix+'_edit',False)
+				setattr(self,prop + '_y' + prop_suffix,self.joints_data[0][prop][1])
+				setattr(self,prop + '_y' + prop_suffix+'_edit',False)
+				setattr(self,prop + '_z' + prop_suffix,self.joints_data[0][prop][2])
+				setattr(self,prop + '_z' + prop_suffix+'_edit',False)
+
+
+		wm = context.window_manager		
+		return wm.invoke_props_dialog(self, width=400)
+
+
+	def draw(self, context):
+		layout = self.layout
+
+		obj = context.active_object 
+
+		
+		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		
+
+		row = layout.row()
+		row.label(text='Active Object: '+ context.active_object.name)
+		
+		row.label(text='Active Object Bone: '+ bone_name)
+
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object 
+		return obj is not None and obj.mmd_type == 'JOINT'
+
+
+	def execute(self, context):
+
+		bpy.ops.object.mode_set(mode='OBJECT')
+		
+		obj = context.active_object 
+		"""
+		# Call the function and only pass the non-None parameters
+		transform_selected_rigid_bodies(
+					location_x=self.location.x if self.location_x_edit else None,
+					location_y=self.location.y if self.location_y_edit else None,
+					location_z=self.location.z if self.location_z_edit else None,
+					rotation_mode=obj.rotation_mode if self.rotation_mode_edit else None,
+					rotation_w=self.rotation_w if self.rotation_w_edit else None,
+					rotation_x=self.rotation_x if self.rotation_x_edit else None,
+					rotation_y=self.rotation_y if self.rotation_y_edit else None,
+					rotation_z=self.rotation_z if self.rotation_z_edit else None,
+					size_x=self.size_x if self.size_x_edit else None,
+					size_y=self.size_y if self.size_y_edit else None,
+					size_z=self.size_z if self.size_z_edit else None,
+					rigid_body_type=obj.mmd_rigid.type if self.rigid_body_type_edit else None,
+					rigid_body_shape=obj.mmd_rigid.shape if self.rigid_body_shape_edit else None,
+					mass=obj.rigid_body.mass if self.mass_edit else None,
+					restitution=obj.rigid_body.restitution if self.restitution_edit else None,
+					collision_group_number=obj.mmd_rigid.collision_group_number if self.collision_group_number_edit else None,
+					collision_group_mask=obj.mmd_rigid.collision_group_mask if self.collision_group_mask_edit else None,
+					friction=obj.rigid_body.friction if self.friction_edit else None,
+					linear_damping=obj.rigid_body.linear_damping if self.linear_damping_edit else None,
+					angular_damping=obj.rigid_body.angular_damping if self.angular_damping_edit else None,
+				)
+		"""
+
+		return {'FINISHED'}

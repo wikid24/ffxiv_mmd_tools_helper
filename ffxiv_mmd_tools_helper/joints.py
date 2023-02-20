@@ -459,41 +459,44 @@ class BatchUpdateJoints(bpy.types.Operator):
 	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 
 
-	joints = None #= get_all_rigid_body_chains_from_selected()
-	joints_data = None # = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
+	joints = [] #= get_all_rigid_body_chains_from_selected()
+	joints_data = [] # = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
 
-	number_of_joints = None
+	number_of_joints = 0
+	number_of_vertical_joints = 0
+	number_of_horizontal_joints = 0
 
 	#create property,and property_edit 
 
 	props_init = {
-	
-		#,'use_bone_rotation'
 		('limit_linear','_lower','bpy.props.FloatProperty(default=0,precision=2)')
 		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,precision=2)')
 		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
 		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
 		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2)')
 		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2)')
-
 		}
+	
 	for prop,prop_suffix,prop_type in props_init:
-
 		#create all the properties
-		if prop in ('limit_linear_lower','limit_linear_upper','limit_angular_lower','limit_angular_upper','spring_linear','spring_angular'):
+		if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+			#equivalent to 'writing limit_linear_x_lower_edit = bpy.props.FloatProperty(default=0,precision=2)'
 			exec(f'{prop}_x{prop_suffix} = {prop_type}')
 			exec(f'{prop}_x{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
 			exec(f'{prop}_y{prop_suffix} = {prop_type}')
 			exec(f'{prop}_y{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
 			exec(f'{prop}_z{prop_suffix} = {prop_type}')
 			exec(f'{prop}_z{prop_suffix}_edit = bpy.props.BoolProperty(default=False)')
-
+	"""
+	#limit_linear_x_lower = bpy.props.FloatProperty(default=0,precision=2)
+	#limit_linear_x_lower_edit = bpy.props.BoolProperty(default=False)
+	"""
 
 
 	def invoke(self, context, event):
 		
-		self.joints = []
-
+		self.joints = [] #= get_all_rigid_body_chains_from_selected()
+		self.joints_data = [] # = get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
 		selected_objs = None
 
 		#get all joints from selected objects
@@ -504,18 +507,34 @@ class BatchUpdateJoints(bpy.types.Operator):
 					self.joints.append(selected_obj)
 		
 
+
 		for joint in self.joints:
+			#print(joint.name)
 			self.joints_data.append( get_joint_transform_data(joint))
-		
+
+		#set the joint counters
+		self.number_of_joints = 0
+		self.number_of_vertical_joints = 0
+		self.number_of_horizontal_joints = 0
+
+		for joint in self.joints_data:
+			if joint['joint_type'] == 'VERTICAL':
+				self.number_of_vertical_joints += 1
+			if joint['joint_type'] == 'HORIZONTAL':
+				self.number_of_vertical_joints += 1
+
 		#initialize all properties with the first object in joints_data
+		#equivalent to writing 'limit_linear_x_lower = joints_data[0]['limit_linear_x_lower'][0]'
 		for prop,prop_suffix,prop_type in self.props_init:
-			if prop in ('limit_linear_lower','limit_linear_upper','limit_angular_lower','limit_angular_upper','spring_linear','spring_angular'):
-				setattr(self,prop + '_x' + prop_suffix,self.joints_data[0][prop][0])
+			if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+				setattr(self,prop + '_x' + prop_suffix,self.joints_data[0][prop+prop_suffix][0])
 				setattr(self,prop + '_x' + prop_suffix+'_edit',False)
-				setattr(self,prop + '_y' + prop_suffix,self.joints_data[0][prop][1])
+				setattr(self,prop + '_y' + prop_suffix,self.joints_data[0][prop+prop_suffix][1])
 				setattr(self,prop + '_y' + prop_suffix+'_edit',False)
-				setattr(self,prop + '_z' + prop_suffix,self.joints_data[0][prop][2])
+				setattr(self,prop + '_z' + prop_suffix,self.joints_data[0][prop+prop_suffix][2])
 				setattr(self,prop + '_z' + prop_suffix+'_edit',False)
+
+
 
 
 		wm = context.window_manager		
@@ -527,21 +546,140 @@ class BatchUpdateJoints(bpy.types.Operator):
 
 		obj = context.active_object 
 
-		
-		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
-		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
-		
+		#set the joint counters
+		self.number_of_joints = 0
+		self.number_of_vertical_joints = 0
+		self.number_of_horizontal_joints = 0
 
-		row = layout.row()
-		row.label(text='Active Object: '+ context.active_object.name)
+		self.number_of_joints = len(self.joints_data)
+
+		for joint in self.joints_data:
+			if joint['joint_type'] == 'VERTICAL':
+				self.number_of_vertical_joints += 1
+			if joint['joint_type'] == 'HORIZONTAL':
+				self.number_of_horizontal_joints += 1
+
 		
-		row.label(text='Active Object Bone: '+ bone_name)
+		row = layout.row()
+		row.label(text='Selected Joints: '+str(self.number_of_joints))
+		row.label(text='Vertical: '+str(self.number_of_vertical_joints))
+		row.label(text='Horizontal: '+str(self.number_of_horizontal_joints))
+		row = layout.row()
+		row.label(text='Checkmark to apply to all selected joints')
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Linear Lower:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_linear_x_lower",text="X",toggle=False)
+		c.prop(self,"limit_linear_y_lower",text="Y",toggle=False)
+		c.prop(self,"limit_linear_z_lower",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "limit_linear_x_lower_edit", text="")
+		c.prop(self, "limit_linear_y_lower_edit", text="")
+		c.prop(self, "limit_linear_z_lower_edit", text="")	
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Linear Upper:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_linear_x_upper",text="X",toggle=False)
+		c.prop(self,"limit_linear_y_upper",text="Y",toggle=False)
+		c.prop(self,"limit_linear_z_upper",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "limit_linear_x_upper_edit", text="")
+		c.prop(self, "limit_linear_y_upper_edit", text="")
+		c.prop(self, "limit_linear_z_upper_edit", text="")	
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Angular Lower:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_angular_x_lower",text="X",toggle=False)
+		c.prop(self,"limit_angular_y_lower",text="Y",toggle=False)
+		c.prop(self,"limit_angular_z_lower",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "limit_angular_x_lower_edit", text="")
+		c.prop(self, "limit_angular_y_lower_edit", text="")
+		c.prop(self, "limit_angular_z_lower_edit", text="")	
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Angular Upper:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_angular_x_upper",text="X",toggle=False)
+		c.prop(self,"limit_angular_y_upper",text="Y",toggle=False)
+		c.prop(self,"limit_angular_z_upper",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "limit_angular_x_upper_edit", text="")
+		c.prop(self, "limit_angular_y_upper_edit", text="")
+		c.prop(self, "limit_angular_z_upper_edit", text="")	
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Spring Linear:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"spring_linear_x",text="X",toggle=False)
+		c.prop(self,"spring_linear_y",text="Y",toggle=False)
+		c.prop(self,"spring_linear_z",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "spring_linear_x_edit", text="")
+		c.prop(self, "spring_linear_y_edit", text="")
+		c.prop(self, "spring_linear_z_edit", text="")	
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Spring Angular:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"spring_angular_x",text="X",toggle=False)
+		c.prop(self,"spring_angular_y",text="Y",toggle=False)
+		c.prop(self,"spring_angular_z",text="Z",toggle=False)
+		c = row.column(align=True)
+		c.prop(self, "spring_angular_x_edit", text="")
+		c.prop(self, "spring_angular_y_edit", text="")
+		c.prop(self, "spring_angular_z_edit", text="")	
 
 
 	@classmethod
 	def poll(cls, context):
-		obj = context.active_object 
-		return obj is not None and obj.mmd_type == 'JOINT'
+		#obj = context.active_object 
+		#return obj is not None and obj.mmd_type == 'JOINT'
+
+		selected_objs = context.selected_objects
+
+		is_all_joints = True
+
+		if selected_objs is not None:
+			if len(selected_objs) > 0:
+				for selected_obj in selected_objs:
+					if selected_obj.mmd_type != 'JOINT':
+						is_all_joints = False		
+			else:
+				is_all_joints = False
+		else:
+			is_all_joints = False
+
+		return is_all_joints
+
+	
 
 
 	def execute(self, context):
@@ -549,30 +687,6 @@ class BatchUpdateJoints(bpy.types.Operator):
 		bpy.ops.object.mode_set(mode='OBJECT')
 		
 		obj = context.active_object 
-		"""
-		# Call the function and only pass the non-None parameters
-		transform_selected_rigid_bodies(
-					location_x=self.location.x if self.location_x_edit else None,
-					location_y=self.location.y if self.location_y_edit else None,
-					location_z=self.location.z if self.location_z_edit else None,
-					rotation_mode=obj.rotation_mode if self.rotation_mode_edit else None,
-					rotation_w=self.rotation_w if self.rotation_w_edit else None,
-					rotation_x=self.rotation_x if self.rotation_x_edit else None,
-					rotation_y=self.rotation_y if self.rotation_y_edit else None,
-					rotation_z=self.rotation_z if self.rotation_z_edit else None,
-					size_x=self.size_x if self.size_x_edit else None,
-					size_y=self.size_y if self.size_y_edit else None,
-					size_z=self.size_z if self.size_z_edit else None,
-					rigid_body_type=obj.mmd_rigid.type if self.rigid_body_type_edit else None,
-					rigid_body_shape=obj.mmd_rigid.shape if self.rigid_body_shape_edit else None,
-					mass=obj.rigid_body.mass if self.mass_edit else None,
-					restitution=obj.rigid_body.restitution if self.restitution_edit else None,
-					collision_group_number=obj.mmd_rigid.collision_group_number if self.collision_group_number_edit else None,
-					collision_group_mask=obj.mmd_rigid.collision_group_mask if self.collision_group_mask_edit else None,
-					friction=obj.rigid_body.friction if self.friction_edit else None,
-					linear_damping=obj.rigid_body.linear_damping if self.linear_damping_edit else None,
-					angular_damping=obj.rigid_body.angular_damping if self.angular_damping_edit else None,
-				)
-		"""
+
 
 		return {'FINISHED'}

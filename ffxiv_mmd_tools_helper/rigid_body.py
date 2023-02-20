@@ -419,7 +419,7 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 		if has_rigid_body == True and has_only_one_child_bone == True and has_use_connect_false == True:
 			rigid_body_bone_origin = rigid_body_bone
 		else:
-			break           = 
+			break
 		i = i-1
 		
 	
@@ -430,67 +430,72 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 	
 	
 def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
-	
-	armature_name = rigid_body_bone_origin.id_data.name
-	
-	obj = bpy.data.objects.get(armature_name)
-	armature_obj = None
-	
-	if obj.type == 'ARMATURE':
-		armature_obj = obj
-	else:
-		for child in obj.children_recursive:
-			if child.type == 'ARMATURE':
-				armature_obj = child
-				break
-			
-	#store all rigid bodies and their associated bone for the armature in a list
-	for child in armature_obj.parent.children:
-		if child.name.startswith('rigidbodies'):
-			rigidbodies_obj = child
-			break
-		
-	rigid_body_bone_list = []
-	
-	for rigid_body_obj in rigidbodies_obj.children:
-		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
+    
+    armature_name = rigid_body_bone_origin.id_data.name    
+    
+    obj = bpy.data.objects.get(armature_name)
+    armature_obj = None
+    
+    if obj.type == 'ARMATURE':
+        armature_obj = obj
+    else:
+        for child in obj.parent.children_recursive:
+            if child.type == 'ARMATURE':
+                armature_obj = child
+                break
+            
+    #store all rigid bodies and their associated bone for the armature in a list
+    rigid_body_bone_list = []
+    for child in armature_obj.parent.children:
+        if child.name.startswith('rigidbodies'):
+            rigidbodies_obj = child
+            break	
+    
+    for rigid_body_obj in rigidbodies_obj.children:
+        rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
 
-	rigid_body_bone_chain = []
-	
+    #get all the rigid bodies in armature object(occurrs when MMD 'Physics' button is enabled)
+    for obj in armature_obj.parent.children_recursive:
+        if obj.mmd_type == 'RIGID_BODY':
+            if obj not in rigid_body_bone_list[0]:
+                rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
 
-	#set the first in the rigid body bone chain list to the bone origin
-	for rigid_body in rigid_body_bone_list:
-			if rigid_body[2] == rigid_body_bone_origin.name:
-				rigid_body_bone_chain.append((rigid_body[0],rigid_body_bone_origin))
-				rigid_body[0].select_set(True)
-				
-	#add all children to the bone chain        
-	for bone_child in rigid_body_bone_origin.children_recursive:
-		for rigid_body in rigid_body_bone_list:
-			if rigid_body[2] == bone_child.name:
-				rigid_body_bone_chain.append((rigid_body[0],bone_child))                
-				rigid_body[0].select_set(True)
+    rigid_body_bone_chain = []
+    
 
-	unique_bones = []
-	sorted_unique_bones = []
+    #set the first in the rigid body bone chain list to the bone origin
+    for rigid_body in rigid_body_bone_list:
+            if rigid_body[2] == rigid_body_bone_origin.name:
+                rigid_body_bone_chain.append((rigid_body[0],rigid_body_bone_origin))
+                rigid_body[0].select_set(True)
+                
+    #add all children to the bone chain        
+    for bone_child in rigid_body_bone_origin.children_recursive:
+        for rigid_body in rigid_body_bone_list:
+            if rigid_body[2] == bone_child.name:
+                rigid_body_bone_chain.append((rigid_body[0],bone_child))                
+                rigid_body[0].select_set(True)
 
-	#sort the bones in order from parent to child (we'll need this in a later function for specifying min/max values
-	for i in rigid_body_bone_chain:
-		if i[1] not in unique_bones:
-			unique_bones.append(i[1])            
-			
-	for i,bone in enumerate(unique_bones):
-		sorted_unique_bones.append((i,bone))
-		
-	sorted_rigid_body_bone_chain = []
+    unique_bones = []
+    sorted_unique_bones = []
 
-	#sort the rigid bodies in order from bone parent to child
-	for i,item in enumerate(rigid_body_bone_chain):
-		for bone in sorted_unique_bones:
-			if item[1]==bone[1]:
-				sorted_rigid_body_bone_chain.append((bone[0],bone[1],i,item[0]))
-				
-	return sorted_rigid_body_bone_chain
+    #sort the bones in order from parent to child (we'll need this in a later function for specifying min/max values
+    for i in rigid_body_bone_chain:
+        if i[1] not in unique_bones:
+            unique_bones.append(i[1])            
+            
+    for i,bone in enumerate(unique_bones):
+        sorted_unique_bones.append((i,bone))
+        
+    sorted_rigid_body_bone_chain = []
+
+    #sort the rigid bodies in order from bone parent to child
+    for i,item in enumerate(rigid_body_bone_chain):
+        for bone in sorted_unique_bones:
+            if item[1]==bone[1]:
+                sorted_rigid_body_bone_chain.append((bone[0],bone[1],i,item[0]))
+                
+    return sorted_rigid_body_bone_chain
 	
 def is_selected_rigid_bodies_in_a_bone_chain ():
 
@@ -1210,11 +1215,11 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 
 	def execute(self, context):
 		bone = get_bone_from_rigid_body(context.active_object)
-		bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
-		if self.direction == 'ALL':
-			get_rigid_body_chain_from_bone(bone_chain_origin)
-		elif self.direction == 'DOWN':
+		if self.direction == 'DOWN':
 			get_rigid_body_chain_from_bone(bone)
+		elif self.direction == 'ALL':
+			bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
+			get_rigid_body_chain_from_bone(bone_chain_origin)
 		return {'FINISHED'}
 
 

@@ -50,13 +50,31 @@ def find_MMD_Armature(obj):
 		return armature(root)
 
 def findArmature(obj):
+	
 	if obj.type == 'ARMATURE':
-		obj.hide = False
+		#obj.hide = False
 		return obj
 	if obj.parent is not None:
 		if obj.parent.type == 'ARMATURE':
-			obj.parent.hide = False
+			#obj.parent.hide = False
+			#obj.mmd_root.show_armature = True	
 			return obj.parent
+		else:
+			for child in obj.parent.children:
+				if child.type == 'ARMATURE':
+					#child.hide = False
+					#child.mmd_root.show_armature = True	
+					return child
+	if obj.parent.parent is not None:
+		if obj.parent.parent.type == 'ARMATURE':
+			#obj.parent.parent.hide = False
+			#child.mmd_root.show_armature = True	
+			return obj.parent.parent
+		for child in obj.parent.parent.children:
+			if child.type == 'ARMATURE':
+				#child.hide = False
+				#child.mmd_root.show_armature = True	
+				return child
 	if hasattr(obj, "mmd_type"):
 		if obj.mmd_type == 'ROOT':
 			return armature(obj)

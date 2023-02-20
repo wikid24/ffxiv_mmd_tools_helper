@@ -131,8 +131,8 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		if(context.active_object):
 			if (context.active_object.mmd_type == 'RIGID_BODY'):
 				row.prop(context.active_object,"name",text="")	
-				if context.active_object.constraints['mmd_tools_rigid_parent'].subtarget is not None:
-					row.label(text='Bone: '+ context.active_object.constraints['mmd_tools_rigid_parent'].subtarget)	
+				if context.active_object.mmd_rigid.bone is not None:
+					row.label(text='Bone: '+ str(context.active_object.mmd_rigid.bone))	
 		
 		row = layout.row()
 		col = row.column()
@@ -176,7 +176,7 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
-		row.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies', icon='PARTICLE_DATA')
+		row.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Selected Rigid Bodies', icon='PARTICLE_DATA')
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
@@ -185,7 +185,7 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
-		row.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Joints', icon='PARTICLE_DATA')
+		row.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Edit Joints', icon='PARTICLE_DATA')
 		
 	
 		

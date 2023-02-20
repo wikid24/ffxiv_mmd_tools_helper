@@ -42,16 +42,18 @@ def read_rigid_body_file():
 
 def get_armature():
 	
-	if bpy.context.active_object.type == 'ARMATURE':
-		return model.findArmature(bpy.context.active_object)
-	if model.findArmature(bpy.context.selected_objects[0]) is not None:
-		return model.findArmature(bpy.context.selected_objects[0])
-	for child in  bpy.context.selected_objects[0].parent.children:
-		if child.type == 'ARMATURE':
-			return child
-	for child in  bpy.context.selected_objects[0].parent.parent.children:
-		if child.type == 'ARMATURE':
-			return child
+	if bpy.context.active_object.type is not None:
+		if bpy.context.active_object.type == 'ARMATURE':
+			return model.findArmature(bpy.context.active_object)
+	if bpy.context.selected_objects[0] is not None:
+		if model.findArmature(bpy.context.selected_objects[0]) is not None:
+			return model.findArmature(bpy.context.selected_objects[0])
+		for child in  bpy.context.selected_objects[0].parent.children:
+			if child.type == 'ARMATURE':
+				return child
+		for child in  bpy.context.selected_objects[0].parent.parent.children:
+			if child.type == 'ARMATURE':
+				return child
 	else:
 		print ('could not find armature for selected object:', bpy.context.selected_objects[0].name)
 
@@ -178,8 +180,8 @@ def get_skirt_rigid_vertical_objects(obj):
 			
 		rb_obj_chain = []
 				
-		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
-		bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		armature = get_armature() #bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = bpy.context.active_object.mmd_rigid.bone
 		rigid_bodies = None
 
 		#get the 'rigidbodies' object
@@ -219,8 +221,8 @@ def get_skirt_rigid_horizontal_objects(obj):
 			
 		rb_obj_chain = []
 		
-		armature = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
-		bone_name = bpy.context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		armature = get_armature() #bpy.context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = bpy.context.active_object.mmd_rigid.bone
 		rigid_bodies = None
 
 		#get the 'rigidbodies' object
@@ -284,10 +286,10 @@ def get_bone_from_rigid_body (obj = None):
 	
 	if obj.mmd_type == 'RIGID_BODY':
 
-		armature_obj_name = obj.constraints['mmd_tools_rigid_parent'].target.data.name   
+		armature_obj_name = get_armature().name #obj.constraints['mmd_tools_rigid_parent'].target.data.name   
 		armature = bpy.data.armatures[armature_obj_name]
 		
-		rigid_body_bone_name = obj.constraints['mmd_tools_rigid_parent'].subtarget
+		rigid_body_bone_name = obj.mmd_rigid.bone
 		
 		for bone in bpy.data.armatures[armature.name].bones:
 			if bone.name == rigid_body_bone_name:
@@ -333,7 +335,7 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 	rigid_body_bone_list = []
 
 	for rigid_body_obj in rigidbodies_obj.children:
-		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
+		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
 	
 	rigid_body_bone_origin = rigid_body_bone   
 		
@@ -398,7 +400,7 @@ def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
 	rigid_body_bone_list = []
 	
 	for rigid_body_obj in rigidbodies_obj.children:
-		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.constraints['mmd_tools_rigid_parent'].subtarget))
+		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
 
 	rigid_body_bone_chain = []
 	
@@ -645,10 +647,10 @@ def get_rigid_body_transform_data(obj):
 
 	if obj.mmd_type == 'RIGID_BODY':
 		
-		armature_obj_name = obj.constraints['mmd_tools_rigid_parent'].target.data.name   
+		armature_obj_name = get_armature().name #obj.constraints['mmd_tools_rigid_parent'].target.data.name   
 		armature = bpy.data.armatures[armature_obj_name]        
 		rigid_body_dict['armature'] = armature
-		bone = obj.constraints['mmd_tools_rigid_parent'].subtarget
+		bone = obj.mmd_rigid.bone
 		rigid_body_dict['bone'] = bone
 		rigid_body_dict['rigid_body'] = obj
 
@@ -871,7 +873,13 @@ def reset_rigid_body_location_to_bone(rigid_body_obj):
 				armature_obj = bpy.data.objects[bone.id_data.name]
 
 			if (armature_obj.type == 'ARMATURE'):
+				
+				is_armature_hidden = armature_obj.hide
 
+				if armature_obj.hide == True:
+					armature_obj.hide = False
+
+				
 				bpy.context.view_layer.objects.active= armature_obj
 				
 				bpy.ops.object.mode_set(mode='EDIT')
@@ -887,6 +895,8 @@ def reset_rigid_body_location_to_bone(rigid_body_obj):
 									
 				bpy.ops.object.mode_set(mode='OBJECT')
 				armature_obj.select_set(False)
+
+				armature_obj.hide = is_armature_hidden
 				
 			bpy.context.view_layer.objects.active = active_obj
 
@@ -909,6 +919,11 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 
 			if (armature_obj.type == 'ARMATURE'):
 				
+				is_armature_hidden = armature_obj.hide
+
+				if armature_obj.hide == True:
+					armature_obj.hide = False
+				
 
 				bpy.context.view_layer.objects.active= armature_obj
 				
@@ -927,6 +942,8 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 									
 				bpy.ops.object.mode_set(mode='OBJECT')
 				armature_obj.select_set(False)
+
+				armature_obj.hide = is_armature_hidden
 			
 			else:
 				print(armature_obj)
@@ -1301,8 +1318,8 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		obj = context.active_object 
 
 		
-		armature_name = context.active_object.constraints['mmd_tools_rigid_parent'].target
-		bone_name = context.active_object.constraints['mmd_tools_rigid_parent'].subtarget
+		armature_name = get_armature().name #context.active_object.constraints['mmd_tools_rigid_parent'].target
+		bone_name = context.active_object.mmd_rigid.bone
 		
 
 		row = layout.row()
@@ -1497,9 +1514,9 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		# Call the function and only pass the non-None parameters
 		transform_selected_rigid_bodies(
-					location_x=self.location.x if self.location_x_edit else None,
-					location_y=self.location.y if self.location_y_edit else None,
-					location_z=self.location.z if self.location_z_edit else None,
+					location_x=self.location_x if self.location_x_edit else None,
+					location_y=self.location_y if self.location_y_edit else None,
+					location_z=self.location_z if self.location_z_edit else None,
 					rotation_mode=obj.rotation_mode if self.rotation_mode_edit else None,
 					rotation_w=self.rotation_w if self.rotation_w_edit else None,
 					rotation_x=self.rotation_x if self.rotation_x_edit else None,

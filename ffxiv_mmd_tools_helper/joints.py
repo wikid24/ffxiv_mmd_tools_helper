@@ -267,7 +267,60 @@ def get_joint_transform_data(joint_obj):
 		return joint_dict
 
 
-def get_joint_from_selected_rigid_bodies():
+def get_joints_from_selected_rigid_bodies():
+
+	selected_objs = None
+
+	rigid_body_list_unsorted = []
+	joints_lists_unsorted = []
+	joint_list_sorted = set()
+
+	if bpy.context.selected_objects:
+		selected_objs = bpy.context.selected_objects
+
+		#check if all selected objects are rigid bodies
+		for obj in selected_objs:
+			if obj.mmd_type =='RIGID_BODY':
+				rigid_body_list_unsorted.append(obj)
+
+		#get all joints lists from the selected rigid bodies
+		if rigid_body_list_unsorted:
+			for rigid_body_obj in rigid_body_list_unsorted:
+				joints_lists_unsorted.append(get_joints_from_rigid_body(rigid_body_obj))
+
+		#get the joint from each joint list
+		if joints_lists_unsorted:
+			for joint_list in joints_lists_unsorted:
+				for joint in joint_list:
+					joint_data = get_joint_transform_data(joint)
+					if joint_data['rigid_body_1'] in rigid_body_list_unsorted and joint_data['rigid_body_2'] in rigid_body_list_unsorted:
+						joint_list_sorted.add(joint)
+
+		#if there are joints, return the list
+		if joint_list_sorted:
+			return joint_list_sorted
+
+def select_joints_from_selected_rigid_bodies():
+
+	joints_list = get_joints_from_selected_rigid_bodies()
+
+	if joints_list:
+		#set the active object to the first joint it sees
+		for joint in joints_list:
+			bpy.context.view_layer.objects.active = joint
+			break
+
+		#deselect all objects
+		bpy.ops.object.select_all(action='DESELECT')
+
+		for joint in joints_list:
+			joint.hide = False
+			joint.select_set(True)
+
+
+
+		
+
 
 	print ('getting joints from selected rigid bodies')
 		

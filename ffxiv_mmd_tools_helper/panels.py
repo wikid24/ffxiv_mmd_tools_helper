@@ -112,10 +112,7 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 
-				
-
 		layout = self.layout
-
 		row = layout.row()
 		row.label(text="Converted to MMD Model(English bones only)")
 		row = layout.row()
@@ -135,8 +132,6 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 			if (context.active_object.mmd_type == 'RIGID_BODY'):
 				row.prop(context.active_object,"name",text="")	
 				row.label(text='Bone: '+ context.active_object.constraints['mmd_tools_rigid_parent'].subtarget)	
-		
-
 		
 		row = layout.row()
 		col = row.column()
@@ -174,6 +169,14 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply', icon='PARTICLE_DATA')
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain',icon='CURVE_PATH')
 		row.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Chains', icon='EMPTY_ARROWS')
+		row = layout.row()
+		col = row.column()
+		row.label(text="Joints", icon='RIGID_BODY_CONSTRAINT')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		row.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Selected Rigid Bodies', icon='PARTICLE_DATA')
+	
 		
 				
 

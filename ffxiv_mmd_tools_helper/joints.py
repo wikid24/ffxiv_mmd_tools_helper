@@ -160,11 +160,12 @@ def get_joints_from_rigid_body(rigid_body_obj):
 				joints_obj = obj
 				break
 
-		for joint in joints_obj.children:
-			if joint.rigid_body_constraint.object1.name == rigid_body_obj.name:
-				rigid_body_joints.append(joint)
-			if joint.rigid_body_constraint.object2.name == rigid_body_obj.name:
-				rigid_body_joints.append(joint)
+		if joints_obj:
+			for joint in joints_obj.children:
+				if joint.rigid_body_constraint.object1.name == rigid_body_obj.name:
+					rigid_body_joints.append(joint)
+				if joint.rigid_body_constraint.object2.name == rigid_body_obj.name:
+					rigid_body_joints.append(joint)
 
 		return rigid_body_joints
 	else:
@@ -275,7 +276,7 @@ def get_joints_from_selected_rigid_bodies():
 	joints_lists_unsorted = []
 	joint_list_sorted = set()
 
-	if bpy.context.selected_objects:
+	if bpy.context.selected_objects is not None and len(bpy.context.selected_objects) > 1:
 		selected_objs = bpy.context.selected_objects
 
 		#check if all selected objects are rigid bodies
@@ -284,12 +285,12 @@ def get_joints_from_selected_rigid_bodies():
 				rigid_body_list_unsorted.append(obj)
 
 		#get all joints lists from the selected rigid bodies
-		if rigid_body_list_unsorted:
+		if rigid_body_list_unsorted is not None:
 			for rigid_body_obj in rigid_body_list_unsorted:
 				joints_lists_unsorted.append(get_joints_from_rigid_body(rigid_body_obj))
 
 		#get the joint from each joint list
-		if joints_lists_unsorted:
+		if joints_lists_unsorted is not None:
 			for joint_list in joints_lists_unsorted:
 				for joint in joint_list:
 					joint_data = get_joint_transform_data(joint)
@@ -297,32 +298,34 @@ def get_joints_from_selected_rigid_bodies():
 						joint_list_sorted.add(joint)
 
 		#if there are joints, return the list
-		if joint_list_sorted:
+		if joint_list_sorted is not None:
 			return joint_list_sorted
 
-def select_joints_from_selected_rigid_bodies():
+def select_joints_from_selected_rigid_bodies(append_to_selected=False):
 
 	joints_list = get_joints_from_selected_rigid_bodies()
 
-	if joints_list:
+	if joints_list is not None and len(joints_list)>=1:
 		#set the active object to the first joint it sees
 		for joint in joints_list:
-			bpy.context.view_layer.objects.active = joint
-			break
+			if bpy.context.view_layer.objects.active is not None:
+				bpy.context.view_layer.objects.active = joint
+				break
 
-		#deselect all objects
-		bpy.ops.object.select_all(action='DESELECT')
+		if append_to_selected==True:
+			if bpy.context.selected_objects is not None:
+				for selected_obj in bpy.context.selected_objects:
+					#deselect all objects
+					if selected_obj.mmd_type != 'JOINT':
+						selected_obj.select_set(False)
+		else:
+			bpy.ops.object.select_all(action='DESELECT')
 
 		for joint in joints_list:
 			joint.hide = False
 			joint.select_set(True)
-
-
-
-		
-
-
-	print ('getting joints from selected rigid bodies')
+	else:
+		print('there are no joints to select')
 		
 
 
@@ -350,4 +353,33 @@ class AddJointsFromFile(bpy.types.Operator):
 
 	def execute(self, context):
 		create_rigid_bodies_from_csv(context)
+		return {'FINISHED'}
+
+@register_wrap
+class SelectJointsFromRigidBodies(bpy.types.Operator):
+	"""Get Joints From Selected Rigid Bodies"""
+	bl_idname = "ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies"
+	bl_label = "Get Joints From Selected Rigid Bodies"
+
+
+	@classmethod
+	def poll(cls, context):
+		#obj = context.active_object
+		selected_objs = context.selected_objects
+
+		is_all_rigid_bodies_and_joints = True
+
+		if selected_objs is not None:
+			if len(selected_objs) > 1:
+				for selected_obj in selected_objs:
+					if selected_obj.mmd_type not in ['RIGID_BODY','JOINT']:
+						is_all_rigid_bodies_and_joints = False		
+
+			else:
+				is_all_rigid_bodies_and_joints = False
+
+		return is_all_rigid_bodies_and_joints #obj is not None and obj.mmd_type == 'RIGID_BODY'
+
+	def execute(self, context):
+		select_joints_from_selected_rigid_bodies()
 		return {'FINISHED'}

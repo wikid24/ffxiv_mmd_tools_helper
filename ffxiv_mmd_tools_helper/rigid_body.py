@@ -304,41 +304,84 @@ def get_joints_from_rigid_body (obj = None):
 	if obj.mmd_type == 'RIGID_BODY':
 		print("this is a rigid body!")
 
+
 def get_rigid_body_bone_chain_origin(bone_obj):
 	
-	rigid_body_bone = bone_obj        
+	#because changing between edit mode and object mode messes all ID references up, need to do it first
+	active_object = bpy.context.view_layer.objects.active
+	rigid_body_bone_name = bone_obj.name
+	armature_name = bone_obj.id_data.name
 	
-	armature_obj = None
+	#start mmd_bone_use_connect stuff
+	bone_list = []
+	bpy.context.view_layer.objects.active = bpy.data.objects[armature_name]
+	bpy.ops.object.mode_set(mode='EDIT')
+	
+	#bpy.context.active_object.data.edit_bones['skirt_12_1'].get('mmd_bone_use_connect')
+	for bone in bpy.context.active_object.data.edit_bones:
+		if bone not in bone_list:
+			blender_use_connect_flag = bone.use_connect
+			mmd_use_connect_flag = bone.get('mmd_bone_use_connect')
+			use_connect = None
+			
+			#get the appropriate use_connect flag regardless if physics is on or off
+			if mmd_use_connect_flag == None:
+				use_connect = blender_use_connect_flag  
+			elif mmd_use_connect_flag == 1:
+				use_connect = True
+			else:
+				use_connect = False
+					
+			bone_list.append((bone.name,use_connect))    
+
+	bpy.ops.object.mode_set(mode='OBJECT')    
+	#end mmd_bone_use_connect stuff
+
+	#initialize all variables to what they were before edit mode
+	bpy.context.view_layer.objects.active = active_object
+	armature_obj = bpy.data.objects[armature_name]
 	armature = None
+	rigid_body_bone = bpy.data.objects[armature_name].data.bones[rigid_body_bone_name]
 	
 	#get the armature and armature object
 	if rigid_body_bone is not None:
 		armature_name = rigid_body_bone.id_data.name
-		obj = bpy.data.objects.get(armature_name)
+		obj = bpy.data.objects.get(armature_name)	
 				
 		if obj.type == 'ARMATURE':
 			armature_obj = obj
 			armature = obj.data
 		else:
-			for child in obj.children_recursive:
+			for child in obj.parent.children_recursive:
 				if child.type == 'ARMATURE':
 					armature_obj = child
 					armature = child.data
 					break
 		
+	#unhide the armature so we can find the bones we need
+	is_armature_hidden = armature_obj.hide
+	if armature_obj.hide == True:
+		armature_obj.hide = False   
+				
 	#store all rigid bodies and their associated bone for the armature in a list
 	for child in armature_obj.parent.children:
 		if child.name.startswith('rigidbodies'):
 			rigidbodies_obj = child
 			break
-
+		
+	#get all the rigid bodies in 'rigidbodies'
 	rigid_body_bone_list = []
-
 	for rigid_body_obj in rigidbodies_obj.children:
 		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
-	
-	rigid_body_bone_origin = rigid_body_bone   
 		
+	#get all the rigid bodies in armature object(occurrs when MMD 'Physics' button is enabled
+	for obj in armature_obj.parent.children_recursive:
+		if obj.mmd_type == 'RIGID_BODY':
+			if obj not in rigid_body_bone_list[0]:
+				rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
+
+	rigid_body_bone_origin = rigid_body_bone
+
 	##Arbitrary number to make sure the while loop definitely exits at some point         
 	i = 100
 	while i >= 0:
@@ -347,10 +390,11 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 		has_only_one_child_bone = True
 		has_use_connect_false = True
 		
-		#check if bone has a rigid body
+		
+		#check if bone has a rigid body and if physics is on for it
 		for bone in rigid_body_bone_list:
 			if rigid_body_bone.name == bone[2]:
-				has_rigid_body = True    
+				has_rigid_body = True
 				break
 			
 		###TO DO - check if bone has only ONE rigid body
@@ -362,18 +406,27 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 				break
 				
 		#check if bone is not connected physically to another bone
-		if (armature.bones[rigid_body_bone.name].use_connect) == False:
-			has_use_connect_false = False
+		for bone in bone_list:
+			if bone[0] == armature.bones[rigid_body_bone.name]:
+				#if use_connect flag is false
+				if bone[1] == False:
+				#if (armature.bones[rigid_body_bone.name].use_connect) == False:
+					has_use_connect_false = False
+				break
 		
 		rigid_body_bone = rigid_body_bone.parent
 		
 		if has_rigid_body == True and has_only_one_child_bone == True and has_use_connect_false == True:
 			rigid_body_bone_origin = rigid_body_bone
 		else:
-			break           
+			break           = 
 		i = i-1
+		
+	
+	armature_obj.hide = is_armature_hidden
 
 	return rigid_body_bone_origin
+
 	
 	
 def get_rigid_body_chain_from_bone(rigid_body_bone_origin):

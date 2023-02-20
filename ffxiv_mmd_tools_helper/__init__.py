@@ -53,13 +53,13 @@ if "bpy" in locals():
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(mmd_lamp_setup)
 	#importlib.reload(mmd_view)
-	importlib.reload(panels)
 	importlib.reload(reverse_japanese_english)
 	importlib.reload(rigid_body)
 	importlib.reload(shape_keys)
 	importlib.reload(skirt)
 	importlib.reload(toon_textures_to_node_editor_shader)
 	importlib.reload(toon_modifier)
+	importlib.reload(panels)
 	
 else:
 	import bpy
@@ -85,13 +85,13 @@ else:
 	from . import miscellaneous_tools
 	from . import mmd_lamp_setup
 	#from . import mmd_view
-	from . import panels
 	from . import reverse_japanese_english
 	from . import rigid_body
 	from . import shape_keys
 	from . import skirt
 	from . import toon_textures_to_node_editor_shader
 	from . import toon_modifier
+	from . import panels
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

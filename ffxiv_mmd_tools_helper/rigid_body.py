@@ -172,7 +172,7 @@ def get_skirt_rigid_vertical_objects(obj):
 		result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
 		if result:
 			chain_number = int(result.group(1))
-			print("Captured value:", chain_number )
+			print("Skirt Chain number:", chain_number )
 		else:
 			print("No match found.")
 			
@@ -213,7 +213,7 @@ def get_skirt_rigid_horizontal_objects(obj):
 		result = re.search("^skirt_(\d+)_(\d+)$", obj.name)
 		if result:
 			chain_number = int(result.group(2))
-			print("Captured value:", chain_number )
+			print("Skirt Chain link number:", chain_number )
 		else:
 			print("No match found.")
 			
@@ -292,6 +292,15 @@ def get_bone_from_rigid_body (obj = None):
 		for bone in bpy.data.armatures[armature.name].bones:
 			if bone.name == rigid_body_bone_name:
 					return bone	
+	
+
+def get_joints_from_rigid_body (obj = None):
+
+	if obj is None and bpy.context.active_object is not None:
+		obj = bpy.context.active_object
+	
+	if obj.mmd_type == 'RIGID_BODY':
+		print("this is a rigid body!")
 
 def get_rigid_body_bone_chain_origin(bone_obj):
 	
@@ -813,78 +822,6 @@ def transform_rigid_body_bone_chain(rigid_body_bone_chain
 
 
 		
-"""
-
-def transform_rigid_body_bone_chains_by_delta(rigid_body_bone_chain
-									,location_x_start=None,location_x_start_delta=None,location_x_end=None,location_x_end_delta=None
-									,location_y_start=None,location_y_start_delta=None,location_y_end=None,location_y_end_delta=None
-									,location_z_start=None,location_z_start_delta=None,location_z_end=None,location_z_end_delta=None
-									,rotation_w_start=None,rotation_w_start_delta=None,rotation_w_end=None,rotation_w_end_delta=None
-									,rotation_x_start=None,rotation_x_start_delta=None,rotation_x_end=None,rotation_x_end_delta=None
-									,rotation_y_start=None,rotation_y_start_delta=None,rotation_y_end=None,rotation_y_end_delta=None
-									,rotation_z_start=None,rotation_z_start_delta=None,rotation_z_end=None,rotation_z_end_delta=None
-									,size_x_start=None,size_x_start_delta=None,size_x_end=None,size_x_end_delta=None
-									,size_y_start=None,size_y_start_delta=None,size_y_end=None,size_y_end_delta=None
-									,size_z_start=None,size_z_start_delta=None,size_z_end=None,size_z_end_delta=None
-									,mass_start=None,mass_start_delta=None,mass_end=None,mass_end_delta=None
-									,restitution_start=None,restitution_start_delta=None,restitution_end=None,restitution_end_delta=None
-									,friction_start=None,friction_start_delta=None,friction_end=None,friction_end_delta=None
-									,linear_damping_start=None,linear_damping_start_delta=None,linear_damping_end=None,linear_damping_end_delta=None
-									,angular_damping_start=None,angular_damping_start_delta=None,angular_damping_end=None,angular_damping_end_delta=None
-									):
-	
-	
-	armature_obj_name = rigid_body_bone_chain[0][2].constraints['mmd_tools_rigid_parent'].target.data.name
-	armature = bpy.data.armatures[armature_obj_name]
-
-	bone_chain_head = armature.bones[rigid_body_bone_chain[0][1]]
-	bone_chain_tail = armature.bones[rigid_body_bone_chain[-1][1]]
-	body_chain_length = len(rigid_body_bone_chain)
-
-	#print(body_chain_length)
-
-	starting_rigid_body = rigid_body_bone_chain[0][2]
-	ending_rigid_body = rigid_body_bone_chain[-1][2]
-	
-	for prop, var, start, end in [('location.x','location_x', location_x_start, location_x_end),
-								('location.y','location_y', location_y_start, location_y_end),
-								('location.z','location_z', location_z_start, location_z_end),
-								('w','rotation_w', rotation_w_start, rotation_w_end),
-								('x','rotation_x', rotation_x_start, rotation_x_end),
-								('y','rotation_y', rotation_y_start, rotation_y_end),
-								('z','rotation_z', rotation_z_start, rotation_z_end),
-								('mmd_rigid.size[0]','size_x', size_x_start, size_x_end),
-								('mmd_rigid.size[1]','size_y', size_y_start, size_y_end),
-								('mmd_rigid.size[2]','size_z', size_z_start, size_z_end),
-								('rigid_body.mass','mass', mass_start, mass_end),
-								('rigid_body.restitution','restitution', restitution_start, restitution_end),
-								('rigid_body.friction','friction', friction_start, friction_end),
-								('rigid_body.linear_damping','linear_damping', linear_damping_start, linear_damping_end),
-								('rigid_body.angular_damping','angular_damping', angular_damping_start, angular_damping_end)]:
-		if start is not None and end is not None:
-
-			if var in ['rotation_w','rotation_x','rotation_y','rotation_z']:
-				if starting_rigid_body.rotation_mode == 'QUATERNION' and ending_rigid_body.rotation_mode == 'QUATERNION':
-					start_value =  get_attribute(starting_rigid_body,'rotation_quaternion.' + prop) + start
-					end_value =  get_attribute(ending_rigid_body,'rotation_quaternion.' + prop) + end
-				
-				elif starting_rigid_body.rotation_mode == 'AXIS_ANGLE' and ending_rigid_body.rotation_mode == 'AXIS_ANGLE':
-					start_value =  get_attribute(starting_rigid_body,'rotation_axis_angle.' + prop) + start
-					end_value =  get_attribute(ending_rigid_body,'rotation_axis_angle.' + prop) + end
-
-				else:
-					start_value =  get_attribute(starting_rigid_body,'rotation_euler.' + prop) + start
-					end_value =  get_attribute(ending_rigid_body,'rotation_euler.' + prop) + end
-
-			else:
-				start_value = get_attribute(starting_rigid_body, prop) + start
-				end_value = get_attribute(ending_rigid_body, prop) + end
-
-			if var in ['size_x', 'size_y', 'size_z', 'mass', 'restitution', 'friction', 'linear_damping', 'angular_damping']:
-				start_value = max(0, start_value)
-				end_value = max(0, end_value)
-			transform_rigid_body_bone_chain_property(rigid_body_bone_chain, var, start_value, end_value)
-"""
 	
 	
 	
@@ -1048,9 +985,9 @@ def create_rigid_bodies_from_csv(context):
 	#apply_all_rigid_bodies(armature)
 
 @register_wrap
-class AddRigidBody(bpy.types.Operator):
+class AddRigidBodyFromFile(bpy.types.Operator):
 	"""Add Rigid Bodies to a FFXIV Model (Converted to an MMD Model)"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_rigid_body"
+	bl_idname = "ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv"
 	bl_label = "Add Rigid Bodies from CSV"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1159,7 +1096,6 @@ class FindRigidBodies(bpy.types.Operator):
 	bl_options = {'REGISTER', 'UNDO'}
 
 	append_to_selected = bpy.props.BoolProperty(name="Append", default=False)
-
 	bpy.types.Scene.rigidbody_startswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_endswith = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
 	bpy.types.Scene.rigidbody_contains = bpy.props.StringProperty(name="", description="", default="", maxlen=0, options={'ANIMATABLE'}, subtype='NONE', update=None, get=None, set=None)
@@ -1184,6 +1120,7 @@ class ClearFindRigidBodies(bpy.types.Operator):
 		context.scene.rigidbody_endswith = ''
 		context.scene.rigidbody_contains = ''
 		return {'FINISHED'}
+
 
 @register_wrap
 class SelectRigidBodyBoneChain(bpy.types.Operator):
@@ -1386,9 +1323,9 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c.label(text="")
 		c.label(text="")
 		c = row.column(align=True)
-		c.prop(self,"location_x",text="",toggle=False)
-		c.prop(self,"location_y",text="",toggle=False)
-		c.prop(self,"location_z",text="",toggle=False)
+		c.prop(self,"location_x",text="X",toggle=False)
+		c.prop(self,"location_y",text="Y",toggle=False)
+		c.prop(self,"location_z",text="Z",toggle=False)
 		c.operator("ffxiv_mmd_tools_helper.reset_location_rigid_bodies",text="Reset to bone")
 		c = row.column(align=True)
 		c.prop(self, "location_x_edit", text="")
@@ -1404,6 +1341,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		row = layout.row()
 		row = layout.row()
 		c = row.column(align=True)
+		
 		if self.rotation_mode in('QUATERNION','AXIS_ANGLE'):
 			c = row.column(align=True)
 			c.label(text='Rotation')
@@ -1639,18 +1577,6 @@ class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 		ending_rigid_body = self.rigid_body_bone_chain[-1][2]
 
 		
-		# list of tuples defining each property
-
-		#properties[0] = internal property name
-		#properties[1] = external property name
-		#properties[2] = external property suffix
-		
-		#properties[3] = starting rigid body variable to pull external property from 
-		#properties[4] = ending rigid body variable to pull external property from 
-
-		#external property name + suffix
-		#starting variable to initialize + internal property name
-		#ending variable to initialize + internal property name
 		properties = [
 					('location_x','location','.x', starting_rigid_body, ending_rigid_body),
 					('location_y','location','.y', starting_rigid_body, ending_rigid_body),
@@ -2024,9 +1950,9 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 
 		#selected_objs = context.selected_objects
 		
-
+		
 		for i in self.rigid_body_bone_chains_data:
-			print('chain: ', str(i),' head: ',self.rigid_body_bone_chains_data[i]['head']['bone'], 'tail: ',self.rigid_body_bone_chains_data[i]['tail']['bone'])
+			print('chain:', str(i),' head:',self.rigid_body_bone_chains_data[i]['head']['bone'], ' tail:',self.rigid_body_bone_chains_data[i]['tail']['bone'])
 
 
 		self.number_of_bone_chains = len(self.rigid_body_bone_chains_data)

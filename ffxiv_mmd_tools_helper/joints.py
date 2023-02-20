@@ -5,6 +5,18 @@ from . import import_csv
 import math
 from mmd_tools.operators.rigid_body import AddRigidBody
 from mmd_tools.core import model as mmd_model
+from functools import reduce 
+from . import rigid_body
+
+
+def get_attribute(obj, attr_name):
+    if "[" in attr_name and "]" in attr_name:
+        attr_base, index_str = attr_name.split("[")
+        index = int(index_str.strip("]"))
+        attr_value = reduce(getattr, attr_base.split("."), obj)
+        return getattr(attr_value, f"__getitem__")(index)
+    else:
+        return reduce(getattr, attr_name.split("."), obj)
 
 
 def get_armature():
@@ -39,9 +51,11 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
 		if obj.mmd_type == 'JOINT': 
+			#error handling: delete a joint if it does not have both object 1 AND object 2 filled out
 			if (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
 				print ('deleting joint with missing rigid body object1 or object2:', obj.name)
 				bpy.data.objects.remove(obj, do_unlink=True)
+			#error handling: if both object 1 and object 2 are found, delete the existing joint
 			elif (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
 				if (obj.rigid_body_constraint.object2.name == rigid_body_1 or  obj.rigid_body_constraint.object2.name == rigid_body_2):
 					print ('deleting existing joint:', obj.name)
@@ -105,7 +119,162 @@ def apply_all_joints(armature,joints_data):
 
 			create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
 			
-def main(context):
+def is_joint_horizontal(joint_obj):
+
+	if joint_obj.mmd_type == 'JOINT':
+		rigid_body1 = joint_obj.rigid_body_constraint.object1
+		rigid_body2 = joint_obj.rigid_body_constraint.object2
+		bone1 = rigid_body.get_bone_from_rigid_body(rigid_body1)
+		bone2 = rigid_body.get_bone_from_rigid_body(rigid_body2)
+
+		if bone1.parent == bone2 or bone2.parent == bone1:
+			return False
+		else:
+			return True
+
+
+def is_joint_vertical(joint_obj):
+
+	if joint_obj.mmd_type == 'JOINT':
+		rigid_body1 = joint_obj.rigid_body_constraint.object1
+		rigid_body2 = joint_obj.rigid_body_constraint.object2
+		bone1 = rigid_body.get_bone_from_rigid_body(rigid_body1)
+		bone2 = rigid_body.get_bone_from_rigid_body(rigid_body2)
+
+		if bone1.parent == bone2 or bone2.parent == bone1:
+			return True
+		else:
+			return False
+
+#returns a list of joints from the rigid body 
+def get_joints_from_rigid_body(rigid_body_obj):
+
+	joints_obj = None
+
+	rigid_body_joints = []
+
+	if rigid_body_obj.mmd_type == 'RIGID_BODY': 
+
+		for obj in bpy.context.active_object.parent.parent.children:
+			if obj.name.startswith('joints'):
+				joints_obj = obj
+				break
+
+		for joint in joints_obj.children:
+			if joint.rigid_body_constraint.object1.name == rigid_body_obj.name:
+				rigid_body_joints.append(joint)
+			if joint.rigid_body_constraint.object2.name == rigid_body_obj.name:
+				rigid_body_joints.append(joint)
+
+		return rigid_body_joints
+	else:
+		print('obj',rigid_body_obj.name,'has no joints')
+
+
+
+
+def get_joint_transform_data(joint_obj):
+	
+	joint_dict = {
+	
+		'armature':None
+		,'joint': None
+		,'rigid_body_1': None
+		,'rigid_body_2': None
+		,'joint_type':None
+		,'limit_linear_lower':()
+		,'limit_linear_upper':None
+		,'limit_angular_lower':None
+		,'limit_angular_upper':None
+		,'spring_linear':None
+		,'spring_angular':None
+
+		}
+
+	properties = [
+			#('armature','location','.x'),
+			#('joint','location','.x'),
+			('rigid_body_1','','rigid_body_constraint.object1',''),
+			('rigid_body_2','', 'rigid_body_constraint.object2',''),
+			('limit_linear_lower',0,'rigid_body_constraint.limit_lin_','x_lower'),
+			('limit_linear_lower',1,'rigid_body_constraint.limit_lin_','y_lower'),
+			('limit_linear_lower',2,'rigid_body_constraint.limit_lin_','z_lower'),
+			('limit_linear_upper',0,'rigid_body_constraint.limit_lin_','x_upper'),
+			('limit_linear_upper',1,'rigid_body_constraint.limit_lin_','y_upper'),
+			('limit_linear_upper',2,'rigid_body_constraint.limit_lin_','z_upper'),
+			('limit_angular_lower',0,'rigid_body_constraint.limit_ang_','x_lower'),
+			('limit_angular_lower',1,'rigid_body_constraint.limit_ang_','y_lower'),
+			('limit_angular_lower',2,'rigid_body_constraint.limit_ang_','z_lower'),
+			('limit_angular_upper',0,'rigid_body_constraint.limit_ang_','x_upper'),
+			('limit_angular_upper',1,'rigid_body_constraint.limit_ang_','y_upper'),
+			('limit_angular_upper',2,'rigid_body_constraint.limit_ang_','z_upper'),
+			('spring_linear',0,'mmd_joint.spring_linear','[0]'),
+			('spring_linear',1,'mmd_joint.spring_linear','[1]'),
+			('spring_linear',2,'mmd_joint.spring_linear','[2]'),
+			('spring_angular',0,'mmd_joint.spring_angular','[0]'),
+			('spring_angular',1,'mmd_joint.spring_angular','[1]'),
+			('spring_angular',2,'mmd_joint.spring_angular','[2]'),
+
+			]
+
+	if joint_obj.mmd_type == 'JOINT':
+		
+		#get the armature
+		for obj in joint_obj.parent.parent.children_recursive:
+			if obj.type =='ARMATURE':
+				armature_obj = obj
+				break
+
+		joint_dict['armature']=armature_obj
+		joint_dict['joint']=joint_obj
+		
+		limit_linear_lower = [0 for i in range(3)]
+		limit_linear_upper = [0 for i in range(3)]
+		limit_angular_lower = [0 for i in range(3)]
+		limit_angular_upper = [0 for i in range(3)]
+		spring_linear = [0 for i in range(3)]
+		spring_angular = [0 for i in range(3)]
+
+		for prop_name,prop_suffix,ext_property,ext_suffix in properties:
+			
+			if prop_name == 'limit_linear_lower':
+				limit_linear_lower[prop_suffix] = get_attribute(joint_obj, ext_property + ext_suffix)
+			elif prop_name == 'limit_linear_upper':
+				limit_linear_upper[prop_suffix] = get_attribute(joint_obj, ext_property + ext_suffix)
+			elif prop_name == 'limit_angular_lower':
+				limit_angular_lower[prop_suffix]= get_attribute(joint_obj, ext_property + ext_suffix)
+			elif prop_name == 'limit_angular_upper':
+				limit_angular_upper[prop_suffix]= get_attribute(joint_obj, ext_property + ext_suffix)
+			elif prop_name == 'spring_linear':
+				spring_linear[prop_suffix]= get_attribute(joint_obj, ext_property + ext_suffix)
+			elif prop_name == 'spring_angular':
+				spring_angular[prop_suffix]= get_attribute(joint_obj, ext_property + ext_suffix)
+			else:
+				joint_dict[prop_name+prop_suffix] = get_attribute(joint_obj, ext_property + ext_suffix)
+
+		joint_dict['limit_linear_lower'] = limit_linear_lower
+		joint_dict['limit_linear_upper'] = limit_linear_upper
+		joint_dict['limit_angular_lower'] = limit_angular_lower
+		joint_dict['limit_angular_upper'] = limit_angular_upper
+		joint_dict['spring_linear'] = spring_linear
+		joint_dict['spring_angular'] = spring_angular
+
+		if is_joint_vertical(joint_obj)==True:
+			joint_dict['joint_type'] = 'VERTICAL'
+		else:
+			joint_dict['joint_type'] = 'HORIZONTAL'
+
+		return joint_dict
+
+
+def get_joint_from_selected_rigid_bodies():
+
+	print ('getting joints from selected rigid bodies')
+		
+
+
+
+def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = get_armature()
 	armature = get_armature()
 
@@ -114,9 +283,9 @@ def main(context):
 
 
 @register_wrap
-class AddJoints(bpy.types.Operator):
+class AddJointsFromFile(bpy.types.Operator):
 	"""Add Joints to a FFXIV Model (Converted to an MMD Model)"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_joints"
+	bl_idname = "ffxiv_mmd_tools_helper.create_joints_from_csv"
 	bl_label = "Replace bones renaming"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -127,5 +296,5 @@ class AddJoints(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
-		main(context)
+		create_rigid_bodies_from_csv(context)
 		return {'FINISHED'}

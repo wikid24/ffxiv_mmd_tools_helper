@@ -97,6 +97,7 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd_tools_helper.add_bone_groups", text = "Auto-Generate")
 
+
 @register_wrap
 class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 	#Rigid Body panel#
@@ -107,15 +108,36 @@ class RigidBodiesJointsPanel_MTH(bpy.types.Panel):
 	bl_category = "FFXIV MMD"
 	bl_order = 4
 
+	
+
 	def draw(self, context):
+
+				
+
 		layout = self.layout
+
 		row = layout.row()
 		row.label(text="Converted to MMD Model(English bones only)")
 		row = layout.row()
 		col = row.column()
-		col.operator("ffxiv_mmd_tools_helper.add_rigid_body", text = "Add Rigid Bodies", icon="RIGID_BODY")
+		col.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "Add Rigid Bodies", icon="RIGID_BODY")
 		col = row.column()
-		row.operator("ffxiv_mmd_tools_helper.add_joints", text = "Add Joints", icon = "RIGID_BODY_CONSTRAINT")
+		row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "Add Joints", icon = "RIGID_BODY_CONSTRAINT")
+		# Display the active object's name in a text box
+		row = layout.row(align=True)
+		
+		col = row.column(align=True)
+		col.alignment = 'LEFT'
+		col.label(text="Active Rigid: ")
+		#row.operator("ffxiv_mmd_tools_helper.get_active_rigid_body_name",text='Active Rigid:')
+		#row.prop(context.scene,"active_rigid_body_name",text="")
+		if(context.active_object):
+			if (context.active_object.mmd_type == 'RIGID_BODY'):
+				row.prop(context.active_object,"name",text="")	
+				row.label(text='Bone: '+ context.active_object.constraints['mmd_tools_rigid_parent'].subtarget)	
+		
+
+		
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
@@ -217,7 +239,7 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Model",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
 		
 @register_wrap
 class CameraLightingPanel_MTH(bpy.types.Panel):

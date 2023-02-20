@@ -384,6 +384,7 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 	"""Get Joints From Selected Rigid Bodies"""
 	bl_idname = "ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies"
 	bl_label = "Get Joints From Selected Rigid Bodies"
+	bl_options = {'REGISTER', 'UNDO'}
 
 
 	@classmethod
@@ -416,6 +417,7 @@ class SelectVerticalHorizontalJoints(bpy.types.Operator):
 	"""Select Vertical or Horizontal Joints from Selected Joints"""
 	bl_idname = "ffxiv_mmd_tools_helper.select_vertical_horizontal_joints"
 	bl_label = "Select Vertical or Horizontal Joints from Selected Joints"
+	bl_options = {'REGISTER', 'UNDO'}
 
 	direction: bpy.props.EnumProperty(items = \
 	[('VERTICAL', 'VERTICAL', 'VERTICAL')\
@@ -430,10 +432,12 @@ class SelectVerticalHorizontalJoints(bpy.types.Operator):
 		is_all_joints = True
 
 		if selected_objs is not None:
-			for selected_obj in selected_objs:
-				if selected_obj.mmd_type != 'JOINT':
-					is_all_joints = False		
-
+			if len(selected_objs) > 0:
+				for selected_obj in selected_objs:
+					if selected_obj.mmd_type != 'JOINT':
+						is_all_joints = False		
+			else:
+				is_all_joints = False
 		else:
 			is_all_joints = False
 

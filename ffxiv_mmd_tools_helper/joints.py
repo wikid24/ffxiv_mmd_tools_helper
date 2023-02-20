@@ -353,7 +353,64 @@ def select_vertical_joints_from_selected_joints():
 				selected_obj.select_set(False)
 
 
+def transform_joint(joint_obj):
+	print('transform joint!')
 
+def transform_joint(joint_obj
+					,rigid_body_1=None,rigid_body_2=None
+					,use_bone_rotation=None
+					,limit_linear_lower_x=None,limit_linear_lower_y=None,limit_linear_lower_z=None
+					,limit_linear_upper_x=None,limit_linear_upper_y=None,limit_linear_upper_z=None
+					,limit_angular_lower_x=None,limit_angular_lower_y=None,limit_angular_lower_z=None
+					,limit_angular_upper_x=None,limit_angular_upper_y=None,limit_angular_upper_z=None
+					,spring_linear_x=None,spring_linear_y=None,spring_linear_z=None
+					,spring_angular_x=None,spring_angular_y=None,spring_angular_z=None
+					):
+
+			if rigid_body_1 is not None:
+				joint_obj.rigid_body_constraint.object1 = rigid_body_1
+			if rigid_body_2 is not None:
+				joint_obj.rigid_body_constraint.object2 = rigid_body_2
+			if use_bone_rotation is not None:
+				print('figure out what this does!')
+			if limit_linear_lower_x is not None:
+				joint_obj.rigid_body_constraint.limit_lin_x_lower = limit_linear_lower_x
+			if limit_linear_lower_y is not None:
+				joint_obj.rigid_body_constraint.limit_lin_y_lower = limit_linear_lower_y
+			if limit_linear_lower_z is not None:
+				joint_obj.rigid_body_constraint.limit_lin_z_lower = limit_linear_lower_z
+			if limit_linear_upper_x is not None:
+				joint_obj.rigid_body_constraint.limit_lin_x_upper = limit_linear_upper_x
+			if limit_linear_upper_y is not None:
+				joint_obj.rigid_body_constraint.limit_lin_y_upper = limit_linear_upper_y
+			if limit_linear_upper_z is not None:
+				joint_obj.rigid_body_constraint.limit_lin_z_upper = limit_linear_upper_z
+			if limit_angular_lower_x is not None:
+				joint_obj.rigid_body_constraint.limit_ang_x_lower = limit_angular_lower_x
+			if limit_angular_lower_y is not None:
+				joint_obj.rigid_body_constraint.limit_ang_y_lower = limit_angular_lower_y
+			if limit_angular_lower_z is not None:
+				joint_obj.rigid_body_constraint.limit_ang_z_lower = limit_angular_lower_z
+			if limit_angular_upper_x is not None:
+				joint_obj.rigid_body_constraint.limit_ang_x_upper = limit_angular_upper_x
+			if limit_angular_upper_y is not None:
+				joint_obj.rigid_body_constraint.limit_ang_y_upper = limit_angular_upper_y
+			if limit_angular_upper_z is not None:
+				joint_obj.rigid_body_constraint.limit_ang_z_upper = limit_angular_upper_z
+			if spring_linear_x is not None:
+				joint_obj.mmd_joint.spring_linear[0] = spring_linear_x
+			if spring_linear_y is not None:
+				joint_obj.mmd_joint.spring_linear[1] = spring_linear_y
+			if spring_linear_z is not None:
+				joint_obj.mmd_joint.spring_linear[2] = spring_linear_z
+			if spring_angular_x is not None:
+				joint_obj.mmd_joint.spring_angular[0] = spring_angular_x
+			if spring_angular_y is not None:
+				joint_obj.mmd_joint.spring_angular[1] = spring_angular_y
+			if spring_angular_z is not None:
+				joint_obj.mmd_joint.spring_angular[2] = spring_angular_z
+		
+	
 def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = get_armature()
 	armature = get_armature()
@@ -686,7 +743,28 @@ class BatchUpdateJoints(bpy.types.Operator):
 
 		bpy.ops.object.mode_set(mode='OBJECT')
 		
-		obj = context.active_object 
+		for joint in self.joints:
 
+			transform_joint(
+				joint_obj=joint
+				,limit_linear_lower_x = self.limit_linear_x_lower if self.limit_linear_x_lower_edit else None
+				,limit_linear_lower_y = self.limit_linear_y_lower if self.limit_linear_y_lower_edit else None
+				,limit_linear_lower_z = self.limit_linear_z_lower if self.limit_linear_z_lower_edit else None
+				,limit_linear_upper_x = self.limit_linear_x_upper if self.limit_linear_x_upper_edit else None
+				,limit_linear_upper_y = self.limit_linear_y_upper if self.limit_linear_y_upper_edit else None
+				,limit_linear_upper_z = self.limit_linear_z_upper if self.limit_linear_z_upper_edit else None
+				,limit_angular_lower_x = self.limit_angular_x_lower if self.limit_angular_x_lower_edit else None
+				,limit_angular_lower_y = self.limit_angular_y_lower if self.limit_angular_y_lower_edit else None
+				,limit_angular_lower_z = self.limit_angular_z_lower if self.limit_angular_z_lower_edit else None
+				,limit_angular_upper_x = self.limit_angular_x_upper if self.limit_angular_x_upper_edit else None
+				,limit_angular_upper_y = self.limit_angular_y_upper if self.limit_angular_y_upper_edit else None
+				,limit_angular_upper_z = self.limit_angular_z_upper if self.limit_angular_z_upper_edit else None
+				,spring_linear_x = self.spring_linear_x if self.spring_linear_x_edit else None
+				,spring_linear_y = self.spring_linear_y if self.spring_linear_y_edit else None
+				,spring_linear_z = self.spring_linear_z if self.spring_linear_z_edit else None
+				,spring_angular_x = self.spring_angular_x if self.spring_angular_x_edit else None
+				,spring_angular_y = self.spring_angular_y if self.spring_angular_y_edit else None
+				,spring_angular_z = self.spring_angular_z if self.spring_angular_z_edit else None
+				)
 
 		return {'FINISHED'}

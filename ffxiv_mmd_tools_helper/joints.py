@@ -381,5 +381,5 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 		return is_all_rigid_bodies_and_joints #obj is not None and obj.mmd_type == 'RIGID_BODY'
 
 	def execute(self, context):
-		select_joints_from_selected_rigid_bodies()
+		select_joints_from_selected_rigid_bodies(append_to_selected=True)
 		return {'FINISHED'}

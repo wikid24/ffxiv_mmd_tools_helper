@@ -1412,7 +1412,8 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		#c.prop(obj.mmd_rigid, 'name_j')
 		#c.prop(obj.mmd_rigid, 'name_e')
-
+		row = layout.row()
+		row.label(text='Number of selected rigid bodies: '+ str(len(bpy.context.selected_objects)))
 		row = layout.row()
 		row.label(text='Checkmark to apply to all selected rigid bodies')
 

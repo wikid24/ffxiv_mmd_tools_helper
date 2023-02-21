@@ -944,10 +944,11 @@ def reset_rigid_body_location_to_bone(rigid_body_obj):
 			bone = get_bone_from_rigid_body(rigid_body_obj)
 
 			if bpy.data.objects[bone.id_data.name].type != 'ARMATURE':
-				for obj in bpy.data.objects[bone.id_data.name].parent.children_recursive:
+				for obj in bpy.data.objects[bone.id_data.name].children_recursive:
 					if obj.type == 'ARMATURE':
 						armature_obj = obj
 						break
+
 			else:
 				armature_obj = bpy.data.objects[bone.id_data.name]
 

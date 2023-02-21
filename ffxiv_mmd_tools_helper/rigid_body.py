@@ -191,7 +191,7 @@ def get_skirt_rigid_vertical_objects(obj):
 		
 		if rigid_bodies is not None:
 			#get all rigid bodies that have the same chain number as object that was passed
-			for rigid_body in rigid_bodies.children:
+			for rigid_body in rigid_bodies.parent.children_recursive:
 				
 				#if it finds it, add it to the rb_obj_chain list
 				if rigid_body.name.startswith('skirt_'+str(chain_number)+'_') and rigid_body.mmd_type == 'RIGID_BODY':
@@ -232,7 +232,7 @@ def get_skirt_rigid_horizontal_objects(obj):
 		
 		if rigid_bodies is not None:
 			#get all rigid bodies that have the same chain number as object that was passed
-			for rigid_body in rigid_bodies.children:
+			for rigid_body in rigid_bodies.parent.children_recursive:
 				
 				#if it finds it, add it to the rb_obj_chain list
 				if rigid_body.name.endswith('_'+str(chain_number)) and rigid_body.mmd_type == 'RIGID_BODY':

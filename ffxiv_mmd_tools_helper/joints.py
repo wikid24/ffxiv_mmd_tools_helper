@@ -884,8 +884,8 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 
 				incl_pin = ''
 				if rigid_body_pin_obj is not None:
-					incl_pin = ' (including rigid body pin)'
-				print('chain ',i,' created ',len(bpy.context.selected_objects),' vertical joints ',' for ',len(chain),' rigid bodies',incl_pin)
+					incl_pin = '+ rigid body pin'
+				print('chain ',i,' created ',len(bpy.context.selected_objects),' vertical joints ',' for ',len(chain),' rigid bodies in chain',incl_pin)
 				
 
 		

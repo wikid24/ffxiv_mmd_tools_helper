@@ -46,7 +46,8 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 	bl_order = 2
 
 	def draw(self, context):
-		obj = context.object
+		if context.object is not None:
+			obj = context.object
 		layout = self.layout
 		row = layout.row()
 		row.label(text="Mass Rename Bones", icon="GROUP_BONE")
@@ -58,8 +59,9 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		grid = col.grid_flow(align=True)
 		row = grid.row(align=True)
 		row.operator("ffxiv_mmd_tools_helper.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
-		if obj.type=='ARMATURE':
-			row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
+		if obj:
+			if obj.type=='ARMATURE':
+				row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
 		row = layout.row(align=True)
 		col = layout.column(align=True)
 		grid = col.grid_flow(align=True)
@@ -78,16 +80,19 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 	bl_order = 3
 
 	def draw(self, context):
+		if context.object is not None:
+			obj = context.object
 
 		layout = self.layout
 		row = layout.row(align=True)
 		grid = row.grid_flow(columns=1,align=True)
 		row = grid.row(align=True)
 		row.prop(context.space_data.overlay, 'show_bones', toggle=True, text='',icon_only=True,icon='HIDE_OFF' if context.space_data.overlay.show_bones else 'HIDE_ON' )
-		if context.object.type == 'ARMATURE':
-			row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
-			row.prop(context.object,"show_in_front",toggle=True ,text = "",icon_only=True,icon='COMMUNITY')
-			row.prop(context.object.data, 'display_type',text='')
+		if obj:
+			if obj.type == 'ARMATURE':
+				row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
+				row.prop(context.object,"show_in_front",toggle=True ,text = "",icon_only=True,icon='COMMUNITY')
+				row.prop(context.object.data, 'display_type',text='')
 		else:
 			row.label(text=' Bone Visibility')
 		row = layout.row()

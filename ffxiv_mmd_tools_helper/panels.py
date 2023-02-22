@@ -243,7 +243,7 @@ class JointsPanel_MTH(bpy.types.Panel):
 			row = col.row(align=True)
 			grid = row.grid_flow(align=True,columns=2)
 			grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Vertical', icon="SORT_DESC").direction='VERTICAL'
-			grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horizontal (broken)', icon="CENTER_ONLY").direction='HORIZONTAL'
+			grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horizontal', icon="CENTER_ONLY").direction='HORIZONTAL'
 			
 			row = layout.row()
 			row.label(text="Joint Transform:", icon='CON_CLAMPTO')

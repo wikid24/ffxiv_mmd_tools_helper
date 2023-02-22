@@ -468,7 +468,6 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 	bl_label = "Get Joints From Selected Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
-
 	@classmethod
 	def poll(cls, context):
 		#obj = context.active_object

@@ -10,15 +10,15 @@ from . import rigid_body
 
 
 def get_attribute(obj, attr_name):
-    if "[" in attr_name and "]" in attr_name:
-        attr_base, index_str = attr_name.split("[")
-        index = int(index_str.strip("]"))
-        attr_value = reduce(getattr, attr_base.split("."), obj)
-        return getattr(attr_value, f"__getitem__")(index)
-    else:
-        return reduce(getattr, attr_name.split("."), obj)
+	if "[" in attr_name and "]" in attr_name:
+		attr_base, index_str = attr_name.split("[")
+		index = int(index_str.strip("]"))
+		attr_value = reduce(getattr, attr_base.split("."), obj)
+		return getattr(attr_value, f"__getitem__")(index)
+	else:
+		return reduce(getattr, attr_name.split("."), obj)
 
-
+"""
 def get_armature():
 	
 	if bpy.context.active_object.type == 'ARMATURE':
@@ -33,6 +33,18 @@ def get_armature():
 			return child
 	else:
 		print ('could not find armature for selected object:', bpy.context.selected_objects[0].name)
+"""
+def get_armature(obj):
+	
+	root = model.findRoot(obj)
+
+	if obj is not None:
+		if root is not None:
+			return model.find_MMD_Armature(obj)
+
+	else:
+		print ('could not find armature for obj:','obj')
+
 
 def read_joints_file():
 	
@@ -46,7 +58,10 @@ def read_joints_file():
 	
 	return JOINTS_DICTIONARY
 
-def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular):
+def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation=None
+				,limit_linear_lower=None,limit_linear_upper=None
+				,limit_angular_lower=None,limit_angular_upper=None
+				, spring_linear=None,spring_angular=None):
 
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
@@ -83,13 +98,13 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 	if (object_1 is not None) and (object_2 is not None):
 		#create the joint
 		bpy.ops.mmd_tools.joint_add(
-			use_bone_rotation= use_bone_rotation
-			,limit_linear_lower= limit_linear_lower
-			,limit_linear_upper=limit_linear_upper
-			,limit_angular_lower=limit_angular_lower
-			,limit_angular_upper=limit_angular_upper
-			,spring_linear=spring_linear
-			,spring_angular=spring_angular
+			use_bone_rotation= use_bone_rotation if use_bone_rotation is not None else None
+			,limit_linear_lower= limit_linear_lower if limit_linear_lower is not None else None
+			,limit_linear_upper=limit_linear_upper if limit_linear_upper is not None else None
+			,limit_angular_lower=limit_angular_lower if limit_angular_lower is not None else None
+			,limit_angular_upper=limit_angular_upper if limit_angular_upper is not None else None
+			,spring_linear=spring_linear if spring_linear is not None else None
+			,spring_angular=spring_angular if spring_angular is not None else None
 		)
 		
 		joint = bpy.context.view_layer.objects.active
@@ -272,6 +287,14 @@ def get_joint_transform_data(joint_obj):
 		return joint_dict
 
 
+def get_rigid_body_from_joint(joint_obj,rigid_number):
+
+	if joint_obj.mmd_type == 'JOINT':
+		if rigid_number == '1':
+			return joint_obj.rigid_body_constraint.object1
+		elif rigid_number == '2':
+			return joint_obj.rigid_body_constraint.object2
+
 def get_joints_from_selected_rigid_bodies():
 
 	selected_objs = None
@@ -353,8 +376,6 @@ def select_vertical_joints_from_selected_joints():
 				selected_obj.select_set(False)
 
 
-def transform_joint(joint_obj):
-	print('transform joint!')
 
 def transform_joint(joint_obj
 					,rigid_body_1=None,rigid_body_2=None
@@ -412,8 +433,12 @@ def transform_joint(joint_obj
 		
 	
 def create_rigid_bodies_from_csv(context):
-	bpy.context.view_layer.objects.active = get_armature()
-	armature = get_armature()
+	
+	obj = context.active_object
+	armature = get_armature(obj)
+	
+	bpy.context.view_layer.objects.active = armature #get_armature()
+	
 
 	JOINTS_DICTIONARY = read_joints_file ()
 	apply_all_joints(armature, JOINTS_DICTIONARY)
@@ -467,6 +492,30 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 
 	def execute(self, context):
 		select_joints_from_selected_rigid_bodies(append_to_selected=True)
+		return {'FINISHED'}
+
+@register_wrap
+class SelectRigidBodyFromJoint(bpy.types.Operator):
+	"""Get Rigid Body From Active Joint """
+	bl_idname = "ffxiv_mmd_tools_helper.select_rigid_body_from_joint"
+	bl_label = "Get Bone From Active Rigid Body "
+	bl_options = {'REGISTER', 'UNDO'}
+
+	rigid_number = bpy.props.EnumProperty(items = \
+	[('1', '1', '1')\
+		,('2','2','2')
+	], name = "", default = '1')
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.mmd_type == 'JOINT'
+
+	def execute(self, context):
+		obj = context.active_object
+		rigid_body = get_rigid_body_from_joint(joint_obj=obj,rigid_number=self.rigid_number)
+		rigid_body.hide = False
+		rigid_body.select_set(True)
 		return {'FINISHED'}
 
 @register_wrap
@@ -768,3 +817,113 @@ class BatchUpdateJoints(bpy.types.Operator):
 				)
 
 		return {'FINISHED'}
+
+def create_vertical_joints(rigid_body_pin_obj = None):
+
+		selected_objs = []
+		if bpy.context.selected_objects:
+			selected_objs = bpy.context.selected_objects
+
+		for obj in selected_objs:
+			if obj.mmd_type != 'RIGID_BODY':
+				obj.select_set(False)
+
+		#sort the selected rigid bodies into rigid body bone chains
+		rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
+
+		if rigid_body_bone_chains is not None:
+			for chain in rigid_body_bone_chains:
+				#deselect all objects
+				if bpy.context.selected_objects:
+					for selected_objs in bpy.context.selected_objects:
+						obj.select_set(False)
+				
+				#select all the rigid bodies in the chain
+				for rigid_body_obj in chain[0:1]:
+					obj.select_set(False)
+
+				#add the rigid body pin object
+				if rigid_body_pin_obj is not None:
+					if rigid_body_pin_obj.mmd_type == 'RIGID_BODY':
+						rigid_body_pin_obj.select_set(True)
+				
+		"""
+				bpy.ops.mmd_tools.joint_add(
+							
+							use_bone_rotation= use_bone_rotation
+							,limit_linear_lower= limit_linear_lower
+							,limit_linear_upper=limit_linear_upper
+							,limit_angular_lower=limit_angular_lower
+							,limit_angular_upper=limit_angular_upper
+							,spring_linear=spring_linear
+							,spring_angular=spring_angular
+							
+						)
+		
+		#get all the rigid bodies and select all the joints added
+		if bpy.context.selected_objects:
+			#deselect all objects
+			for selected_objs in bpy.context.selected_objects:
+						obj.select_set(False)
+
+		for chain in rigid_body_bone_chains:
+			for rigid_body_obj in chain:
+				rigid_body_obj.select_set(True)
+
+		if rigid_body_pin_obj is not None:
+				if rigid_body_pin_obj.mmd_type == 'RIGID_BODY':
+					rigid_body_pin_obj.select_set(True)
+
+		get_joints_from_selected_rigid_bodies()
+		"""
+			
+
+
+
+
+@register_wrap
+class BatchCreateVerticalJoints(bpy.types.Operator):
+	""" Create Vertical Joints from Selected Rigid Bodies"""
+	bl_idname = "ffxiv_mmd_tools_helper.batch_create_vertical_joints"
+	bl_label = "Create Vertical Joints from Selected Rigid Bodies"
+	bl_options = {'REGISTER','UNDO','PRESET'} 
+	bl_space_type = "VIEW_3D"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
+
+	bpy.types.Scene.vertical_joint_pin = bpy.props.PointerProperty(
+		type=bpy.types.Object
+		,poll=lambda self, obj: obj.mmd_type == 'RIGID_BODY' and obj not in bpy.context.selected_objects,
+		)
+	
+	def invoke(self, context, event):
+		wm = context.window_manager      
+		return wm.invoke_props_dialog(self, width=400)
+
+	def draw(self, context):
+		layout = self.layout
+		row = layout.row()
+		row.label(text='(Optional) Pin the head to a rigid body')
+		row.prop(context.scene, "vertical_joint_pin", text="")
+
+	@classmethod
+	def poll(cls, context):
+		is_all_rigid_bodies = True
+		is_at_least_2_rigid_bodies_selected = False
+		if context.selected_objects:
+			selected_objs = context.selected_objects
+			for selected_obj in selected_objs:
+				if selected_obj.mmd_type != 'RIGID_BODY':
+					is_all_rigid_bodies = False
+					break
+			if len(selected_objs) >= 2:
+				is_at_least_2_rigid_bodies_selected = True
+
+		return is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
+
+	def execute(self, context):
+		if context.scene.vertical_joint_pin:
+			create_vertical_joints(rigid_body_pin_obj=context.scene.vertical_joint_pin)
+		else:
+			create_vertical_joints()
+		return {'FINISHED'}
+

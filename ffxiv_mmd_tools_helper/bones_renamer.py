@@ -170,21 +170,36 @@ def find_and_replace_bone_names(context):
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
 
-def find_bone_names(search_string,append_to_selected=None):
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
-	armature = bpy.context.view_layer.objects.active
+def find_bone_names(contains=None,startswith=None,endswith=None,append_to_selected=None):
+
+	armature = model.findArmature(bpy.context.active_object)
+	if armature is not None:
+		armature.mmd_root.show_armature = True
+		armature.hide = False
+		bpy.context.view_layer.objects.active = armature
+
+	if startswith is None:
+		startswith = ''
+	if endswith is None:
+		endswith = ''
+	if contains is None:
+		contains = ''
+	if append_to_selected is None:
+		append_to_selected = False
 
 	if bpy.context.mode == 'OBJECT':
 		bpy.ops.object.mode_set(mode='EDIT')
 
 	if bpy.context.mode == 'EDIT_ARMATURE':
+
 		if append_to_selected == False:
 			#deselect all bones
 			bpy.ops.armature.select_all(action='DESELECT')
-		
+
 		for b in bpy.data.objects[armature.name].data.edit_bones:
-			if search_string in b.name:
-				if '_dummy' not in b.name and '_shadow' not in b.name:
+			if '_dummy' not in b.name and '_shadow' not in b.name:
+				if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
+					b.hide=False
 					b.select = True
 
 	if bpy.context.mode == 'POSE':
@@ -194,8 +209,9 @@ def find_bone_names(search_string,append_to_selected=None):
 				b.bone.select = False
 		
 		for b in bpy.context.active_object.pose.bones:
-			if search_string in b.name:
-				if '_dummy' not in b.name and '_shadow' not in b.name:
+			if '_dummy' not in b.name and '_shadow' not in b.name:
+				if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
+					b.bone.hide = False
 					b.bone.select = True
                 
 	
@@ -234,10 +250,10 @@ class FindBoneNames(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		return obj is not None #and obj.type == 'ARMATURE'
 
 	def execute(self, context):
-		find_bone_names(bpy.context.scene.find_bone_string,append_to_selected=self.append_to_selected)
+		find_bone_names(contains=bpy.context.scene.find_bone_string,append_to_selected=self.append_to_selected)
 		return {'FINISHED'}
 
 

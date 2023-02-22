@@ -13,7 +13,7 @@ def armature(root):
 	armatures = []
 	for c in root.children:
 		if c.type == 'ARMATURE':
-			c.hide = False
+			#c.hide = False
 			armatures.append(c)
 	if len(armatures) == 1:
 		return armatures[0]
@@ -50,31 +50,42 @@ def find_MMD_Armature(obj):
 		return armature(root)
 
 def findArmature(obj):
+
+	arm = None
+
+	
+	obj.hide = False
 	
 	if obj.type == 'ARMATURE':
-		#obj.hide = False
-		return obj
+		arm = obj
+		return arm
 	if obj.parent is not None:
 		if obj.parent.type == 'ARMATURE':
-			#obj.parent.hide = False
 			#obj.mmd_root.show_armature = True	
-			return obj.parent
+			arm = obj.parent
+			arm.hide = False
+			return arm
 		else:
 			for child in obj.parent.children:
-				if child.type == 'ARMATURE':
-					#child.hide = False
+				if child.type == 'ARMATURE':					
 					#child.mmd_root.show_armature = True	
-					return child
+					arm = child
+					arm.hide = False
+					return arm
 	if obj.parent.parent is not None:
 		if obj.parent.parent.type == 'ARMATURE':
-			#obj.parent.parent.hide = False
+			obj.parent.parent.hide = False
 			#child.mmd_root.show_armature = True	
-			return obj.parent.parent
-		for child in obj.parent.parent.children:
-			if child.type == 'ARMATURE':
-				#child.hide = False
-				#child.mmd_root.show_armature = True	
-				return child
+			arm = obj.parent.parent
+			arm.hide = False
+			return arm
+		else:
+			for child in obj.parent.parent.children:
+				if child.type == 'ARMATURE':
+					arm = child
+					arm.hide = False
+					#child.mmd_root.show_armature = True	
+					return arm
 	if hasattr(obj, "mmd_type"):
 		if obj.mmd_type == 'ROOT':
 			return armature(obj)

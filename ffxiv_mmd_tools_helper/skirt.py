@@ -1,6 +1,10 @@
 import bpy
 import math
 from . import register_wrap
+from . import bones_renamer
+from . import rigid_body
+
+
 
 def create_skirt_mesh(num_segments, radius_tail, radius_head, height, floor_offset, x_scale, y_scale,subdivisions):
     # Create a cylinder mesh
@@ -451,6 +455,19 @@ def move_bones_and_skirt_to_ffxiv_model(armature):
     for bone in armature.data.edit_bones:
         if bone.name.startswith('skirt_') and bone.name.endswith('_0'):
             bone.parent = lower_body_bone
+
+
+    #if new_skirt_arm exists and there's no object, delete it
+    for armature in bpy.data.armatures:
+        if armature.name == 'new_skirt_arm':
+            if bpy.data.objects.get(armature.name):
+                obj = bpy.data.objects.get(armature.name)
+                #if obj and obj.children:
+                    #print(obj.name)
+            else:
+                bpy.data.armatures.remove(armature)
+                print('deleted armature: new_skirt_arm')
+
         
 
 
@@ -567,16 +584,80 @@ class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
 @register_wrap
 class MergeBonesAndMeshToFFXIVModel(bpy.types.Operator):
     bl_idname = "ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model"
-    bl_label = "Delete FFXIV Skirt Vertex Groups"
+    bl_label = "Merge bones and all meshes in skirt_obj to the selected armature"
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
         obj = context.active_object
-        #skirt_obj = bpy.data.armatures['new_skirt_arm']
-        return obj is not None and obj.type == 'ARMATURE' and obj.name != 'new_skirt_arm'
+        skirt_obj_exist = False
+
+        if 'skirt_obj' in bpy.data.objects:
+            skirt_obj_exist = True
+
+        return obj is not None and obj.type == 'ARMATURE'  and skirt_obj_exist
 
     def execute(self, context):
         armature = bpy.context.view_layer.objects.active
         move_bones_and_skirt_to_ffxiv_model (armature)
         return {'FINISHED'}
+
+@register_wrap
+class GenerateSkirtRigidBodies(bpy.types.Operator):
+    bl_idname = "ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies"
+    bl_label = "Generate all the skirt Rigid Bodies"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def poll(cls, context):
+        
+        if bpy.context.active_object is not None:
+            obj = context.active_object
+
+            contains_rigidbodies = False
+            contains_skirt_bones = False
+
+            if obj.type == 'ARMATURE':
+                for child in obj.parent.children:
+                    if child.name == ('rigidbodies') or child.mmd_type == 'RIGID_BODY':
+                        contains_rigidbodies = True
+                        break
+                for pbone in obj.pose.bones:
+                    if pbone.name.startswith('skirt_'):
+                        contains_skirt_bones = True
+                        break
+
+            return obj is not None and obj.type == 'ARMATURE'  and contains_rigidbodies == True and contains_skirt_bones==True
+        return False
+
+    def execute(self, context):
+        armature = bpy.context.view_layer.objects.active
+
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.view_layer.objects.active = armature
+        bpy.ops.object.mode_set(mode='EDIT')
+        #bpy.ops.action.select_all(action='DESELECT')
+        bones_renamer.find_bone_names('skirt_',append_to_selected=False)
+
+        
+        bpy.ops.mmd_tools.rigid_body_add(
+            name_j = "$name_j"
+			,name_e = "$name_e"
+			,collision_group_number= 6
+			,collision_group_mask= (False, False, False, False, False,False, True, False, False, False, False, False, False, False, False, False)
+			,rigid_type= "1" #'0'= Bone, '1' = Physics, '2' = Physics+Bone
+			,rigid_shape="BOX" #SPHERE, BOX, CAPSULE
+			#,size=size #size[0] = X, size[1] = Y, size[2] = Z
+			#,mass=mass
+			#,friction=friction
+			#,bounce=bounce  #restitution
+			#,linear_damping=linear_damping
+			#,angular_damping=angular_damping
+		)
+
+        bpy.ops.object.mode_set(mode='OBJECT')
+        rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
+
+        return {'FINISHED'}
+
+

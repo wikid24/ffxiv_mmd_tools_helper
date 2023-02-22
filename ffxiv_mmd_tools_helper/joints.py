@@ -817,7 +817,10 @@ class BatchUpdateJoints(bpy.types.Operator):
 
 		return {'FINISHED'}
 
-def create_vertical_joints(rigid_body_pin_obj = None):
+def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
+							,limit_linear_lower=None,limit_linear_upper=None
+							,limit_angular_lower=None,limit_angular_upper=None
+							,spring_linear=None,spring_angular=None):
 
 		selected_objs = []
 		if bpy.context.selected_objects:
@@ -830,34 +833,61 @@ def create_vertical_joints(rigid_body_pin_obj = None):
 		#sort the selected rigid bodies into rigid body bone chains
 		rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
 
+		total_joints = 0
+
 		if rigid_body_bone_chains is not None:
-			for chain in rigid_body_bone_chains:
+			for i,chain in enumerate(rigid_body_bone_chains):
+
 				#deselect all objects
 				if bpy.context.selected_objects:
-					for selected_objs in bpy.context.selected_objects:
+					for obj in bpy.context.selected_objects:
 						obj.select_set(False)
 				
 				#select all the rigid bodies in the chain
-				for rigid_body_obj in chain[0:1]:
-					obj.select_set(False)
-
+				for chain_obj in chain:
+					#chain_obj[2] is the rigid body object
+					chain_obj[2].select_set(True)
+				
 				#add the rigid body pin object
 				if rigid_body_pin_obj is not None:
 					if rigid_body_pin_obj.mmd_type == 'RIGID_BODY':
 						rigid_body_pin_obj.select_set(True)
 				
-		"""
+				#check if there are existing joints, if there is, delete them
+				root = model.findRoot(bpy.context.active_object)
+				selected_objs = bpy.context.selected_objects
+
+				for obj in root.children_recursive:
+					if obj.mmd_type == 'JOINT': 
+						#error handling: delete a joint if it does not have both object 1 AND object 2 filled out
+						if (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
+							print ('deleting joint with missing rigid body object1 or object2:', obj.name)
+							bpy.data.objects.remove(obj, do_unlink=True)
+						#error handling: if both object 1 and object 2 are found, delete the existing joint
+						elif (obj.rigid_body_constraint.object1 in selected_objs):
+							if (obj.rigid_body_constraint.object2 in selected_objs):
+									print ('deleting existing joint:', obj.name)
+									bpy.data.objects.remove(obj, do_unlink=True)
+
 				bpy.ops.mmd_tools.joint_add(
-							
-							use_bone_rotation= use_bone_rotation
-							,limit_linear_lower= limit_linear_lower
-							,limit_linear_upper=limit_linear_upper
-							,limit_angular_lower=limit_angular_lower
-							,limit_angular_upper=limit_angular_upper
-							,spring_linear=spring_linear
-							,spring_angular=spring_angular
+							use_bone_rotation= True #True
+							,limit_linear_lower= [0,0,0]#limit_linear_lower
+							,limit_linear_upper= [0,0,0]#limit_linear_upper
+							,limit_angular_lower= [0,0,0]#limit_angular_lower
+							,limit_angular_upper= [0,0,0]#limit_angular_upper
+							,spring_linear= [0,0,0]#spring_linear
+							,spring_angular=[0,0,0]#spring_angular
 							
 						)
+				
+				total_joints += len(bpy.context.selected_objects)
+
+				incl_pin = ''
+				if rigid_body_pin_obj is not None:
+					incl_pin = ' (including rigid body pin)'
+				print('chain ',i,' created ',len(bpy.context.selected_objects),' vertical joints ',' for ',len(chain),' rigid bodies',incl_pin)
+				
+
 		
 		#get all the rigid bodies and select all the joints added
 		if bpy.context.selected_objects:
@@ -865,16 +895,22 @@ def create_vertical_joints(rigid_body_pin_obj = None):
 			for selected_objs in bpy.context.selected_objects:
 						obj.select_set(False)
 
+		#select all the rigid bodies from the rigid body bone chain
 		for chain in rigid_body_bone_chains:
 			for rigid_body_obj in chain:
-				rigid_body_obj.select_set(True)
+				rigid_body_obj[2].select_set(True)
 
+		#also get the rigid body pin object
 		if rigid_body_pin_obj is not None:
 				if rigid_body_pin_obj.mmd_type == 'RIGID_BODY':
 					rigid_body_pin_obj.select_set(True)
 
-		get_joints_from_selected_rigid_bodies()
-		"""
+		#select all the joints that were just created
+		select_joints_from_selected_rigid_bodies(append_to_selected=False)
+		
+		print(total_joints,' vertical joints created for ',len(rigid_body_bone_chains),' rigid body bone chains')
+		
+		
 			
 
 
@@ -917,7 +953,7 @@ class BatchCreateVerticalJoints(bpy.types.Operator):
 			if len(selected_objs) >= 2:
 				is_at_least_2_rigid_bodies_selected = True
 
-		return is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
+		return is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected #and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
 
 	def execute(self, context):
 		if context.scene.vertical_joint_pin:

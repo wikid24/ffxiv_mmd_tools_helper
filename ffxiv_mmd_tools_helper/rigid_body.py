@@ -437,32 +437,15 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 	
 def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
 	
-	armature_name = rigid_body_bone_origin.id_data.name    
-		
-	if bpy.data.objects[armature_name].type != 'ARMATURE':
-		for child in bpy.data.objects[armature_name].children:
-			if child.type == 'ARMATURE':
-				armature_name=child.name
-				break
 	
-	armature_obj = None
-	armature_obj = bpy.data.objects.get(armature_name)
-	
-	#store all rigid bodies and their associated bone for the armature in a list
+	armature_obj = bpy.data.objects.get(rigid_body_bone_origin.id_data.name)
+	root = model.findRoot(armature_obj)
 	rigid_body_bone_list = []
-	for child in armature_obj.parent.children:
-		if child.name.startswith('rigidbodies'):
-			rigidbodies_obj = child
-			break	
 	
-	for rigid_body_obj in rigidbodies_obj.children:
-		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
-
-	#get all the rigid bodies in armature object(occurrs when MMD 'Physics' button is enabled)
-	for obj in armature_obj.parent.children_recursive:
+	#get all the rigid bodies in the root object
+	for obj in root.children_recursive: #armature_obj.parent.children_recursive:
 		if obj.mmd_type == 'RIGID_BODY':
-			if obj not in rigid_body_bone_list[0]:
-				rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
+			rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
 
 	rigid_body_bone_chain = []
 	

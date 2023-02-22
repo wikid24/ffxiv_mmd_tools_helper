@@ -46,6 +46,7 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 	bl_order = 2
 
 	def draw(self, context):
+		obj = None
 		if context.object is not None:
 			obj = context.object
 		layout = self.layout
@@ -80,6 +81,7 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 	bl_order = 3
 
 	def draw(self, context):
+		obj = None
 		if context.object is not None:
 			obj = context.object
 

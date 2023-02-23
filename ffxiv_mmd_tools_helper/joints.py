@@ -911,9 +911,6 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 		print(total_joints,' vertical joints created for ',len(rigid_body_bone_chains),' rigid body bone chains')
 		
 		
-			
-
-
 
 
 @register_wrap
@@ -963,6 +960,92 @@ class BatchCreateVerticalJoints(bpy.types.Operator):
 		return {'FINISHED'}
 
 
+def create_horizontal_joints( rigid_body_chains
+							,wrap_around = None,use_bone_rotation = None
+							,limit_linear_lower=None,limit_linear_upper=None
+							,limit_angular_lower=None,limit_angular_upper=None
+							,spring_linear=None,spring_angular=None):
+
+		active_obj = bpy.context.active_object
+		armature = model.find_MMD_Armature(active_obj)
+		#root = model.findRoot(active_obj)
+
+		total_joints = 0
+
+		if rigid_body_chains is not None:
+			
+			for i,chain in enumerate(rigid_body_chains):
+
+				#starting with the 1st joint to the 2nd last joint (chain[:-1]), start creating joints
+				for j,chain_obj in enumerate(chain[:-1]):
+
+					rigid_body_1 = chain[j][1]
+					rigid_body_2 = chain[j+1][1]
+
+					create_joint(armature=armature
+								,joint_name = 'J.h-'+rigid_body_1+'-'+ rigid_body_2
+								,rigid_body_1=rigid_body_1
+								,rigid_body_2=rigid_body_2
+								,use_bone_rotation=True
+								,limit_linear_lower= [0,0,0]#limit_linear_lower
+								,limit_linear_upper= [0,0,0]#limit_linear_upper
+								,limit_angular_lower= [0,0,0]#limit_angular_lower
+								,limit_angular_upper= [0,0,0]#limit_angular_upper
+								,spring_linear= [0,0,0]#spring_linear
+								,spring_angular=[0,0,0]#spring_angular
+								)
+				
+				#creates the last joint to connect the first object to teh last object
+				if wrap_around == True:
+					rigid_body_1 = chain[-1][1]
+					rigid_body_2 = chain[0][1]
+
+					create_joint(armature=armature
+								,joint_name = 'J.h-'+rigid_body_1+'-'+rigid_body_2
+								,rigid_body_1=rigid_body_1
+								,rigid_body_2=rigid_body_2
+								,use_bone_rotation=True
+								,limit_linear_lower= [0,0,0]#limit_linear_lower
+								,limit_linear_upper= [0,0,0]#limit_linear_upper
+								,limit_angular_lower= [0,0,0]#limit_angular_lower
+								,limit_angular_upper= [0,0,0]#limit_angular_upper
+								,spring_linear= [0,0,0]#spring_linear
+								,spring_angular=[0,0,0]#spring_angular
+								)
+
+				total_joints += len(chain)
+
+				#fix this its broken
+				print('chain ',i,' created ',len(bpy.context.selected_objects),' horizontal joints ',' for ',len(chain),' rigid bodies in chain')
+				
+
+		
+		#get all the rigid bodies and select all the joints added
+		if bpy.context.selected_objects:
+			#deselect all objects
+			for selected_objs in bpy.context.selected_objects:
+						selected_objs.select_set(False)
+
+		#select all the rigid bodies from the rigid body bone chain
+		for chain in rigid_body_chains:
+			for rigid_body_obj in chain:
+				rigid_body_obj[0].select_set(True)
+
+		
+
+		#select all the joints that were just created
+		select_joints_from_selected_rigid_bodies(append_to_selected=False)
+		select_horizontal_joints_from_selected_joints()
+		
+		print(total_joints,' horizontal joints created for ',len(rigid_body_chains),' rigid body chains')
+		
+		
+						
+
+
+
+
+
 @register_wrap
 class BatchCreateHorizontalJoints(bpy.types.Operator):
 	""" Create Horizontal Joints from Selected Rigid Bodies"""
@@ -977,6 +1060,7 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		props.scope_startswith = self.scope_startswith
 		props.scope_contains = self.scope_contains
 		props.scope_endswith = self.scope_endswith
+		props.wrap_around = self.wrap_around
 		
 
 	def _update_enum_callback(scene, context):
@@ -993,8 +1077,6 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 			props.rigid_body_chain_index = 0
 			rigid_body.select_rigid_bodies_in_grouped_list(props.grouped_rigid_bodies_by_index_pos,props.rigid_body_chain_index)
 
-
-	
 	scope_startswith = bpy.props.StringProperty(update=_update_prop)
 	scope_contains = bpy.props.StringProperty(update=_update_prop)
 	scope_endswith = bpy.props.StringProperty(update=_update_prop)
@@ -1007,6 +1089,14 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 	rigid_body_list_with_number_index = None
 	grouped_rigid_bodies_by_index_pos = None
 	rigid_body_chain_index = None
+	wrap_around = bpy.props.BoolProperty(default=False,name='Connect Ending Rigid to Starting Rigid',update=_update_prop)
+	limit_linear_lower = None
+	limit_linear_upper = None
+	limit_angular_lower = None 
+	limit_angular_upper = None
+	spring_linear = None
+	spring_angular = None
+
 
 		
 	def invoke(self, context, event):
@@ -1020,6 +1110,12 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		props.rigid_body_list_with_number_index = None
 		props.grouped_rigid_bodies_by_index_pos = None
 		props.rigid_body_chain_index = None
+		props.limit_linear_lower = None
+		props.limit_linear_upper = None
+		props.limit_angular_lower = None 
+		props.limit_angular_upper = None
+		props.spring_linear = None
+		props.spring_angular = None
 
 		wm = context.window_manager      
 		return wm.invoke_props_dialog(self, width=400)
@@ -1029,6 +1125,8 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 
 
 		layout = self.layout
+		row = layout.row()
+		row.label(text='*****************************************')
 		row = layout.row()
 		row.label(text='Input Horizontal Rigid Body Search Scope:')
 		row = layout.row()
@@ -1042,10 +1140,14 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		row.prop(self,"scope_startswith", text = "")
 		row.prop(self,"scope_contains", text = "")
 		row.prop(self,"scope_endswith", text = "")
+
 		row = grid.row(align=True)
 		row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids", text = 'Find', icon='VIEWZOOM')
+		#row.operator("ffxiv_mmd_tools_helper.clear_horizontal_joints_find_rigids", text='',icon='TRASH')
 		row = layout.row()
-		row.label(text='Message: ' + self.message)
+		row.label(text='*****************************************')
+		row = layout.row()
+		row.label(text=self.message)
 		if props.search_scope_objects is not None:
 			row = layout.row()
 			row.label(text='Sample Rigid Body: '+props.sample_rigid_body[1])
@@ -1055,19 +1157,43 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 			row = layout.row()
 			row.prop(self,'index_position_enum',expand=True)
 			row.label (text='index position is: ' + self.index_position_enum)
-			row = layout.row()
-			row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='UP').direction = 'UP'
-			row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='DOWN').direction = 'DOWN'
-
-
+			if props.grouped_rigid_bodies_by_index_pos is not None:
+				row = layout.row()
+				col = row.column()
+				col.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='UP').direction = 'UP'
+				col.label(text = 'Rigid Body Chain: ' + str(props.rigid_body_chain_index))
+				col.label(text = 'Starting Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][0][1]) )
+				col.label(text = 'Ending Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][-1][1]) )
+				col.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='DOWN').direction = 'DOWN'
+				row = layout.row()
+				col = row.column()
+				row.prop(self,'wrap_around')
+				
 
 	@classmethod
 	def poll(cls, context):
 		return True #is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected #and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
 
 	def execute(self, context):
-		
+		props = BatchCreateHorizontalJoints
+
+
+
+
+		create_horizontal_joints(props.grouped_rigid_bodies_by_index_pos
+								,wrap_around=props.wrap_around if props.wrap_around is not None else None
+								,limit_linear_lower=None if props.limit_linear_lower is not None else None
+								,limit_linear_upper=None if props.limit_linear_upper is not None else None
+								,limit_angular_lower=None if props.limit_angular_lower is not None else None
+								,limit_angular_upper=None if props.limit_angular_upper is not None else None
+								,spring_linear=None if props.spring_linear is not None else None
+								,spring_angular=None if props.spring_angular is not None else None
+							)
+
+
 		return {'FINISHED'}
+
+
 
 @register_wrap
 class HorizontalJointsFindRigidBodies(bpy.types.Operator):
@@ -1082,7 +1208,7 @@ class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 		results = None
 		results = rigid_body.find_rigid_bodies(startswith=props.scope_startswith,endswith=props.scope_endswith,contains=props.scope_contains,append_to_selected=False)
 		if results is not None:
-			props.message = 'there are: '+str(len(results)) + ' rigid bodies found'
+			props.message = str(len(results)) + ' Rigid Bodies in search scope'
 			props.search_scope_objects = results
 			props.rigid_body_list_with_number_index = rigid_body.get_rigid_body_list_with_number_index(props.search_scope_objects)
 			props.sample_rigid_body = props.rigid_body_list_with_number_index[-1]	
@@ -1091,7 +1217,7 @@ class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 			#create the index values for rigid_body_list_with_number_index[-1] (used in the EnumProperty)
 			item_list = []
 			for i,value in enumerate(props.sample_rigid_body[2]):
-				item_list.append((str(i),str(value),str(value)))
+				item_list.append((str(i),str(value),'\''+str(value)+'\' in \''+ props.sample_rigid_body[1] + '\' at index pos ' + str(i) ))
 			props.item_list = item_list
 
 			props.rigid_body_chain_index = 0
@@ -1100,6 +1226,19 @@ class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 			props.search_scope_objects = None
 
 
+		return {'FINISHED'}
+
+@register_wrap
+class ClearFindRigidBodies(bpy.types.Operator):
+	"""Clear Find Horizontal Joint Rigid Bodies """
+	bl_idname = "ffxiv_mmd_tools_helper.clear_horizontal_joints_find_rigids"
+	bl_label = "Clear Find Horizontal Joint Rigid Bodies"
+
+	def execute(self, context):
+		props = BatchCreateHorizontalJoints
+		props.scope_startswith = ''
+		props.scope_endswith = ''
+		props.scope_contains = ''
 		return {'FINISHED'}
 
 @register_wrap

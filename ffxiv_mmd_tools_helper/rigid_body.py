@@ -241,6 +241,102 @@ def get_skirt_rigid_horizontal_objects(obj):
 		
 			return rb_obj_chain
 
+def get_rigid_body_list_with_number_index (rigid_body_list):
+
+    #get all rigid bodies and the numbers contained within the name, 
+    #store it on an list
+
+    rigid_body_list_with_number_index = []
+
+    if rigid_body_list is not None:
+        for obj in rigid_body_list:
+            if obj.mmd_type == 'RIGID_BODY':
+                matches = re.findall(r'\d+', obj.name)
+                numbers = [m for m in matches]
+                rigid_body_list_with_number_index.append((obj,obj.name,numbers))
+
+        return rigid_body_list_with_number_index
+
+def get_grouped_rigid_body_list_by_index_position (rigid_body_list_with_index,target_index_pos):
+
+    #print the length of index positions in grouped_rigid_body_list
+    #print(len(rigid_body_list_with_index[-1][2]),' index positions for',rigid_body_list_with_index[-1][1],' :', rigid_body_list_with_index[-1][2])
+    
+    if rigid_body_list_with_index is not None:
+        #sort the list by the values at index position [2][0] (first index)
+        sorted_rigid_bodies = sorted(rigid_body_list_with_index, key=lambda x: x[2][target_index_pos])
+
+        # Group the rigid bodies with the same value at rigid_body_name_index_values[2][selected_index_pos] into a list of lists
+        grouped_rigid_body_dict_by_index_pos = {}
+        for rigid_body in rigid_body_list_with_index:
+            index_pos = rigid_body[2][target_index_pos]
+            if index_pos in grouped_rigid_body_dict_by_index_pos:
+                grouped_rigid_body_dict_by_index_pos[index_pos].append(rigid_body)
+            else:
+                grouped_rigid_body_dict_by_index_pos[index_pos] = [rigid_body]
+
+                
+        #convert the dictionary keys into a list
+        grouped_rigid_body_list_by_index_pos = []
+        
+        for index_pos_value, rigid_bodies in grouped_rigid_body_dict_by_index_pos.items():
+            grouped_rigid_body_list_by_index_pos.append(rigid_bodies)
+            #print(f"Rigid bodies with value {index_pos_value}:")
+            #for rigid_body in rigid_bodies:
+                #print(rigid_body)
+        
+        return  grouped_rigid_body_list_by_index_pos
+
+def select_rigid_bodies_in_grouped_list(grouped_rigid_body_list,index_pos):
+    
+    #deselect all objects
+    bpy.ops.object.select_all(action='DESELECT')
+    
+    if grouped_rigid_body_list is not None:
+        for i in grouped_rigid_body_list[index_pos]:
+            i[0].select_set(True)
+
+
+def reconstruct_string_split_by_number_index(string,indexed_values):
+    
+    # Split the input string into non-numeric and numeric parts
+    parts = re.split(r'(\d+)', string)
+    nonnumeric_parts = [p for p in parts if not p.isdigit()]
+    numeric_parts = [int(p) for p in parts if p.isdigit()]
+
+    # Replace the numeric parts with the corresponding numbers
+    if len(numeric_parts) < 2:
+        raise ValueError('Must be at least 2 numeric parts in name:'+string+'. Found:'+str(len(numeric_parts)))
+    
+    elif len(numeric_parts) == len(indexed_values):
+        for i in range(len(indexed_values)):
+            numeric_parts[i] = indexed_values[i]
+    else:
+        raise ValueError('Number of numeric parts does not match number of indexed_values')
+        
+    reconstructed_dict = {}
+    reconstructed_dict['nonnumeric_parts'] = nonnumeric_parts
+    reconstructed_dict['numeric_parts'] = numeric_parts
+    
+
+    # Concatenate the non-numeric and numeric parts to reconstruct the string
+    reconstructed = ''
+    for i in range(len(reconstructed_dict['nonnumeric_parts'])):
+        reconstructed += reconstructed_dict['nonnumeric_parts'][i]
+        #print(nonnumeric_parts[i])
+        if i < len(reconstructed_dict['numeric_parts']):
+            reconstructed += str(reconstructed_dict['numeric_parts'][i])
+            #print(numeric_parts[i])
+    
+    #print('total number of numeric indexes:',len(numeric_parts))
+    #print (reconstructed)
+            
+    return reconstructed_dict
+    #return reconstructed
+    
+    
+    
+
 def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_selected=None):
 
 	bpy.ops.object.mode_set(mode='OBJECT')

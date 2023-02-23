@@ -962,3 +962,168 @@ class BatchCreateVerticalJoints(bpy.types.Operator):
 			create_vertical_joints()
 		return {'FINISHED'}
 
+
+@register_wrap
+class BatchCreateHorizontalJoints(bpy.types.Operator):
+	""" Create Horizontal Joints from Selected Rigid Bodies"""
+	bl_idname = "ffxiv_mmd_tools_helper.batch_create_horizontal_joints"
+	bl_label = "Create Horizontal Joints from Selected Rigid Bodies"
+	bl_options = {'REGISTER','UNDO','PRESET'} 
+	bl_space_type = "VIEW_3D"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
+
+	def _update_prop (self,context):
+		props = BatchCreateHorizontalJoints
+		props.scope_startswith = self.scope_startswith
+		props.scope_contains = self.scope_contains
+		props.scope_endswith = self.scope_endswith
+		
+
+	def _update_enum_callback(scene, context):
+		props = BatchCreateHorizontalJoints
+		item_list = BatchCreateHorizontalJoints.item_list
+		return item_list
+
+	def _update_index_pos(self, context):
+		props = BatchCreateHorizontalJoints
+		props.index_position = int(self.index_position_enum)
+		props.grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (props.rigid_body_list_with_number_index,props.index_position)
+		
+		if props.grouped_rigid_bodies_by_index_pos is not None:
+			props.rigid_body_chain_index = 0
+			rigid_body.select_rigid_bodies_in_grouped_list(props.grouped_rigid_bodies_by_index_pos,props.rigid_body_chain_index)
+
+
+	
+	scope_startswith = bpy.props.StringProperty(update=_update_prop)
+	scope_contains = bpy.props.StringProperty(update=_update_prop)
+	scope_endswith = bpy.props.StringProperty(update=_update_prop)
+	message = ''
+	search_scope_objects = None
+	sample_rigid_body = None
+	item_list = None
+	index_position_enum = bpy.props.EnumProperty(items = _update_enum_callback,default=None,update=_update_index_pos)
+	index_position = None
+	rigid_body_list_with_number_index = None
+	grouped_rigid_bodies_by_index_pos = None
+	rigid_body_chain_index = None
+
+		
+	def invoke(self, context, event):
+		props = BatchCreateHorizontalJoints
+		props.message = ''
+		props.search_scope_objects = None
+		props.sample_rigid_body = None
+		props.item_list = None
+		#props.index_position_enum
+		props.index_position = None
+		props.rigid_body_list_with_number_index = None
+		props.grouped_rigid_bodies_by_index_pos = None
+		props.rigid_body_chain_index = None
+
+		wm = context.window_manager      
+		return wm.invoke_props_dialog(self, width=400)
+
+	def draw(self, context):
+		props = BatchCreateHorizontalJoints
+
+
+		layout = self.layout
+		row = layout.row()
+		row.label(text='Input Horizontal Rigid Body Search Scope:')
+		row = layout.row()
+		col = row.column(align=True)
+		grid = col.grid_flow(align=True)
+		row = grid.row(align=True)
+		row.label(text='Starts w/')
+		row.label(text='Contains')
+		row.label(text='Ends w/')
+		row = grid.row(align=True)
+		row.prop(self,"scope_startswith", text = "")
+		row.prop(self,"scope_contains", text = "")
+		row.prop(self,"scope_endswith", text = "")
+		row = grid.row(align=True)
+		row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids", text = 'Find', icon='VIEWZOOM')
+		row = layout.row()
+		row.label(text='Message: ' + self.message)
+		if props.search_scope_objects is not None:
+			row = layout.row()
+			row.label(text='Sample Rigid Body: '+props.sample_rigid_body[1])
+			row.label(text=str(len(props.sample_rigid_body[2])) + ' numbers found: '+ str(props.sample_rigid_body[2]) )
+			row = layout.row()
+			row.label(text='Specify which value indicates a horizontal rigid body chain: ')
+			row = layout.row()
+			row.prop(self,'index_position_enum',expand=True)
+			row.label (text='index position is: ' + self.index_position_enum)
+			row = layout.row()
+			row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='UP').direction = 'UP'
+			row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='DOWN').direction = 'DOWN'
+
+
+
+	@classmethod
+	def poll(cls, context):
+		return True #is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected #and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
+
+	def execute(self, context):
+		
+		return {'FINISHED'}
+
+@register_wrap
+class HorizontalJointsFindRigidBodies(bpy.types.Operator):
+	#Find Rigid Bodies
+	bl_idname = "ffxiv_mmd_tools_helper.horizontal_joints_find_rigids"
+	bl_label = "Find Rigid Bodies"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		props = BatchCreateHorizontalJoints
+		#print(props.scope_startswith)
+		results = None
+		results = rigid_body.find_rigid_bodies(startswith=props.scope_startswith,endswith=props.scope_endswith,contains=props.scope_contains,append_to_selected=False)
+		if results is not None:
+			props.message = 'there are: '+str(len(results)) + ' rigid bodies found'
+			props.search_scope_objects = results
+			props.rigid_body_list_with_number_index = rigid_body.get_rigid_body_list_with_number_index(props.search_scope_objects)
+			props.sample_rigid_body = props.rigid_body_list_with_number_index[-1]	
+			print(props.rigid_body_list_with_number_index[-1])
+			
+			#create the index values for rigid_body_list_with_number_index[-1] (used in the EnumProperty)
+			item_list = []
+			for i,value in enumerate(props.sample_rigid_body[2]):
+				item_list.append((str(i),str(value),str(value)))
+			props.item_list = item_list
+
+			props.rigid_body_chain_index = 0
+		else:
+			props.message = ''
+			props.search_scope_objects = None
+
+
+		return {'FINISHED'}
+
+@register_wrap
+class HorizontalJointsFindRigidBodiesByIndexPosition(bpy.types.Operator):
+	#Find Rigid Bodies
+	bl_idname = "ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index"
+	bl_label = "Find Rigid Bodies"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	direction = bpy.props.EnumProperty(items = \
+	[('UP', 'UP', 'UP')\
+		,('DOWN','DOWN','DOWN')
+	], name = "", default = 'UP')
+
+	def execute(self, context):
+		props = BatchCreateHorizontalJoints
+		props.grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (props.rigid_body_list_with_number_index,props.index_position)
+		if self.direction == 'UP':
+			props.rigid_body_chain_index += 1
+			props.rigid_body_chain_index = min(len(props.grouped_rigid_bodies_by_index_pos)-1,props.rigid_body_chain_index)
+		if self.direction == 'DOWN':
+			props.rigid_body_chain_index -= 1
+			props.rigid_body_chain_index = max(0,props.rigid_body_chain_index)
+
+		rigid_body.select_rigid_bodies_in_grouped_list(props.grouped_rigid_bodies_by_index_pos,props.rigid_body_chain_index)
+
+		return {'FINISHED'}

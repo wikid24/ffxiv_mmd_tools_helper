@@ -266,7 +266,7 @@ class JointsPanel_MTH(bpy.types.Panel):
 			col = layout.column()
 			grid = row.grid_flow(row_major=True,align=True,columns=1)
 			grid.label(text='Horizontal',icon='CENTER_ONLY')
-			grid.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Create(broken)")
+			grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Create")
 			grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
 		else:
 			row = layout.row()

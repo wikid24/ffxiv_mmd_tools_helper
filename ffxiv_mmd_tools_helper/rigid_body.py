@@ -1303,6 +1303,33 @@ class ClearFindRigidBodies(bpy.types.Operator):
 		context.scene.rigidbody_contains = ''
 		return {'FINISHED'}
 
+#from mmd_tools.operators.rigid_body import AddRigidBody
+
+@register_wrap
+class CreateRigidBodies(bpy.types.Operator):
+	"""Create Rigid Bodies From Selected Bones"""
+	bl_idname = "ffxiv_mmd_tools_helper.create_rigid_bodies"
+	bl_label = "Create Rigid Bodies From Selected Bones"
+
+	@classmethod
+	def poll(cls, context):
+		active_obj = context.active_object
+		is_active_a_bone = True
+		is_in_edit_or_pose_mode = True
+		
+		if bpy.context.object.mode not in ('EDIT','POSE'):
+			is_in_edit_or_pose_mode = False
+
+		if active_obj.type != 'ARMATURE':
+			is_active_a_bone = False
+
+		return is_active_a_bone and is_in_edit_or_pose_mode
+
+	def execute(self, context):
+		bpy.ops.mmd_tools.rigid_body_add('INVOKE_DEFAULT')
+		return {'FINISHED'}
+
+
 
 @register_wrap
 class SelectRigidBodyBoneChain(bpy.types.Operator):

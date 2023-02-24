@@ -82,8 +82,12 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		obj = None
+		root = None
+		
 		if context.object is not None:
 			obj = context.object
+			if model.findRoot(obj):
+				root = model.findRoot(obj)
 
 		layout = self.layout
 		row = layout.row(align=True)
@@ -92,11 +96,15 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		row.prop(context.space_data.overlay, 'show_bones', toggle=True, text='',icon_only=True,icon='HIDE_OFF' if context.space_data.overlay.show_bones else 'HIDE_ON' )
 		if obj:
 			if obj.type == 'ARMATURE':
-				row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
-				row.prop(context.object,"show_in_front",toggle=True ,text = "",icon_only=True,icon='COMMUNITY')
-				row.prop(context.object.data, 'display_type',text='')
-		else:
-			row.label(text=' Bone Visibility')
+				row.prop(obj.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
+				row.prop(obj,"show_in_front",toggle=True ,text = "",icon_only=True,icon='COMMUNITY')
+				row.prop(obj.data, 'display_type',text='')
+
+
+			else:
+				row.label(text=' Bone Visibility')
+			if root:
+				row.prop(root.mmd_root, 'show_armature', toggle=True, icon_only=True, icon='ARMATURE_DATA')
 		row = layout.row()
 		row.label(text="MMD Conversion")
 		split = layout.split( factor=0.80, align=True)
@@ -201,7 +209,13 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply')
 			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain')
 			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Bone Chains')
-
+			row = layout.row()
+			col = row.column(align=True)
+			grid = col.grid_flow(align=True)
+			row = grid.row(align=True)
+			row.label(text='Create:',icon='RIGID_BODY')
+			#row.operator('mmd_tools.rigid_body_add', text='From Selected Bones')
+			row.operator('ffxiv_mmd_tools_helper.create_rigid_bodies', text='From Selected Bones')
 		else:
 			row = layout.row()
 			row.label(text='Select an MMD Model')
@@ -258,6 +272,10 @@ class JointsPanel_MTH(bpy.types.Panel):
 			row = layout.row()
 			grid = row.grid_flow(align=True,columns=1)
 			grid.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Apply')
+			row = layout.row()
+			col = layout.column()
+			row.label(text='Create:',icon='PIVOT_MEDIAN')
+			row.operator('mmd_tools.joint_add', text='From Selected Rigid Bodies')			
 			row = layout.row()
 			col = layout.column()
 			grid = row.grid_flow(row_major=True,align=True,columns=1)

@@ -555,6 +555,38 @@ class SelectVerticalHorizontalJoints(bpy.types.Operator):
 			select_horizontal_joints_from_selected_joints()
 		return {'FINISHED'}
 
+@register_wrap
+class CreateJoints(bpy.types.Operator):
+	"""Create Joints From Selected Rigid Bodies"""
+	bl_idname = "ffxiv_mmd_tools_helper.create_joints"
+	bl_label = "Create Joints From Selected Rigid Bodies"
+
+	@classmethod
+	def poll(cls, context):
+		selected_objs = context.selected_objects
+		is_selected_all_rigid_bodies = True
+		is_in_object_mode = True
+		is_at_least_2_rigids = True
+		
+		if bpy.context.object.mode != 'OBJECT':
+			is_in_object_mode = False
+
+		for selected_obj in selected_objs:
+			if selected_obj.mmd_type != 'RIGID_BODY':
+				is_selected_all_rigid_bodies = False
+				break
+
+		if len(selected_objs) < 2:
+			is_at_least_2_rigids = False
+
+		
+
+		return is_in_object_mode and is_selected_all_rigid_bodies and is_at_least_2_rigids
+
+	def execute(self, context):
+		bpy.ops.mmd_tools.joint_add('INVOKE_DEFAULT')
+		return {'FINISHED'}
+
 
 @register_wrap
 class BatchUpdateJoints(bpy.types.Operator):
@@ -898,7 +930,7 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 				incl_pin = ''
 				if rigid_body_pin_obj is not None:
 					incl_pin = '+ rigid body pin'
-					
+
 				print('chain ',i,' created ',chain_joints_count,' vertical joints ',' for ',str(len(chain)),' rigid bodies in chain',incl_pin)		
 
 		

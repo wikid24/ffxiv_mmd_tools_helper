@@ -145,10 +145,11 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		if model.findRoot(bpy.context.object) is not None:
 			row = layout.row()
 			col = row.column()
-			grid = col.grid_flow(align=True,columns=3)
+			grid = col.grid_flow(align=True,columns=4)
 			grid.prop(root.mmd_root,"show_rigid_bodies", toggle=True, text='',icon_only=True,icon='HIDE_OFF' if root.mmd_root.show_rigid_bodies else 'HIDE_ON' )
 			grid.prop(root.mmd_root,"show_names_of_rigid_bodies", toggle=True, text='',icon_only=True,icon='SORTALPHA')
 			grid.label(text="Rigid Body Visibility")
+			grid.prop(root.mmd_root,"show_meshes", toggle=True, text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 			row = layout.row()
 			col = row.column()
 			grid = col.grid_flow(align=True,columns=2)
@@ -180,7 +181,7 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 			col = row.column()
 			grid = col.grid_flow(align=True)
 			grid.label(text='Bone Chain',icon='LINK_BLEND')
-			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Up (broken)', icon='TRIA_UP').direction='UP'
+			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Up', icon='TRIA_UP').direction='UP'
 			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
 			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
 			col = row.column()

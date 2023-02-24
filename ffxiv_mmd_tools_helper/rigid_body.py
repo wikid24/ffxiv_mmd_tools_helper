@@ -8,6 +8,7 @@ import re
 import math
 from functools import reduce
 from . import bones_renamer
+import mathutils
 
 def get_attribute(obj, attr_name):
     if "[" in attr_name and "]" in attr_name:
@@ -76,6 +77,7 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			rigid_body_name = rigid_body['rigid_body_name']
 			bone = rigid_body['bone_name']
 			offset_loc = [rigid_body['offset_x'],rigid_body['offset_y'],rigid_body['offset_z']]
+			offset_rot = [rigid_body['offset_rot_x'],rigid_body['offset_rot_y'],rigid_body['offset_rot_z']]
 			name_j = rigid_body['name_j']
 			name_e = rigid_body['name_e']
 			collision_group_number = int(rigid_body['collision_group'])
@@ -91,10 +93,10 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			
 
 			bpy.context.view_layer.objects.active = armature
-			create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
+			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
 	
 
-def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
+def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
 
 	
 	#if rigid body exists, delete it
@@ -149,6 +151,29 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,name_j,name_e,col
 		rigid_body.location.x = rigid_body.location.x + offset_loc[0]
 		rigid_body.location.y = rigid_body.location.y + offset_loc[1]
 		rigid_body.location.z = rigid_body.location.z + offset_loc[2]
+
+		offset_rot_euler = mathutils.Euler((math.radians(offset_rot[0]),math.radians(offset_rot[1]),math.radians(offset_rot[2])), 'XYZ')
+
+		if rigid_body.rotation_mode == 'QUATERNION':
+			offset_rot_quaternion = offset_rot_euler.to_quaternion()
+			rigid_body.rotation_quaternion[0] +=  offset_rot_quaternion[0]
+			rigid_body.rotation_quaternion[1] +=  offset_rot_quaternion[1]
+			rigid_body.rotation_quaternion[2] +=  offset_rot_quaternion[2]
+			rigid_body.rotation_quaternion[3] +=  offset_rot_quaternion[3]
+
+		if rigid_body.rotation_mode == 'AXIS_ANGLE':
+			offset_rot_axis_angle = offset_rot_euler.to_matrix()
+			rigid_body.rotation_axis_angle[0] + offset_rot_axis_angle[0]
+			rigid_body.rotation_axis_angle[1] + offset_rot_axis_angle[1]
+			rigid_body.rotation_axis_angle[2] + offset_rot_axis_angle[2]
+			rigid_body.rotation_axis_angle[3] + offset_rot_axis_angle[3]
+
+		else:
+			rigid_body.rotation_euler.x += offset_rot_euler[0]
+			rigid_body.rotation_euler.y += offset_rot_euler[1]
+			rigid_body.rotation_euler.z += offset_rot_euler[1]
+
+
 		
 		print ('created rigid body: ',rigid_body.name)
 		return rigid_body
@@ -398,12 +423,15 @@ def get_joints_from_rigid_body (obj = None):
 	#TO BE COMPLETED
 
 
-def get_rigid_body_bone_chain_origin(bone_obj):
+def get_rigid_body_bone_chain_origin(bone_obj,rigid_body_bone_list=None):
 	
 	#because changing between edit mode and object mode messes all ID references up, need to do it first
+	#need to store the NAME, not the object or data
 	active_object = bpy.context.view_layer.objects.active
 	rigid_body_bone_name = bone_obj.name
 	armature_name = bone_obj.id_data.name
+
+	
 	
 	if bpy.data.objects[armature_name].type != 'ARMATURE':
 		for child in bpy.data.objects[armature_name].children:
@@ -414,7 +442,6 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 	#start mmd_bone_use_connect stuff
 	bone_list = []
 
-	#print (armature_name)
 	
 	#unhide the armature so we can find the bones we need
 	armature_obj = bpy.data.objects.get(armature_name)
@@ -423,7 +450,6 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 		armature_obj.hide = False
 		
 	bpy.context.view_layer.objects.active = armature_obj
-	
 	bpy.ops.object.mode_set(mode='EDIT')
 	
 	#bpy.context.active_object.data.edit_bones['skirt_12_1'].get('mmd_bone_use_connect')
@@ -449,39 +475,13 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 	#initialize all variables to what they were before edit mode
 	bpy.context.view_layer.objects.active = active_object
 	armature_obj = bpy.data.objects[armature_name]
-	armature = None
-	rigid_body_bone = bpy.data.objects[armature_name].data.bones[rigid_body_bone_name]
+	armature = armature_obj.data
+	rigid_body_bone = armature.bones[rigid_body_bone_name]
 	
-	#get the armature and armature object
-	if rigid_body_bone is not None:
-		obj = bpy.data.objects.get(armature_name)	
-				
-		if obj.type == 'ARMATURE':
-			armature_obj = obj
-			armature = obj.data
-		else:
-			for child in obj.parent.children_recursive:
-				if child.type == 'ARMATURE':
-					armature_obj = child
-					armature = child.data
-					break
-			
-	#store all rigid bodies and their associated bone for the armature in a list
-	for child in armature_obj.parent.children:
-		if child.name.startswith('rigidbodies'):
-			rigidbodies_obj = child
-			break
-		
-	#get all the rigid bodies in 'rigidbodies'
-	rigid_body_bone_list = []
-	for rigid_body_obj in rigidbodies_obj.children:
-		rigid_body_bone_list.append((rigid_body_obj,rigid_body_obj.name,rigid_body_obj.mmd_rigid.bone))
-		
-	#get all the rigid bodies in armature object(occurrs when MMD 'Physics' button is enabled
-	for obj in armature_obj.parent.children_recursive:
-		if obj.mmd_type == 'RIGID_BODY':
-			if obj not in rigid_body_bone_list[0]:
-				rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
+	#performance increase
+	if rigid_body_bone_list == None:
+		rigid_body_bone_list = get_rigid_body_bone_list(armature_obj)
+
 
 	rigid_body_bone_origin = rigid_body_bone
 
@@ -529,6 +529,56 @@ def get_rigid_body_bone_chain_origin(bone_obj):
 
 	return rigid_body_bone_origin
 
+
+def get_rigid_body_bone_list(obj):
+
+	#armature_obj = bpy.data.objects.get(rigid_body_bone_origin.id_data.name)
+	root = model.findRoot(obj)
+
+	rigid_body_bone_list = []
+	
+	#get all the rigid bodies in the root object
+	for obj in root.children_recursive: #armature_obj.parent.children_recursive:
+		if obj.mmd_type == 'RIGID_BODY':
+			rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
+
+	return rigid_body_bone_list
+
+
+def select_rigid_body_bone_chain_from_bone(rigid_body_bone_origin,rigid_body_bone_list=None,current_bone_name=None):
+
+	print('rigid body bone origin:',rigid_body_bone_origin, ' current bone: ',current_bone_name)
+
+	#armature_obj = bpy.data.objects.get(rigid_body_bone_origin.id_data.name)
+	#root = model.findRoot(armature_obj)
+
+	#performance increase
+	if rigid_body_bone_list is None:
+		rigid_body_bone_list = get_rigid_body_bone_list(rigid_body_bone_origin)
+		"""
+		#get all the rigid bodies in the root object
+		for obj in root.children_recursive: #armature_obj.parent.children_recursive:
+			if obj.mmd_type == 'RIGID_BODY':
+				rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
+		"""
+
+	#set the first in the rigid body bone chain list to the bone origin
+	for rigid_body in rigid_body_bone_list:
+		if rigid_body[2] == rigid_body_bone_origin.name:
+			rigid_body[0].select_set(True)
+			break
+							
+	#starting from origin, select all children
+	for bone_child in rigid_body_bone_origin.children_recursive:
+		#if the bone_child is on the rigid body bone list, add it
+		for rigid_body in rigid_body_bone_list:
+			if rigid_body[2] == bone_child.name:
+				rigid_body[0].select_set(True)
+				#prevents the for loop from going any further than the current bone
+				if bone_child.name == current_bone_name:
+					return
+
+	
 	
 	
 def get_rigid_body_chain_from_bone(rigid_body_bone_origin):
@@ -868,6 +918,8 @@ def transform_rigid_body(obj=None
 		#SPHERE
 		#CAPSULE
 		obj.mmd_rigid.shape = rigid_body_shape
+
+	
 	if (size_x is not None or size_y is not None or size_z is not None):
 		if size_x is None:
 			size_x = obj.mmd_rigid.size[0]    
@@ -876,6 +928,15 @@ def transform_rigid_body(obj=None
 		if size_z is None:
 			size_z = obj.mmd_rigid.size[2] 
 		obj.mmd_rigid.size = [max(size_x, 1e-3),max(size_y , 1e-3),max(size_z, 1e-3)]
+	
+	"""
+	if size_x is not None:
+		obj.mmd_rigid.size[0]  = size_x
+	if size_y is not None:
+		obj.mmd_rigid.size[1]  = size_y
+	if size_z is not None:
+		obj.mmd_rigid.size[2]  = size_z
+	"""
 	if rigid_body_type is not None:
 		obj.mmd_rigid.type = rigid_body_type
 		#'0' = bone
@@ -1261,33 +1322,77 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 		return obj is not None and obj.mmd_type == 'RIGID_BODY'
 
 	def execute(self, context):
-		bone = get_bone_from_rigid_body(context.active_object)
-		if self.direction == 'DOWN':
-			get_rigid_body_chain_from_bone(bone)
-		elif self.direction == 'ALL':
-			bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
-			get_rigid_body_chain_from_bone(bone_chain_origin)
+
+		if bpy.context.selected_objects:
+			selected_objs = context.selected_objects
+
+			rigid_body_bone_list = get_rigid_body_bone_list(context.active_object)
+
+			for obj in selected_objs:
+				if obj.mmd_type == 'RIGID_BODY':
+					#print (obj.name)
+					bone = get_bone_from_rigid_body(obj)
+					bone_name = bone.name
+					if self.direction == 'DOWN':
+						#get_rigid_body_chain_from_bone(bone)
+						select_rigid_body_bone_chain_from_bone(bone,rigid_body_bone_list)
+						
+					elif self.direction == 'ALL':
+						bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
+						#get_rigid_body_chain_from_bone(bone_chain_origin)
+						select_rigid_body_bone_chain_from_bone(bone_chain_origin,rigid_body_bone_list)
+
+					elif self.direction == 'UP':
+						bone_chain_origin = get_rigid_body_bone_chain_origin(bone)
+						select_rigid_body_bone_chain_from_bone(bone_chain_origin,rigid_body_bone_list,bone_name)
+
 		return {'FINISHED'}
 
 
 def _transform_selected_rigid_bodies(self,context):
+	if BatchUpdateRigidBodies.initialization == True:
+		if context.active_object is not None:
 
-	#obj = context.active_object 
+			obj = context.active_object 
+			if obj.mmd_type == 'RIGID_BODY':
+
+				root = model.findRoot(obj)
+				if root.mmd_root.is_built == False:
 
 
-	transform_selected_rigid_bodies(
-		location_x=self.location_x if self.location_x_edit else None,
-		location_y=self.location_y if self.location_y_edit else None,
-		location_z=self.location_z if self.location_z_edit else None,
-		rotation_mode=self.rotation_mode if self.rotation_mode_edit else None,
-		rotation_w=self.rotation_w if self.rotation_w_edit else None,
-		rotation_x=self.rotation_x if self.rotation_x_edit else None,
-		rotation_y=self.rotation_y if self.rotation_y_edit else None,
-		rotation_z=self.rotation_z if self.rotation_z_edit else None,
-		size_x=self.size_x if self.size_x_edit else None,
-		size_y=self.size_y if self.size_y_edit else None,
-		size_z=self.size_z if self.size_z_edit else None,
-	)
+						transform_rigid_body(
+							obj=obj,
+							location_x=self.location_x if self.location_x_edit == False else None,
+							location_y=self.location_y if self.location_y_edit == False else None,
+							location_z=self.location_z if self.location_z_edit == False  else None,
+							rotation_mode=self.rotation_mode if self.rotation_mode_edit == False  else None,
+							rotation_w=self.rotation_w if self.rotation_w_edit == False  else None,
+							rotation_x=self.rotation_x if self.rotation_x_edit == False  else None,
+							rotation_y=self.rotation_y if self.rotation_y_edit == False else None,
+							rotation_z=self.rotation_z if self.rotation_z_edit == False else None,
+							rigid_body_shape=obj.mmd_rigid.shape if self.rigid_body_shape_edit == False else None,
+							size_x=self.size_x if self.size_x_edit == False else None,
+							size_y=self.size_y if self.size_y_edit == False else None,
+							size_z=self.size_z if self.size_z_edit == False else None,
+						)
+
+
+						transform_selected_rigid_bodies(
+							location_x=self.location_x if self.location_x_edit else None,
+							location_y=self.location_y if self.location_y_edit else None,
+							location_z=self.location_z if self.location_z_edit else None,
+							rotation_mode=self.rotation_mode if self.rotation_mode_edit else None,
+							rotation_w=self.rotation_w if self.rotation_w_edit else None,
+							rotation_x=self.rotation_x if self.rotation_x_edit else None,
+							rotation_y=self.rotation_y if self.rotation_y_edit else None,
+							rotation_z=self.rotation_z if self.rotation_z_edit else None,
+							rigid_body_shape=obj.mmd_rigid.shape if self.rigid_body_shape_edit else None,
+							size_x=self.size_x if self.size_x_edit else None,
+							size_y=self.size_y if self.size_y_edit else None,
+							size_z=self.size_z if self.size_z_edit else None,
+						)
+
+
 
 
 
@@ -1296,7 +1401,9 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
 	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
 	bl_label = "Batch Update Rigid Bodies"
-	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
+	bl_options = {'REGISTER','UNDO','PRESET'} 
+
+	initialization=False
 
 	#checkbox to bulk edit
 	location_x_edit: bpy.props.BoolProperty(default=False)
@@ -1320,7 +1427,8 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 	linear_damping_edit: bpy.props.BoolProperty(default=False)
 	angular_damping_edit: bpy.props.BoolProperty(default=False)
 
-	
+
+	#obj = bpy.context.active_object
 	#original values
 	location_x: bpy.props.FloatProperty(name='location_x',default=0,unit='LENGTH',update=_transform_selected_rigid_bodies)
 	location_y: bpy.props.FloatProperty(name='location_y',default=0,unit='LENGTH',update=_transform_selected_rigid_bodies)
@@ -1357,6 +1465,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 
 	def invoke(self, context, event):
+		BatchUpdateRigidBodies.initialization = False
 
 		self.location_x_edit = False
 		self.location_y_edit = False
@@ -1381,44 +1490,68 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 
 		obj = context.active_object 
 
-		self.location_x = obj.location.x
-		self.location_y = obj.location.y
-		self.location_z = obj.location.z
-		self.rotation_mode = obj.rotation_mode
+		#BUGFIX: snapshot all the values before changing them
+		self.obj_location = obj.location.copy()
+		self.obj_rigid_body_shape = obj.mmd_rigid.shape
+		self.obj_size_x = obj.mmd_rigid.size[0]
+		self.obj_size_y = obj.mmd_rigid.size[1]
+		self.obj_size_z = obj.mmd_rigid.size[2]
+		self.obj_rotation_mode = obj.rotation_mode
+		self.obj_rotation_quaternion = obj.rotation_quaternion.copy()
+		self.obj_rotation_axis_angle = obj.rotation_axis_angle
+		self.obj_rotation_euler = obj.rotation_euler.copy()
+		self.obj_rigid_body_type = obj.mmd_rigid.type
+
+		self.obj_mass = obj.rigid_body.mass
+		self.obj_restitution = obj.rigid_body.restitution
+		self.obj_collision_group_number = obj.mmd_rigid.collision_group_number
+		self.obj_collision_group_mask = obj.mmd_rigid.collision_group_mask
+		self.obj_friction = obj.rigid_body.friction
+		self.obj_linear_damping = obj.rigid_body.linear_damping
+		self.obj_angular_damping = obj.rigid_body.angular_damping
+		
+
+		self.location_x = self.obj_location[0]
+		self.location_y = self.obj_location[1]
+		self.location_z = self.obj_location[2]
+		self.rotation_mode = self.obj_rotation_mode
 		if obj.rotation_mode == 'QUATERNION':
-			self.rotation_w = obj.rotation_quaternion.w
-			self.rotation_x = obj.rotation_quaternion.x
-			self.rotation_y = obj.rotation_quaternion.y
-			self.rotation_z = obj.rotation_quaternion.z
+			self.rotation_w = self.obj_rotation_quaternion.w #obj.rotation_quaternion.w
+			self.rotation_x = self.obj_rotation_quaternion.x
+			self.rotation_y = self.obj_rotation_quaternion.y
+			self.rotation_z = self.obj_rotation_quaternion.z
+		
 		elif obj.rotation_mode == 'AXIS_ANGLE':
-			self.rotation_w = obj.rotation_axis_angle.w
-			self.rotation_x = obj.rotation_axis_angle.x
-			self.rotation_y = obj.rotation_axis_angle.y
-			self.rotation_z = obj.rotation_axis_angle.z
+			self.rotation_w = self.obj_rotation_axis_angle.w
+			self.rotation_x = self.obj_rotation_axis_angle.x
+			self.rotation_y = self.obj_rotation_axis_angle.y
+			self.rotation_z = self.obj_rotation_axis_angle.z
+		
 		else:
 			self.rotation_w = 0
-			self.rotation_x = obj.rotation_euler.x
-			self.rotation_y = obj.rotation_euler.y
-			self.rotation_z = obj.rotation_euler.z
-		self.size_x = obj.mmd_rigid.size[0]
-		self.size_y = obj.mmd_rigid.size[1]
-		self.size_z = obj.mmd_rigid.size[2]
-		self.rigid_body_type = obj.mmd_rigid.type
-		self.rigid_body_shape = obj.mmd_rigid.shape
-		self.mass = obj.rigid_body.mass
-		self.restitution = obj.rigid_body.restitution
-		self.collision_group_number = obj.mmd_rigid.collision_group_number
-		self.collision_group_mask = obj.mmd_rigid.collision_group_mask
-		self.friction = obj.rigid_body.friction
-		self.linear_damping = obj.rigid_body.linear_damping
-		self.angular_damping = obj.rigid_body.angular_damping
+			self.rotation_x = self.obj_rotation_euler.x
+			self.rotation_y = self.obj_rotation_euler.y
+			self.rotation_z = self.obj_rotation_euler.z
+		self.rigid_body_shape = self.obj_rigid_body_shape #obj.mmd_rigid.shape
+		self.size_x = self.obj_size_x #obj.mmd_rigid.size[0]
+		self.size_y = self.obj_size_y #obj.mmd_rigid.size[1]
+		self.size_z = self.obj_size_z #obj.mmd_rigid.size[2]
+		self.rigid_body_type = self.obj_rigid_body_type #obj.mmd_rigid.type
+
+		self.mass = self.obj_mass #obj.rigid_body.mass
+		self.restitution = self.obj_restitution #obj.rigid_body.restitution
+		self.collision_group_number = self.obj_collision_group_number #obj.mmd_rigid.collision_group_number
+		self.collision_group_mask = self.obj_collision_group_mask #obj.mmd_rigid.collision_group_mask
+		self.friction = self.obj_friction #obj.rigid_body.friction
+		self.linear_damping = self.obj_linear_damping #obj.rigid_body.linear_damping
+		self.angular_damping = self.obj_angular_damping#obj.rigid_body.angular_damping
 
 		wm = context.window_manager		
 		return wm.invoke_props_dialog(self, width=400)
 
 
 	def draw(self, context):
-		
+		BatchUpdateRigidBodies.initialization = True
 
 		obj = context.active_object 		
 		root = model.findRoot(obj)
@@ -1433,21 +1566,21 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		row = layout.row()
 		row.label(text='Number of selected rigid bodies: '+ str(len(bpy.context.selected_objects)))
 		row = layout.row()
-		row.label(text='Checkmark to apply to all selected rigid bodies')
+		row.label(text='Unchecked: Active only. Checked: All selected')
 		row = layout.row()
 		c = layout.column()
 		c = row.column(align=True)
 		c = row.column(align=True)
 		c.alignment = 'RIGHT'
-		c.label(text='Location: X')
-		c.label(text="Y")
-		c.label(text="Z")
-		c.label(text="")
-		c = row.column(align=True)
-		c.alignment = 'LEFT'
 		if root.mmd_root.is_built == True:
 			c.label(text="Turn off Physics to change location")	
 		else:
+			c.label(text='Location: X')
+			c.label(text="Y")
+			c.label(text="Z")
+			c.label(text="")
+			c = row.column(align=True)
+			c.alignment = 'LEFT'
 			c.prop(self,"location_x",toggle=False, text="")
 			c.prop(self,"location_y",toggle=False, text="")
 			c.prop(self,"location_z",toggle=False, text="")
@@ -1468,18 +1601,18 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c = layout.column()
 		c = row.column(align=True)
 		c = row.column(align=True)
-		if self.rotation_mode in('QUATERNION','AXIS_ANGLE'):
-			c = row.column(align=True)
-			c.alignment = 'RIGHT'
-			c.label(text='Rotation: W')
-			c.label(text='X')
-			c.label(text='Y')
-			c.label(text='Z')
-			c = row.column(align=True)
-			c.alignment = 'LEFT'
-			if root.mmd_root.is_built == True:
-				c.label(text="Turn off Physics to change rotation")	
-			else:
+		if root.mmd_root.is_built == True:
+			c.label(text="Turn off Physics to change rotation")	
+		else:
+			if self.rotation_mode in('QUATERNION','AXIS_ANGLE'):
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Rotation: W')
+				c.label(text='X')
+				c.label(text='Y')
+				c.label(text='Z')
+				c = row.column(align=True)
+				c.alignment = 'LEFT'
 				c.prop(self,"rotation_w",index=0, text="")
 				c.prop(self,"rotation_x",index=1, text="")
 				c.prop(self,"rotation_y",index=2, text="")
@@ -1490,17 +1623,14 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 				c.prop(self, "rotation_x_edit", text="")
 				c.prop(self, "rotation_y_edit", text="")
 				c.prop(self, "rotation_z_edit", text="")
-		else:
-			c = row.column(align=True)
-			c.alignment = 'RIGHT'
-			c.label(text='Rotation: X')
-			c.label(text='Y')
-			c.label(text='Z')
-			c = row.column(align=True)
-			c.alignment = 'LEFT'
-			if root.mmd_root.is_built == True:
-				c.label(text="Turn off Physics to change rotation")	
 			else:
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Rotation: X')
+				c.label(text='Y')
+				c.label(text='Z')
+				c = row.column(align=True)
+				c.alignment = 'LEFT'
 				c.prop(self,"rotation_x",index=1, text="")
 				c.prop(self,"rotation_y",index=2, text="")
 				c.prop(self,"rotation_z",index=3, text="")
@@ -1525,8 +1655,8 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		c = layout.column(align=True)
 		c.enabled = obj.mode == 'OBJECT'
 		g = c.grid_flow(row_major=True, align=True)
-		if (self.size_x_edit or self.size_y_edit or self.size_z_edit):
-			self.rigid_body_shape_edit = True
+		#if (self.size_x_edit or self.size_y_edit or self.size_z_edit):
+			#self.rigid_body_shape_edit = True
 		row = g.row(align=True)
 		row.prop(obj.mmd_rigid, 'shape', expand=True)
 		row.prop(self, "rigid_body_shape_edit", text="")
@@ -1609,7 +1739,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 		z=None
 
 		if obj.rotation_mode == ('QUATERNION'):
-			w=self.rotation_quaternion.w
+			w=obj.rotation_quaternion.w
 			x=obj.rotation_quaternion.x
 			y=obj.rotation_quaternion.y
 			z=obj.rotation_quaternion.z

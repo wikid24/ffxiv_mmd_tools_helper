@@ -833,60 +833,73 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 		#sort the selected rigid bodies into rigid body bone chains
 		rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
 
-		total_joints = 0
+		active_obj = bpy.context.active_object
+		armature = model.find_MMD_Armature(active_obj)
+		#root = model.findRoot(active_obj)
+
+		
+		total_joints_count = 0
+	
 
 		if rigid_body_bone_chains is not None:
+
 			for i,chain in enumerate(rigid_body_bone_chains):
 
-				#deselect all objects
-				if bpy.context.selected_objects:
-					for obj in bpy.context.selected_objects:
-						obj.select_set(False)
-				
-				#select all the rigid bodies in the chain
-				for chain_obj in chain:
+				chain_joints_count = 0
+
+				#starting with the 1st joint to the 2nd last joint (chain[:-1]), start creating joints
+				for j,chain_obj in enumerate(chain[:-1]):
+
 					#chain_obj[2] is the rigid body object
-					chain_obj[2].select_set(True)
-				
-				#add the rigid body pin object
+					rigid_body_1 = chain[j][2].name
+					rigid_body_2 = chain[j+1][2].name
+
+					joint = create_joint(armature=armature
+								,joint_name = 'J.v-'+rigid_body_1+'-'+ rigid_body_2
+								,rigid_body_1=rigid_body_1
+								,rigid_body_2=rigid_body_2
+								,use_bone_rotation=True
+								,limit_linear_lower= [0,0,0]#limit_linear_lower
+								,limit_linear_upper= [0,0,0]#limit_linear_upper
+								,limit_angular_lower= [0,0,0]#limit_angular_lower
+								,limit_angular_upper= [0,0,0]#limit_angular_upper
+								,spring_linear= [0,0,0]#spring_linear
+								,spring_angular=[0,0,0]#spring_angular
+								)
+					
+					if joint:
+						chain_joints_count+=1
+
+
+				#creates the joint to connect the first object to the pin object
 				if rigid_body_pin_obj is not None:
-					if rigid_body_pin_obj.mmd_type == 'RIGID_BODY':
-						rigid_body_pin_obj.select_set(True)
-				
-				#check if there are existing joints, if there is, delete them
-				root = model.findRoot(bpy.context.active_object)
-				selected_objs = bpy.context.selected_objects
+					rigid_body_1 = rigid_body_pin_obj.name
+					rigid_body_2 = chain[0][2].name
 
-				for obj in root.children_recursive:
-					if obj.mmd_type == 'JOINT': 
-						#error handling: delete a joint if it does not have both object 1 AND object 2 filled out
-						if (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
-							print ('deleting joint with missing rigid body object1 or object2:', obj.name)
-							bpy.data.objects.remove(obj, do_unlink=True)
-						#error handling: if both object 1 and object 2 are found, delete the existing joint
-						elif (obj.rigid_body_constraint.object1 in selected_objs):
-							if (obj.rigid_body_constraint.object2 in selected_objs):
-									print ('deleting existing joint:', obj.name)
-									bpy.data.objects.remove(obj, do_unlink=True)
-
-				bpy.ops.mmd_tools.joint_add(
-							use_bone_rotation= True #True
-							,limit_linear_lower= [0,0,0]#limit_linear_lower
-							,limit_linear_upper= [0,0,0]#limit_linear_upper
-							,limit_angular_lower= [0,0,0]#limit_angular_lower
-							,limit_angular_upper= [0,0,0]#limit_angular_upper
-							,spring_linear= [0,0,0]#spring_linear
-							,spring_angular=[0,0,0]#spring_angular
-							
-						)
+					joint = create_joint(armature=armature
+								,joint_name = 'J.v-'+rigid_body_1+'-'+rigid_body_2
+								,rigid_body_1=rigid_body_1
+								,rigid_body_2=rigid_body_2
+								,use_bone_rotation=True
+								,limit_linear_lower= [0,0,0]#limit_linear_lower
+								,limit_linear_upper= [0,0,0]#limit_linear_upper
+								,limit_angular_lower= [0,0,0]#limit_angular_lower
+								,limit_angular_upper= [0,0,0]#limit_angular_upper
+								,spring_linear= [0,0,0]#spring_linear
+								,spring_angular=[0,0,0]#spring_angular
+								)
+					if joint:
+						chain_joints_count+=1
 				
-				total_joints += len(bpy.context.selected_objects)
+				total_joints_count += chain_joints_count
+				#total_joints += len(chain)
+
 
 				incl_pin = ''
 				if rigid_body_pin_obj is not None:
 					incl_pin = '+ rigid body pin'
-				print('chain ',i,' created ',len(bpy.context.selected_objects),' vertical joints ',' for ',len(chain),' rigid bodies in chain',incl_pin)
-				
+					
+				print('chain ',i,' created ',chain_joints_count,' vertical joints ',' for ',str(len(chain)),' rigid bodies in chain',incl_pin)		
 
 		
 		#get all the rigid bodies and select all the joints added
@@ -907,8 +920,9 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 
 		#select all the joints that were just created
 		select_joints_from_selected_rigid_bodies(append_to_selected=False)
+		select_vertical_joints_from_selected_joints()
 		
-		print(total_joints,' vertical joints created for ',len(rigid_body_bone_chains),' rigid body bone chains')
+		print(total_joints_count,' vertical joints created for ',len(rigid_body_bone_chains),' rigid body bone chains')
 		
 		
 
@@ -975,6 +989,8 @@ def create_horizontal_joints( rigid_body_chains
 		if rigid_body_chains is not None:
 			
 			for i,chain in enumerate(rigid_body_chains):
+				
+				chain_joints_count = 0
 
 				#starting with the 1st joint to the 2nd last joint (chain[:-1]), start creating joints
 				for j,chain_obj in enumerate(chain[:-1]):
@@ -982,7 +998,7 @@ def create_horizontal_joints( rigid_body_chains
 					rigid_body_1 = chain[j][1]
 					rigid_body_2 = chain[j+1][1]
 
-					create_joint(armature=armature
+					joint = create_joint(armature=armature
 								,joint_name = 'J.h-'+rigid_body_1+'-'+ rigid_body_2
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
@@ -994,13 +1010,16 @@ def create_horizontal_joints( rigid_body_chains
 								,spring_linear= [0,0,0]#spring_linear
 								,spring_angular=[0,0,0]#spring_angular
 								)
+					if joint:
+						chain_joints_count+=1
+
 				
 				#creates the last joint to connect the first object to teh last object
 				if wrap_around == True:
 					rigid_body_1 = chain[-1][1]
 					rigid_body_2 = chain[0][1]
 
-					create_joint(armature=armature
+					joint = create_joint(armature=armature
 								,joint_name = 'J.h-'+rigid_body_1+'-'+rigid_body_2
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
@@ -1012,11 +1031,13 @@ def create_horizontal_joints( rigid_body_chains
 								,spring_linear= [0,0,0]#spring_linear
 								,spring_angular=[0,0,0]#spring_angular
 								)
+					if joint:
+						chain_joints_count+=1
 
 				total_joints += len(chain)
 
 				#fix this its broken
-				print('chain ',i,' created ',len(bpy.context.selected_objects),' horizontal joints ',' for ',len(chain),' rigid bodies in chain')
+				print('chain ',i,' created ',chain_joints_count,' horizontal joints ',' for ',len(chain),' rigid bodies in chain')
 				
 
 		

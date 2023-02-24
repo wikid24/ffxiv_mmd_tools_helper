@@ -2160,6 +2160,67 @@ def _transform_rigid_body_bone_chains_by_delta(self,context):
 					angular_damping_end=self.angular_damping_end + rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
 				)
 		
+@register_wrap
+class ResetValue_BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
+	""" Resets the value back to 0 """
+	bl_idname = "ffxiv_mmd_tools_helper.reset_batch_update_property"
+	bl_label = " Resets the value back to 0"
+	
+	"""
+	property: bpy.props.EnumProperty(items = \
+		[('ALL', 'ALL', 'ALL')\
+			,('UP','UP','UP')
+			,('DOWN', 'DOWN', 'DOWN')\
+		], name = "", default = 'DOWN')
+	"""
+	prop_list_items = [
+			('location_x_start','location_x_start','location_x_start'),
+			('location_x_end','location_x_end','location_x_end'),
+			('location_y_start', 'location_y_start', 'location_y_start'),
+			('location_y_end', 'location_y_end', 'location_y_end'),
+			('location_z_start', 'location_z_start', 'location_z_start'),
+			('location_z_end', 'location_z_end', 'location_z_end'),
+			('rotation_w_start', 'rotation_w_start', 'rotation_w_start'),
+			('rotation_w_end', 'rotation_w_end', 'rotation_w_end'),
+			('rotation_x_start', 'rotation_x_start', 'rotation_x_start'),
+			('rotation_x_end', 'rotation_x_end', 'rotation_x_end'),
+			('rotation_y_start', 'rotation_y_start', 'rotation_y_start'),
+			('rotation_y_end', 'rotation_y_end', 'rotation_y_end'),
+			('rotation_z_start', 'rotation_z_start', 'rotation_z_start'),
+			('rotation_z_end', 'rotation_z_end', 'rotation_z_end'),
+			('size_x_start', 'size_x_start', 'size_x_start'),
+			('size_x_end', 'size_x_end', 'size_x_end'),
+			('size_y_end', 'size_y_end', 'size_y_end'),
+			('size_z_start', 'size_z_start', 'size_z_start'),
+			('size_z_end', 'size_z_end', 'size_z_end'),
+			('mass_start','mass_start','mass_start'),
+			('mass_end', 'mass_end', 'mass_end'),
+			('restitution_start','restitution_start','restitution_start'),
+			('restitution_end', 'restitution_end', 'restitution_end'),
+			('friction_start','friction_start','friction_start'),
+			('friction_end', 'friction_end', 'friction_end'),
+			('linear_damping_start','linear_damping_start','linear_damping_start'),
+			('linear_damping_end', 'linear_damping_end', 'linear_damping_end'),
+			('angular_damping_start', 'angular_damping_start', 'angular_damping_start'),
+			('angular_damping_end','angular_damping_end','angular_damping_end'),
+		]
+	
+
+	prop: bpy.props.EnumProperty(items = prop_list_items, name = "", default = 'location_x_start')
+
+	def execute(self, context):
+		cls = BatchUpdateMultipleRigidBodyBoneChain
+		
+
+		for prop_list_item in ResetValue_BatchUpdateMultipleRigidBodyBoneChain.prop_list_items:
+			if prop_list_item[0] == self.prop:
+				print ('at least we got here, location x start is:',cls.location_x_start)
+				setattr(cls,self.prop,0)
+				break
+		
+		return {'FINISHED'}
+
+
 
 
 @register_wrap
@@ -2221,16 +2282,12 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 		#for i in self.rigid_body_bone_chains_data:
 			#print('chain:', str(i),' head:',self.rigid_body_bone_chains_data[i]['head']['bone'], ' tail:',self.rigid_body_bone_chains_data[i]['tail']['bone'])
 
-
 		self.number_of_bone_chains = len(self.rigid_body_bone_chains_data)
 		self.number_of_rigid_bodies = 0
 		for i in self.rigid_body_bone_chains_data:
 			#print(self.rigid_body_bone_chains_data[i]['chain_length'])
 			self.number_of_rigid_bodies = self.number_of_rigid_bodies + self.rigid_body_bone_chains_data[i]['chain_length']
 			
-
-
-
 		wm = context.window_manager		
 		return wm.invoke_props_dialog(self, width=400)
 
@@ -2271,6 +2328,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row = c.row()
 			row.label(text='Location X')
 			row.prop(self, 'location_x_start',expand=True, text="")
+			#row.operator("ffxiv_mmd_tools_helper.reset_batch_update_property", text='',icon='TRASH').prop ='location_x_start'
 			row.prop(self, 'location_x_end',expand=True, text="")
 			row.prop(self, "location_x_edit", text="")
 			row = c.row()
@@ -2284,64 +2342,28 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row.prop(self, 'location_z_end',expand=True, text="")
 			row.prop(self, "location_z_edit", text="")
 			row = c.row()
-			if starting_rigid_body['rotation_mode'] == 'QUATERNION' and ending_rigid_body['rotation_mode'] == 'QUATERNION':	
+			if (starting_rigid_body['rotation_mode'] == 'QUATERNION' and ending_rigid_body['rotation_mode'] == 'QUATERNION') \
+				or (starting_rigid_body['rotation_mode'] == 'AXIS_ANGLE' and ending_rigid_body['rotation_mode'] == 'AXIS_ANGLE'):	
 				row = c.row()
 				row.label(text='Rotation W')
 				row.prop(self, 'rotation_w_start',expand=True, text="")
 				row.prop(self, 'rotation_w_end',expand=True, text="")
 				row.prop(self, "rotation_w_edit", text="")
-				row = c.row()
-				row.label(text='Rotation X')
-				row.prop(self, 'rotation_x_start',expand=True, text="")
-				row.prop(self, 'rotation_x_end',expand=True, text="")
-				row.prop(self, "rotation_x_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Y')
-				row.prop(self, 'rotation_y_start',expand=True, text="")
-				row.prop(self, 'rotation_y_end',expand=True, text="")
-				row.prop(self, "rotation_y_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Z')
-				row.prop(self, 'rotation_z_start',expand=True, text="")
-				row.prop(self, 'rotation_z_end',expand=True, text="")
-				row.prop(self, "rotation_z_edit", text="")
-			elif starting_rigid_body['rotation_mode'] == 'AXIS_ANGLE' and ending_rigid_body['rotation_mode'] == 'AXIS_ANGLE':	
-				row = c.row()
-				row.label(text='Rotation W')
-				row.prop(self, 'rotation_w_start',expand=True, text="")
-				row.prop(self, 'rotation_w_end',expand=True, text="")
-				row.prop(self, "rotation_w_edit", text="")
-				row = c.row()
-				row.label(text='Rotation X')
-				row.prop(self, 'rotation_x_start',expand=True, text="")
-				row.prop(self, 'rotation_x_end',expand=True, text="")
-				row.prop(self, "rotation_x_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Y')
-				row.prop(self, 'rotation_y_start',expand=True, text="")
-				row.prop(self, 'rotation_y_end',expand=True, text="")
-				row.prop(self, "rotation_y_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Z')
-				row.prop(self, 'rotation_z_start',expand=True, text="")
-				row.prop(self, 'rotation_z_end',expand=True, text="")
-				row.prop(self, "rotation_z_edit", text="")
-			else:	
-				row = c.row()
-				row.label(text='Rotation X')
-				row.prop(self, 'rotation_x_start',expand=True, text="")
-				row.prop(self, 'rotation_x_end',expand=True, text="")
-				row.prop(self, "rotation_x_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Y')
-				row.prop(self, 'rotation_y_start',expand=True, text="")
-				row.prop(self, 'rotation_y_end',expand=True, text="")
-				row.prop(self, "rotation_y_edit", text="")
-				row = c.row()
-				row.label(text='Rotation Z')
-				row.prop(self, 'rotation_z_start',expand=True, text="")
-				row.prop(self, 'rotation_z_end',expand=True, text="")
-				row.prop(self, "rotation_z_edit", text="")
+			row = c.row()
+			row.label(text='Rotation X')
+			row.prop(self, 'rotation_x_start',expand=True, text="")
+			row.prop(self, 'rotation_x_end',expand=True, text="")
+			row.prop(self, "rotation_x_edit", text="")
+			row = c.row()
+			row.label(text='Rotation Y')
+			row.prop(self, 'rotation_y_start',expand=True, text="")
+			row.prop(self, 'rotation_y_end',expand=True, text="")
+			row.prop(self, "rotation_y_edit", text="")
+			row = c.row()
+			row.label(text='Rotation Z')
+			row.prop(self, 'rotation_z_start',expand=True, text="")
+			row.prop(self, 'rotation_z_end',expand=True, text="")
+			row.prop(self, "rotation_z_edit", text="")
 		row = c.row()
 		if starting_rigid_body['rigid_body_shape'] == 'SPHERE' and ending_rigid_body['rigid_body_shape'] == 'SPHERE':		
 			row = c.row()

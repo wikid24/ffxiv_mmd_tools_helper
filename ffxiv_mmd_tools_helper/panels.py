@@ -197,9 +197,9 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 			grid.label(text="Skirt", icon='MESH_CONE')
 			#row.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
 			#row.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
-			grid.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
-			grid.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
-			grid.operator("ffxiv_mmd_tools_helper.get_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
+			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
+			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
+			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
 			row = layout.row()
 			col = row.column()
 			col.label(text="Rigid Body Transform:", icon='CON_CLAMPTO')
@@ -360,11 +360,12 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='AUTOMERGE_ON')
 		row = layout.row()
+		row.operator("ffxiv_mmd_tools_helper.generate_skirt_joints", text = "Generate Skirt Joints",icon='AUTOMERGE_ON')
 		
 		
 
 		
-		
+"""		
 @register_wrap
 class CameraLightingPanel_MTH(bpy.types.Panel):
 	bl_label = "Camera and Lighting"
@@ -412,6 +413,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		layout.prop(context.scene, "ToonModifierColor")
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
+"""
+
 
 @register_wrap
 class MiscellaneousToolsPanel_MTH(bpy.types.Panel):

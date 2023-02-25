@@ -190,6 +190,8 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 	if bpy.context.mode == 'OBJECT':
 		bpy.ops.object.mode_set(mode='EDIT')
 
+	selected_objs = None
+
 	if bpy.context.mode == 'EDIT_ARMATURE':
 
 		if append_to_selected == False:
@@ -202,6 +204,9 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 					b.hide=False
 					b.select = True
 
+		selected_bones = bpy.context.selected_bones
+		return selected_bones
+
 	if bpy.context.mode == 'POSE':
 		if append_to_selected == False:
 			#deselect all bones
@@ -213,6 +218,13 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 				if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
 					b.bone.hide = False
 					b.bone.select = True
+		
+		selected_bones = bpy.context.selected_bones
+		return selected_objs
+
+		
+
+	
                 
 	
 

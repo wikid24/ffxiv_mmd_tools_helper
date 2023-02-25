@@ -1191,7 +1191,7 @@ class AddRigidBodyFromFile(bpy.types.Operator):
 @register_wrap
 class SelectSkirtRigidBodies(bpy.types.Operator):
 	"""Select Rigid Bodies in a skirt """
-	bl_idname = "ffxiv_mmd_tools_helper.get_skirt_rigid_bodies"
+	bl_idname = "ffxiv_mmd_tools_helper.select_skirt_rigid_bodies"
 	bl_label = "Select All Skirt Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 

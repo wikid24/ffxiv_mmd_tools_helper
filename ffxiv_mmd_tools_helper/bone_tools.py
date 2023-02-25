@@ -410,25 +410,6 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 				
 
 @register_wrap
-class ShowHideBoneNames(bpy.types.Operator):
-	"""Toggle Bone Name Display On or Off"""
-	bl_idname = "ffxiv_mmd_tools_helper.bone_names_showhide"
-	bl_label = "Show or Hide the Bone Name"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	@classmethod
-	def poll(cls, context):
-		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
-
-	def execute(self, context):
-		if context.object.data.show_names == True:
-			context.object.data.show_names = False
-		else:
-			context.object.data.show_names = True
-		return {'FINISHED'}
-
-@register_wrap
 class SortMMDBoneOrder(bpy.types.Operator):
 	"""Auto Sorts the MMD Bone Order & Deformation Tiers"""
 	bl_idname = "ffxiv_mmd_tools_helper.sort_mmd_bone_order"

@@ -75,6 +75,7 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 				if (obj.rigid_body_constraint.object2.name == rigid_body_1 or  obj.rigid_body_constraint.object2.name == rigid_body_2):
 					print ('deleting existing joint:', obj.name)
 					bpy.data.objects.remove(obj, do_unlink=True)
+					break
 	
 	object_1 = None
 	object_2 = None
@@ -109,6 +110,8 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 		
 		joint = bpy.context.view_layer.objects.active
 		joint.name = joint_name
+		joint.mmd_joint['name_e'] = joint_name
+		joint.mmd_joint['name_j'] = joint_name
 		#joint.rotation_euler[0] = 0 #sets x rotation to 0
 		bpy.context.view_layer.objects.active = joint
 		print ('created joint: ',joint.name)
@@ -606,12 +609,12 @@ class BatchUpdateJoints(bpy.types.Operator):
 	#create property,and property_edit 
 
 	props_init = {
-		('limit_linear','_lower','bpy.props.FloatProperty(default=0,precision=2)')
-		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,precision=2)')
-		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
-		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,unit=\'ROTATION\')')
-		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2)')
-		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2)')
+		('limit_linear','_lower','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
+		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
 		}
 	
 	for prop,prop_suffix,prop_type in props_init:
@@ -891,12 +894,12 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
 								,use_bone_rotation=True
-								,limit_linear_lower= [0,0,0]#limit_linear_lower
-								,limit_linear_upper= [0,0,0]#limit_linear_upper
-								,limit_angular_lower= [0,0,0]#limit_angular_lower
-								,limit_angular_upper= [0,0,0]#limit_angular_upper
-								,spring_linear= [0,0,0]#spring_linear
-								,spring_angular=[0,0,0]#spring_angular
+								,limit_linear_lower= limit_linear_lower
+								,limit_linear_upper= limit_linear_upper
+								,limit_angular_lower= limit_angular_lower
+								,limit_angular_upper= limit_angular_upper
+								,spring_linear= spring_linear
+								,spring_angular=spring_angular
 								)
 					
 					if joint:
@@ -909,16 +912,16 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 					rigid_body_2 = chain[0][2].name
 
 					joint = create_joint(armature=armature
-								,joint_name = 'J.v-'+rigid_body_1+'-'+rigid_body_2
+								,joint_name = 'J.v-'+rigid_body_1+'-'+ rigid_body_2
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
 								,use_bone_rotation=True
-								,limit_linear_lower= [0,0,0]#limit_linear_lower
-								,limit_linear_upper= [0,0,0]#limit_linear_upper
-								,limit_angular_lower= [0,0,0]#limit_angular_lower
-								,limit_angular_upper= [0,0,0]#limit_angular_upper
-								,spring_linear= [0,0,0]#spring_linear
-								,spring_angular=[0,0,0]#spring_angular
+								,limit_linear_lower= limit_linear_lower
+								,limit_linear_upper= limit_linear_upper
+								,limit_angular_lower= limit_angular_lower
+								,limit_angular_upper= limit_angular_upper
+								,spring_linear= spring_linear
+								,spring_angular=spring_angular
 								)
 					if joint:
 						chain_joints_count+=1
@@ -972,16 +975,135 @@ class BatchCreateVerticalJoints(bpy.types.Operator):
 		type=bpy.types.Object
 		,poll=lambda self, obj: obj.mmd_type == 'RIGID_BODY' and obj not in bpy.context.selected_objects,
 		)
+
+	props_init = {
+		('limit_linear','_lower','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
+		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
+		}
+	use_bone_rotation= bpy.props.BoolProperty(default=True)
+	
+	for prop,prop_suffix,prop_type in props_init:
+		#create all the properties
+		if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+			#equivalent to 'writing limit_linear_x_lower_edit = bpy.props.FloatProperty(default=0,precision=2)'
+			exec(f'{prop}_x{prop_suffix} = {prop_type}')
+			exec(f'{prop}_y{prop_suffix} = {prop_type}')
+			exec(f'{prop}_z{prop_suffix} = {prop_type}')
+
 	
 	def invoke(self, context, event):
+		
+		#initialize all properties with the first object in joints_data
+		#equivalent to writing 'limit_linear_x_lower = joints_data[0]['limit_linear_x_lower'][0]'
+		for prop,prop_suffix,prop_type in self.props_init:
+			if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+				setattr(self,prop + '_x' + prop_suffix,0)
+				setattr(self,prop + '_y' + prop_suffix,0)
+				setattr(self,prop + '_z' + prop_suffix,0)
+		self.use_bone_rotation = True
+
+		self.rigid_body_chains = rigid_body.get_all_rigid_body_chains_from_selected()
+		self.rigid_body_chain_count = len(self.rigid_body_chains)
+
+		self.rigid_body_count = 0
+		for chain in self.rigid_body_chains:
+			self.rigid_body_count += len (chain)
+
+
+
 		wm = context.window_manager      
 		return wm.invoke_props_dialog(self, width=400)
 
 	def draw(self, context):
 		layout = self.layout
+
 		row = layout.row()
-		row.label(text='(Optional) Pin the head to a rigid body')
+
+
+		row.label(text='Rigid Body Bone Chains: '+ str(self.rigid_body_chain_count))
+		row.label(text='Selected Rigid Bodies: ' + str(self.rigid_body_count))
+		row = layout.row()
+		row.label(text='(Optional) Pin each chain\'s head to:')
 		row.prop(context.scene, "vertical_joint_pin", text="")
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Use Bone Rotation')
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.prop(self,'use_bone_rotation',text='')
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Linear Lower:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_linear_x_lower",text="X",toggle=False)
+		c.prop(self,"limit_linear_y_lower",text="Y",toggle=False)
+		c.prop(self,"limit_linear_z_lower",text="Z",toggle=False)
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Linear Upper:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_linear_x_upper",text="X",toggle=False)
+		c.prop(self,"limit_linear_y_upper",text="Y",toggle=False)
+		c.prop(self,"limit_linear_z_upper",text="Z",toggle=False)
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Angular Lower:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_angular_x_lower",text="X",toggle=False)
+		c.prop(self,"limit_angular_y_lower",text="Y",toggle=False)
+		c.prop(self,"limit_angular_z_lower",text="Z",toggle=False)
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Limit Angular Upper:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"limit_angular_x_upper",text="X",toggle=False)
+		c.prop(self,"limit_angular_y_upper",text="Y",toggle=False)
+		c.prop(self,"limit_angular_z_upper",text="Z",toggle=False)
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Spring Linear:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"spring_linear_x",text="X",toggle=False)
+		c.prop(self,"spring_linear_y",text="Y",toggle=False)
+		c.prop(self,"spring_linear_z",text="Z",toggle=False)
+		row = layout.row()
+		c = row.column(align=True)
+		c = row.column(align=True)
+		c.alignment = 'RIGHT'
+		c.label(text='Spring Angular:')
+		c.label(text="")
+		c.label(text="")
+		c = row.column(align=True)
+		c.prop(self,"spring_angular_x",text="X",toggle=False)
+		c.prop(self,"spring_angular_y",text="Y",toggle=False)
+		c.prop(self,"spring_angular_z",text="Z",toggle=False)
+
 
 	@classmethod
 	def poll(cls, context):
@@ -1000,7 +1122,15 @@ class BatchCreateVerticalJoints(bpy.types.Operator):
 
 	def execute(self, context):
 		if context.scene.vertical_joint_pin:
-			create_vertical_joints(rigid_body_pin_obj=context.scene.vertical_joint_pin)
+			create_vertical_joints(rigid_body_pin_obj=context.scene.vertical_joint_pin
+									,use_bone_rotation=self.use_bone_rotation
+									,limit_linear_lower=[self.limit_linear_x_lower,self.limit_linear_y_lower,self.limit_linear_z_lower] 
+									,limit_linear_upper= [self.limit_linear_x_upper,self.limit_linear_y_upper,self.limit_linear_z_upper]
+									,limit_angular_lower=[self.limit_angular_x_lower,self.limit_angular_y_lower,self.limit_angular_z_lower]
+									,limit_angular_upper=[self.limit_angular_x_upper,self.limit_angular_y_upper,self.limit_angular_z_upper]
+									,spring_angular=[self.spring_angular_x,self.spring_angular_y,self.spring_angular_z]
+									,spring_linear=[self.spring_linear_x,self.spring_linear_y,self.spring_linear_z]						
+									)
 		else:
 			create_vertical_joints()
 		return {'FINISHED'}
@@ -1016,6 +1146,8 @@ def create_horizontal_joints( rigid_body_chains
 		armature = model.find_MMD_Armature(active_obj)
 		#root = model.findRoot(active_obj)
 
+
+		
 		total_joints = 0
 
 		if rigid_body_chains is not None:
@@ -1034,13 +1166,13 @@ def create_horizontal_joints( rigid_body_chains
 								,joint_name = 'J.h-'+rigid_body_1+'-'+ rigid_body_2
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
-								,use_bone_rotation=True
-								,limit_linear_lower= [0,0,0]#limit_linear_lower
-								,limit_linear_upper= [0,0,0]#limit_linear_upper
-								,limit_angular_lower= [0,0,0]#limit_angular_lower
-								,limit_angular_upper= [0,0,0]#limit_angular_upper
-								,spring_linear= [0,0,0]#spring_linear
-								,spring_angular=[0,0,0]#spring_angular
+								,use_bone_rotation=use_bone_rotation
+								,limit_linear_lower= limit_linear_lower
+								,limit_linear_upper= limit_linear_upper
+								,limit_angular_lower= limit_angular_lower
+								,limit_angular_upper= limit_angular_upper
+								,spring_linear= spring_linear
+								,spring_angular=spring_angular
 								)
 					if joint:
 						chain_joints_count+=1
@@ -1055,13 +1187,13 @@ def create_horizontal_joints( rigid_body_chains
 								,joint_name = 'J.h-'+rigid_body_1+'-'+rigid_body_2
 								,rigid_body_1=rigid_body_1
 								,rigid_body_2=rigid_body_2
-								,use_bone_rotation=True
-								,limit_linear_lower= [0,0,0]#limit_linear_lower
-								,limit_linear_upper= [0,0,0]#limit_linear_upper
-								,limit_angular_lower= [0,0,0]#limit_angular_lower
-								,limit_angular_upper= [0,0,0]#limit_angular_upper
-								,spring_linear= [0,0,0]#spring_linear
-								,spring_angular=[0,0,0]#spring_angular
+								,use_bone_rotation=use_bone_rotation
+								,limit_linear_lower= limit_linear_lower
+								,limit_linear_upper= limit_linear_upper
+								,limit_angular_lower= limit_angular_lower
+								,limit_angular_upper= limit_angular_upper
+								,spring_linear= spring_linear
+								,spring_angular=spring_angular
 								)
 					if joint:
 						chain_joints_count+=1
@@ -1104,7 +1236,7 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 	""" Create Horizontal Joints from Selected Rigid Bodies"""
 	bl_idname = "ffxiv_mmd_tools_helper.batch_create_horizontal_joints"
 	bl_label = "Create Horizontal Joints from Selected Rigid Bodies"
-	bl_options = {'REGISTER','UNDO','PRESET'} 
+	bl_options = {'REGISTER','UNDO'} 
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 
@@ -1143,12 +1275,25 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 	grouped_rigid_bodies_by_index_pos = None
 	rigid_body_chain_index = None
 	wrap_around = bpy.props.BoolProperty(default=False,name='Connect Ending Rigid to Starting Rigid',update=_update_prop)
-	limit_linear_lower = None
-	limit_linear_upper = None
-	limit_angular_lower = None 
-	limit_angular_upper = None
-	spring_linear = None
-	spring_angular = None
+
+	props_init = {
+		('limit_linear','_lower','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_linear','_upper','bpy.props.FloatProperty(default=0,unit=\'LENGTH\')')
+		,('limit_angular','_lower','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('limit_angular','_upper','bpy.props.FloatProperty(default=0,min=math.radians(-360), max=math.radians(360),unit=\'ROTATION\')')
+		,('spring_linear','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
+		,('spring_angular','','bpy.props.FloatProperty(default=0,precision=2,min=0)')
+		}
+	use_bone_rotation= bpy.props.BoolProperty(default=True)
+	
+	for prop,prop_suffix,prop_type in props_init:
+		#create all the properties
+		if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+			#equivalent to 'writing limit_linear_x_lower_edit = bpy.props.FloatProperty(default=0,precision=2)'
+			exec(f'{prop}_x{prop_suffix} = {prop_type}')
+			exec(f'{prop}_y{prop_suffix} = {prop_type}')
+			exec(f'{prop}_z{prop_suffix} = {prop_type}')
+
 
 
 		
@@ -1163,12 +1308,23 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		props.rigid_body_list_with_number_index = None
 		props.grouped_rigid_bodies_by_index_pos = None
 		props.rigid_body_chain_index = None
+		"""
 		props.limit_linear_lower = None
 		props.limit_linear_upper = None
 		props.limit_angular_lower = None 
 		props.limit_angular_upper = None
 		props.spring_linear = None
 		props.spring_angular = None
+		"""
+
+		#initialize all properties with the first object in joints_data
+		#equivalent to writing 'limit_linear_x_lower = joints_data[0]['limit_linear_x_lower'][0]'
+		for prop,prop_suffix,prop_type in self.props_init:
+			if prop in ('limit_linear','limit_angular','spring_linear','spring_angular'):
+				setattr(self,prop + '_x' + prop_suffix,0)
+				setattr(self,prop + '_y' + prop_suffix,0)
+				setattr(self,prop + '_z' + prop_suffix,0)
+		self.use_bone_rotation = True
 
 		wm = context.window_manager      
 		return wm.invoke_props_dialog(self, width=400)
@@ -1179,9 +1335,8 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 
 		layout = self.layout
 		row = layout.row()
-		row.label(text='*****************************************')
 		row = layout.row()
-		row.label(text='Input Horizontal Rigid Body Search Scope:')
+		row.label(text='Input Rigid Body Search Scope:')
 		row = layout.row()
 		col = row.column(align=True)
 		grid = col.grid_flow(align=True)
@@ -1193,34 +1348,118 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		row.prop(self,"scope_startswith", text = "")
 		row.prop(self,"scope_contains", text = "")
 		row.prop(self,"scope_endswith", text = "")
-
 		row = grid.row(align=True)
 		row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids", text = 'Find', icon='VIEWZOOM')
 		#row.operator("ffxiv_mmd_tools_helper.clear_horizontal_joints_find_rigids", text='',icon='TRASH')
 		row = layout.row()
-		row.label(text='*****************************************')
 		row = layout.row()
 		row.label(text=self.message)
 		if props.search_scope_objects is not None:
 			row = layout.row()
-			row.label(text='Sample Rigid Body: '+props.sample_rigid_body[1])
-			row.label(text=str(len(props.sample_rigid_body[2])) + ' numbers found: '+ str(props.sample_rigid_body[2]) )
+			#row.label(text='Sample Rigid Body: '+props.sample_rigid_body[1])
+			row = layout.row()
+			row.label(text=str(len(props.sample_rigid_body[2])) + ' numbers found: '+ str(props.sample_rigid_body[2])+' on sample rigid body: '+props.sample_rigid_body[1])
 			row = layout.row()
 			row.label(text='Specify which value indicates a horizontal rigid body chain: ')
 			row = layout.row()
 			row.prop(self,'index_position_enum',expand=True)
-			row.label (text='index position is: ' + self.index_position_enum)
+			row.label (text='Index Position: ' + self.index_position_enum)
 			if props.grouped_rigid_bodies_by_index_pos is not None:
-				row = layout.row()
+				box = layout.box()
+				row = box.row()
 				col = row.column()
-				col.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='UP').direction = 'UP'
-				col.label(text = 'Rigid Body Chain: ' + str(props.rigid_body_chain_index))
-				col.label(text = 'Starting Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][0][1]) )
-				col.label(text = 'Ending Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][-1][1]) )
-				col.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='DOWN').direction = 'DOWN'
+				row.label(text='Chains found: '+ str(len(props.grouped_rigid_bodies_by_index_pos)))
+				row = box.row()
+				col = row.column()
+				row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='PREVIOUS',icon='TRIA_LEFT').direction = 'PREVIOUS'
+				row.label(text = 'Chain: ' + str(props.rigid_body_chain_index))
+				row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='NEXT',icon='TRIA_RIGHT').direction = 'NEXT'
+				row = box.row()
+				col = row.column()
+				row.label(text = 'Rigid Bodies within chain: ' + str(len(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index])) )
+				row = box.row()
+				col = row.column()
+				row.label(text = 'Starting Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][0][1]) )
+				row.label(text = 'Ending Rigid Body: ' + str(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index][-1][1]) )
+
 				row = layout.row()
 				col = row.column()
 				row.prop(self,'wrap_around')
+
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Use Bone Rotation')
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.prop(self,'use_bone_rotation',text='')
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Limit Linear Lower:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"limit_linear_x_lower",text="X",toggle=False)
+				c.prop(self,"limit_linear_y_lower",text="Y",toggle=False)
+				c.prop(self,"limit_linear_z_lower",text="Z",toggle=False)
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Limit Linear Upper:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"limit_linear_x_upper",text="X",toggle=False)
+				c.prop(self,"limit_linear_y_upper",text="Y",toggle=False)
+				c.prop(self,"limit_linear_z_upper",text="Z",toggle=False)
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Limit Angular Lower:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"limit_angular_x_lower",text="X",toggle=False)
+				c.prop(self,"limit_angular_y_lower",text="Y",toggle=False)
+				c.prop(self,"limit_angular_z_lower",text="Z",toggle=False)
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Limit Angular Upper:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"limit_angular_x_upper",text="X",toggle=False)
+				c.prop(self,"limit_angular_y_upper",text="Y",toggle=False)
+				c.prop(self,"limit_angular_z_upper",text="Z",toggle=False)
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Spring Linear:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"spring_linear_x",text="X",toggle=False)
+				c.prop(self,"spring_linear_y",text="Y",toggle=False)
+				c.prop(self,"spring_linear_z",text="Z",toggle=False)
+				row = layout.row()
+				c = row.column(align=True)
+				c = row.column(align=True)
+				c.alignment = 'RIGHT'
+				c.label(text='Spring Angular:')
+				c.label(text="")
+				c.label(text="")
+				c = row.column(align=True)
+				c.prop(self,"spring_angular_x",text="X",toggle=False)
+				c.prop(self,"spring_angular_y",text="Y",toggle=False)
+				c.prop(self,"spring_angular_z",text="Z",toggle=False)
 				
 
 	@classmethod
@@ -1231,16 +1470,17 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		props = BatchCreateHorizontalJoints
 
 
-
+		print('we\'re here: ',self.limit_linear_x_lower)
 
 		create_horizontal_joints(props.grouped_rigid_bodies_by_index_pos
 								,wrap_around=props.wrap_around if props.wrap_around is not None else None
-								,limit_linear_lower=None if props.limit_linear_lower is not None else None
-								,limit_linear_upper=None if props.limit_linear_upper is not None else None
-								,limit_angular_lower=None if props.limit_angular_lower is not None else None
-								,limit_angular_upper=None if props.limit_angular_upper is not None else None
-								,spring_linear=None if props.spring_linear is not None else None
-								,spring_angular=None if props.spring_angular is not None else None
+								,use_bone_rotation=self.use_bone_rotation
+								,limit_linear_lower=[self.limit_linear_x_lower,self.limit_linear_y_lower,self.limit_linear_z_lower] 
+								,limit_linear_upper= [self.limit_linear_x_upper,self.limit_linear_y_upper,self.limit_linear_z_upper]
+								,limit_angular_lower=[self.limit_angular_x_lower,self.limit_angular_y_lower,self.limit_angular_z_lower]
+								,limit_angular_upper=[self.limit_angular_x_upper,self.limit_angular_y_upper,self.limit_angular_z_upper]
+								,spring_angular=[self.spring_angular_x,self.spring_angular_y,self.spring_angular_z]
+								,spring_linear=[self.spring_linear_x,self.spring_linear_y,self.spring_linear_z]			
 							)
 
 
@@ -1302,17 +1542,17 @@ class HorizontalJointsFindRigidBodiesByIndexPosition(bpy.types.Operator):
 	bl_options = {'REGISTER', 'UNDO'}
 
 	direction = bpy.props.EnumProperty(items = \
-	[('UP', 'UP', 'UP')\
-		,('DOWN','DOWN','DOWN')
-	], name = "", default = 'UP')
+	[('NEXT', 'NEXT', 'NEXT')\
+		,('PREVIOUS','PREVIOUS','PREVIOUS')
+	], name = "", default = 'NEXT')
 
 	def execute(self, context):
 		props = BatchCreateHorizontalJoints
 		props.grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (props.rigid_body_list_with_number_index,props.index_position)
-		if self.direction == 'UP':
+		if self.direction == 'NEXT':
 			props.rigid_body_chain_index += 1
 			props.rigid_body_chain_index = min(len(props.grouped_rigid_bodies_by_index_pos)-1,props.rigid_body_chain_index)
-		if self.direction == 'DOWN':
+		if self.direction == 'PREVIOUS':
 			props.rigid_body_chain_index -= 1
 			props.rigid_body_chain_index = max(0,props.rigid_body_chain_index)
 

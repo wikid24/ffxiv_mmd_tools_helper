@@ -2175,16 +2175,16 @@ def _transform_rigid_body_bone_chains_by_delta(self,context):
 					size_y_end=self.size_y_end + rigid_body_bone_chains_data[i]['tail']['size_y'] if self.size_y_edit else None,
 					size_z_start=self.size_z_start + rigid_body_bone_chains_data[i]['head']['size_z'] if self.size_z_edit else None,
 					size_z_end=self.size_z_end + rigid_body_bone_chains_data[i]['tail']['size_z'] if self.size_z_edit else None,
-					mass_start=self.mass_start + rigid_body_bone_chains_data[i]['head']['mass'] if self.mass_edit else None,
-					mass_end=self.mass_end + rigid_body_bone_chains_data[i]['tail']['mass'] if self.mass_edit else None,
-					restitution_start=self.restitution_start + rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
-					restitution_end=self.restitution_end + rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
-					friction_start=self.friction_start + rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
-					friction_end=self.friction_edit + rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
-					linear_damping_start=self.linear_damping_start + rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
-					linear_damping_end=self.linear_damping_end + rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
-					angular_damping_start=self.angular_damping_start + rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,
-					angular_damping_end=self.angular_damping_end + rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
+					#mass_start=self.mass_start + rigid_body_bone_chains_data[i]['head']['mass'] if self.mass_edit else None,
+					#mass_end=self.mass_end + rigid_body_bone_chains_data[i]['tail']['mass'] if self.mass_edit else None,
+					#restitution_start=self.restitution_start + rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
+					#restitution_end=self.restitution_end + rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
+					#friction_start=self.friction_start + rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
+					#friction_end=self.friction_edit + rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
+					#linear_damping_start=self.linear_damping_start + rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
+					#linear_damping_end=self.linear_damping_end + rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
+					#angular_damping_start=self.angular_damping_start + rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,
+					#angular_damping_end=self.angular_damping_end + rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
 				)
 		
 @register_wrap
@@ -2279,11 +2279,11 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			('size_x', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
 			('size_y', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
 			('size_z', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
-			('mass', 'bpy.props.FloatProperty(default=0,min=-1,precision=6,unit=\'MASS\',update=_transform_rigid_body_bone_chains_by_delta)'),
-			('restitution', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
-			('friction', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
-			('linear_damping', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
-			('angular_damping', 'bpy.props.FloatProperty(default=0,min=-1,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('mass', 'bpy.props.FloatProperty(default=0,min=0.001,precision=6,unit=\'MASS\',update=_transform_rigid_body_bone_chains_by_delta)'),
+			('restitution', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('friction', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('linear_damping', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
+			('angular_damping', 'bpy.props.FloatProperty(default=0,min=0,max=1,precision=6,update=_transform_rigid_body_bone_chains_by_delta)'),
 		]
 
 	for property,prop_type in props_init:
@@ -2344,7 +2344,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 		row = layout.row() 
 		c = layout.column(align=True)
 		row = c.row()
-		row.label(text="Property")
+		row.label(text="")
 		row.label(text="Bone Head Delta")
 		row.label(text="Bone Tail Delta")
 		if root.mmd_root.is_built == True:
@@ -2425,6 +2425,10 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row.prop(self, 'size_y_start', expand=True, text="")
 			row.prop(self, 'size_y_end', expand=True, text="")
 			row.prop(self, "size_y_edit", text="")
+		row = c.row()
+		row.label(text="")
+		row.label(text="Bone Head Absolute")
+		row.label(text="Bone Tail Absolute")
 		row = c.row()
 		row.label(text="Mass")
 		row.prop(self, 'mass_start',text="")
@@ -2509,16 +2513,16 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 						size_y_end=self.size_y_end + self.rigid_body_bone_chains_data[i]['tail']['size_y'] if self.size_y_edit else None,
 						size_z_start=self.size_z_start + self.rigid_body_bone_chains_data[i]['head']['size_z'] if self.size_z_edit else None,
 						size_z_end=self.size_z_end + self.rigid_body_bone_chains_data[i]['tail']['size_z'] if self.size_z_edit else None,
-						mass_start=self.mass_start + self.rigid_body_bone_chains_data[i]['head']['mass'] if self.mass_edit else None,
-						mass_end=self.mass_end + self.rigid_body_bone_chains_data[i]['tail']['mass'] if self.mass_edit else None,
-						restitution_start=self.restitution_start + self.rigid_body_bone_chains_data[i]['head']['restitution'] if self.restitution_edit else None,
-						restitution_end=self.restitution_end + self.rigid_body_bone_chains_data[i]['tail']['restitution'] if self.restitution_edit else None,
-						friction_start=self.friction_start + self.rigid_body_bone_chains_data[i]['head']['friction'] if self.friction_edit else None,
-						friction_end=self.friction_end + self.rigid_body_bone_chains_data[i]['tail']['friction'] if self.friction_edit else None,
-						linear_damping_start=self.linear_damping_start + self.rigid_body_bone_chains_data[i]['head']['linear_damping']  if self.linear_damping_edit else None,
-						linear_damping_end=self.linear_damping_end + self.rigid_body_bone_chains_data[i]['tail']['linear_damping'] if self.linear_damping_edit else None,
-						angular_damping_start=self.angular_damping_start + self.rigid_body_bone_chains_data[i]['head']['angular_damping'] if self.angular_damping_edit else None,
-						angular_damping_end=self.angular_damping_end + self.rigid_body_bone_chains_data[i]['tail']['angular_damping'] if self.angular_damping_edit else None
+						mass_start=self.mass_start if self.mass_edit else None,
+						mass_end=self.mass_end if self.mass_edit else None,
+						restitution_start=self.restitution_start if self.restitution_edit else None,
+						restitution_end=self.restitution_end if self.restitution_edit else None,
+						friction_start=self.friction_start if self.friction_edit else None,
+						friction_end=self.friction_end if self.friction_edit else None,
+						linear_damping_start=self.linear_damping_start if self.linear_damping_edit else None,
+						linear_damping_end=self.linear_damping_end if self.linear_damping_edit else None,
+						angular_damping_start=self.angular_damping_start if self.angular_damping_edit else None,
+						angular_damping_end=self.angular_damping_end if self.angular_damping_edit else None
 					)
 			
 		return {'FINISHED'}

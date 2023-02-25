@@ -5,6 +5,7 @@ from . import register_wrap
 from . import bones_renamer
 from . import rigid_body
 from . import joints
+from . import model
 
 
 
@@ -636,20 +637,23 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         if bpy.context.active_object is not None:
             obj = context.active_object
 
-            contains_rigidbodies = False
             contains_skirt_bones = False
+            is_mmd_armature = False
+            armature = None
 
-            if obj.type == 'ARMATURE':
-                for child in obj.parent.children:
-                    if child.name == ('rigidbodies') or child.mmd_type == 'RIGID_BODY':
-                        contains_rigidbodies = True
-                        break
+            if model.find_MMD_Armature(obj) is not None:
+                armature = model.find_MMD_Armature(obj)
+                is_mmd_armature = True
+
+
+            if armature is not None:
+
                 for pbone in obj.pose.bones:
                     if pbone.name.startswith('skirt_'):
                         contains_skirt_bones = True
                         break
 
-            return obj is not None and obj.type == 'ARMATURE'  and contains_rigidbodies == True and contains_skirt_bones==True
+            return obj is not None and is_mmd_armature and contains_skirt_bones
         return False
 
     def execute(self, context):
@@ -756,20 +760,25 @@ class GenerateSkirtJoints(bpy.types.Operator):
         if bpy.context.active_object is not None:
             obj = context.active_object
 
-            contains_rigidbodies = False
-            contains_skirt_bones = False
+            contains_skirt_rigidbodies = False
+            is_mmd_armature = False
+            armature = None
+            root = None
 
-            if obj.type == 'ARMATURE':
-                for child in obj.parent.children:
-                    if child.name == ('rigidbodies') or child.mmd_type == 'RIGID_BODY':
-                        contains_rigidbodies = True
-                        break
-                for pbone in obj.pose.bones:
-                    if pbone.name.startswith('skirt_'):
-                        contains_skirt_bones = True
-                        break
+            if model.find_MMD_Armature(obj) is not None:
+                armature = model.find_MMD_Armature(obj)
+                root = model.findRoot(armature)
+                is_mmd_armature = True
 
-            return obj is not None and obj.type == 'ARMATURE'  and contains_rigidbodies == True and contains_skirt_bones==True
+
+            if armature is not None:
+
+                for child in root.children_recursive:
+                    if child.mmd_type == 'RIGID_BODY' and child.name.startswith('skirt_'):
+                        contains_skirt_rigidbodies = True
+                        break
+                
+            return obj is not None and is_mmd_armature  and contains_skirt_rigidbodies
         return False
 
     def execute(self, context):

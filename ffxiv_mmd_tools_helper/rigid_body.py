@@ -367,6 +367,7 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_sele
 	bpy.ops.object.mode_set(mode='OBJECT')
 	
 	obj = bpy.context.active_object
+
 	if obj.type == 'ARMATURE':
 		search_scope = bpy.context.object.parent.children_recursive
 	else:

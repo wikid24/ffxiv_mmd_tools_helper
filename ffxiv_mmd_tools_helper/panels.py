@@ -160,7 +160,7 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 			grid.label(text="Rigid Body Visibility")
 			grid.prop(root.mmd_root,"show_meshes", toggle=True, text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		else:
-			grid.label(text='')
+			grid.label(text="Rigid Body Visibility")
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True,columns=2)
@@ -172,7 +172,7 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 				grid.prop(context.active_object,"name",text="")	
 				grid.operator("ffxiv_mmd_tools_helper.get_bone_from_rigid_body",text=str(context.active_object.mmd_rigid.bone))
 			else:
-				grid.label(text='')
+				grid.label(text='Select a Rigid Body')
 		row = layout.row()
 		col = row.column(align=True)
 		grid = col.grid_flow(align=True)
@@ -252,8 +252,8 @@ class JointsPanel_MTH(bpy.types.Panel):
 		col = row.column()
 		grid = col.grid_flow(align=True,columns=3)
 		grid.label(text="Active Joint: ")
-		grid.label(text='Rigid Body 1: ')	
-		grid.label(text='Rigid Body 2: ')	
+		grid.label(text='Rigid 1: ')	
+		grid.label(text='Rigid 2: ')	
 		grid = col.grid_flow(align=True,columns=4)
 		if(context.active_object):
 			if context.active_object.mmd_type == 'JOINT':
@@ -261,7 +261,7 @@ class JointsPanel_MTH(bpy.types.Panel):
 				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object1.name).rigid_number = '1'
 				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object2.name).rigid_number = '2'
 			else:
-				grid.label(text='')
+				grid.label(text='Select a Joint')
 		row = layout.row()
 		col = row.column()
 		row = col.row(align=True)
@@ -288,17 +288,20 @@ class JointsPanel_MTH(bpy.types.Panel):
 		row.operator('ffxiv_mmd_tools_helper.create_joints', text='From Selected Rigid Bodies')	
 		row = grid.row(align=True)
 		row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "From FFXIV Skeleton (CSV)")
-		row = layout.row()
-		col = layout.column()
-		grid = row.grid_flow(row_major=True,align=True,columns=1)
-		grid.label(text='Vertical',icon='EMPTY_SINGLE_ARROW')
-		grid.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Create")
-		grid.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
-		col = layout.column()
-		grid = row.grid_flow(row_major=True,align=True,columns=1)
-		grid.label(text='Horizontal',icon='CENTER_ONLY')
-		grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Create")
-		grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
+		#row = layout.row()
+		#col = layout.column()
+		#grid = row.grid_flow(row_major=True,align=True,columns=1)
+		row = grid.row(align=True)
+		col = row.grid_flow(align=True,columns=2)
+		#grid.label(text='Vertical',icon='EMPTY_SINGLE_ARROW')
+		col.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
+		col.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
+		#col = layout.column()
+		#grid = row.grid_flow(row_major=True,align=True,columns=1)
+		row = grid.row(align=True)
+		#grid.label(text='Horizontal',icon='CENTER_ONLY')
+		grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Bulk Horizontal",icon='CENTER_ONLY')
+		#grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
 
 		
 				

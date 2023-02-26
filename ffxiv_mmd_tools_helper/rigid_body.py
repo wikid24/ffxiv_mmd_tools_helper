@@ -1333,19 +1333,22 @@ class CreateRigidBodies(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
+
 		active_obj = context.active_object
-		is_active_a_bone = True
+		armature = None
+		
+		is_an_mmd_armature = False
 		is_in_edit_or_pose_mode = True
 		
 		if active_obj:
+			armature = model.find_MMD_Armature(active_obj)
+			if armature:
+				is_an_mmd_armature = True
+				if bpy.context.object.mode not in ('EDIT','POSE'):
+					is_in_edit_or_pose_mode = False
 
-			if bpy.context.object.mode not in ('EDIT','POSE'):
-				is_in_edit_or_pose_mode = False
-
-			if active_obj.type != 'ARMATURE':
-				is_active_a_bone = False
-
-		return is_active_a_bone and is_in_edit_or_pose_mode
+				
+		return is_an_mmd_armature and is_in_edit_or_pose_mode
 
 	def execute(self, context):
 		bpy.ops.mmd_tools.rigid_body_add('INVOKE_DEFAULT')

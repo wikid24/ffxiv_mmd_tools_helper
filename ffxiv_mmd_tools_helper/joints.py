@@ -1470,7 +1470,21 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		return True #is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected #and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
+
+		has_rigids = False
+		root = None
+
+		if bpy.context.active_object:
+			active_obj = context.active_object
+			root = model.findRoot(active_obj)
+			if root:
+				if root.children_recursive:
+					for child in root.children_recursive:
+						if child.mmd_type == 'RIGID_BODY':
+							has_rigids = True
+							break
+
+		return has_rigids #is_all_rigid_bodies and is_at_least_2_rigid_bodies_selected #and rigid_body.is_selected_rigid_bodies_in_a_bone_chain()
 
 	def execute(self, context):
 		props = BatchCreateHorizontalJoints

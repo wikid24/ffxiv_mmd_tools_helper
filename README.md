@@ -11,9 +11,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
   - Auto generate Bone Morphs (Facial Expressions)
       - working for Hyur so far (but can be used on other races)
   - Auto generate Rigid Bodies (Physics blocks)
-      - working but only partially completed (so far)
   - Auto generate Joints
-      - working but only partially completed (so far)
   - Auto generate Bone Groups
   - Auto generate Shape Keys from csv
       - Working for Hyur, partially completed (so far)
@@ -21,11 +19,11 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
   - Auto Sort the MMD Bone Order and Deformation Tiers
-  - Auto-fix MMD Bone Names
+  - Auto-fix/Translate MMD Bone Names
   - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
   - A bunch of important useful stuff. Will list them later.
 
-# Conversion/upgrade to Blender 2.8+ (to do):
+# To-Do Conversion/upgrade to Blender 2.8+ (from original Hogarth-MMD plugin):
   - mmd_lamp_setup.py
   - mmd_view.py
   - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)

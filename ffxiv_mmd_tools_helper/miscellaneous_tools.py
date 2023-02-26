@@ -3,6 +3,8 @@ import math
 from . import register_wrap
 from . import model
 from mmd_tools.core.bone import FnBone
+from . import rigid_body
+from . import bone_tools
 
 
 def all_materials_mmd_ambient_white():
@@ -82,34 +84,104 @@ def analyze_selected_parent_child_bone_pair():
 
 	bpy.ops.object.mode_set(mode='POSE')
 
+def flag_unused_bones():
+	armature = model.findArmature(bpy.context.active_object)
+	root = armature.parent
+
+
+	#check if bone has any attached rigid bodies, or vertex groups. If it has neither, delete it.
+	#ignore D bones, IK bones, and shoulder P & C bones.
+	#need to add:ignore hidden bones or bones on another layer
+
+	if armature is not None:
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		#Get bones from the metadata dictionary
+		target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+		FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_metadata_by_bone_type("is_special", target_columns)
+
+
+		for b in bpy.context.active_object.pose.bones:
+			has_rigid = False
+			has_vg = False
+			is_special = False
+
+			#check if bone has any constraints
+			if len(b.constraints.items()) > 0:
+				is_special = True
+
+			#check if bone is a special MMD Tools bone
+			if b.name.startswith('_dummy') or b.name.startswith('_shadow'):
+				is_special = True
+			
+			#check if bone is on the 'is_special' list
+			for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
+				if b.name == metadata_bone[1]:
+					is_special = True
+					break
+
+			if is_special == False:		
+				for obj in root.children_recursive:
+					#check for vertex groups
+					if obj.type =='MESH':
+						for vg in obj.vertex_groups:
+							if vg.name == b.name:
+								if vg.name == 'j_mune_r':
+									print (vg.name,' found on ',obj.name)
+								has_vg = True
+								break
+					#check for rigid bodies
+					if obj.mmd_type == 'RIGID_BODY':
+						if b == rigid_body.get_bone_from_rigid_body(obj):
+							has_rigid = True
+							break
+				
+				for b2 in bpy.context.active_object.pose.bones:
+					#check if bone is used as a transform bone
+					if b2.mmd_bone.additional_transform_bone == b.name:
+						is_special = True
+						break
+					#check if bone is used as an IK bone
+					if 'IK' in b2.constraints.keys():
+						if b2.constraints['IK'].subtarget == b.name:
+							is_special = True
+							break
+
+			if has_rigid == False and has_vg == False and is_special == False:
+				if b.name.startswith('_unused_'):
+					b.name = b.name
+				else:
+					b.name = '_unused_' + b.name
+			"""
+			#if it magically got used, remove the '_unused_' part of the name
+			else:
+				if b.name.startswith('_unused_'):
+					b.name.replace('_unused_','')
+			"""
+
+
+
+	else:
+		print('\n Cannot find an armature. Please select an armature first.'), 
+
 def delete_unused_bones():
-	print('\n')
-	bpy.ops.object.mode_set(mode='EDIT')
-	bones_to_be_deleted = []
+	armature = model.findArmature(bpy.context.active_object)
+	#root = armature.parent
 
-	for b in bpy.context.active_object.data.edit_bones:
-		if 'unused' in b.name.lower():
-			bones_to_be_deleted.append(b.name)
 
-	for b in bones_to_be_deleted:
-		bpy.context.active_object.data.edit_bones.remove(bpy.context.active_object.data.edit_bones[b])
-		print("removed bone  ", b)
+	if armature is not None:
+		bpy.ops.object.mode_set(mode='EDIT')
 
-	bpy.ops.object.mode_set(mode='POSE')
+		#Get bones from the metadata dictionary
+		target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+		FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_metadata_by_bone_type("is_special", target_columns)
 
-def delete_unused_vertex_groups():
-	print('\n')
-	for o in bpy.context.scene.objects:
-		if o.type == 'MESH':
-			delete_these = []
-			for vg in o.vertex_groups:
-				if 'unused' in vg.name.lower():
-					if vg.name not in delete_these:
-						delete_these.append(vg.name)
-			for vg in delete_these:
-				if vg in o.vertex_groups.keys():
-					o.vertex_groups.remove(o.vertex_groups[vg])
-					print('removed vertex group  ', vg)
+
+		for b in armature.data.edit_bones:
+			if b.name.startswith('_unused_'):
+				bpy.data.armatures[armature.name].edit_bones.remove(b)
+
+
 
 
 def add_bone_to_group (bone_name,bone_group):
@@ -168,10 +240,14 @@ def main(context):
 			if child_bone_name is not None:
 				combine_2_vg_1_vg(parent_bone_name, child_bone_name)
 				combine_2_bones_1_bone(parent_bone_name, child_bone_name)
-	if selected_miscellaneous_tools == "delete_unused":
+	if selected_miscellaneous_tools == "flag_unused_bones":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		flag_unused_bones()
+		#delete_unused_vertex_groups()
+	if selected_miscellaneous_tools == "delete_unused_bones":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		#flag_unused_bones()
 		delete_unused_bones()
-		delete_unused_vertex_groups()
 	if selected_miscellaneous_tools == "mmd_ambient_white":
 		all_materials_mmd_ambient_white()
 	if selected_miscellaneous_tools == "fix_object_axis":
@@ -192,8 +268,9 @@ class MiscellaneousTools(bpy.types.Operator):
 	[('none', 'none', 'none')\
 	, ("fix_object_axis", "Fix Object Axis (90 degrees)","Fix Object Axis (90 degrees)") \
 	, ("combine_2_bones", "Combine 2 bones", "Combine a parent-child pair of bones and their vertex groups to 1 bone and 1 vertex group")\
-	, ("delete_unused", "Delete unused bones and unused vertex groups", "Delete all bones and vertex groups which have the word 'unused' in them")\
-	, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
+	, ("flag_unused_bones", "Flag unused bones as '_unused_'", "Flag non-special bones with no vertex groups/constraints/rigid bodies as '_unused_'")\
+	, ("delete_unused_bones", "Delete '_unused_' bones", "Delete all bones which start with '_unused_' in them")\
+	#, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
 	], name = "", default = 'none')
 
 	@classmethod

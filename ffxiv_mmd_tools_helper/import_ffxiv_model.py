@@ -57,8 +57,9 @@ def import_ffxiv_model(file_path):
 	for child in selected_obj_parent.children:
 		# Check if the child object contains the substring 'Group' in its name
 		if 'Group' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
+			if len(child.children) == 0:
+				# Parent the child object to the new empty object
+				child.parent = new_empty
 			
 	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
 	bpy.context.view_layer.objects.active = selected_obj

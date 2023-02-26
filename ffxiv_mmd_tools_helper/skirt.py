@@ -649,8 +649,8 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 
             if armature is not None:
 
-                for pbone in armature.pose.bones:
-                    if pbone.name.startswith('skirt_'):
+                for bone in armature.data.bones:
+                    if bone.name.startswith('skirt_'):
                         contains_skirt_bones = True
                         break
 
@@ -757,8 +757,9 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
                         )
             
 
+        bpy.ops.object.mode_set(mode='OBJECT')
         rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
-
+        bpy.context.view_layer.objects.active = armature
 
         return {'FINISHED'}
 

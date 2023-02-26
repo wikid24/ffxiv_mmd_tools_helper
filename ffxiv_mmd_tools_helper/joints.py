@@ -68,12 +68,15 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
 		if obj.mmd_type == 'JOINT': 
+			#error handling: delete a joint where the a rigid body has been removed
+			if (obj.rigid_body_constraint is None):
+				bpy.data.objects.remove(obj, do_unlink=True)
 			#error handling: delete a joint if it does not have both object 1 AND object 2 filled out
-			if (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
+			elif (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
 				print ('deleting joint with missing rigid body object1 or object2:', obj.name)
 				bpy.data.objects.remove(obj, do_unlink=True)
 			#error handling: if both object 1 and object 2 are found, delete the existing joint
-			if (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
+			elif (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
 				if (obj.rigid_body_constraint.object2.name == rigid_body_1 or  obj.rigid_body_constraint.object2.name == rigid_body_2):
 					print ('deleting existing joint:', obj.name)
 					bpy.data.objects.remove(obj, do_unlink=True)
@@ -573,16 +576,17 @@ class CreateJoints(bpy.types.Operator):
 		is_in_object_mode = True
 		is_at_least_2_rigids = True
 		
-		if bpy.context.object.mode != 'OBJECT':
-			is_in_object_mode = False
+		if bpy.context.object:
+			if bpy.context.object.mode != 'OBJECT':
+				is_in_object_mode = False
 
-		for selected_obj in selected_objs:
-			if selected_obj.mmd_type != 'RIGID_BODY':
-				is_selected_all_rigid_bodies = False
-				break
+			for selected_obj in selected_objs:
+				if selected_obj.mmd_type != 'RIGID_BODY':
+					is_selected_all_rigid_bodies = False
+					break
 
-		if len(selected_objs) < 2:
-			is_at_least_2_rigids = False
+			if len(selected_objs) < 2:
+				is_at_least_2_rigids = False
 
 		
 

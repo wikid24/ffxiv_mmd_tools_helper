@@ -1337,11 +1337,13 @@ class CreateRigidBodies(bpy.types.Operator):
 		is_active_a_bone = True
 		is_in_edit_or_pose_mode = True
 		
-		if bpy.context.object.mode not in ('EDIT','POSE'):
-			is_in_edit_or_pose_mode = False
+		if active_obj:
 
-		if active_obj.type != 'ARMATURE':
-			is_active_a_bone = False
+			if bpy.context.object.mode not in ('EDIT','POSE'):
+				is_in_edit_or_pose_mode = False
+
+			if active_obj.type != 'ARMATURE':
+				is_active_a_bone = False
 
 		return is_active_a_bone and is_in_edit_or_pose_mode
 

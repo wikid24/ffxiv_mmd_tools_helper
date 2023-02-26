@@ -29,10 +29,10 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "Add Base Rigid Bodies", icon="RIGID_BODY")
-		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "Add Base Joints", icon = "RIGID_BODY_CONSTRAINT")
+		#row = layout.row()
+		#row.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "Add Base Rigid Bodies", icon="RIGID_BODY")
+		#row = layout.row()
+		#row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "Add Base Joints", icon = "RIGID_BODY_CONSTRAINT")
 
 
 @register_wrap
@@ -115,7 +115,7 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		grid = col.grid_flow(columns=1,align=True)
 		grid.label(text="Find in name:")
 		grid.prop(context.scene,"find_bone_string",text='')
-		grid.operator("ffxiv_mmd_tools_helper.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=True
+		grid.operator("ffxiv_mmd_tools_helper.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=False
 		col = row.column(align=True)
 		grid = col.grid_flow(columns=1,align=True)
 		grid.label(text="Replace with:")
@@ -150,75 +150,79 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 
 		layout = self.layout
 		# Display the active object's name in a text box
+
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True,columns=4)
 		if model.findRoot(bpy.context.object) is not None:
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True,columns=4)
 			grid.prop(root.mmd_root,"show_rigid_bodies", toggle=True, text='',icon_only=True,icon='HIDE_OFF' if root.mmd_root.show_rigid_bodies else 'HIDE_ON' )
 			grid.prop(root.mmd_root,"show_names_of_rigid_bodies", toggle=True, text='',icon_only=True,icon='SORTALPHA')
 			grid.label(text="Rigid Body Visibility")
 			grid.prop(root.mmd_root,"show_meshes", toggle=True, text='',icon_only=True,icon='OUTLINER_DATA_MESH')
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True,columns=2)
-			grid.label(text="Active Rigid: ")
-			grid.label(text='Bone: ')	
-			grid = col.grid_flow(align=True,columns=2)
-			if(context.active_object):
-				if context.active_object.mmd_type == 'RIGID_BODY':
-					grid.prop(context.active_object,"name",text="")	
-					grid.operator("ffxiv_mmd_tools_helper.get_bone_from_rigid_body",text=str(context.active_object.mmd_rigid.bone))
-				else:
-					grid.label(text='')
-			row = layout.row()
-			col = row.column(align=True)
-			grid = col.grid_flow(align=True)
-			row = grid.row(align=True)
-			row.label(text='Starts w/')
-			row.label(text='Contains')
-			row.label(text='Ends w/')
-			row = grid.row(align=True)
-			row.prop(context.scene,"rigidbody_startswith", text = "")
-			row.prop(context.scene,"rigidbody_contains", text = "")
-			row.prop(context.scene,"rigidbody_endswith", text = "")
-			row = grid.row(align=True)
-			row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append_to_selected=False
-			row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
-			row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True)
-			grid.label(text='Bone Chain',icon='LINK_BLEND')
-			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Up', icon='TRIA_UP').direction='UP'
-			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
-			grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
-			col = row.column()
-			grid = col.grid_flow(align=True)
-			grid.label(text="Skirt", icon='MESH_CONE')
-			#row.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
-			#row.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
-			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
-			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
-			grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
-			row = layout.row()
-			col = row.column()
-			col.label(text="Rigid Body Transform:", icon='CON_CLAMPTO')
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True)
-			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply')
-			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain')
-			grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Bone Chains')
-			row = layout.row()
-			col = row.column(align=True)
-			grid = col.grid_flow(align=True)
-			row = grid.row(align=True)
-			row.label(text='Create:',icon='RIGID_BODY')
-			#row.operator('mmd_tools.rigid_body_add', text='From Selected Bones')
-			row.operator('ffxiv_mmd_tools_helper.create_rigid_bodies', text='From Selected Bones')
 		else:
-			row = layout.row()
-			row.label(text='Select an MMD Model')
+			grid.label(text='')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True,columns=2)
+		grid.label(text="Active Rigid: ")
+		grid.label(text='Bone: ')	
+		grid = col.grid_flow(align=True,columns=2)
+		if(context.active_object):
+			if context.active_object.mmd_type == 'RIGID_BODY':
+				grid.prop(context.active_object,"name",text="")	
+				grid.operator("ffxiv_mmd_tools_helper.get_bone_from_rigid_body",text=str(context.active_object.mmd_rigid.bone))
+			else:
+				grid.label(text='')
+		row = layout.row()
+		col = row.column(align=True)
+		grid = col.grid_flow(align=True)
+		row = grid.row(align=True)
+		row.label(text='Starts w/')
+		row.label(text='Contains')
+		row.label(text='Ends w/')
+		row = grid.row(align=True)
+		row.prop(context.scene,"rigidbody_startswith", text = "")
+		row.prop(context.scene,"rigidbody_contains", text = "")
+		row.prop(context.scene,"rigidbody_endswith", text = "")
+		row = grid.row(align=True)
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append_to_selected=False
+		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
+		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		grid.label(text='Bone Chain',icon='LINK_BLEND')
+		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Up', icon='TRIA_UP').direction='UP'
+		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
+		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		grid.label(text="Skirt", icon='MESH_CONE')
+		#row.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
+		#row.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
+		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
+		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
+		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
+		row = layout.row()
+		col = row.column()
+		col.label(text="Rigid Body Transform:", icon='CON_CLAMPTO')
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True)
+		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply')
+		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain')
+		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Bone Chains')
+		row = layout.row()
+		col = row.column(align=True)
+		grid = col.grid_flow(align=True)
+		row = grid.row(align=True)
+		row.label(text='Rigid Body Create:',icon='RIGID_BODY')
+		#row.operator('mmd_tools.rigid_body_add', text='From Selected Bones')
+		row = grid.row(align=True)
+		row.operator('ffxiv_mmd_tools_helper.create_rigid_bodies', text='From Selected Bones')
+		row = grid.row(align=True)
+		row.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "From FFXIV Skeleton (CSV)")
+
 		
 		
 
@@ -236,61 +240,66 @@ class JointsPanel_MTH(bpy.types.Panel):
 		root = model.findRoot(context.object)
 
 		layout = self.layout
+			
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True,columns=3)
 		if model.findRoot(bpy.context.object) is not None:
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True,columns=3)
 			grid.prop(root.mmd_root,"show_joints", toggle=True, text='',icon_only=True,icon='HIDE_OFF' if root.mmd_root.show_joints else 'HIDE_ON' )
 			grid.prop(root.mmd_root,"show_names_of_joints", toggle=True, text='',icon_only=True,icon='SORTALPHA')
-			grid.label(text="Joint Visibility")
-			row = layout.row()
-			col = row.column()
-			grid = col.grid_flow(align=True,columns=3)
-			grid.label(text="Active Joint: ")
-			grid.label(text='Rigid Body 1: ')	
-			grid.label(text='Rigid Body 2: ')	
-			grid = col.grid_flow(align=True,columns=4)
-			if(context.active_object):
-				if context.active_object.mmd_type == 'JOINT':
-					grid.prop(context.active_object,"name",text="")	
-					grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object1.name).rigid_number = '1'
-					grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object2.name).rigid_number = '2'
-				else:
-					grid.label(text='')
-			row = layout.row()
-			col = row.column()
-			row = col.row(align=True)
-			grid = row.grid_flow(align=True)
-			grid.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies')
-			row = col.row(align=True)
-			grid = row.grid_flow(align=True,columns=2)
-			grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Vertical', icon="SORT_DESC").direction='VERTICAL'
-			grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horizontal', icon="CENTER_ONLY").direction='HORIZONTAL'
-			
-			row = layout.row()
-			row.label(text="Joint Transform:", icon='CON_CLAMPTO')
-			row = layout.row()
-			grid = row.grid_flow(align=True,columns=1)
-			grid.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Apply')
-			row = layout.row()
-			col = layout.column()
-			row.label(text='Create:',icon='PIVOT_MEDIAN')
-			#row.operator('mmd_tools.joint_add', text='From Selected Rigid Bodies')		
-			row.operator('ffxiv_mmd_tools_helper.create_joints', text='From Selected Rigid Bodies')	
-			row = layout.row()
-			col = layout.column()
-			grid = row.grid_flow(row_major=True,align=True,columns=1)
-			grid.label(text='Vertical',icon='EMPTY_SINGLE_ARROW')
-			grid.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Create")
-			grid.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
-			col = layout.column()
-			grid = row.grid_flow(row_major=True,align=True,columns=1)
-			grid.label(text='Horizontal',icon='CENTER_ONLY')
-			grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Create")
-			grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
-		else:
-			row = layout.row()
-			row.label(text='Select an MMD Model')
+		grid.label(text="Joint Visibility")
+		row = layout.row()
+		col = row.column()
+		grid = col.grid_flow(align=True,columns=3)
+		grid.label(text="Active Joint: ")
+		grid.label(text='Rigid Body 1: ')	
+		grid.label(text='Rigid Body 2: ')	
+		grid = col.grid_flow(align=True,columns=4)
+		if(context.active_object):
+			if context.active_object.mmd_type == 'JOINT':
+				grid.prop(context.active_object,"name",text="")	
+				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object1.name).rigid_number = '1'
+				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object2.name).rigid_number = '2'
+			else:
+				grid.label(text='')
+		row = layout.row()
+		col = row.column()
+		row = col.row(align=True)
+		grid = row.grid_flow(align=True)
+		grid.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies')
+		row = col.row(align=True)
+		grid = row.grid_flow(align=True,columns=2)
+		grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Vertical', icon="SORT_DESC").direction='VERTICAL'
+		grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horizontal', icon="CENTER_ONLY").direction='HORIZONTAL'
+		
+		row = layout.row()
+		row.label(text="Joint Transform:", icon='CON_CLAMPTO')
+		row = layout.row()
+		grid = row.grid_flow(align=True,columns=1)
+		grid.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Apply')
+		row = layout.row()
+		col = layout.column()
+		row.label(text='Joint Create:',icon='PIVOT_MEDIAN')
+		#row.operator('mmd_tools.joint_add', text='From Selected Rigid Bodies')	
+		row = layout.row()
+		col = row.column(align=True)
+		grid = col.grid_flow(align=True)
+		row = grid.row(align=True)
+		row.operator('ffxiv_mmd_tools_helper.create_joints', text='From Selected Rigid Bodies')	
+		row = grid.row(align=True)
+		row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "From FFXIV Skeleton (CSV)")
+		row = layout.row()
+		col = layout.column()
+		grid = row.grid_flow(row_major=True,align=True,columns=1)
+		grid.label(text='Vertical',icon='EMPTY_SINGLE_ARROW')
+		grid.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Create")
+		grid.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
+		col = layout.column()
+		grid = row.grid_flow(row_major=True,align=True,columns=1)
+		grid.label(text='Horizontal',icon='CENTER_ONLY')
+		grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Create")
+		grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
+
 		
 				
 
@@ -358,9 +367,9 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='RIGID_BODY')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.generate_skirt_joints", text = "Generate Skirt Joints",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd_tools_helper.generate_skirt_joints", text = "Generate Skirt Joints",icon='RIGID_BODY_CONSTRAINT')
 		
 		
 

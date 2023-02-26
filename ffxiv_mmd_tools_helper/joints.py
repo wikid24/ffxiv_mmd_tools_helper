@@ -62,6 +62,8 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 				,limit_linear_lower=None,limit_linear_upper=None
 				,limit_angular_lower=None,limit_angular_upper=None
 				, spring_linear=None,spring_angular=None):
+	
+	
 
 	#check if joint exists, if it does delete it
 	for obj in armature.parent.children_recursive:
@@ -71,11 +73,11 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 				print ('deleting joint with missing rigid body object1 or object2:', obj.name)
 				bpy.data.objects.remove(obj, do_unlink=True)
 			#error handling: if both object 1 and object 2 are found, delete the existing joint
-			elif (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
+			if (obj.rigid_body_constraint.object1.name == rigid_body_1 or  obj.rigid_body_constraint.object1.name == rigid_body_2):
 				if (obj.rigid_body_constraint.object2.name == rigid_body_1 or  obj.rigid_body_constraint.object2.name == rigid_body_2):
 					print ('deleting existing joint:', obj.name)
 					bpy.data.objects.remove(obj, do_unlink=True)
-					break
+						
 	
 	object_1 = None
 	object_2 = None

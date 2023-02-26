@@ -45,7 +45,8 @@ def meshes(root):
 def find_MMD_Armature(obj):
 	root = findRoot(obj)
 	if root is None:
-		print('No MMD model is selected')
+		return None
+		#print('No MMD model is selected')
 	else:
 		return armature(root)
 

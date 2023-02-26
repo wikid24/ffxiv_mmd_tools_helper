@@ -78,6 +78,8 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			bone = rigid_body['bone_name']
 			offset_loc = [rigid_body['offset_x'],rigid_body['offset_y'],rigid_body['offset_z']]
 			offset_rot = [rigid_body['offset_rot_x'],rigid_body['offset_rot_y'],rigid_body['offset_rot_z']]
+			reset_rot = [rigid_body['reset_rot_x'],rigid_body['reset_rot_y'],rigid_body['reset_rot_z']]
+			
 			name_j = rigid_body['name_j']
 			name_e = rigid_body['name_e']
 			collision_group_number = int(rigid_body['collision_group'])
@@ -93,10 +95,10 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			
 
 			bpy.context.view_layer.objects.active = armature
-			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
+			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
 	
 
-def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
+def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
 
 	
 	#if rigid body exists, delete it
@@ -153,25 +155,48 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,name_j
 		rigid_body.location.z = rigid_body.location.z + offset_loc[2]
 
 		offset_rot_euler = mathutils.Euler((math.radians(offset_rot[0]),math.radians(offset_rot[1]),math.radians(offset_rot[2])), 'XYZ')
+		
 
 		if rigid_body.rotation_mode == 'QUATERNION':
+			if reset_rot[0] =='y':
+				rigid_body.rotation_quaternion[0] = 0
+				rigid_body.rotation_quaternion[1] = 0
+			if reset_rot[1] =='y':
+				rigid_body.rotation_quaternion[2] = 0
+			if reset_rot[2] =='y':
+				rigid_body.rotation_quaternion[3] = 0
+
 			offset_rot_quaternion = offset_rot_euler.to_quaternion()
-			rigid_body.rotation_quaternion[0] +=  offset_rot_quaternion[0]
-			rigid_body.rotation_quaternion[1] +=  offset_rot_quaternion[1]
-			rigid_body.rotation_quaternion[2] +=  offset_rot_quaternion[2]
+			rigid_body.rotation_quaternion[0] +=  offset_rot_quaternion[0] 
+			rigid_body.rotation_quaternion[1] +=  offset_rot_quaternion[1] 
+			rigid_body.rotation_quaternion[2] +=  offset_rot_quaternion[2] 
 			rigid_body.rotation_quaternion[3] +=  offset_rot_quaternion[3]
 
 		if rigid_body.rotation_mode == 'AXIS_ANGLE':
-			offset_rot_axis_angle = offset_rot_euler.to_matrix()
-			rigid_body.rotation_axis_angle[0] + offset_rot_axis_angle[0]
-			rigid_body.rotation_axis_angle[1] + offset_rot_axis_angle[1]
-			rigid_body.rotation_axis_angle[2] + offset_rot_axis_angle[2]
-			rigid_body.rotation_axis_angle[3] + offset_rot_axis_angle[3]
+			if reset_rot[0] =='y':
+				rigid_body.rotation_axis_angle[0] = 0
+				rigid_body.rotation_axis_angle[1] = 0
+			if reset_rot[1] =='y':
+				rigid_body.rotation_axis_angle[2] = 0
+			if reset_rot[2] =='y':
+				rigid_body.rotation_axis_angle[3] = 0
 
+			offset_rot_axis_angle = offset_rot_euler.to_matrix()
+			rigid_body.rotation_axis_angle[0] += offset_rot_axis_angle[0]
+			rigid_body.rotation_axis_angle[1] += offset_rot_axis_angle[1]
+			rigid_body.rotation_axis_angle[2] += offset_rot_axis_angle[2]
+			rigid_body.rotation_axis_angle[3] += offset_rot_axis_angle[3]
 		else:
-			rigid_body.rotation_euler.x += offset_rot_euler[0]
+			if reset_rot[0] =='y':
+				rigid_body.rotation_euler.x = 0
+			if reset_rot[1] =='y':
+				rigid_body.rotation_euler.y = 0
+			if reset_rot[2] =='y':
+				rigid_body.rotation_euler.z = 0
+
+			rigid_body.rotation_euler.x += offset_rot_euler[0] 
 			rigid_body.rotation_euler.y += offset_rot_euler[1]
-			rigid_body.rotation_euler.z += offset_rot_euler[1]
+			rigid_body.rotation_euler.z += offset_rot_euler[2]
 
 
 		
@@ -548,20 +573,14 @@ def get_rigid_body_bone_list(obj):
 
 def select_rigid_body_bone_chain_from_bone(rigid_body_bone_origin,rigid_body_bone_list=None,current_bone_name=None):
 
-	print('rigid body bone origin:',rigid_body_bone_origin, ' current bone: ',current_bone_name)
+	#print('rigid body bone origin:',rigid_body_bone_origin, ' current bone: ',current_bone_name)
 
-	#armature_obj = bpy.data.objects.get(rigid_body_bone_origin.id_data.name)
-	#root = model.findRoot(armature_obj)
+
 
 	#performance increase
 	if rigid_body_bone_list is None:
 		rigid_body_bone_list = get_rigid_body_bone_list(rigid_body_bone_origin)
-		"""
-		#get all the rigid bodies in the root object
-		for obj in root.children_recursive: #armature_obj.parent.children_recursive:
-			if obj.mmd_type == 'RIGID_BODY':
-				rigid_body_bone_list.append((obj,obj.name,obj.mmd_rigid.bone))
-		"""
+
 
 	#set the first in the rigid body bone chain list to the bone origin
 	for rigid_body in rigid_body_bone_list:

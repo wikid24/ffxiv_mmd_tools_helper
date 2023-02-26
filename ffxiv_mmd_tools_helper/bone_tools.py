@@ -499,4 +499,5 @@ class AutoFixMMDBoneNames(bpy.types.Operator):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		auto_fix_mmd_bone_names(armature)
+		bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}

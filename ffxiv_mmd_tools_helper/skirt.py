@@ -570,6 +570,7 @@ class MoveMeshToNewSkirt(bpy.types.Operator):
         mesh_obj = bpy.context.view_layer.objects.active
         skirt_obj = bpy.data.objects['skirt_obj']
         transfer_mesh_to_new_skirt (mesh_obj,skirt_obj)
+        bpy.context.view_layer.objects.active = mesh_obj
         return {'FINISHED'}
 
 
@@ -648,7 +649,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 
             if armature is not None:
 
-                for pbone in obj.pose.bones:
+                for pbone in armature.pose.bones:
                     if pbone.name.startswith('skirt_'):
                         contains_skirt_bones = True
                         break
@@ -658,11 +659,26 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 
     def execute(self, context):
         armature = bpy.context.view_layer.objects.active
-
+        root = model.findRoot(armature)
         bpy.ops.object.mode_set(mode='OBJECT')
+
+        #delete all the existing rigid bodies and joints for skirt 
+        for obj in root.children_recursive:
+            if obj.mmd_type == 'RIGID_BODY' and obj.name.startswith('skirt_'):
+                
+                
+                for obj_joint in root.children_recursive:
+                    if obj_joint.mmd_type == 'JOINT':
+                        if (obj_joint.rigid_body_constraint.object1 == obj or obj_joint.rigid_body_constraint.object2 == obj):
+                            bpy.data.objects.remove(obj_joint,do_unlink=True)
+
+                bpy.data.meshes.remove(obj.data,do_unlink=True)
+                #bpy.data.objects.remove(obj, do_unlink=True)
+                
+           
+
         bpy.context.view_layer.objects.active = armature
         bpy.ops.object.mode_set(mode='EDIT')
-        #bpy.ops.action.select_all(action='DESELECT')
         skirt_bones = bones_renamer.find_bone_names(startswith='skirt_',append_to_selected=False)
 
         #get the minimum vertical chain number and chain head number from skirt bones
@@ -670,7 +686,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         for bone in skirt_bones:
             if bone.name.startswith('skirt_'):
                 bone_names.append(bone.name)
-                print(bone.name)
+                #print(bone.name)
 
         min_chain_number = get_min_skirt_chain_number_from_list(bone_names,1)
         min_chain_head_number = get_min_skirt_chain_number_from_list(bone_names,2)
@@ -678,9 +694,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         print ('Min Chain Number:',min_chain_number)
         print ('Min Head Chain Number:',min_chain_head_number)
 
-        
-
-
+   
         #create all the rigid bodies with some presets
         bpy.ops.mmd_tools.rigid_body_add(
             name_j = "$name_j"
@@ -689,7 +703,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 			,collision_group_mask= (False, False, False, False, False,False, True, False, False, False, False, False, False, False, False, False)
 			,rigid_type= "1" #'0'= Bone, '1' = Physics, '2' = Physics+Bone
 			,rigid_shape="BOX" #SPHERE, BOX, CAPSULE
-			,size= [0.6,0.2,0.6] #size #size[0] = X, size[1] = Y, size[2] = Z
+			,size= [0.6,0.15,0.6] #size #size[0] = X, size[1] = Y, size[2] = Z
 			,mass=0.5
 			#,friction=friction
 			#,bounce=bounce  #restitution
@@ -699,8 +713,6 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 
         #get head to tail
         bpy.ops.object.mode_set(mode='OBJECT')
-        print("Min chain number = ", min_chain_number)
-        print("Min chain head number = ", min_chain_head_number)
         rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
         rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
         rigid_body_bone_chains_data=  rigid_body.get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
@@ -743,6 +755,9 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
                         linear_damping_start=1,
                         linear_damping_end=0.555,
                         )
+            
+
+        rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
 
 
         return {'FINISHED'}
@@ -802,7 +817,7 @@ class GenerateSkirtJoints(bpy.types.Operator):
         
         rigid_body_list_with_number_index = rigid_body.get_rigid_body_list_with_number_index(rigid_body_list)
         grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (rigid_body_list_with_number_index,1)
-        #create horizontal joints, wrap around = True. This should really be a parameter that gets passed to this operator? If it is a half skirt (like on Neo-Ishgardian Top of Aiming or Obsolete Android's Cloak of Aiming)
+        #create horizontal joints, wrap around = True. This should really be a parameter that gets passed to this operator? If it is a half skirt (like on Neo-Ishgardian Top) or cape (like Obsolete Android's Cloak of Aiming)
         joints.create_horizontal_joints(rigid_body_chains=grouped_rigid_bodies_by_index_pos
                                         ,wrap_around=True
                                         ,use_bone_rotation=True
@@ -814,7 +829,10 @@ class GenerateSkirtJoints(bpy.types.Operator):
                                     ,spring_angular=[0,0,0]
         )
 
+        
 
+        rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
+        joints.get_joints_from_selected_rigid_bodies()
 
 
         return {'FINISHED'}

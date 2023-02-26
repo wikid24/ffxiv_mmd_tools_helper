@@ -389,6 +389,8 @@ class Add_MMD_foot_leg_IK(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
+		bpy.ops.object.mode_set(mode='OBJECT')
 		clear_IK(context)
 		main(context)
+		bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}

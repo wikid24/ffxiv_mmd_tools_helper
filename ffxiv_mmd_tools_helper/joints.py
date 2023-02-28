@@ -1519,7 +1519,7 @@ class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 		props = BatchCreateHorizontalJoints
 		#print(props.scope_startswith)
 		results = None
-		results = rigid_body.find_rigid_bodies(startswith=props.scope_startswith,endswith=props.scope_endswith,contains=props.scope_contains,append_to_selected=False)
+		results = rigid_body.find_rigid_bodies(startswith=props.scope_startswith,endswith=props.scope_endswith,contains=props.scope_contains,append_to_selected=False,unhide=False)
 		if results is not None:
 			props.message = str(len(results)) + ' Rigid Bodies in search scope'
 			props.search_scope_objects = results

@@ -387,16 +387,18 @@ def reconstruct_string_split_by_number_index(string,indexed_values):
     
     
 
-def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_selected=None):
+def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_selected=None,unhide=True):
 
 	bpy.ops.object.mode_set(mode='OBJECT')
 	
-	obj = bpy.context.active_object
 
-	if obj.type == 'ARMATURE':
-		search_scope = bpy.context.object.parent.children_recursive
-	else:
-		search_scope = bpy.context.object.parent.parent.children_recursive
+	obj = bpy.context.active_object
+	root = model.findRoot(obj)
+
+	#if obj.type == 'ARMATURE':
+	#	search_scope = bpy.context.object.parent.children_recursive
+	#else:
+		#search_scope = bpy.context.object.parent.parent.children_recursive
 
 	if startswith is None:
 		startswith = ''
@@ -410,10 +412,12 @@ def find_rigid_bodies(startswith=None,endswith=None,contains=None,append_to_sele
 	if append_to_selected==False:
 		bpy.ops.object.select_all(action='DESELECT')
 		
-	for obj in search_scope:
+	for obj in root.children_recursive:
 		if obj.mmd_type=='RIGID_BODY' and obj.name.startswith(str(startswith)) and obj.name.endswith(str(endswith)) and contains in obj.name:
-			obj.hide=False
-			obj.select_set(True)
+			if unhide == True:
+				obj.hide=False
+			if obj.hide == False:
+				obj.select_set(True)
 	
 	if bpy.context.selected_objects:
 		bpy.context.view_layer.objects.active =  bpy.context.selected_objects[0]
@@ -1152,6 +1156,8 @@ def reset_rigid_body_rotation_to_bone(rigid_body_obj):
 			bpy.context.view_layer.objects.active = active_obj
 
 def _transform_rigid_body_bone_chain(self,context):
+	
+	bpy.ops.ed.undo_push()
 
 	rigid_body_bone_chain = get_selected_rigid_bodies_in_bone_chain()
 
@@ -1402,6 +1408,9 @@ class SelectRigidBodyBoneChain(bpy.types.Operator):
 
 
 def _transform_selected_rigid_bodies(self,context):
+
+	bpy.ops.ed.undo_push()
+	
 	if BatchUpdateRigidBodies.initialization == True:
 		if context.active_object is not None:
 

@@ -42,7 +42,7 @@ def correct_root_center():
 			print("Added center bone.")
 			center_bone.head = 0.25 * (bpy.context.active_object.data.edit_bones["knee_L"].head + bpy.context.active_object.data.edit_bones["knee_R"].head + bpy.context.active_object.data.edit_bones["leg_L"].head + bpy.context.active_object.data.edit_bones["leg_R"].head)
 			center_bone.head.y = 0
-			center_bone.tail.z = center_bone.head.z - 0.7
+			center_bone.tail.z = root_bone.head.z #center_bone.head.z - 0.7
 			center_bone.parent = bpy.context.active_object.data.edit_bones["root"]
 			if "lower body" in bpy.context.active_object.data.edit_bones.keys():
 				bpy.context.active_object.data.edit_bones["lower body"].parent = bpy.context.active_object.data.edit_bones["center"]
@@ -281,6 +281,19 @@ def fix_bone_length(armature,source_bone_name,target_bone_name):
 	target_bone = armature.data.edit_bones[target_bone_name]
 	source_bone.tail = target_bone.head
 
+	#source_bone.tail = target_bone.head
+	#source_bone.roll = source_bone_roll
+
+	# Deselect all bones in edit mode
+	#bpy.ops.armature.select_all(action='DESELECT')
+	
+	#bpy.context.object.data.edit_bones.active = source_bone
+	#source_bone.data.select = True
+
+	#recalculate bone roll
+	#bpy.ops.armature.calculate_roll(type='GLOBAL_POS_Y')
+	#bpy.context.active_object.data.bones.active = bpy.data.armatures[armature.name].bones[source_bone.name]
+
 def correct_bones_length():
 	print('\ncorrect_bones_length():')
 	if model.is_mmd_english() == True:
@@ -295,6 +308,8 @@ def correct_bones_length():
 		fix_bone_length(armature,'elbow_L','wrist_L')
 		fix_bone_length(armature,'elbow_R','wrist_R')
 		print('reset bone length for shoulder/arm/elbow')
+
+		bpy.ops.object.mode_set(mode='OBJECT')
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
@@ -314,6 +329,8 @@ def add_breast_tip_bones(armature):
 		bone = bone_tools.add_bone(armature,breast.name + "_tip",parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
 		bone.head = breast.tail
 		bone.roll = breast.roll
+
+	bpy.ops.object.mode_set(mode='OBJECT')
 
 def add_eye_control_bone():
 	print('\nadd_eye_control_bone():')
@@ -347,8 +364,12 @@ def add_eye_control_bone():
 		bone_tools.apply_MMD_additional_rotation(armature,'eyes','eye_L',1)
 		bone_tools.apply_MMD_additional_rotation(armature,'eyes','eye_R',1)	
 
+		bpy.ops.object.mode_set(mode='POSE')
+		#set bones as tip bones
+		armature.pose.bones['eyes'].mmd_bone.is_tip = True
 
-		bpy.ops.object.mode_set(mode='EDIT')
+
+		bpy.ops.object.mode_set(mode='OBJECT')
 
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -374,11 +395,22 @@ def create_twist_support_bones(armature,source_bone_name,bone_1_name,bone_2_name
 			_bone_1 = bone_tools.add_bone(armature, bone_1_name,parent_bone=source_bone,length= length * 0.30,head= pos1,tail= pos1 + mathutils.Vector((0, 0, length * 0.1)))
 			_bone_2 = bone_tools.add_bone(armature, bone_2_name,parent_bone=source_bone,length= length * 0.30,head= pos2,tail= pos2 + mathutils.Vector((0, 0, length * 0.1)))
 			_bone_3 = bone_tools.add_bone(armature, bone_3_name,parent_bone=source_bone,length= length * 0.30,head= pos3,tail= pos3 + mathutils.Vector((0, 0, length * 0.1)))
+
+
+
 			
 			bpy.ops.object.mode_set(mode='POSE')
+			#set bones as tip bones
+			armature.pose.bones[bone_1_name].mmd_bone.is_tip = True
+			armature.pose.bones[bone_2_name].mmd_bone.is_tip = True
+			armature.pose.bones[bone_3_name].mmd_bone.is_tip = True
+
+			#apply additional rotation
 			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_1_name, 0.25)
 			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_2_name, 0.50)
 			bone_tools.apply_MMD_additional_rotation(armature,additional_rotation_bone_name,bone_3_name, 0.75)
+
+
 			
 			# Return to object mode
 			bpy.ops.object.mode_set(mode='OBJECT')
@@ -423,6 +455,8 @@ def add_arm_wrist_twist():
 		offset_bone_by_parents_tail('elbow_L','wrist_twist_L', 0.33)
 		offset_bone_by_parents_tail('elbow_R','wrist_twist_R', 0.33)
 
+		bpy.ops.object.mode_set(mode='OBJECT')
+
 
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -441,7 +475,69 @@ def offset_bone_by_parents_tail(parent,child,percentage_of_parent):
     child.length = (parent.length * percentage_of_parent)
     child.head = child.tail
     child.tail = parent.tail
-        
+    
+def set_bone_to_target_bone_axis(source_bone_name,target_bone_name,target_bone_head_or_tail,axis):
+	
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	source_bone = bpy.context.active_object.data.edit_bones[source_bone_name]
+	target_bone = bpy.context.active_object.data.edit_bones[target_bone_name]
+	
+	if axis == 'x':  
+		if target_bone_head_or_tail == 'head':
+			target_bone.head.x = source_bone.head.x
+			target_bone.tail.x = source_bone.head.x
+		if target_bone_head_or_tail == 'tail':
+			target_bone.head.x = source_bone.tail.x
+			target_bone.tail.x = source_bone.tail.x
+
+	if axis == 'y':  
+		if target_bone_head_or_tail == 'head':
+			target_bone.head.y = source_bone.head.y
+			target_bone.tail.y = source_bone.head.y
+		if target_bone_head_or_tail == 'tail':
+			target_bone.head.y = source_bone.tail.y
+			target_bone.tail.y = source_bone.tail.y
+
+	if axis == 'z':  
+		if target_bone_head_or_tail == 'head':
+			target_bone.head.z = source_bone.head.z
+			target_bone.tail.z = source_bone.head.z
+		if target_bone_head_or_tail == 'tail':
+			target_bone.head.z = source_bone.tail.z
+			target_bone.tail.z = source_bone.tail.z
+
+		
+def offset_bone_by_source_bone(source_bone_name,target_bone_name,head_or_tail,axis,percentage_of_source):
+	
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	source_bone = bpy.context.active_object.data.edit_bones[source_bone_name]
+	target_bone = bpy.context.active_object.data.edit_bones[target_bone_name]
+	
+	if head_or_tail == 'head':
+		if axis == 'x':
+			offset = (source_bone.length) * (1 - percentage_of_source)        
+			target_bone.head.x = source_bone.tail.x - offset
+			
+		elif axis == 'y':
+			offset = (source_bone.length) * (1 - percentage_of_source)
+			target_bone.head.y = source_bone.tail.y - offset
+		elif axis == 'z':
+			offset = (source_bone.length) * (1 - percentage_of_source)
+			target_bone.head.z = source_bone.tail.z - offset
+
+	if head_or_tail == 'tail':
+		if axis == 'x':
+			offset = (source_bone.length) * (1 - percentage_of_source)        
+			target_bone.tail.x = source_bone.tail.x - offset
+			
+		elif axis == 'y':
+			offset = (source_bone.length) * (1 - percentage_of_source)
+			target_bone.tail.y = source_bone.tail.y - offset
+		elif axis == 'z':
+			offset = (source_bone.length) * (1 - percentage_of_source)
+			target_bone.tail.z = source_bone.tail.z - offset
 
 
 def add_shoulder_control_bones():
@@ -484,10 +580,19 @@ def add_shoulder_control_bones():
 		# Select all bones in the armature
 		for bone in armature.pose.bones:
 			bone.bone.select = True
+
+		#set bones as tip bones
+		armature.pose.bones['shoulder_P_L'].mmd_bone.is_tip = True
+		armature.pose.bones['shoulder_C_L'].mmd_bone.is_tip = True
+		armature.pose.bones['shoulder_P_R'].mmd_bone.is_tip = True
+		armature.pose.bones['shoulder_C_R'].mmd_bone.is_tip = True
+		
 		
 		bone_tools.apply_MMD_additional_rotation (armature,'shoulder_P_L', 'shoulder_C_L', -1.0)
 		bone_tools.apply_MMD_additional_rotation (armature,'shoulder_P_R', 'shoulder_C_R', -1.0)
 		#FnBone.apply_additional_transformation(armature)
+
+		bpy.ops.object.mode_set(mode='OBJECT')
 	
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -539,7 +644,8 @@ def merge_double_jointed_knee(armature):
 
 
 def main(context):
-	
+
+
 	selected_bone_tool = bpy.context.scene.selected_bone_tool
 
 	if selected_bone_tool == "correct_root_center":
@@ -595,6 +701,47 @@ def main(context):
 		add_arm_wrist_twist()
 		add_shoulder_control_bones()
 		bpy.ops.object.mode_set(mode='OBJECT')
+	if selected_bone_tool == 'adjust_arm_position':
+		bpy.ops.object.mode_set(mode='EDIT')
+		bpy.context.object.data.use_mirror_x = True
+
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','x',1.15)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','y',1)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','z',0.75)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','x',2.56)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','z',0.33)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','y',0.825)
+		arm_L = bpy.context.active_object.data.edit_bones['arm_L']
+		shoulder_L = bpy.context.active_object.data.edit_bones['shoulder_L']
+		arm_L.head = shoulder_L.tail
+		arm_L.tail.x = arm_L.tail.x * 0.98
+		arm_L.tail.y = arm_L.tail.y * 0.7
+		arm_L.tail.z = arm_L.tail.z * 1.008
+		elbow_L = bpy.context.active_object.data.edit_bones['elbow_L']
+		elbow_L.head = arm_L.tail
+		elbow_L.tail.x = elbow_L.tail.x * 0.979
+		#elbow_L.tail.y = elbow_L.tail.y * 0.999
+		wrist_L = bpy.context.active_object.data.edit_bones['wrist_L']
+		wrist_L.head = elbow_L.tail
+		wrist_L.tail.x = wrist_L.tail.x * 0.965
+		"""
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','x',1/1.15)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','y',1)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','z',0.75)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','x',-0.56)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','z',0.33)
+		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','y',0.825)
+		arm_R = bpy.context.active_object.data.edit_bones['arm_R']
+		shoulder_R = bpy.context.active_object.data.edit_bones['shoulder_R']
+		arm_R.head = shoulder_R.tail
+		arm_R.tail.x = arm_R.tail.x * 0.98
+		arm_R.tail.y = arm_R.tail.y * 0.7
+		arm_R.tail.z = arm_R.tail.z * 1.008
+		elbow_R = bpy.context.active_object.data.edit_bones['elbow_R']
+		elbow_R.head = arm_R.tail
+		"""
+		bpy.context.object.data.use_mirror_x = False
+		bpy.ops.object.mode_set(mode='OBJECT')
 
 
 @register_wrap
@@ -619,6 +766,7 @@ class BoneTools(bpy.types.Operator):
 	, ("add_extra_finger_bones", "10- Add Extra Finger Bones (select finger mesh first)", "Add Extra Finger Bones (select finger mesh first)")\
 	, ("add_breast_tip_bones", "11- Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
 	, ("merge_double_jointed_knee", "12- Merge Double-Jointed Knee (FFXIV PMX Export Only)", "Merge Double-Jointed Knee (FFXIV PMX Export Only)")\
+	, ("adjust_arm_position", "EXPERIMENTAL - Adjust Arm Position for FFXIV Models", "Hard-Coded values to better align arms")\
 	], name = "", default = 'run_1_to_9')
 
 	@classmethod

@@ -47,7 +47,7 @@ def import_ffxiv_model(file_path):
 	# Create a new empty object to store all the junk that comes from FFXIV
 	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
 	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Junk'
+	new_empty.name = 'FFXIV Empty Groups'
 	#print (new_empty)
 
 	# Parent the new empty object to the selected object

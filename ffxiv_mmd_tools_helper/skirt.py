@@ -170,9 +170,14 @@ def reset_skirt_obj():
     for obj in bpy.data.objects:
         if obj.name == "skirt_obj":
             
-            #remove the new_skirt_shape mesh
             for child in obj.children:
                 if child.name.startswith("new_skirt_shape"):
+                    #Remove active material from skirt_shape mesh
+                    active_mat = child.active_material
+                    if active_mat is not None:
+                        child.active_material = None
+                    bpy.data.materials.remove(active_mat)
+                    #remove the new_skirt_shape mesh
                     for mesh in bpy.data.meshes:
                         if mesh.name == child.name:
                             bpy.data.meshes.remove(mesh)
@@ -217,6 +222,14 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     # Create the skirt mesh and bones armature
     skirt_mesh = create_skirt_mesh(num_segments, radius_tail, radius_head, height,floor_offset , x_scale, y_scale,num_subdivisions)
     skirt_arm = create_skirt_bones(num_bone_parents, radius_tail, radius_head, height, floor_offset,x_scale, y_scale, num_bone_children)
+   
+    #create skirt material and assign it to the mesh
+    skirt_mat = bpy.data.materials.new(name="new_skirt_mat")
+    skirt_mat.use_nodes = True
+    skirt_mat.node_tree.nodes["Principled BSDF"].inputs[21].default_value = 0.1 #set alpha to 10%
+    skirt_mesh.active_material = skirt_mat
+    skirt_mesh.active_material.blend_method = 'BLEND'
+     
             
             
     bpy.ops.object.mode_set(mode='OBJECT')
@@ -227,6 +240,8 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     # Select the mesh and make it the active object
     skirt_mesh.select_set(True)
     bpy.context.view_layer.objects.active = skirt_mesh
+
+    
 
     # Make the armature the active object
     bpy.context.view_layer.objects.active = skirt_arm
@@ -245,6 +260,7 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     bpy.ops.pose.select_all(action='SELECT')
     bpy.ops.object.vertex_group_smooth(group_select_mode='ALL', factor=1, repeat=1, expand=0)
 
+    bpy.ops.material.new()
 
     
     #parents the skirt_obj_children to the new skirt armature
@@ -498,6 +514,18 @@ def get_min_skirt_chain_number_from_list(skirt_name_list,index_pos):
         
 
 def _skirt_shape_update(self, context):
+    props = GenerateSkirtModal
+    
+    props.num_bone_parents = self.num_bone_parents
+    props.num_segments = self.num_segments
+    props.num_subdivisions = self.num_subdivisions
+    props.radius_tail = self.radius_tail
+    props.radius_head = self.radius_head
+    props.height = self.height
+    props.floor_offset =  self.floor_offset
+    props.x_scale = self.x_scale
+    props.y_scale = self.y_scale
+    props.num_bone_children = self.num_bone_children
 
     bpy.context.space_data.shading.type = 'WIREFRAME'
 
@@ -531,8 +559,26 @@ class GenerateSkirtModal(bpy.types.Operator):
     x_scale: bpy.props.FloatProperty(name="X Scale", default=1.3,min=0, update =_skirt_shape_update)
     y_scale: bpy.props.FloatProperty(name="Y Scale", default=1.0,min=0, update =_skirt_shape_update)
 
+    def invoke (self,context,event):
+        bpy.context.space_data.shading.type = 'WIREFRAME'
+
+        props = GenerateSkirtModal
+
+        self.num_bone_parents = props.num_bone_parents
+        self.num_segments = props.num_segments
+        self.num_subdivisions = props.num_subdivisions
+        self.radius_tail = props.radius_tail
+        self.radius_head = props.radius_head
+        self.height = props.height
+        self.floor_offset = props.floor_offset
+        self.x_scale = props.x_scale
+        self.y_scale = props.y_scale
+        self.num_bone_children = props.num_bone_children
+
 
     def execute(self, context):
+       # props = GenerateSkirtModal
+
         generate_new_skirt(
             self.num_bone_parents
             ,self.num_segments

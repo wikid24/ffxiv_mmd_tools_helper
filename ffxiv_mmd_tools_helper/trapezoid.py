@@ -1,16 +1,16 @@
 import bpy
 
-def create_trapezoid_mesh(head_length, tail_length, height, head_offset, tail_offset, num_subdivisions):
+def create_trapezoid_mesh(head_width, tail_width, height, head_offset, tail_offset, num_subdivisions):
     # Calculate the x-coordinates of the vertices
 
     # head verts
-    head_start = -head_length / 2
-    head_end = head_length / 2
+    head_start = -head_width / 2
+    head_end = head_width / 2
 
     if num_subdivisions > 0:
-        head_subdivision_distance = head_length / (num_subdivisions+1)
+        head_subdivision_distance = head_width / (num_subdivisions+1)
     else:
-        head_subdivision_distance = head_length
+        head_subdivision_distance = head_width
     
     head_verts = []
     for i in range(num_subdivisions+2):
@@ -18,13 +18,13 @@ def create_trapezoid_mesh(head_length, tail_length, height, head_offset, tail_of
         head_verts.append((x, 0, height+head_offset))
 
     # tail verts
-    tail_start = -tail_length / 2
-    tail_end = tail_length / 2
+    tail_start = -tail_width / 2
+    tail_end = tail_width / 2
 
     if num_subdivisions > 0:
-        tail_subdivision_distance = tail_length / (num_subdivisions+1)
+        tail_subdivision_distance = tail_width / (num_subdivisions+1)
     else:
-        tail_subdivision_distance = tail_length
+        tail_subdivision_distance = tail_width
     
     tail_verts = []
     for i in range(num_subdivisions+2):

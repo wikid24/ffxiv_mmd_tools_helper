@@ -426,6 +426,14 @@ def move_bones_and_skirt_to_ffxiv_model(armature):
     for child in skirt_obj.children:
         if child.type == 'MESH' and child.name != 'new_skirt_shape':
             meshes.append(child)
+            
+        #remove the material from new_skirt_shape object
+        if child.type == 'MESH' and child.name == 'new_skirt_shape':
+            active_mat = child.active_material
+            if active_mat is not None:
+                child.active_material = None
+                bpy.data.materials.remove(active_mat)
+        
 
 
     # Deselect all objects
@@ -440,10 +448,13 @@ def move_bones_and_skirt_to_ffxiv_model(armature):
         bpy.context.view_layer.objects.active = armature
         bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
 
-    #delete the new_skirt_shape mesh
+    #delete the new_skirt_shape mesh and material
+    
+
     new_skirt_shape = bpy.data.meshes['new_skirt_shape']
     if new_skirt_shape != None:
         bpy.data.meshes.remove(new_skirt_shape)
+
 
 
             
@@ -510,43 +521,56 @@ def get_min_skirt_chain_number_from_list(skirt_name_list,index_pos):
     return min_chain_number
 
 
-
-        
-
-def _skirt_shape_update(self, context):
-    props = GenerateSkirtModal
+"""
+def _skirt_reset_to_default(self,context):
     
-    props.num_bone_parents = self.num_bone_parents
-    props.num_segments = self.num_segments
-    props.num_subdivisions = self.num_subdivisions
-    props.radius_tail = self.radius_tail
-    props.radius_head = self.radius_head
-    props.height = self.height
-    props.floor_offset =  self.floor_offset
-    props.x_scale = self.x_scale
-    props.y_scale = self.y_scale
-    props.num_bone_children = self.num_bone_children
-
-    bpy.context.space_data.shading.type = 'WIREFRAME'
-
-    generate_new_skirt(
-            self.num_bone_parents
-            ,self.num_segments
-            ,self.num_subdivisions
-            ,self.radius_tail
-            ,self.radius_head
-            ,self.height
-            ,self.floor_offset
-            ,self.x_scale
-            ,self.y_scale
-            ,self.num_bone_children
-            )
+    props = GenerateSkirtModal
+    self.num_bone_parents = #props.bl_rna.properties["num_bone_parents"].default
+    self.num_bone_children = props.bl_rna.properties["num_bone_children"].default
+    self.num_segments = props.bl_rna.properties["num_segments"].default
+    self.num_subdivisions = props.bl_rna.properties["num_subdivisions"].default
+    self.height = props.bl_rna.properties["height"].default
+    self.radius_head = props.bl_rna.properties["radius_head"].default
+    self.floor_offset = props.bl_rna.properties["floor_offset"].default
+    self.radius_tail = props.bl_rna.properties["radius_tail"].default
+    self.x_scale = props.bl_rna.properties["x_scale"].default
+    self.y_scale = props.bl_rna.properties["y_scale"].default
+        
+"""
 
 @register_wrap
 class GenerateSkirtModal(bpy.types.Operator):
     bl_idname = "ffxiv_mmd_tools_helper.generate_skirt_modal"
     bl_label = "Create New Skirt"
     bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
+
+    def _skirt_shape_update(self, context):
+        props = GenerateSkirtModal
+        props.num_bone_parents = self.num_bone_parents
+        props.num_segments = self.num_segments
+        props.num_subdivisions = self.num_subdivisions
+        props.radius_tail = self.radius_tail
+        props.radius_head = self.radius_head
+        props.height = self.height
+        props.floor_offset =  self.floor_offset
+        props.x_scale = self.x_scale
+        props.y_scale = self.y_scale
+        props.num_bone_children = self.num_bone_children
+        bpy.context.space_data.shading.type = 'WIREFRAME'
+
+        generate_new_skirt(
+                self.num_bone_parents
+                ,self.num_segments
+                ,self.num_subdivisions
+                ,self.radius_tail
+                ,self.radius_head
+                ,self.height
+                ,self.floor_offset
+                ,self.x_scale
+                ,self.y_scale
+                ,self.num_bone_children
+                )
+    
     
     num_bone_parents: bpy.props.IntProperty(name="Bone Parents", default=16, min =0, update =_skirt_shape_update)
     num_bone_children: bpy.props.IntProperty(name="Number of Bone Children", default=13, min=3, update =_skirt_shape_update)
@@ -559,22 +583,7 @@ class GenerateSkirtModal(bpy.types.Operator):
     x_scale: bpy.props.FloatProperty(name="X Scale", default=1.3,min=0, update =_skirt_shape_update)
     y_scale: bpy.props.FloatProperty(name="Y Scale", default=1.0,min=0, update =_skirt_shape_update)
 
-    def invoke (self,context,event):
-        bpy.context.space_data.shading.type = 'WIREFRAME'
-
-        props = GenerateSkirtModal
-
-        self.num_bone_parents = props.num_bone_parents
-        self.num_segments = props.num_segments
-        self.num_subdivisions = props.num_subdivisions
-        self.radius_tail = props.radius_tail
-        self.radius_head = props.radius_head
-        self.height = props.height
-        self.floor_offset = props.floor_offset
-        self.x_scale = props.x_scale
-        self.y_scale = props.y_scale
-        self.num_bone_children = props.num_bone_children
-
+       
 
     def execute(self, context):
        # props = GenerateSkirtModal

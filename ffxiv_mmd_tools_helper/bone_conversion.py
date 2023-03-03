@@ -659,8 +659,8 @@ def set_bust_size(bust_scale=None):
 			scale_y = 0.816 + (bust_scale * 0.368)
 			scale_z = 0.8 + (bust_scale * 0.4)
 
-		bust_L.scale= (scale_x,scale_y,scale_z)
-		bust_R.scale= (scale_x,scale_y,scale_z)
+		bust_L.scale= (scale_z,scale_y,scale_x)
+		bust_R.scale= (scale_z,scale_y,scale_x)
 
 
 

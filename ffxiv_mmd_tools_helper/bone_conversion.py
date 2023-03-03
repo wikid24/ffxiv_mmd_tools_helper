@@ -642,6 +642,27 @@ def merge_double_jointed_knee(armature):
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
+def set_bust_size(bust_scale=None):
+	print('\n')
+
+	bpy.ops.object.mode_set(mode='POSE')
+	bust_L = bpy.context.active_object.pose.bones['j_mune_l']
+	bust_R = bpy.context.active_object.pose.bones['j_mune_r']
+
+	scale_x = 1
+	scale_y = 1
+	scale_z = 1
+		
+	if bust_L is not None and bust_R is not None:
+		if bust_scale is not None:
+			scale_x = 0.92 + (bust_scale * 0.16)
+			scale_y = 0.816 + (bust_scale * 0.368)
+			scale_z = 0.8 + (bust_scale * 0.4)
+
+		bust_L.scale= (scale_x,scale_y,scale_z)
+		bust_R.scale= (scale_x,scale_y,scale_z)
+
+
 
 def main(context):
 
@@ -748,7 +769,7 @@ def main(context):
 class BoneTools(bpy.types.Operator):
 	"""Bone Creation/Adjustment Tools"""
 	bl_idname = "ffxiv_mmd_tools_helper.bone_tools"
-	bl_label = "Miscellaneous Tools"
+	bl_label = "Bone Tools"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.selected_bone_tool = bpy.props.EnumProperty(items = \
@@ -782,3 +803,27 @@ class BoneTools(bpy.types.Operator):
 		return {'FINISHED'}
 
 
+@register_wrap
+class FFXIVBustSlider(bpy.types.Operator):
+	"""Slider for FFXIV Bust"""
+	bl_idname = "ffxiv_mmd_tools_helper.bust_slider"
+	bl_label = "FFXIV Bust Slider"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	bpy.types.Scene.bust_slider = bpy.props.IntProperty(name='Bust',default=50,min=0, soft_min=0,soft_max=300)
+
+	@classmethod
+	def poll(cls, context):
+		is_ffxiv_bust = False
+
+		if context.active_object is not None:
+			obj = context.active_object	
+			if obj.pose.bones['j_mune_l'] is not None and obj.pose.bones['j_mune_r'] is not None:
+				is_ffxiv_bust =True
+		
+		return is_ffxiv_bust
+				
+
+	def execute(self, context):
+		set_bust_size(context.scene.bust_slider/100)
+		return {'FINISHED'}

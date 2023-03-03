@@ -1,5 +1,6 @@
 import bpy
 
+
 def create_trapezoid_mesh(head_width, tail_width, height, head_offset, tail_offset, num_subdivisions):
     # Calculate the x-coordinates of the vertices
 
@@ -62,6 +63,9 @@ def create_trapezoid_mesh(head_width, tail_width, height, head_offset, tail_offs
     # Return the object
     return obj
 
+
+import bpy
+
 def create_trapezoid_bones(head_width, tail_width, height, head_offset, tail_offset, num_subdivisions, num_bones):
     # Calculate the x-coordinates of the bones
 
@@ -100,12 +104,20 @@ def create_trapezoid_bones(head_width, tail_width, height, head_offset, tail_off
     # Create bones
     bones = []
     for i in range(num_subdivisions+2):
-        print("bone ",i,' head = ',head_bone_pos[i], ' tail = ', tail_bone_pos[i])
+        #print("bone ",i,' head = ',head_bone_pos[i], ' tail = ', tail_bone_pos[i])
         bone = armature.edit_bones.new("Bone " + str(i))
         bone.head = head_bone_pos[i]
         bone.tail = tail_bone_pos[i]
-        bone
         bones.append(bone)
+        
+        
+    #subdivide the bone
+    for bone in armature.edit_bones:
+        for i in range(num_subdivisions+2):
+            bpy.ops.armature.select_all(action='DESELECT')
+            bones[i].select =True
+            #armature.data.edit_bones.active = bones[i]
+            #bpy.ops.armature.subdivide(number_cuts=num_bones)
 
     # Connect bones
     #for i in range(num_subdivisions):

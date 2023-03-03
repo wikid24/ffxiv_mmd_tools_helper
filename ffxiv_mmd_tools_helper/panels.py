@@ -447,6 +447,9 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		split = layout.split(factor=0.80,align=True)
 		split.prop(context.scene, "selected_miscellaneous_tools")	
 		split.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
+		row = layout.row()
+		row.prop(context.scene,"bust_slider",slider=True)
+		row.operator("ffxiv_mmd_tools_helper.bust_slider",text='Run')
 
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):

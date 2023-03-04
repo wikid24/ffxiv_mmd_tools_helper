@@ -412,7 +412,7 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 @register_wrap
 class SortMMDBoneOrder(bpy.types.Operator):
 	"""Auto Sorts the MMD Bone Order & Deformation Tiers"""
-	bl_idname = "ffxiv_mmd_tools_helper.sort_mmd_bone_order"
+	bl_idname = "ffxiv_mmd.sort_mmd_bone_order"
 	bl_label = "Sort MMD Bone Order/Deformation Tiers"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -431,7 +431,7 @@ class SortMMDBoneOrder(bpy.types.Operator):
 @register_wrap
 class HideSpecial_Bones(bpy.types.Operator):
 	"""Hides Bones for Export to MMD"""
-	bl_idname = "ffxiv_mmd_tools_helper.hide_special_bones"
+	bl_idname = "ffxiv_mmd.hide_special_bones"
 	bl_label = "Hides Special/Physics Bones for Export to MMD"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -449,7 +449,7 @@ class HideSpecial_Bones(bpy.types.Operator):
 @register_wrap
 class LockPositionRotation_Bones(bpy.types.Operator):
 	"""Locks Position & Rotation of Bones for Export to MMD"""
-	bl_idname = "ffxiv_mmd_tools_helper.lock_position_rotation_bones"
+	bl_idname = "ffxiv_mmd.lock_position_rotation_bones"
 	bl_label = "Hides Special/Physics Bones for Export to MMD"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -467,7 +467,7 @@ class LockPositionRotation_Bones(bpy.types.Operator):
 @register_wrap
 class SetFixedAxisLocalAxis_Bones(bpy.types.Operator):
 	"""Sets Fixed Axis/Local Axis for Export to MMD"""
-	bl_idname = "ffxiv_mmd_tools_helper.set_fixed_axis_local_axis_bones"
+	bl_idname = "ffxiv_mmd.set_fixed_axis_local_axis_bones"
 	bl_label = "Hides Special/Physics Bones for Export to MMD"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -486,7 +486,7 @@ class SetFixedAxisLocalAxis_Bones(bpy.types.Operator):
 @register_wrap
 class AutoFixMMDBoneNames(bpy.types.Operator):
 	"""If MMD bone name is empty, sets to Blender Bone name, then check if MMD bone matches a bone on metadata dictionary, sets it to the MMD Japanese/English equivalent"""
-	bl_idname = "ffxiv_mmd_tools_helper.auto_fix_mmd_bone_names"
+	bl_idname = "ffxiv_mmd.auto_fix_mmd_bone_names"
 	bl_label = "If MMD bone name is empty, sets to Blender Bone name, then if it matches a bone on metadata dictionary, sets it to the MMD Japanese/English equivalent"
 	bl_options = {'REGISTER', 'UNDO'}
 

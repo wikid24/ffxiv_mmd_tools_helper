@@ -93,7 +93,7 @@ def mass_bones_renamer(context):
 @register_wrap
 class MassBonesRenamer(bpy.types.Operator):
 	"""Mass bones renamer for armature conversion"""
-	bl_idname = "ffxiv_mmd_tools_helper.bones_renamer"
+	bl_idname = "ffxiv_mmd.bones_renamer"
 	bl_label = "Bones Renamer"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -231,7 +231,7 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 @register_wrap
 class FindAndReplaceBoneNames(bpy.types.Operator):
 	"""Find and replace mass renaming of bones"""
-	bl_idname = "ffxiv_mmd_tools_helper.replace_bones_renaming"
+	bl_idname = "ffxiv_mmd.replace_bones_renaming"
 	bl_label = "Replace bones renaming"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -253,7 +253,7 @@ class FindAndReplaceBoneNames(bpy.types.Operator):
 @register_wrap
 class FindBoneNames(bpy.types.Operator):
 	"""Find bones that match earch string"""
-	bl_idname = "ffxiv_mmd_tools_helper.find_bones"
+	bl_idname = "ffxiv_mmd.find_bones"
 	bl_label = "Find bones that match search string"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -279,7 +279,7 @@ def blender_to_japanese_bone_names(context):
 @register_wrap
 class BlenderToJapaneseBoneNames(bpy.types.Operator):
 	"""Copy Blender bone names to Japanese bone names"""
-	bl_idname = "ffxiv_mmd_tools_helper.blender_to_japanese_bone_names"
+	bl_idname = "ffxiv_mmd.blender_to_japanese_bone_names"
 	bl_label = "Copy Blender bone names to Japanese bone names"
 	bl_options = {'REGISTER', 'UNDO'}
 

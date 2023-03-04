@@ -295,7 +295,7 @@ def main(context):
 @register_wrap
 class MmdToolsDisplayPanelGroups(bpy.types.Operator):
 	"""Mass add bone names and shape key names to display panel groups"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_display_panel_groups"
+	bl_idname = "ffxiv_mmd.add_display_panel_groups"
 	bl_label = "Create Display Panel Groups"
 	bl_options = {'REGISTER', 'UNDO'}
 

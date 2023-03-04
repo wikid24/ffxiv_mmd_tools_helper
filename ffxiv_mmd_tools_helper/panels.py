@@ -17,22 +17,22 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.ffxiv_file_browser_operator", text="Import FFXIV Model from .fbx File", icon='IMPORT')
+		row.operator("ffxiv_mmd.ffxiv_file_browser_operator", text="Import FFXIV Model from .fbx File", icon='IMPORT')
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True, align=True)
 		#split = row.split(factor=0.66)
 		grid.row(align=True).prop(context.scene, "selected_ffxiv_test_model")
-		grid.row(align=True).operator("ffxiv_mmd_tools_helper.import_ffxiv_model", text = "Import", icon='IMPORT')
+		grid.row(align=True).operator("ffxiv_mmd.import_ffxiv_model", text = "Import", icon='IMPORT')
 		row = layout.row()
 		row.label(text="FFXIV Conversion:")
 		row = layout.row()
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
 		#row = layout.row()
-		#row.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "Add Base Rigid Bodies", icon="RIGID_BODY")
+		#row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "Add Base Rigid Bodies", icon="RIGID_BODY")
 		#row = layout.row()
-		#row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "Add Base Joints", icon = "RIGID_BODY_CONSTRAINT")
+		#row.operator("ffxiv_mmd.create_joints_from_csv", text = "Add Base Joints", icon = "RIGID_BODY_CONSTRAINT")
 
 
 @register_wrap
@@ -59,15 +59,15 @@ class LanguageTranslationPanel_MTH(bpy.types.Panel):
 		grid.column(align=True).prop(context.scene, "Destination_Armature_Type")
 		grid = col.grid_flow(align=True)
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
+		row.operator("ffxiv_mmd.bones_renamer", text = "Mass Rename Bones",icon='IMPORT')
 		if obj:
 			if obj.type=='ARMATURE':
 				row.prop(context.object.data,"show_names",toggle=True ,text = "",icon_only=True,icon='SORTALPHA')
 		row = layout.row(align=True)
 		col = layout.column(align=True)
 		grid = col.grid_flow(align=True)
-		grid.column(align=True).operator("ffxiv_mmd_tools_helper.blender_to_japanese_bone_names", text = "Blender to MMD Jap",icon='TRACKING_REFINE_FORWARDS')
-		grid.column(align=True).operator("ffxiv_mmd_tools_helper.reverse_japanese_english", text = "Swap Jap/Eng",icon='UV_SYNC_SELECT')
+		grid.column(align=True).operator("ffxiv_mmd.blender_to_japanese_bone_names", text = "Blender to MMD Jap",icon='TRACKING_REFINE_FORWARDS')
+		grid.column(align=True).operator("ffxiv_mmd.reverse_japanese_english", text = "Swap Jap/Eng",icon='UV_SYNC_SELECT')
 
 
 @register_wrap
@@ -109,30 +109,30 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		row.label(text="MMD Conversion")
 		split = layout.split( factor=0.80, align=True)
 		split.prop(context.scene, "selected_bone_tool")	
-		split.operator("ffxiv_mmd_tools_helper.bone_tools", text = "Run", icon='ORIENTATION_NORMAL')
+		split.operator("ffxiv_mmd.bone_tools", text = "Run", icon='ORIENTATION_NORMAL')
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		grid = col.grid_flow(columns=1,align=True)
 		grid.label(text="Find in name:")
 		grid.prop(context.scene,"find_bone_string",text='')
-		grid.operator("ffxiv_mmd_tools_helper.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=False
+		grid.operator("ffxiv_mmd.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=False
 		col = row.column(align=True)
 		grid = col.grid_flow(columns=1,align=True)
 		grid.label(text="Replace with:")
 		grid.prop(context.scene,"replace_bone_string",text='')
-		grid.operator("ffxiv_mmd_tools_helper.replace_bones_renaming", text = "Replace", icon='CON_ROTLIMIT')
+		grid.operator("ffxiv_mmd.replace_bones_renaming", text = "Replace", icon='CON_ROTLIMIT')
 		grid.prop(context.scene, "bones_all_or_selected",text='Selected Only')
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		grid = col.grid_flow(row_major=True,align=True)
 		grid.label(text="IK", icon="CONSTRAINT_BONE")
-		grid.operator("ffxiv_mmd_tools_helper.add_foot_leg_ik", text = "Leg/Foot IK")
-		grid.operator("ffxiv_mmd_tools_helper.add_hand_arm_ik", text = "Hand/Arm IK")
+		grid.operator("ffxiv_mmd.add_foot_leg_ik", text = "Leg/Foot IK")
+		grid.operator("ffxiv_mmd.add_hand_arm_ik", text = "Hand/Arm IK")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.label(text="Bone Groups", icon="GROUP_BONE")
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd_tools_helper.add_bone_groups", text = "Auto-Generate")
+		col.operator("ffxiv_mmd.add_bone_groups", text = "Auto-Generate")
 
 
 @register_wrap
@@ -170,7 +170,7 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		if(context.active_object):
 			if context.active_object.mmd_type == 'RIGID_BODY':
 				grid.prop(context.active_object,"name",text="")	
-				grid.operator("ffxiv_mmd_tools_helper.get_bone_from_rigid_body",text=str(context.active_object.mmd_rigid.bone))
+				grid.operator("ffxiv_mmd.get_bone_from_rigid_body",text=str(context.active_object.mmd_rigid.bone))
 			else:
 				grid.label(text='Select a Rigid Body')
 		row = layout.row()
@@ -185,33 +185,33 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"rigidbody_contains", text = "")
 		row.prop(context.scene,"rigidbody_endswith", text = "")
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append_to_selected=False
-		row.operator("ffxiv_mmd_tools_helper.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
-		row.operator("ffxiv_mmd_tools_helper.clear_find_rigid_bodies", text='',icon='TRASH')
+		row.operator("ffxiv_mmd.find_rigid_bodies", text = 'Find', icon='VIEWZOOM').append_to_selected=False
+		row.operator("ffxiv_mmd.find_rigid_bodies", text = 'Find + Add', icon='ZOOM_IN').append_to_selected=True
+		row.operator("ffxiv_mmd.clear_find_rigid_bodies", text='',icon='TRASH')
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
 		grid.label(text='Bone Chain',icon='LINK_BLEND')
-		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Up', icon='TRIA_UP').direction='UP'
-		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
-		grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
+		grid.operator("ffxiv_mmd.select_rigid_body_bone_chain", text = 'Up', icon='TRIA_UP').direction='UP'
+		grid.operator("ffxiv_mmd.select_rigid_body_bone_chain", text = 'Down', icon='TRIA_DOWN').direction='DOWN'
+		grid.operator("ffxiv_mmd.select_rigid_body_bone_chain", text = 'All', icon='UV_SYNC_SELECT').direction='ALL'
 		col = row.column()
 		grid = col.grid_flow(align=True)
 		grid.label(text="Skirt", icon='MESH_CONE')
-		#row.operator("ffxiv_mmd_tools_helper.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
-		#row.operator("ffxiv_mmd_tools_helper.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
-		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
-		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
-		grid.operator("ffxiv_mmd_tools_helper.select_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
+		#row.operator("ffxiv_mmd.get_vertical_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC")
+		#row.operator("ffxiv_mmd.get_horizontal_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY")
+		grid.operator("ffxiv_mmd.select_skirt_rigid_bodies", text = "Vert", icon="SORT_DESC").direction='VERTICAL'
+		grid.operator("ffxiv_mmd.select_skirt_rigid_bodies", text = "Horiz", icon="CENTER_ONLY").direction='HORIZONTAL'
+		grid.operator("ffxiv_mmd.select_skirt_rigid_bodies", text = "All", icon="CONE").direction='ALL'
 		row = layout.row()
 		col = row.column()
 		col.label(text="Rigid Body Transform:", icon='CON_CLAMPTO')
 		row = layout.row()
 		col = row.column()
 		grid = col.grid_flow(align=True)
-		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_bodies", text = 'Bulk Apply')
-		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain", text='Bone Chain')
-		grid.operator("ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains", text = 'All Bone Chains')
+		grid.operator("ffxiv_mmd.batch_update_rigid_bodies", text = 'Bulk Apply')
+		grid.operator("ffxiv_mmd.batch_update_rigid_body_bone_chain", text='Bone Chain')
+		grid.operator("ffxiv_mmd.batch_update_rigid_body_bone_chains", text = 'All Bone Chains')
 		row = layout.row()
 		col = row.column(align=True)
 		grid = col.grid_flow(align=True)
@@ -219,9 +219,9 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		row.label(text='Rigid Body Create:',icon='RIGID_BODY')
 		#row.operator('mmd_tools.rigid_body_add', text='From Selected Bones')
 		row = grid.row(align=True)
-		row.operator('ffxiv_mmd_tools_helper.create_rigid_bodies', text='From Selected Bones')
+		row.operator('ffxiv_mmd.create_rigid_bodies', text='From Selected Bones')
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv", text = "From FFXIV Skeleton (CSV)")
+		row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "From FFXIV Skeleton (CSV)")
 
 		
 		
@@ -258,25 +258,25 @@ class JointsPanel_MTH(bpy.types.Panel):
 		if(context.active_object):
 			if context.active_object.mmd_type == 'JOINT':
 				grid.prop(context.active_object,"name",text="")	
-				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object1.name).rigid_number = '1'
-				grid.operator("ffxiv_mmd_tools_helper.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object2.name).rigid_number = '2'
+				grid.operator("ffxiv_mmd.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object1.name).rigid_number = '1'
+				grid.operator("ffxiv_mmd.select_rigid_body_from_joint",text=context.active_object.rigid_body_constraint.object2.name).rigid_number = '2'
 			else:
 				grid.label(text='Select a Joint')
 		row = layout.row()
 		col = row.column()
 		row = col.row(align=True)
 		grid = row.grid_flow(align=True)
-		grid.operator("ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies')
+		grid.operator("ffxiv_mmd.select_joints_from_rigid_bodies", text = 'Get Joints from Rigid Bodies')
 		row = col.row(align=True)
 		grid = row.grid_flow(align=True,columns=2)
-		grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Vertical', icon="SORT_DESC").direction='VERTICAL'
-		grid.operator("ffxiv_mmd_tools_helper.select_vertical_horizontal_joints", text = 'Horizontal', icon="CENTER_ONLY").direction='HORIZONTAL'
+		grid.operator("ffxiv_mmd.select_vertical_horizontal_joints", text = 'Vertical', icon="SORT_DESC").direction='VERTICAL'
+		grid.operator("ffxiv_mmd.select_vertical_horizontal_joints", text = 'Horizontal', icon="CENTER_ONLY").direction='HORIZONTAL'
 		
 		row = layout.row()
 		row.label(text="Joint Transform:", icon='CON_CLAMPTO')
 		row = layout.row()
 		grid = row.grid_flow(align=True,columns=1)
-		grid.operator("ffxiv_mmd_tools_helper.batch_update_joints", text = 'Bulk Apply')
+		grid.operator("ffxiv_mmd.batch_update_joints", text = 'Bulk Apply')
 		row = layout.row()
 		col = layout.column()
 		row.label(text='Joint Create:',icon='PIVOT_MEDIAN')
@@ -285,22 +285,22 @@ class JointsPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		grid = col.grid_flow(align=True)
 		row = grid.row(align=True)
-		row.operator('ffxiv_mmd_tools_helper.create_joints', text='From Selected Rigid Bodies')	
+		row.operator('ffxiv_mmd.create_joints', text='From Selected Rigid Bodies')	
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.create_joints_from_csv", text = "From FFXIV Skeleton (CSV)")
+		row.operator("ffxiv_mmd.create_joints_from_csv", text = "From FFXIV Skeleton (CSV)")
 		#row = layout.row()
 		#col = layout.column()
 		#grid = row.grid_flow(row_major=True,align=True,columns=1)
 		row = grid.row(align=True)
 		col = row.grid_flow(align=True,columns=2)
 		#grid.label(text='Vertical',icon='EMPTY_SINGLE_ARROW')
-		col.operator("ffxiv_mmd_tools_helper.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
+		col.operator("ffxiv_mmd.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
 		col.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
 		#col = layout.column()
 		#grid = row.grid_flow(row_major=True,align=True,columns=1)
 		row = grid.row(align=True)
 		#grid.label(text='Horizontal',icon='CENTER_ONLY')
-		grid.operator("ffxiv_mmd_tools_helper.batch_create_horizontal_joints", text = "Bulk Horizontal",icon='CENTER_ONLY')
+		grid.operator("ffxiv_mmd.batch_create_horizontal_joints", text = "Bulk Horizontal",icon='CENTER_ONLY')
 		#grid.prop(context.scene, "bones_all_or_selected",text='Wrap Around')
 
 		
@@ -324,23 +324,23 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		split = col.split(factor = 0.55,align=True)
 		split.prop(context.scene, "bone_morph_ffxiv_model_list")
-		split.operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Create",icon='SHAPEKEY_DATA')
-		split.operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text="File",icon='FILE')
+		split.operator("ffxiv_mmd.add_bone_morphs", text = "Create",icon='SHAPEKEY_DATA')
+		split.operator("ffxiv_mmd.open_bone_morphs_file", text="File",icon='FILE')
 		"""
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True)
 		row = grid.row(align=True)
 		row.prop(context.scene, "bone_morph_ffxiv_model_list")
-		row.operator("ffxiv_mmd_tools_helper.add_bone_morphs", text = "Generate",icon='SHAPEKEY_DATA')
-		row.operator("ffxiv_mmd_tools_helper.open_bone_morphs_file", text="",icon='CURRENT_FILE')
+		row.operator("ffxiv_mmd.add_bone_morphs", text = "Generate",icon='SHAPEKEY_DATA')
+		row.operator("ffxiv_mmd.open_bone_morphs_file", text="",icon='CURRENT_FILE')
 		#row = layout.row()
 		#layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.column(align=True).prop(context.scene,'bone_morph_rotation_mode_list')
 		col = row.column(align=True)
-		col.column(align=True).operator("ffxiv_mmd_tools_helper.change_face_rotation_mode",text='Change Rotation Mode')
+		col.column(align=True).operator("ffxiv_mmd.change_face_rotation_mode",text='Change Rotation Mode')
 		row = layout.row()
 		row.label(text='**TODO** Open Dictionary File')
 		row = layout.row()
@@ -360,19 +360,19 @@ class SkirtPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.generate_skirt_modal", text = "Generate A New Skirt Object",icon='SHADERFX')
+		row.operator("ffxiv_mmd.generate_skirt_modal", text = "Generate A New Skirt Object",icon='SHADERFX')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.move_mesh_to_new_skirt_btn", text = "Move Mesh To New Skirt Object",icon='PASTEDOWN')
+		row.operator("ffxiv_mmd.move_mesh_to_new_skirt_btn", text = "Move Mesh To New Skirt Object",icon='PASTEDOWN')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.weight_paint_transfer_to_mesh_btn", text = "Weight Paint Transfer To Mesh",icon='MOD_VERTEX_WEIGHT')
+		row.operator("ffxiv_mmd.weight_paint_transfer_to_mesh_btn", text = "Weight Paint Transfer To Mesh",icon='MOD_VERTEX_WEIGHT')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
+		row.operator("ffxiv_mmd.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='RIGID_BODY')
+		row.operator("ffxiv_mmd.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='RIGID_BODY')
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.generate_skirt_joints", text = "Generate Skirt Joints",icon='RIGID_BODY_CONSTRAINT')
+		row.operator("ffxiv_mmd.generate_skirt_joints", text = "Generate Skirt Joints",icon='RIGID_BODY_CONSTRAINT')
 		
 		
 
@@ -391,11 +391,11 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_light_setup", text = "Add MMD light (broken)", icon="LIGHT")
+		row.operator("ffxiv_mmd.mmd_light_setup", text = "Add MMD light (broken)", icon="LIGHT")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras", icon="CAMERA_DATA")
+		row.operator("ffxiv_mmd.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras", icon="CAMERA_DATA")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.background_color_picker", text = "MMD background color picker", icon="COLOR")
+		row.operator("ffxiv_mmd.background_color_picker", text = "MMD background color picker", icon="COLOR")
 		layout.prop(context.scene, "BackgroundColor")
 		row = layout.row()
 
@@ -416,7 +416,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 		row.label(text="MMD Render toon textures (broken)", icon="MATERIAL")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes (broken)",icon='MATERIAL')
+		row.operator("ffxiv_mmd.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes (broken)",icon='MATERIAL')
 		row = layout.row()
 
 		row.label(text="MMD Toon modifier (broken)", icon='NODE_MATERIAL')
@@ -424,7 +424,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		layout.prop(context.scene, "ToonModifierColor")
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
+		row.operator("ffxiv_mmd.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
 """
 
 
@@ -446,10 +446,10 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		split = layout.split(factor=0.80,align=True)
 		split.prop(context.scene, "selected_miscellaneous_tools")	
-		split.operator("ffxiv_mmd_tools_helper.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
+		split.operator("ffxiv_mmd.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
 		row = layout.row()
 		row.prop(context.scene,"bust_slider",slider=True)
-		row.operator("ffxiv_mmd_tools_helper.bust_slider",text='Run')
+		row.operator("ffxiv_mmd.bust_slider",text='Run')
 
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):
@@ -465,21 +465,21 @@ class ExportMMD_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.auto_fix_mmd_bone_names",text="Auto-Fix MMD Japanese/English Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+		row.operator("ffxiv_mmd.auto_fix_mmd_bone_names",text="Auto-Fix MMD Japanese/English Bone Names", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
 		row = layout.row(align=True)
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd_tools_helper.add_display_panel_groups", text = "Add Display Panels", icon="LONGDISPLAY")
+		col.operator("ffxiv_mmd.add_display_panel_groups", text = "Add Display Panels", icon="LONGDISPLAY")
 		col = row.column(align=True)
 		col.prop (context.scene, "mmd_display_panel_options")
 		row.separator()
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.sort_mmd_bone_order", text = "Sort Bone Order/Deform Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
+		row.operator("ffxiv_mmd.sort_mmd_bone_order", text = "Sort Bone Order/Deform Tiers", icon="MOD_ARRAY") #Set bone order & deformation tiers
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.lock_position_rotation_bones",text="Lock Position & Rotation", icon="LOCKED") 
+		row.operator("ffxiv_mmd.lock_position_rotation_bones",text="Lock Position & Rotation", icon="LOCKED") 
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.set_fixed_axis_local_axis_bones",text="Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
+		row.operator("ffxiv_mmd.set_fixed_axis_local_axis_bones",text="Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
 		row = layout.row()
-		row.operator("ffxiv_mmd_tools_helper.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)		
+		row.operator("ffxiv_mmd.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)		
 		row = layout.row()
 		row.label(text="**TODO** Edit Metadata Dictionary File", icon="CURRENT_FILE") 
 		row = layout.row()
@@ -488,7 +488,7 @@ class ExportMMD_MTH(bpy.types.Panel):
 		"""
 		row = layout.row(align=True)
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd_tools_helper.armature_diagnostic", text = "Diagnose Armature (broken)",icon='ORPHAN_DATA')
+		col.operator("ffxiv_mmd.armature_diagnostic", text = "Diagnose Armature (broken)",icon='ORPHAN_DATA')
 		col = row.column(align=True)
 		col.prop(context.scene, "selected_armature_to_diagnose")
 		row = layout.row()

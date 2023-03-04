@@ -43,7 +43,7 @@ def swap_japanese_english(context):
 @register_wrap
 class ReverseJapaneseEnglish(bpy.types.Operator):
 	"""Reverses Japanese and English names of shape keys, materials, bones"""
-	bl_idname = "ffxiv_mmd_tools_helper.reverse_japanese_english"
+	bl_idname = "ffxiv_mmd.reverse_japanese_english"
 	bl_label = "Reverse Japanese English names of MMD model"
 	bl_options = {'REGISTER', 'UNDO'}
 

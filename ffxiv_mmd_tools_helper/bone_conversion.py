@@ -768,7 +768,7 @@ def main(context):
 @register_wrap
 class BoneTools(bpy.types.Operator):
 	"""Bone Creation/Adjustment Tools"""
-	bl_idname = "ffxiv_mmd_tools_helper.bone_tools"
+	bl_idname = "ffxiv_mmd.bone_tools"
 	bl_label = "Bone Tools"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -806,7 +806,7 @@ class BoneTools(bpy.types.Operator):
 @register_wrap
 class FFXIVBustSlider(bpy.types.Operator):
 	"""Slider for FFXIV Bust"""
-	bl_idname = "ffxiv_mmd_tools_helper.bust_slider"
+	bl_idname = "ffxiv_mmd.bust_slider"
 	bl_label = "FFXIV Bust Slider"
 	bl_options = {'REGISTER', 'UNDO'}
 

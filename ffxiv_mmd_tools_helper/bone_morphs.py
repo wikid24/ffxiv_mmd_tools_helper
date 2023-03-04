@@ -261,7 +261,7 @@ def main(context):
 @register_wrap
 class AddBoneMorphs(bpy.types.Operator):
 	"""Add Bone Morphs to an FFXIV Model (converted to an MMD Model)"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_bone_morphs"
+	bl_idname = "ffxiv_mmd.add_bone_morphs"
 	bl_label = "Import Bone Morphs"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -295,7 +295,7 @@ class AddBoneMorphs(bpy.types.Operator):
 @register_wrap
 class OpenBoneMorphsFile(bpy.types.Operator):
 	"""Open Bone Morphs CSV File for the selected race"""
-	bl_idname = "ffxiv_mmd_tools_helper.open_bone_morphs_file"
+	bl_idname = "ffxiv_mmd.open_bone_morphs_file"
 	bl_label = "Open Bone Morphs CSV File"
 
 	def execute(self, context):
@@ -305,7 +305,7 @@ class OpenBoneMorphsFile(bpy.types.Operator):
 @register_wrap
 class ChangeFaceBoneRotationMode(bpy.types.Operator):
 	"""Changes all Face Bones to the selected Rotation Mode"""
-	bl_idname = "ffxiv_mmd_tools_helper.change_face_rotation_mode"
+	bl_idname = "ffxiv_mmd.change_face_rotation_mode"
 	bl_label = "Change Face Rotation Mode"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -321,7 +321,7 @@ class ChangeFaceBoneRotationMode(bpy.types.Operator):
 """
 @register_wrap
 class PopulateMMDBoneMorphsFile(bpy.types.Operator):
-	bl_idname = "ffxiv_mmd_tools_helper.populate_mmd_bone_morphs_file"
+	bl_idname = "ffxiv_mmd.populate_mmd_bone_morphs_file"
 	bl_label = "Open Bone Morphs CSV File"
 	bl_options = {'REGISTER', 'UNDO'}
 

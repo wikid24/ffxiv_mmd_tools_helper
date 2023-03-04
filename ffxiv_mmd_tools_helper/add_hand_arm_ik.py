@@ -421,7 +421,7 @@ def get_armature():
 @register_wrap
 class Add_MMD_Hand_Arm_IK(bpy.types.Operator):
 	"""Add hand and arm IK bones and constraints to active MMD model"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_hand_arm_ik"
+	bl_idname = "ffxiv_mmd.add_hand_arm_ik"
 	bl_label = "Add Hand Arm IK to MMD model"
 	bl_options = {'REGISTER', 'UNDO'}
 

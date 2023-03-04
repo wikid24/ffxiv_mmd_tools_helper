@@ -540,7 +540,7 @@ def _skirt_reset_to_default(self,context):
 
 @register_wrap
 class GenerateSkirtModal(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.generate_skirt_modal"
+    bl_idname = "ffxiv_mmd.generate_skirt_modal"
     bl_label = "Create New Skirt"
     bl_options = {'REGISTER', 'BLOCKING','UNDO','PRESET'}
 
@@ -613,7 +613,7 @@ class GenerateSkirtModal(bpy.types.Operator):
 
 @register_wrap
 class MoveMeshToNewSkirt(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.move_mesh_to_new_skirt_btn"
+    bl_idname = "ffxiv_mmd.move_mesh_to_new_skirt_btn"
     bl_label = "Move Mesh to New Skirt"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -631,7 +631,7 @@ class MoveMeshToNewSkirt(bpy.types.Operator):
 
 @register_wrap
 class WeightPaintTransferToMesh(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.weight_paint_transfer_to_mesh_btn"
+    bl_idname = "ffxiv_mmd.weight_paint_transfer_to_mesh_btn"
     bl_label = "Weight Paint Transfer to Mesh"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -647,7 +647,7 @@ class WeightPaintTransferToMesh(bpy.types.Operator):
 
 @register_wrap
 class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.delete_ffxiv_skirt_vertex_groups"
+    bl_idname = "ffxiv_mmd.delete_ffxiv_skirt_vertex_groups"
     bl_label = "Delete FFXIV Skirt Vertex Groups"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -662,7 +662,7 @@ class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
 
 @register_wrap
 class MergeBonesAndMeshToFFXIVModel(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.merge_bones_and_meshes_to_ffxiv_model"
+    bl_idname = "ffxiv_mmd.merge_bones_and_meshes_to_ffxiv_model"
     bl_label = "Merge bones and all meshes in skirt_obj to the selected armature"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -683,7 +683,7 @@ class MergeBonesAndMeshToFFXIVModel(bpy.types.Operator):
 
 @register_wrap
 class GenerateSkirtRigidBodies(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.generate_skirt_rigid_bodies"
+    bl_idname = "ffxiv_mmd.generate_skirt_rigid_bodies"
     bl_label = "Generate all the skirt Rigid Bodies"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -784,8 +784,8 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         #get head+1 to tail
         #rigid_body.find_rigid_bodies(startswith='skirt_1_1',append_to_selected=False)[0]
         rigid_body.find_rigid_bodies(startswith='skirt_'+min_chain_number+'_'+str((int(min_chain_head_number)+1)),append_to_selected=False)[0]
-        bpy.ops.ffxiv_mmd_tools_helper.select_skirt_rigid_bodies(direction='HORIZONTAL')
-        bpy.ops.ffxiv_mmd_tools_helper.select_rigid_body_bone_chain(direction='DOWN')
+        bpy.ops.ffxiv_mmd.select_skirt_rigid_bodies(direction='HORIZONTAL')
+        bpy.ops.ffxiv_mmd.select_rigid_body_bone_chain(direction='DOWN')
         #set mass for head+1 to tail to 0.1 to 0.02
         rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
         rigid_body_bone_chains_data=  rigid_body.get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
@@ -799,8 +799,8 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         #get head+2 to tail
         #rigid_body.find_rigid_bodies(startswith='skirt_1_2',append_to_selected=False)[0]
         rigid_body.find_rigid_bodies(startswith='skirt_'+min_chain_number+'_'+str((int(min_chain_head_number)+2)),append_to_selected=False)[0]
-        bpy.ops.ffxiv_mmd_tools_helper.select_skirt_rigid_bodies(direction='HORIZONTAL')
-        bpy.ops.ffxiv_mmd_tools_helper.select_rigid_body_bone_chain(direction='DOWN')
+        bpy.ops.ffxiv_mmd.select_skirt_rigid_bodies(direction='HORIZONTAL')
+        bpy.ops.ffxiv_mmd.select_rigid_body_bone_chain(direction='DOWN')
         #set linear_damping for head+1 to tail to 1 to 0.555
         rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
         rigid_body_bone_chains_data=  rigid_body.get_all_rigid_body_chains_dictionary(rigid_body_bone_chains)
@@ -821,7 +821,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
 
 @register_wrap
 class GenerateSkirtJoints(bpy.types.Operator):
-    bl_idname = "ffxiv_mmd_tools_helper.generate_skirt_joints"
+    bl_idname = "ffxiv_mmd.generate_skirt_joints"
     bl_label = "Generate all the skirt Rigid Body Joints"
     bl_options = {'REGISTER', 'UNDO'}
 

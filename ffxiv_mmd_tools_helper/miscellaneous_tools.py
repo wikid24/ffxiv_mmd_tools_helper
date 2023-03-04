@@ -259,7 +259,7 @@ def main(context):
 @register_wrap
 class MiscellaneousTools(bpy.types.Operator):
 	"""Execute Function"""
-	bl_idname = "ffxiv_mmd_tools_helper.miscellaneous_tools"
+	bl_idname = "ffxiv_mmd.miscellaneous_tools"
 	bl_label = "Miscellaneous Tools"
 	bl_options = {'REGISTER', 'UNDO'}
 	

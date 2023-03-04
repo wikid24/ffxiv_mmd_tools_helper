@@ -276,7 +276,7 @@ def main(context):
 @register_wrap
 class Shape_Keys(bpy.types.Operator):
 	"""Shape Keys"""
-	bl_idname = "ffxiv_mmd_tools_helper.add_shape_keys_btn"
+	bl_idname = "ffxiv_mmd.add_shape_keys_btn"
 	bl_label = "Import Shape Keys"
 	bl_options = {'REGISTER', 'UNDO'}
 

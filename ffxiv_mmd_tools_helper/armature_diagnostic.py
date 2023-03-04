@@ -34,7 +34,7 @@ def main(context):
 @register_wrap
 class ArmatureDiagnostic(bpy.types.Operator):
 	"""Tooltip"""
-	bl_idname = "ffxiv_mmd_tools_helper.armature_diagnostic"
+	bl_idname = "ffxiv_mmd.armature_diagnostic"
 	bl_label = "Armature Diagnostic"
 
 	bpy.types.Scene.selected_armature_to_diagnose = bpy.props.EnumProperty(items = [\

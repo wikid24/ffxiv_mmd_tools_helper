@@ -420,7 +420,7 @@ def toonify_material(mat):
 @register_wrap
 class MMDToonTexturesToNodeEditorShader(bpy.types.Operator):
 	"""Sets up nodes in Blender node editor for rendering toon textures"""
-	bl_idname = "ffxiv_mmd_tools_helper.mmd_toon_render_node_editor"
+	bl_idname = "ffxiv_mmd.mmd_toon_render_node_editor"
 	bl_label = "MMD toon textures render using node editor "
 	bl_options = {'REGISTER', 'UNDO'}
 

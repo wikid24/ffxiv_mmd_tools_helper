@@ -455,7 +455,7 @@ def create_rigid_bodies_from_csv(context):
 @register_wrap
 class AddJointsFromFile(bpy.types.Operator):
 	"""Add Joints to a FFXIV Model (Converted to an MMD Model)"""
-	bl_idname = "ffxiv_mmd_tools_helper.create_joints_from_csv"
+	bl_idname = "ffxiv_mmd.create_joints_from_csv"
 	bl_label = "Replace bones renaming"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -472,7 +472,7 @@ class AddJointsFromFile(bpy.types.Operator):
 @register_wrap
 class SelectJointsFromRigidBodies(bpy.types.Operator):
 	"""Get Joints From Selected Rigid Bodies"""
-	bl_idname = "ffxiv_mmd_tools_helper.select_joints_from_rigid_bodies"
+	bl_idname = "ffxiv_mmd.select_joints_from_rigid_bodies"
 	bl_label = "Get Joints From Selected Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -504,7 +504,7 @@ class SelectJointsFromRigidBodies(bpy.types.Operator):
 @register_wrap
 class SelectRigidBodyFromJoint(bpy.types.Operator):
 	"""Get Rigid Body From Active Joint """
-	bl_idname = "ffxiv_mmd_tools_helper.select_rigid_body_from_joint"
+	bl_idname = "ffxiv_mmd.select_rigid_body_from_joint"
 	bl_label = "Get Bone From Active Rigid Body "
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -528,7 +528,7 @@ class SelectRigidBodyFromJoint(bpy.types.Operator):
 @register_wrap
 class SelectVerticalHorizontalJoints(bpy.types.Operator):
 	"""Select Vertical or Horizontal Joints from Selected Joints"""
-	bl_idname = "ffxiv_mmd_tools_helper.select_vertical_horizontal_joints"
+	bl_idname = "ffxiv_mmd.select_vertical_horizontal_joints"
 	bl_label = "Select Vertical or Horizontal Joints from Selected Joints"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -566,7 +566,7 @@ class SelectVerticalHorizontalJoints(bpy.types.Operator):
 @register_wrap
 class CreateJoints(bpy.types.Operator):
 	"""Create Joints From Selected Rigid Bodies"""
-	bl_idname = "ffxiv_mmd_tools_helper.create_joints"
+	bl_idname = "ffxiv_mmd.create_joints"
 	bl_label = "Create Joints From Selected Rigid Bodies"
 
 	@classmethod
@@ -600,7 +600,7 @@ class CreateJoints(bpy.types.Operator):
 @register_wrap
 class BatchUpdateJoints(bpy.types.Operator):
 	""" Bulk Update all Selected Joints using the Active Joint """
-	bl_idname = "ffxiv_mmd_tools_helper.batch_update_joints"
+	bl_idname = "ffxiv_mmd.batch_update_joints"
 	bl_label = "Batch Update Joints"
 	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 
@@ -971,7 +971,7 @@ def create_vertical_joints(rigid_body_pin_obj = None,use_bone_rotation=None
 @register_wrap
 class BatchCreateVerticalJoints(bpy.types.Operator):
 	""" Create Vertical Joints from Selected Rigid Bodies"""
-	bl_idname = "ffxiv_mmd_tools_helper.batch_create_vertical_joints"
+	bl_idname = "ffxiv_mmd.batch_create_vertical_joints"
 	bl_label = "Create Vertical Joints from Selected Rigid Bodies"
 	bl_options = {'REGISTER','UNDO','PRESET'} 
 	bl_space_type = "VIEW_3D"
@@ -1240,7 +1240,7 @@ def create_horizontal_joints( rigid_body_chains
 @register_wrap
 class BatchCreateHorizontalJoints(bpy.types.Operator):
 	""" Create Horizontal Joints from Selected Rigid Bodies"""
-	bl_idname = "ffxiv_mmd_tools_helper.batch_create_horizontal_joints"
+	bl_idname = "ffxiv_mmd.batch_create_horizontal_joints"
 	bl_label = "Create Horizontal Joints from Selected Rigid Bodies"
 	bl_options = {'REGISTER','UNDO'} 
 	bl_space_type = "VIEW_3D"
@@ -1355,8 +1355,8 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 		row.prop(self,"scope_contains", text = "")
 		row.prop(self,"scope_endswith", text = "")
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids", text = 'Find', icon='VIEWZOOM')
-		#row.operator("ffxiv_mmd_tools_helper.clear_horizontal_joints_find_rigids", text='',icon='TRASH')
+		row.operator("ffxiv_mmd.horizontal_joints_find_rigids", text = 'Find', icon='VIEWZOOM')
+		#row.operator("ffxiv_mmd.clear_horizontal_joints_find_rigids", text='',icon='TRASH')
 		row = layout.row()
 		row = layout.row()
 		row.label(text=self.message)
@@ -1377,9 +1377,9 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 				row.label(text='Chains found: '+ str(len(props.grouped_rigid_bodies_by_index_pos)))
 				row = box.row()
 				col = row.column()
-				row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='PREVIOUS',icon='TRIA_LEFT').direction = 'PREVIOUS'
+				row.operator("ffxiv_mmd.horizontal_joints_find_rigids_by_index",text='PREVIOUS',icon='TRIA_LEFT').direction = 'PREVIOUS'
 				row.label(text = 'Chain: ' + str(props.rigid_body_chain_index))
-				row.operator("ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index",text='NEXT',icon='TRIA_RIGHT').direction = 'NEXT'
+				row.operator("ffxiv_mmd.horizontal_joints_find_rigids_by_index",text='NEXT',icon='TRIA_RIGHT').direction = 'NEXT'
 				row = box.row()
 				col = row.column()
 				row.label(text = 'Rigid Bodies within chain: ' + str(len(props.grouped_rigid_bodies_by_index_pos[props.rigid_body_chain_index])) )
@@ -1511,7 +1511,7 @@ class BatchCreateHorizontalJoints(bpy.types.Operator):
 @register_wrap
 class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 	#Find Rigid Bodies
-	bl_idname = "ffxiv_mmd_tools_helper.horizontal_joints_find_rigids"
+	bl_idname = "ffxiv_mmd.horizontal_joints_find_rigids"
 	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1544,7 +1544,7 @@ class HorizontalJointsFindRigidBodies(bpy.types.Operator):
 @register_wrap
 class ClearFindRigidBodies(bpy.types.Operator):
 	"""Clear Find Horizontal Joint Rigid Bodies """
-	bl_idname = "ffxiv_mmd_tools_helper.clear_horizontal_joints_find_rigids"
+	bl_idname = "ffxiv_mmd.clear_horizontal_joints_find_rigids"
 	bl_label = "Clear Find Horizontal Joint Rigid Bodies"
 
 	def execute(self, context):
@@ -1557,7 +1557,7 @@ class ClearFindRigidBodies(bpy.types.Operator):
 @register_wrap
 class HorizontalJointsFindRigidBodiesByIndexPosition(bpy.types.Operator):
 	#Find Rigid Bodies
-	bl_idname = "ffxiv_mmd_tools_helper.horizontal_joints_find_rigids_by_index"
+	bl_idname = "ffxiv_mmd.horizontal_joints_find_rigids_by_index"
 	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 

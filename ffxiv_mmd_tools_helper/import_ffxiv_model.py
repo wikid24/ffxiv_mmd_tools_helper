@@ -132,7 +132,7 @@ from bpy_extras.io_utils import ImportHelper
 @register_wrap
 class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	"""Operator that opens the file browser dialog"""
-	bl_idname = "ffxiv_mmd_tools_helper.ffxiv_file_browser_operator"
+	bl_idname = "ffxiv_mmd.ffxiv_file_browser_operator"
 	bl_label = "File Browser Operator"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -155,7 +155,7 @@ class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 @register_wrap
 class ImportFFXIVModel(bpy.types.Operator):
 	"""Import FFXIV Test Model"""
-	bl_idname = "ffxiv_mmd_tools_helper.import_ffxiv_model"
+	bl_idname = "ffxiv_mmd.import_ffxiv_model"
 	bl_label = "Import FFXIV Test Model"
 	bl_options = {'REGISTER', 'UNDO'}
 

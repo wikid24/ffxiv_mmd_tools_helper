@@ -1199,7 +1199,7 @@ def create_rigid_bodies_from_csv(context):
 @register_wrap
 class AddRigidBodyFromFile(bpy.types.Operator):
 	"""Add Rigid Bodies to a FFXIV Model (Converted to an MMD Model)"""
-	bl_idname = "ffxiv_mmd_tools_helper.create_rigid_bodies_from_csv"
+	bl_idname = "ffxiv_mmd.create_rigid_bodies_from_csv"
 	bl_label = "Add Rigid Bodies from CSV"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1217,7 +1217,7 @@ class AddRigidBodyFromFile(bpy.types.Operator):
 @register_wrap
 class SelectSkirtRigidBodies(bpy.types.Operator):
 	"""Select Rigid Bodies in a skirt """
-	bl_idname = "ffxiv_mmd_tools_helper.select_skirt_rigid_bodies"
+	bl_idname = "ffxiv_mmd.select_skirt_rigid_bodies"
 	bl_label = "Select All Skirt Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1245,7 +1245,7 @@ class SelectSkirtRigidBodies(bpy.types.Operator):
 @register_wrap
 class GetBoneFromRigidBody(bpy.types.Operator):
 	"""Get Bone From Active Rigid Body """
-	bl_idname = "ffxiv_mmd_tools_helper.get_bone_from_rigid_body"
+	bl_idname = "ffxiv_mmd.get_bone_from_rigid_body"
 	bl_label = "Get Bone From Active Rigid Body "
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1263,7 +1263,7 @@ class GetBoneFromRigidBody(bpy.types.Operator):
 @register_wrap
 class ResetLocationRigidBodies(bpy.types.Operator):
 	"""Reset Location of selected Rigid Bodies back to match bone """
-	bl_idname = "ffxiv_mmd_tools_helper.reset_location_rigid_bodies"
+	bl_idname = "ffxiv_mmd.reset_location_rigid_bodies"
 	bl_label = "Reset the Location of Rigid Bodies back to bone"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1281,7 +1281,7 @@ class ResetLocationRigidBodies(bpy.types.Operator):
 @register_wrap
 class ResetRotationRigidBodies(bpy.types.Operator):
 	"""Reset Rotation of selected Rigid Bodies back to match bone """
-	bl_idname = "ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies"
+	bl_idname = "ffxiv_mmd.reset_rotation_rigid_bodies"
 	bl_label = "Reset the Rotation of Rigid Bodies back to bone"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1299,7 +1299,7 @@ class ResetRotationRigidBodies(bpy.types.Operator):
 @register_wrap
 class FindRigidBodies(bpy.types.Operator):
 	"""Find Rigid Bodies """
-	bl_idname = "ffxiv_mmd_tools_helper.find_rigid_bodies"
+	bl_idname = "ffxiv_mmd.find_rigid_bodies"
 	bl_label = "Find Rigid Bodies"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -1320,7 +1320,7 @@ class FindRigidBodies(bpy.types.Operator):
 @register_wrap
 class ClearFindRigidBodies(bpy.types.Operator):
 	"""Clear Find Rigid Bodies """
-	bl_idname = "ffxiv_mmd_tools_helper.clear_find_rigid_bodies"
+	bl_idname = "ffxiv_mmd.clear_find_rigid_bodies"
 	bl_label = "Clear Find Rigid Bodies"
 
 	def execute(self, context):
@@ -1334,7 +1334,7 @@ class ClearFindRigidBodies(bpy.types.Operator):
 @register_wrap
 class CreateRigidBodies(bpy.types.Operator):
 	"""Create Rigid Bodies From Selected Bones"""
-	bl_idname = "ffxiv_mmd_tools_helper.create_rigid_bodies"
+	bl_idname = "ffxiv_mmd.create_rigid_bodies"
 	bl_label = "Create Rigid Bodies From Selected Bones"
 
 	@classmethod
@@ -1365,7 +1365,7 @@ class CreateRigidBodies(bpy.types.Operator):
 @register_wrap
 class SelectRigidBodyBoneChain(bpy.types.Operator):
 	"""Get Rigid Bodies From Bone Chain"""
-	bl_idname = "ffxiv_mmd_tools_helper.select_rigid_body_bone_chain"
+	bl_idname = "ffxiv_mmd.select_rigid_body_bone_chain"
 	bl_label = "Get Rigid Bodies From Bone Chain"
 
 	direction: bpy.props.EnumProperty(items = \
@@ -1460,7 +1460,7 @@ def _transform_selected_rigid_bodies(self,context):
 @register_wrap
 class BatchUpdateRigidBodies(bpy.types.Operator):
 	""" Bulk Update all Selected Rigid Bodies using the Active Rigid Body """
-	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_bodies"
+	bl_idname = "ffxiv_mmd.batch_update_rigid_bodies"
 	bl_label = "Batch Update Rigid Bodies"
 	bl_options = {'REGISTER','UNDO','PRESET'} 
 
@@ -1645,7 +1645,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 			c.prop(self,"location_x",toggle=False, text="")
 			c.prop(self,"location_y",toggle=False, text="")
 			c.prop(self,"location_z",toggle=False, text="")
-			c.operator("ffxiv_mmd_tools_helper.reset_location_rigid_bodies",text="Reset to bone")
+			c.operator("ffxiv_mmd.reset_location_rigid_bodies",text="Reset to bone")
 			c = row.column(align=True)
 			c.prop(self, "location_x_edit", text="")
 			c.prop(self, "location_y_edit", text="")
@@ -1678,7 +1678,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 				c.prop(self,"rotation_x",index=1, text="")
 				c.prop(self,"rotation_y",index=2, text="")
 				c.prop(self,"rotation_z",index=3, text="")
-				c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset to bone")
+				c.operator("ffxiv_mmd.reset_rotation_rigid_bodies",text="Reset to bone")
 				c = row.column(align=True)
 				c.prop(self, "rotation_w_edit", text="")
 				c.prop(self, "rotation_x_edit", text="")
@@ -1695,7 +1695,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 				c.prop(self,"rotation_x",index=1, text="")
 				c.prop(self,"rotation_y",index=2, text="")
 				c.prop(self,"rotation_z",index=3, text="")
-				c.operator("ffxiv_mmd_tools_helper.reset_rotation_rigid_bodies",text="Reset to bone")
+				c.operator("ffxiv_mmd.reset_rotation_rigid_bodies",text="Reset to bone")
 				c = row.column(align=True)
 				c.prop(self, "rotation_x_edit", text="")
 				c.prop(self, "rotation_y_edit", text="")
@@ -1845,7 +1845,7 @@ class BatchUpdateRigidBodies(bpy.types.Operator):
 @register_wrap
 class BatchUpdateRigidBodyBoneChain(bpy.types.Operator):
 	""" Update Rigid Bodies in a Bone Chain with Start and End values """
-	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chain"
+	bl_idname = "ffxiv_mmd.batch_update_rigid_body_bone_chain"
 	bl_label = "Update Rigid Bodies by Bone Chain"
 	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 
@@ -2224,7 +2224,7 @@ def _transform_rigid_body_bone_chains_by_delta(self,context):
 @register_wrap
 class ResetValue_BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	""" Resets the value back to 0 """
-	bl_idname = "ffxiv_mmd_tools_helper.reset_batch_update_property"
+	bl_idname = "ffxiv_mmd.reset_batch_update_property"
 	bl_label = " Resets the value back to 0"
 	
 	"""
@@ -2287,7 +2287,7 @@ class ResetValue_BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 @register_wrap
 class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 	""" Update Multiple Rigid Bodies in a Bone Chain by delta of start and end values """
-	bl_idname = "ffxiv_mmd_tools_helper.batch_update_rigid_body_bone_chains"
+	bl_idname = "ffxiv_mmd.batch_update_rigid_body_bone_chains"
 	bl_label = "Update Multiple Rigid Bodies in Bone Chains by delta"
 	bl_options = {'REGISTER','UNDO','PRESET','BLOCKING'} 
 	
@@ -2389,7 +2389,7 @@ class BatchUpdateMultipleRigidBodyBoneChain(bpy.types.Operator):
 			row = c.row()
 			row.label(text='Location X')
 			row.prop(self, 'location_x_start',expand=True, text="")
-			#row.operator("ffxiv_mmd_tools_helper.reset_batch_update_property", text='',icon='TRASH').prop ='location_x_start'
+			#row.operator("ffxiv_mmd.reset_batch_update_property", text='',icon='TRASH').prop ='location_x_start'
 			row.prop(self, 'location_x_end',expand=True, text="")
 			row.prop(self, "location_x_edit", text="")
 			row = c.row()

@@ -153,12 +153,16 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 
 		row = layout.row()
 		col = row.column()
-		grid = col.grid_flow(align=True,columns=4)
+		grid = col.grid_flow(align=True,columns=5)
 		if model.findRoot(bpy.context.object) is not None:
 			grid.prop(root.mmd_root,"show_rigid_bodies", toggle=True, text='',icon_only=True,icon='HIDE_OFF' if root.mmd_root.show_rigid_bodies else 'HIDE_ON' )
 			grid.prop(root.mmd_root,"show_names_of_rigid_bodies", toggle=True, text='',icon_only=True,icon='SORTALPHA')
 			grid.label(text="Rigid Body Visibility")
 			grid.prop(root.mmd_root,"show_meshes", toggle=True, text='',icon_only=True,icon='OUTLINER_DATA_MESH')
+			if not root.mmd_root.is_built:
+				row.operator('mmd_tools.build_rig',text='',icon='PHYSICS',depress=False)
+			else:
+				row.operator('mmd_tools.clean_rig',text='', icon='PHYSICS',depress=True)
 		else:
 			grid.label(text="Rigid Body Visibility")
 		row = layout.row()

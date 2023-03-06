@@ -1,6 +1,6 @@
 ﻿joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,linear_min_x,linear_min_y,linear_min_z,linear_max_x,linear_max_y,linear_max_z,angular_min_x,angular_min_y,angular_min_z,angular_max_x,angular_max_y,angular_max_z,linear_spring_x,linear_spring_y,linear_spring_z,angular_spring_x,angular_spring_y,angular_spring_z
-J.v_upper body 2b-j_mune_l,upper body 2b,j_mune_l,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
-J.v_upper body 2b-j_mune_r,upper body 2b,j_mune_r,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
+J.v_upper body 2b-j_mune_l,upper body 2b,j_mune_l,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
+J.v_upper body 2b-j_mune_r,upper body 2b,j_mune_r,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
 J.v_head-j_kami_a,head,j_kami_a,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
 J.v_j_kami_a-j_kami_b,j_kami_a,j_kami_b,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
 J.v_head-j_kami_f_l,head,j_kami_f_l,1,,,,,,,-5,-5,-5,5,5,5,,,,,,

@@ -267,14 +267,14 @@ class AddBoneMorphs(bpy.types.Operator):
 
 	bpy.types.Scene.bone_morph_ffxiv_model_list = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
-	, ("hyur", "Hyur (Human)","Import Hyur Bone Morphs") \
-	, ("miquote", "Miquote","Import Miquote Bone Morphs") \
-	, ("viera", "Viera","Import Viera Bone Morphs") \
 	, ("aura", "Au Ra","Import Au Ra Bone Morphs") \
-	, ("hrothgar", "Hrothgar","Import Hrothgar Bone Morphs") \
 	, ("elezen", "Elezen","Import Elezen Bone Morphs") \
-	, ("roegadyn", "Roegadyn","Import Roegadyn Bone Morphs") \
+	, ("hrothgar", "Hrothgar","Import Hrothgar Bone Morphs") \
+	, ("hyur", "Hyur (Human)","Import Hyur Bone Morphs") \
 	, ("lalafell", "Lalafell","Import Lalafell Bone Morphs") \
+	, ("miqote", "Miqo'te","Import Miqo'te Bone Morphs") \
+	, ("roegadyn", "Roegadyn","Import Roegadyn Bone Morphs") \
+	, ("viera", "Viera","Import Viera Bone Morphs") \
 	], name = "Race", default = 'hyur')
 
 

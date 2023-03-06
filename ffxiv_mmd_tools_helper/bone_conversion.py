@@ -644,23 +644,29 @@ def merge_double_jointed_knee(armature):
 
 def set_bust_size(bust_scale=None):
 	print('\n')
+	armature = model.find_MMD_Armature(bpy.context.active_object)
 
-	bpy.ops.object.mode_set(mode='POSE')
-	bust_L = bpy.context.active_object.pose.bones['j_mune_l']
-	bust_R = bpy.context.active_object.pose.bones['j_mune_r']
+	if armature is not None:
+		bpy.context.view_layer.objects.active = armature
 
-	scale_x = 1
-	scale_y = 1
-	scale_z = 1
+		bpy.ops.object.mode_set(mode='POSE')
+		bust_L = armature.pose.bones['j_mune_l']
+		bust_R = armature.pose.bones['j_mune_r']
+
+		scale_x = 1
+		scale_y = 1
+		scale_z = 1
+			
+		if bust_L is not None and bust_R is not None:
+			if bust_scale is not None:
+				scale_x = 0.92 + (bust_scale * 0.16)
+				scale_y = 0.816 + (bust_scale * 0.368)
+				scale_z = 0.8 + (bust_scale * 0.4)
+
+			bust_L.scale= (scale_z,scale_y,scale_x)
+			bust_R.scale= (scale_z,scale_y,scale_x)
+
 		
-	if bust_L is not None and bust_R is not None:
-		if bust_scale is not None:
-			scale_x = 0.92 + (bust_scale * 0.16)
-			scale_y = 0.816 + (bust_scale * 0.368)
-			scale_z = 0.8 + (bust_scale * 0.4)
-
-		bust_L.scale= (scale_z,scale_y,scale_x)
-		bust_R.scale= (scale_z,scale_y,scale_x)
 
 
 
@@ -818,8 +824,13 @@ class FFXIVBustSlider(bpy.types.Operator):
 
 		if context.active_object is not None:
 			obj = context.active_object	
-			if obj.pose.bones['j_mune_l'] is not None and obj.pose.bones['j_mune_r'] is not None:
-				is_ffxiv_bust =True
+			
+			armature = model.find_MMD_Armature(obj)
+			if armature is not None:
+				j_mune_l = armature.pose.bones['j_mune_l'] 
+				j_mune_r = armature.pose.bones['j_mune_r'] 
+				if j_mune_l is not None and j_mune_r is not None:
+					is_ffxiv_bust =True
 		
 		return is_ffxiv_bust
 				

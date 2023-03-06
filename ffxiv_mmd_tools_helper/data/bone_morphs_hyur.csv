@@ -45,11 +45,11 @@ EyeSmile,j_f_hoho_r,,,,,-25,12,,,
 EyeSmall,j_f_eye_l,,,,,,,-0.5,,-0.5
 EyeSmall,j_f_eye_r,,,,,,,-0.5,,-0.5
 Ha!!!,j_f_dmab_l,,,,-10,15,-4,,,
-Ha!!!,j_f_dmab_r,,,,-10,-15,-4,,,
+Ha!!!,j_f_dmab_r,,,,10,-15,-4,,,
 Ha!!!,j_f_umab_l,,,,,5,20,,,
 Ha!!!,j_f_umab_r,,,,,-5,20,,,
 Jito-eye,j_f_dmab_l,,,,-10,15,-4,,,
-Jito-eye,j_f_dmab_r,,,,-10,-15,-4,,,
+Jito-eye,j_f_dmab_r,,,,10,-15,-4,,,
 Jito-eye,j_f_umab_l,,,,,8,-10,,,
 Jito-eye,j_f_umab_r,,,,,-8,-10,,,
 Wail,j_f_dmab_l,,,,,8,,,,

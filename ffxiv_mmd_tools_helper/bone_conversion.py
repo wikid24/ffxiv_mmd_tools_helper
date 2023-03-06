@@ -827,8 +827,8 @@ class FFXIVBustSlider(bpy.types.Operator):
 			
 			armature = model.find_MMD_Armature(obj)
 			if armature is not None:
-				j_mune_l = armature.pose.bones['j_mune_l'] 
-				j_mune_r = armature.pose.bones['j_mune_r'] 
+				j_mune_l = armature.pose.bones.get('j_mune_l')
+				j_mune_r = armature.pose.bones.get('j_mune_r')
 				if j_mune_l is not None and j_mune_r is not None:
 					is_ffxiv_bust =True
 		

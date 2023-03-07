@@ -30,7 +30,6 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 # To do:
 - FFXIV Bone Morphs (facial animation sliders):
-  - Populate the csv files with data. 
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'
 - Add presets for skirt/hair for bulk-update to Rigid Bodies (skirts heaviest on the bottom, hair heaviest on the top?)

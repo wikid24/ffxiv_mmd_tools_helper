@@ -13,8 +13,6 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
   - Auto generate Rigid Bodies (Physics blocks)
   - Auto generate Joints
   - Auto generate Bone Groups
-  - Auto generate Shape Keys from csv
-      - Working for Hyur, partially completed (so far)
   - Skirt rig bone + weight painting generator (for physics)
       - Add new skirt bones + weight paint existing skirt meshes with a few clicks.
   - Auto generate MMD Display Panel groups
@@ -29,6 +27,8 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
   - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
 
 # To do:
+- Auto generate Shape Keys from csv
+  - Working for Hyur, partially completed (so far)
 - FFXIV Bone Morphs (facial animation sliders):
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'

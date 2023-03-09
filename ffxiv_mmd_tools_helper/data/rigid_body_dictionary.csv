@@ -18,7 +18,7 @@ elbow_R,elbow_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.05,0.25,,1,0,0.5,0,0,0.5,0.
 wrist_L,wrist_L,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0,0.5,0.5
 wrist_R,wrist_R,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0,0.5,0.5
 lower body,lower body,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.1,0.08,,1,0,0.5,1,0,0.5,0.5
-lower body b,lower body,,0.018,-0.04,,90,,,y,y,$name_j,$name_e,0,CAPSULE,0.105,0.07,,1,0,0.5,1,0,0.5,0.5
+lower body b,lower body,,0.018,-0.04,,90,,,y,y,lower body b,lower body b,0,CAPSULE,0.105,0.07,,1,0,0.5,1,0,0.5,0.5
 leg_L,leg_L,,0.01,0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0,0.5,0.5
 leg_R,leg_R,,0.01,-0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0,0.5,0.5
 knee_L,knee_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.077,0.0265,,1,0,0.5,1,0,0.5,0.5

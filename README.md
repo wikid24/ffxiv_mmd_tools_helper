@@ -9,7 +9,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 # New Features:
   - Auto-convert the FFXIV bone structure to match MMD Models
   - Auto generate Bone Morphs (Facial Expressions)
-      - working for Hyur so far (but can be used on other races)
+      - working for all races except for Hrothgar (still need to figure out those unique mouth shapes)
   - Auto generate Rigid Bodies (Physics blocks)
   - Auto generate Joints
   - Auto generate Bone Groups

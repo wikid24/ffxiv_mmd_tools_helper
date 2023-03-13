@@ -9,7 +9,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 # New Features:
   - Auto-convert the FFXIV bone structure to match MMD Models
   - Auto generate Bone Morphs (Facial Expressions)
-      - working for Hyur so far (but can be used on other races)
+      - working for all races except for Hrothgar (still need to figure out those unique mouth shapes)
   - Auto generate Rigid Bodies (Physics blocks)
   - Auto generate Joints
   - Auto generate Bone Groups
@@ -27,8 +27,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
   - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
 
 # To do:
-- Auto generate Shape Keys from csv
-  - Working for Hyur, partially completed (so far)
+- Auto generate Shape Keys (as opposed to using Bone Morphs) from csv
 - FFXIV Bone Morphs (facial animation sliders):
   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'

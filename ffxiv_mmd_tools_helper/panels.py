@@ -370,7 +370,7 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd.weight_paint_transfer_to_mesh_btn", text = "Weight Paint Transfer To Mesh",icon='MOD_VERTEX_WEIGHT')
 		row = layout.row()
-		row.operator("ffxiv_mmd.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
+		row.operator("ffxiv_mmd.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV & Unused Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
 		row = layout.row()
 		row.operator("ffxiv_mmd.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
 		row = layout.row()

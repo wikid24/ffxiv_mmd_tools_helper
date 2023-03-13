@@ -219,6 +219,7 @@ def set_mmd_bone_order(armature):
 	
 		bpy.ops.object.mode_set(mode='OBJECT')
 		bpy.context.view_layer.objects.active = bone_order_mesh_object
+		#bone_order_mesh_object.select_set(True)
 	
 		#add missing vertex groups
 		mmd_model.FnModel.add_missing_vertex_groups_from_bones(root_object, bone_order_mesh_object, search_in_all_meshes=True)

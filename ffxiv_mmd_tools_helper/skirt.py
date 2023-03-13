@@ -400,7 +400,10 @@ def weight_paint_transfer (mesh_obj,new_skirt_shape):
 
 def delete_ffxiv_skirt_vertex_groups(mesh_obj):
     
-    if mesh_obj.parent == bpy.data.objects['skirt_obj']:
+    armature = model.findArmature(mesh_obj)
+
+    if armature is not None:
+    #if mesh_obj.parent == bpy.data.objects['skirt_obj']:
         #delete all existing vertex groups that start with 'j_sk_'
         # Get a list of vertex groups to delete
         vertex_groups_to_delete = [vg for vg in mesh_obj.vertex_groups if (vg.name.startswith("j_sk_"))]
@@ -410,6 +413,25 @@ def delete_ffxiv_skirt_vertex_groups(mesh_obj):
             mesh_obj.vertex_groups.remove(vg)
     else:
         print("mesh must be a part of the skirt_obj")
+
+def delete_unused_skirt_vertex_groups(mesh_obj,armature_obj):
+    
+        #delete all existing vertex groups that start with 'skirt_' if the bone doesn't exist
+        # Get a list of all skirt vertex groups and bones
+        vertex_groups_list = [vg for vg in mesh_obj.vertex_groups if (vg.name.startswith("skirt_"))]
+        skirt_bones_list = [bone for bone in armature_obj.pose.bones if (bone.name.startswith("skirt_"))]
+
+        # Delete the vertex groups
+        for vg in vertex_groups_list:
+            bone_found = False
+            for bone in skirt_bones_list:
+                if bone.name == vg.name:
+                    bone_found = True
+            if bone_found==False:
+                mesh_obj.vertex_groups.remove(vg)
+     
+            
+        
 
 def move_bones_and_skirt_to_ffxiv_model(armature):
         
@@ -644,11 +666,13 @@ class WeightPaintTransferToMesh(bpy.types.Operator):
         new_skirt_shape = bpy.data.objects['new_skirt_shape']
         weight_paint_transfer (mesh_obj,new_skirt_shape)
         return {'FINISHED'}
+    
+
 
 @register_wrap
 class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
     bl_idname = "ffxiv_mmd.delete_ffxiv_skirt_vertex_groups"
-    bl_label = "Delete FFXIV Skirt Vertex Groups"
+    bl_label = "Delete FFXIV/Unused Skirt Vertex Groups"
     bl_options = {'REGISTER', 'UNDO'}
 
     # @classmethod
@@ -657,7 +681,9 @@ class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
 
     def execute(self, context):
         mesh_obj = bpy.context.view_layer.objects.active
+        armature_obj = model.findArmature(mesh_obj)
         delete_ffxiv_skirt_vertex_groups (mesh_obj)
+        delete_unused_skirt_vertex_groups(mesh_obj,armature_obj)
         return {'FINISHED'}
 
 @register_wrap

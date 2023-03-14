@@ -189,7 +189,7 @@ Note: When playing an animation, if you are running into issues with legs clippi
 Try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run the physics.
 
 --------------
-Q: My character's skirt isn't complete all around, there are cuts in-between and whatnot. How do I fix?
+#### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
 
 A: You'll need to delete the **horizontal joints** that are connecting the rigid bodies together. 
 
@@ -210,8 +210,8 @@ With the joints you want selected you should now be able to delete them.
 
 After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results.
 
-
 --------------
+
 #### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, useless skirt bones) that my character doesn't use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:

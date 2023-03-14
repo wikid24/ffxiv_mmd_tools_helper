@@ -163,13 +163,13 @@ Your character's **face** will now be animated.
 
 A: I agree! In the conversion guide you'll need to insert some steps _after step 7_ from the conversion guide. 
 
-Use the **Skirt** panel to generate a new skirt. 
+You'll need to use the **Skirt** panel to generate a new skirt, but there are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
 
-There are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
+![image](https://user-images.githubusercontent.com/19479648/225154261-df9eb081-0c3d-4cce-b79e-4281623ebcda.png)
 
-Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a while ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
+Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
 
-#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, skirt bones that my character doesn't use) that my character doesn't use?
+#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, useless skirt bones) that my character doesn't use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:
 - Flag unused bones as '_unused_'
@@ -181,9 +181,11 @@ In general it is safer to run this step immediately after Step 1 in the conversi
 
 #### Q: When I run the an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
 
-A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (or the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the conversion guide above: 
+A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the FFXIV bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the conversion guide above: 
 
 ![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
+
+Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others, your mileage may vary. 
 
 ##### Q: Why are the textures all weird and black? They don't look like this in game.
 

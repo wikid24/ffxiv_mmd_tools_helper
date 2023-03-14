@@ -95,9 +95,9 @@ On the **FFXIV MMD** tab
 
 ![image](https://user-images.githubusercontent.com/19479648/225116978-fc9d2dbd-c3b4-4d27-b2a2-97929b9d785c.png)
 
-4) On the **Bones and IK** panel, click on **Add leg/foot IK**
+5) On the **Bones and IK** panel, click on **Leg/foot IK**
 
-![image](https://user-images.githubusercontent.com/19479648/217979835-044061eb-ef14-4266-b33c-ea048a38b016.png)
+![image](https://user-images.githubusercontent.com/19479648/225117950-33924dbb-8d9d-4198-8053-fbd744618704.png)
 
 
 5) Go the **MMD** tab

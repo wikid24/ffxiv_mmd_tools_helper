@@ -163,9 +163,16 @@ Your character's **face** will now be animated.
 # Frequently Asked Questions:
 #### Q: How do I get better physics working on the skirt? The default one sucks.
 
-A: I agree! In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_ from the conversion guide. 
+A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
 
-You'll need to use the **Skirt** panel to generate a new skirt, but there are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
+In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_ from the conversion guide. 
+
+Note: Blender tends to crash when there is anything related to physics involved. SAVE OFTEN before you press 'Play' to animate a model.
+
+Using the **Rigid Body** panel, find the all the rigid bodies that start with "j_sk" and delete them.
+![image](https://user-images.githubusercontent.com/19479648/225160597-6c1439c0-7cea-4215-8e44-9d0b3d0d4eda.png)
+
+Then'll need to use the **Skirt** panel to generate a new skirt, but there are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
 
 ![image](https://user-images.githubusercontent.com/19479648/225154261-df9eb081-0c3d-4cce-b79e-4281623ebcda.png)
 
@@ -179,10 +186,32 @@ Note: When playing an animation, if you are running into issues with legs clippi
 
 ![image](https://user-images.githubusercontent.com/19479648/225157902-02e4cb80-310f-4fc9-b023-62149c334a72.png)
 
-Try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run physics.
+Try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run the physics.
 
 --------------
+Q: My character's skirt isn't complete all around, there are cuts in-between and whatnot. How do I fix?
 
+A: You'll need to delete the **horizontal joints** that are connecting the rigid bodies together. 
+
+Note: Whenever you need to change __anything__ related to adding or removing bones/rigid bodies/joints, **make sure Physics is turn OFF** in MMD Tools (or use this shortcut), otherwise you risk breaking your model:
+
+![image](https://user-images.githubusercontent.com/19479648/225162913-e236ad64-3375-486b-8853-9dec7c2b8569.png)
+
+
+Using the **Rigid Body** panel shift+select (or control+select) the rigid bodies that you need to remove. These tools will help you make it easy to select what you need to:
+
+![image](https://user-images.githubusercontent.com/19479648/225162948-3a4a2d60-7a28-4ce4-8d79-65d0b5bff4fc.png)
+
+Then go to the **Joints** panel and click on 'Get Joints from Rigid Bodies', then click on 'Horizontal' to filter ONLY horizontal joints.
+
+![image](https://user-images.githubusercontent.com/19479648/225163385-7eda5e1a-2f67-4a6f-b22b-7d61a2b59b97.png)
+
+With the joints you want selected you should now be able to delete them.
+
+After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results.
+
+
+--------------
 #### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, useless skirt bones) that my character doesn't use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:

@@ -100,16 +100,15 @@ On the **FFXIV MMD** tab
 ![image](https://user-images.githubusercontent.com/19479648/225117950-33924dbb-8d9d-4198-8053-fbd744618704.png)
 
 
-5) Go the **MMD** tab
-6) click on **Convert Model**
+6) With your model selected, go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
+7) With your model selected, go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
 
-![image](https://user-images.githubusercontent.com/19479648/217980088-a3cbad2d-f35a-4bf2-b76d-8b384e34deb5.png)
+![image](https://user-images.githubusercontent.com/19479648/225118718-6baf26b6-6b6f-497d-9b08-50c7cfe56458.png)
 
-7) Back on **FFXIV MMD** tab, with your model selected, go to "**Rigid Bodies and Joints**" -> "**Add Rigid Bodies**"
-8) With your model selected, go to "**Rigid Bodies and Joints**" -> "**Add Joints**"
-9) On the **Shape Keys / Bone Morphs** tab, select your model's race and click on **Import Bone Morphs from File**
 
-![image](https://user-images.githubusercontent.com/19479648/217980615-5c8b0469-63e9-4c70-9c11-4dc1f8b14dd1.png)
+8) On the **Bone Morphs (Facial Expressions)** Panel, select your model's race and click on **Generate**
+
+![image](https://user-images.githubusercontent.com/19479648/225119028-099a122f-b3aa-4c36-b400-86c108d210c9.png)
 
 10) On the Scene Outliner View, click on **New MMD Model**
 11) Go to **MMD** tab

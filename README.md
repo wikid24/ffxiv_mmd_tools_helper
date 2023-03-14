@@ -93,7 +93,7 @@ On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
 2) Click on **Initialize MMD Structure**
 3) On the **Language and Translation** panel, click on "**Mass Rename Bones**" (from FFXIV to MMD English)
-4) On the **Bones and IK** panel, run "Run steps 1 to 9" 
+4) On the **Bones and IK** panel, select "Run steps 1 to 9" -> **Run**
 
 ![image](https://user-images.githubusercontent.com/19479648/225116978-fc9d2dbd-c3b4-4d27-b2a2-97929b9d785c.png)
 

@@ -172,6 +172,7 @@ You'll need to use the **Skirt** panel to generate a new skirt, but there are qu
 Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
 
 --------------
+
 #### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, useless skirt bones) that my character doesn't use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:
@@ -183,6 +184,7 @@ A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these 
 In general it is safer to run this step immediately after Step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) (before starting to manipulate all the bones on the model).
 
 --------------
+
 #### Q: When I run the an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
 
 A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the FFXIV bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow): 
@@ -192,6 +194,7 @@ A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's
 Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others, your mileage may vary. 
 
 --------------
+
 #### Q: Why are the textures all weird and black? They don't look like this in game.
 
 ![image](https://user-images.githubusercontent.com/19479648/225144053-a6132eb8-7dd1-4aa5-b2a1-1fd0eb1cb6ef.png)
@@ -203,6 +206,7 @@ Using Textools you'd need to individually export each affected body part's norma
 You'll need to perform this immediately after step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow). On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
  
  --------------
+ 
 #### Q: I want to export my model to PMX Format. How do I do that?
 
 A: Everything that is needed to export to PMX format is included in this plugin. 

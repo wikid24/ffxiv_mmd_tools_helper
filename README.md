@@ -195,7 +195,16 @@ That being said, try to limit the amount of bones/rigid bodies that are needed f
 
 ![image](https://user-images.githubusercontent.com/19479648/225166631-1f0c6b8d-d39a-4c33-8200-ae7da07fd0ee.png)
 
-A: You'll need to delete the **horizontal joints** that are connecting the rigid bodies together. 
+A: You may run into skirts like this that are not perfectly round, or are split into many pieces. 
+
+There are a few ways to fix:
+- Delete skirt bones (before generating the rigid bodies)
+- Delete the rigid bodies (before generating the joints)
+- Delete the horizontal joints
+
+Or you can use a combination of all three.
+
+In this example we will to delete the **horizontal joints** that are connecting the rigid bodies together. 
 
 Note: Whenever you need to change __anything__ related to adding or removing bones/rigid bodies/joints, **make sure Physics is turn OFF** in MMD Tools (or use this shortcut), otherwise you risk breaking your model:
 

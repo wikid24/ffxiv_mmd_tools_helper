@@ -155,3 +155,6 @@ Your character's **body** will now be animated.
 Your character's **face** will now be animated.
 
 19) Press play to watch your character dance. All done!! :D
+
+--------------
+

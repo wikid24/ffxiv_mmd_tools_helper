@@ -165,7 +165,7 @@ A: I agree! In the conversion guide you'll need to insert some steps _after step
 
 Use the **Skirt** panel to generate a new skirt. 
 
-There are quite a few steps involved and probably the hardest about rigging a FFXIV Model. 
+There are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
 
 Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a while ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
 

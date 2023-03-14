@@ -129,22 +129,23 @@ Your character is now rigged and ready for animating using MMD Tools!
 
 ![image](https://user-images.githubusercontent.com/19479648/217982914-77067a23-a2ea-47da-99da-ed408d90477b.png)
 
-16) On the Scene Outliner View, click on **n_root**
-17) Click on **MMD** tab
-18) On the **Scene Setup tab, click on **Motion Import**
+13) On the Scene Outliner View, click on **n_root**
+14) Click on **MMD** tab
+15) On the **Scene Setup tab, click on **Motion** -> **Import**
 
-![image](https://user-images.githubusercontent.com/19479648/217983858-47f90e84-74ea-47a2-bbef-5f33b055d9f0.png)
+![image](https://user-images.githubusercontent.com/19479648/225124664-93fae3b8-333d-42fc-a6f2-9d236a7643c1.png)
 
-19) Use MMD Tools to import a motion dance VMD file:
+
+16) Use MMD Tools to import a motion dance VMD file:
     - 'Treat Current Pose as Rest Pose' should be checked
 
-![image](https://user-images.githubusercontent.com/19479648/217984754-27ce81b7-7c5a-4c2c-a9b4-31fd00b1be83.png)
+![image](https://user-images.githubusercontent.com/19479648/225125072-ac90a801-1f93-459e-88ce-27d00b4ff651.png)
 
-20) On the Scene Outliner View, click on **.placeholder**, and click on **Motion Import** again
+17) On the Scene Outliner View, click on **.placeholder**, and click on **Motion Import** again
 
 ![image](https://user-images.githubusercontent.com/19479648/217985991-70de46c7-1fef-4804-b80b-38089e3aff4d.png)
 
-21) Use MMD Tools to import a motion dance VMD file:
+18) Use MMD Tools to import a motion dance VMD file:
     - 'Treat Current Pose as Rest Pose' should be checked
    ![image](https://user-images.githubusercontent.com/19479648/217985065-779437ea-8c2a-4013-a781-50edcd759789.png)
 

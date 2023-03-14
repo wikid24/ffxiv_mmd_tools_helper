@@ -87,7 +87,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 # How to rig a character and get it dancing less than 60 seconds (my new workflow):
 
-##Part 1: Rigging your FFXIV Character
+## Part 1: Rigging your FFXIV Character
 
 On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
@@ -121,7 +121,7 @@ Your character is now rigged.
 
 --------------
 
-##Part 2: Animating your FFXIV Character
+## Part 2: Animating your FFXIV Character
  
 10) On the Scene Outliner View, click on **New MMD Model**
 11) Go to **MMD** tab

@@ -187,7 +187,7 @@ A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's
 
 Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others, your mileage may vary. 
 
-##### Q: Why are the textures all weird and black? They don't look like this in game.
+#### Q: Why are the textures all weird and black? They don't look like this in game.
 
 ![image](https://user-images.githubusercontent.com/19479648/225144053-a6132eb8-7dd1-4aa5-b2a1-1fd0eb1cb6ef.png)
 

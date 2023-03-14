@@ -199,7 +199,13 @@ You'll need to perform this immediately after step 1 in the conversion guide. On
  
 #### Q: I want to export my model to PMX Format. How do I do that?
 
-A: Everything that is needed to export to PMX format is included in this plugin. Follow steps 1 to 9 in the conversion guide, then follow these steps:
+A: Everything that is needed to export to PMX format is included in this plugin. 
+
+Immediately after step 4 on the conversion guide above, run this command:
+
+![image](https://user-images.githubusercontent.com/19479648/225155767-6f97c683-edb0-44e3-b17a-9cb35eba3293.png)
+
+After step 9 in the conversion guide, then follow these steps:
 
 1) On the **Export MMD Preparation** Panel -> Click on **Add Display Panels** 
 

@@ -182,11 +182,13 @@ Guide coming soon! In the meantime, here's:
 
 I did these a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created). 
 
-Note: When playing an animation, if you are running into issues with legs clipping, I find that usually the easiest solution is to _add more bone parents_: 
+Try to line the bones up __exactly__ with the mesh (you can change their location if you're not 100% accurate).
+
+Note: When playing an animation, if you are running into issues with legs clipping (assuming you lined up the bones to the mesh closely), I find that usually the easiest solution is to _add more bone parents_: 
 
 ![image](https://user-images.githubusercontent.com/19479648/225157902-02e4cb80-310f-4fc9-b023-62149c334a72.png)
 
-Try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run the physics.
+That being said, try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run the physics.
 
 --------------
 #### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?

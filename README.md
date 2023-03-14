@@ -3,7 +3,7 @@
 
 Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now,[download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-install) and simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial below. 
 
-If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel
+If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel.
 
 ------------
 While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
@@ -42,7 +42,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 # In order to use this tool, you need:
 - A FFXIV Model exported into FBX file format - [FFXIV TexTools](https://www.ffxiv-textools.net/) - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
-- [Blender](https://www.blender.org/) (2.80+) or higher installed
+- [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.3 LTS](https://www.blender.org/download/lts/) is _officially_ supported, but it may work on later versions.
 - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
 - VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
 

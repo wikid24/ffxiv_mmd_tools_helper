@@ -225,7 +225,7 @@ After you're finished making your modifications, SAVE your .blend file(just inca
 
 --------------
 
-#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, useless skirt bones) that my character doesn't use?
+#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, unused bones that are not used by your gear, etc) that my character does not use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:
 - Flag unused bones as '_unused_'

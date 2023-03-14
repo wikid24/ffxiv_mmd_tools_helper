@@ -159,28 +159,62 @@ Your character's **face** will now be animated.
 
 --------------
 # Frequently Asked Questions:
-Q: How do I get better physics working on the skirt? The default one sucks.
-A: I agree! In the conversion guide you'll need to insert some steps _after step 7_ from the conversion guide above and implement new skirt bones/rigid bodies/joints. Use the **Skirt** panel to generate a new skirt. There are quite a few steps involved and due to the nature of skirts being different shapes/sizes a "one button click" solution isn't something that is possible. Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a while ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
+#### Q: How do I get better physics working on the skirt? The default one sucks.
 
-Q: There are a lot of useless bones that don't apply to my character! Can I get rid of them?
+A: I agree! In the conversion guide you'll need to insert some steps _after step 7_ from the conversion guide. 
+
+Use the **Skirt** panel to generate a new skirt. 
+
+There are quite a few steps involved and probably the hardest about rigging a FFXIV Model. 
+
+Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a while ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created) 
+
+#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears that are not miqote, skirt bones that my character doesn't use) that my character doesn't use?
+
 A: Yes you can get rid of them! In the Miscellaneous Tools panel, run these two commands:
 - Flag unused bones as '_unused_'
 - Delete 'unused' bones
+
 ![image](https://user-images.githubusercontent.com/19479648/225139856-80f9efc0-5ec6-455a-8be0-aef79c5da27a.png)
 
 In general it is safer to run this step immediately after Step 1 in the conversion guide above (before starting to manipulate all the bones on the model).
 
+#### Q: When I run the an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
 
-Q: When I run the an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
-A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (or the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the conversion guide above: ![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
+A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (or the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the conversion guide above: 
 
-Q: Why are the textures all weird and black? They don't look like this in game.
+![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
+
+##### Q: Why are the textures all weird and black? They don't look like this in game.
+
 ![image](https://user-images.githubusercontent.com/19479648/225144053-a6132eb8-7dd1-4aa5-b2a1-1fd0eb1cb6ef.png)
 
-A: Textools unfortunately doesn't export ALL of the texture files needed to render some textures properly for some gear (like dyed gear or metallic gear). Using Textools you'd need to individually export each affected body part's normal/multi/colorset texture(read:DDS files) and use this [Blender Plugin ](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) & [video guide](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) to fix it. You'll need to perform this immediately after step 1 in the conversion guide. On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
- 
+A: Textools unfortunately doesn't export ALL of the texture files needed to render some textures properly for some gear (like dyed gear or metallic gear).
 
-Q: I want to export my model to PMX Format. How do I do that?
+Using Textools you'd need to individually export each affected body part's normal/multi/colorset texture(read:DDS files) and use this [Blender Plugin ](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) & [video guide](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) to fix it. 
+
+You'll need to perform this immediately after step 1 in the conversion guide. On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
+ 
+#### Q: I want to export my model to PMX Format. How do I do that?
+
 A: Everything that is needed to export to PMX format is included in this plugin. Follow steps 1 to 9 in the conversion guide, then follow these steps:
-1) On the On the **Export MMD Preparation** Panel -> Click on **Add Display Panels** ![image](https://user-images.githubusercontent.com/19479648/225148500-8c5ea5dd-f838-4366-a0f1-1da9d626016d.png)
-2) 
+
+1) On the **Export MMD Preparation** Panel -> Click on **Add Display Panels** 
+
+![image](https://user-images.githubusercontent.com/19479648/225148500-8c5ea5dd-f838-4366-a0f1-1da9d626016d.png)
+
+2) On the MMD Tools Plugin -> **Bone Order** Panel -> Click on that weird square shape on the bottom
+3) Click on the arrow to expand the menu
+4) Click on **Add Missing Vertex Groups from Bones**
+
+![image](https://user-images.githubusercontent.com/19479648/225152213-4dffae74-5e2e-4de6-b992-a9baec4066af.png)
+
+5) Back in FFXIV MMD Tools Plugin, Click on all of these buttons
+
+![image](https://user-images.githubusercontent.com/19479648/225152849-f2339f03-ca85-477b-803d-f2144f880f19.png)
+
+6) On the MMD Tools Plugin -> Click on **Model** -> **Export**
+
+![image](https://user-images.githubusercontent.com/19479648/225153368-5a104ea7-58f5-47de-b95a-c70e34b69648.png)
+
+The character should now be fully rigged and exported into PMX Format. From here you can treat this file exactly as a normal MMD Model and import it directly into MMD program OR edit it using PMX Editor.

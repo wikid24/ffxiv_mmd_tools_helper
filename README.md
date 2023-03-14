@@ -165,14 +165,14 @@ Your character's **face** will now be animated.
 
 A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
 
-In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_ from the conversion guide. 
+In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_. 
 
-Note: Blender tends to crash when there is anything related to physics involved. SAVE OFTEN before you press 'Play' to animate a model.
+Note: Blender tends to crash when there is anything related to physics involved. SAVE OFTEN, especially before you press 'Play' to animate a model.
 
 Using the **Rigid Body** panel, find the all the rigid bodies that start with "j_sk" and delete them.
 ![image](https://user-images.githubusercontent.com/19479648/225160597-6c1439c0-7cea-4215-8e44-9d0b3d0d4eda.png)
 
-Then'll need to use the **Skirt** panel to generate a new skirt, but there are quite a few steps involved and probably the hardest part about rigging a FFXIV Model. 
+Then'll need to use the **Skirt** panel to generate a new skirt, but there are quite a few steps involved and it's probably the longest part about rigging a FFXIV Model in Blender. 
 
 ![image](https://user-images.githubusercontent.com/19479648/225154261-df9eb081-0c3d-4cce-b79e-4281623ebcda.png)
 
@@ -182,7 +182,7 @@ Guide coming soon! In the meantime, here's:
 
 I did these a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created). 
 
-Try to line the bones up __exactly__ with the mesh (you can manually move a bone's location if it's not close to the mesh). The skirt bones don't need to __exactly__ be lined up with the mesh but they do need to be __close__ otherwise you risk having clipping issues with the legs going through the skirt unintentionally. Generally speaking, the closer the bones are to the mesh, the better your physics will work.
+Try to line the bones up __exactly__ with the mesh (you can manually move a bone's location if it's not close enough to the mesh). The skirt bones don't need to __exactly__ be lined up with the mesh but they do need to be __close__ otherwise you risk having clipping issues with the legs going through the skirt unintentionally. Generally speaking, the closer the bones are to the mesh, the better your physics will work.
 
 Note: When playing an animation, if you are running into issues with legs clipping (assuming you lined up the bones to the mesh closely), I find that usually the easiest solution is to _add more bone parents_: 
 

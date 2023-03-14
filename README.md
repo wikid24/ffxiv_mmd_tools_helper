@@ -193,6 +193,8 @@ That being said, try to limit the amount of bones/rigid bodies that are needed f
 --------------
 #### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
 
+![image](https://user-images.githubusercontent.com/19479648/225166631-1f0c6b8d-d39a-4c33-8200-ae7da07fd0ee.png)
+
 A: You'll need to delete the **horizontal joints** that are connecting the rigid bodies together. 
 
 Note: Whenever you need to change __anything__ related to adding or removing bones/rigid bodies/joints, **make sure Physics is turn OFF** in MMD Tools (or use this shortcut), otherwise you risk breaking your model:

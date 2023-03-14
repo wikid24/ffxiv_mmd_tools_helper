@@ -169,13 +169,17 @@ You'll need to use the **Skirt** panel to generate a new skirt, but there are qu
 
 ![image](https://user-images.githubusercontent.com/19479648/225154261-df9eb081-0c3d-4cce-b79e-4281623ebcda.png)
 
-Guide coming soon! In the meantime, here's a [low-quality video](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) I did a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created). 
+Guide coming soon! In the meantime, here's:
+ - [low-quality video to shape the skirt mesh](https://user-images.githubusercontent.com/19479648/225138838-68859c43-a703-40ad-a0f1-c130793d239a.mp4) 
+ - [low-quality video to add the rigid bodies and joints](https://user-images.githubusercontent.com/19479648/225158880-eb61221d-6e27-4d5e-a01d-d9cac7253f97.mp4)
+
+I did these a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created). 
 
 Note: When playing an animation, if you are running into issues with legs clipping, I find that usually the easiest solution is to _add more bone parents_: 
 
 ![image](https://user-images.githubusercontent.com/19479648/225157902-02e4cb80-310f-4fc9-b023-62149c334a72.png)
 
-Try to limit the amount of bones/rigid bodies that are needed for physics, as the more bones that you add, the more physics calculations Blender has to do to animate the rigid bodies, so it will slow down your PC when trying to run physics.
+Try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run physics.
 
 --------------
 

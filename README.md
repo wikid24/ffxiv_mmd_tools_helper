@@ -87,6 +87,8 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 # How to rig a character and get it dancing less than 60 seconds (my new workflow):
 
+##Part 1: Rigging your FFXIV Character
+
 On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
 2) Click on **Initialize MMD Structure**
@@ -110,6 +112,17 @@ On the **FFXIV MMD** tab
 
 ![image](https://user-images.githubusercontent.com/19479648/225119028-099a122f-b3aa-4c36-b400-86c108d210c9.png)
 
+9) On the **Export MMD Preparation** Panel -> Click on **Auto-Fix MMD Japanese/English Bone Names**
+
+![image](https://user-images.githubusercontent.com/19479648/225119958-7208b241-9cdc-4753-9aec-9997c717e633.png)
+
+
+Your character is now rigged. 
+
+--------------
+
+##Part 2: Animating your FFXIV Character
+ 
 10) On the Scene Outliner View, click on **New MMD Model**
 11) Go to **MMD** tab
 12) Under Assembly section click on **All**

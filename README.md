@@ -37,7 +37,7 @@ https://user-images.githubusercontent.com/19479648/225201368-46c79f71-307e-4130-
 Credits:
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
-- MMD Body Motion by かりんとう - https://www.nicovideo.jp/watch/sm33513391
+- MMD Facial/Body Motion by かりんとう - https://www.nicovideo.jp/watch/sm33513391
 - Song - Elephant (Ignite) by Funkin Matt
 
 ------------

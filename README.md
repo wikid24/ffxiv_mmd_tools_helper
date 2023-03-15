@@ -20,7 +20,7 @@ https://user-images.githubusercontent.com/19479648/225201036-c3c85e70-ea17-4100-
 Credits: 
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
-- MMD Body Motion, Facial and Camera by sn - https://sp.nicovideo.jp/watch/sm36532472
+- MMD Body Motion, Facial and Camera by sn - https://www.nicovideo.jp/watch/sm36532472
 - Song - Honeymoon Un Deux Trois (cover) by dongdang - https://www.youtube.com/watch?v=z8i6JnznAi8
 
 #### Sample Video 2: Hythlodaeus, Gauis and Erenville - testing rigging/conversion/rendering in less than 30 minutes (no physics on the hair)

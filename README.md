@@ -217,7 +217,7 @@ A: Assuming you did all the steps correctly and the rigid bodies are lined up co
 
 - **Bulk Apply** will apply the the rigid body's settings you change EXACTLY the same for all selected rigids.
 
-- **Bone Chain** and **All Bone Chains** will apply a 'gradient' so of the selected rigid bodies, the highest bone parent's rigid body  will get that (minimum) value, and lowest bone child's rigid body will get that (maximum) value.
+- **Bone Chain** and **All Bone Chains** will apply a 'gradient' so of the selected rigid bodies, the highest bone parent's rigid body  will get that (starting) value, and lowest bone child's rigid body will get that (ending) value.
 
 Perhaps maybe a visual explanation is better for the differences between each tool:
 

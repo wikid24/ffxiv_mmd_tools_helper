@@ -5,9 +5,11 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-install), simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#frequently-asked-questions) below. 
 
+While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
+
 If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel.
 
-
+------------
 
 Sample Video 1: Thancred & Sadu - skirt physics testing
 
@@ -41,7 +43,6 @@ Credits:
 - Song - Elephant (Ignite) by Funkin Matt
 
 ------------
-While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
 
 # New Features:
   - Auto-convert the FFXIV bone structure to match MMD Models

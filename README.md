@@ -224,8 +224,9 @@ Perhaps maybe a visual explanation is better for the differences between each to
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
 
-In this example, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools:
-![image](https://user-images.githubusercontent.com/19479648/225208922-f6ffbfda-95a0-4911-a590-0e6606dd06d2.png)
+
+In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this case):
+![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
 
 
 --------------

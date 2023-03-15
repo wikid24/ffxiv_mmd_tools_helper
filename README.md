@@ -212,19 +212,20 @@ After you're finished with tweaking the physics settings, you can bake the physi
 --------------
 #### Q: I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?
 
-A: Assuming you did all the steps correctly and the rigid bodies are lined up correctly with their respective meshes, the last available option is to increase the width/length on the skirt's rigid bodies OR increase the width of the leg rigid bodies. Or both. This can be done using the 'Bulk Apply', 'Bone Chain', or 'All Bone Chains' selections.
+A: Assuming you did all the steps correctly and the rigid bodies are lined up correctly with their respective meshes, the last available option is to increase the width/length on the skirt's rigid bodies OR increase the width of the leg rigid bodies. Or both. This can be done using the rigid body transform 'Bulk Apply', 'Bone Chain', or 'All Bone Chains' tools.
 
-In this example, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools below.
 
-- Bulk Apply will apply the the rigid body's settings you change EXACTLY the same for all selected rigids.
+- **Bulk Apply** will apply the the rigid body's settings you change EXACTLY the same for all selected rigids.
 
-- Bone Chain and All Bone Chains will apply a 'gradient' so of the selected rigid bodies, the highest parent will get the smallest (minimum) value, and lowest child will get the largest (maximum) value.
+- **Bone Chain** and **All Bone Chains** will apply a 'gradient' so of the selected rigid bodies, the highest bone parent's rigid body  will get that (minimum) value, and lowest bone child's rigid body will get that (maximum) value.
 
-![image](https://user-images.githubusercontent.com/19479648/225208922-f6ffbfda-95a0-4911-a590-0e6606dd06d2.png)
-
-Perhaps maybe a visual explanation is better for the differences between each setting:
+Perhaps maybe a visual explanation is better for the differences between each tool:
 
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
+
+
+In this example, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools:
+![image](https://user-images.githubusercontent.com/19479648/225208922-f6ffbfda-95a0-4911-a590-0e6606dd06d2.png)
 
 
 --------------

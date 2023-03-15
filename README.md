@@ -89,6 +89,15 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 - [FFXIV TexTools Reference Data](https://docs.google.com/spreadsheets/d/1kIKvVsW3fOnVeTi9iZlBDqJo6GWVn6K6BCUIRldEjhw/edit#gid=296196266)
 
 ------------
+# MMD external video publishing etiquette
+
+It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. There are some 'popular' MMD youtubers out there that do not do this, and quite frankly I would consider it 'stealing' since MMD is a collaborative effort made by lots of people. 
+
+Meaning, in the video's description, always put the person who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
+
+When I say 'with a link' I mean, provide a link to the original source you got it from so OTHER people can download the files as well.
+
+------------
 
 # How to Install
 

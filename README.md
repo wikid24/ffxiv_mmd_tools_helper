@@ -182,7 +182,7 @@ Guide coming soon! In the meantime, here's:
 
 I did these a long time ago (the UI looks different and the steps have changed a bit but hopefully it will suffice for now until a _proper_ guide is created). 
 
-Try to line the bones up __exactly__ with the mesh (you can manually move a bone's location if it's not close enough to the mesh). The skirt bones don't need to __exactly__ be lined up with the mesh but they do need to be __close__ otherwise you risk having clipping issues with the legs going through the skirt unintentionally. Generally speaking, the closer the bones are to the mesh, the better your physics will work.
+Try to line the bones up close to the mesh when generating the skirt (you can manually move a bone's location if it's not close enough to the mesh). The skirt bones don't need to __exactly__ be lined up with the mesh but they do need to be __close__ otherwise you risk having clipping issues with the legs going through the skirt unintentionally. Generally speaking, the closer the bones are to the skirt's mesh, the better your physics will work.
 
 Note: When playing an animation, if you are running into issues with legs clipping (assuming you lined up the bones to the mesh closely), I find that usually the easiest solution is to _add more bone parents_: 
 

@@ -211,7 +211,7 @@ Your character's **face** will now be animated.
 - [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
 - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
 - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
-- [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
+- [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
 
 
 --------------

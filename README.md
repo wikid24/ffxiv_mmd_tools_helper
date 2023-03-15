@@ -191,7 +191,7 @@ I've found the adding 20 to 26 bone parents usually fixes the legs going through
 
 That being said, try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to animate the physics in real-time.
 
-After you're finished tweaking with the physics settings (bones/rigid bodies/joints), you can BAKE the physics into the animation, so blender will not need to preform the calculations again. If you're not happy with the results __after__ baking, you'll have to delete the baked physics before you modify the physics settings again (otherwise you cannot see the changes you've made).
+After you're finished with tweaking the physics settings, you can bake the physics into the animation (using MMD Tools) so that Blender does not need to calculate the physics any more. Since baking the physics into an animation is a time-comsuming process, I generally only bake my physics in once I'm happy with the results of my tweaking and I'm close to the rendering an output file out of Blender.
 
 --------------
 #### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
@@ -225,8 +225,6 @@ Then go to the **Joints** panel and click on 'Get Joints from Rigid Bodies', the
 With the joints you want selected you should now be able to delete them.
 
 After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results. 
-
-After you're finished with tweaking the physics settings, you can bake the physics into the animation (using MMD Tools) so that Blender does not need to calculate the physics any more. Since baking the physics into an animation is a time-comsuming process, I generally only bake my physics in once I'm happy with the results of my tweaking and I'm close to the rendering an output file out of Blender.
 
 --------------
 

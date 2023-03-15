@@ -371,6 +371,21 @@ The character should now be fully rigged and exported into PMX Format. From here
  
 #### Q: My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.
 
+![image](https://user-images.githubusercontent.com/19479648/225433504-7595ca4f-53e0-4ba8-a012-4f675976a4ba.png)
 
+A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. This can be fixed by deleting the extra chest clothing pieces, then leveraging the built-in shape keys to adjust the remaining clothes' size.
 
-A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. THis can be fixed by deleting the extra clothing pieces, then leveraging the built-in shape keys to adjust the size.
+To fix this, we need to go into **MMD Tools** -> **Morph Tools** -> **Vertex** tab, and play with the shape key sliders that show up in this section setting the values from 0 to 1. 
+
+I play with these sliders and set the values to 1 until I find a slider that fixes my clothing issue.
+
+To fix any FFXIV clothing, the value should either be 0 or 1 (nothing in-between).
+
+![image](https://user-images.githubusercontent.com/19479648/225433632-36181fc9-38a3-4062-b17b-c4ed376b3cdd.png)
+
+Setting this particular slider to 1 (shp_kat) fixed my issue. 
+
+Please note you may have MULTIPLE sliders under this section that need to be set to 1. 
+
+![image](https://user-images.githubusercontent.com/19479648/225436383-ca1699a1-e277-4cbb-b6db-3b14ea5a9f88.png)
+

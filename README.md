@@ -211,6 +211,7 @@ Your character's **face** will now be animated.
 - [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
 - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
 - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
+- [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
 
 
 --------------
@@ -390,7 +391,7 @@ Please note you may have MULTIPLE sliders under this section that need to be set
 
 ![image](https://user-images.githubusercontent.com/19479648/225436383-ca1699a1-e277-4cbb-b6db-3b14ea5a9f88.png)
 
-The same result can be found by going into each individual mesh and using Blender's Shape Key panel, but I find it easier to do this using MMD Tools since MMD Tools groups all the shape keys for all the meshes under one easy-to-use panel:
+The same result can be found by going into each individual mesh and using Blender's Shape Key panel, but I find it easier to do this using MMD Tools since MMD Tools groups all the meshes for your model's shape keys together under one easy-to-use panel:
 
 ![image](https://user-images.githubusercontent.com/19479648/225437354-02209e0b-1afd-40c5-8ef2-441b6b59950c.png)
 

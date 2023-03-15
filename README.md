@@ -222,7 +222,9 @@ Then go to the **Joints** panel and click on 'Get Joints from Rigid Bodies', the
 
 With the joints you want selected you should now be able to delete them.
 
-After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results. Since baking the physics into an animation is a time-comsuming process in Blender, I generally only bake my physics in once I'm happy with the results and I'm close to the rendering a file out of blender.
+After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results. 
+
+After you're finished with tweaking the physics settings, you can bake the physics into the animation (using MMD Tools) so that Blender does not need to calculate the physics any more. Since baking the physics into an animation is a time-comsuming process, I generally only bake my physics in once I'm happy with the results of my tweaking and I'm close to the rendering an output file out of Blender.
 
 --------------
 

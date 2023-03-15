@@ -366,3 +366,11 @@ After step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tool
 ![image](https://user-images.githubusercontent.com/19479648/225153368-5a104ea7-58f5-47de-b95a-c70e34b69648.png)
 
 The character should now be fully rigged and exported into PMX Format. From here you can treat this file exactly as a normal MMD Model and import it directly into MMD program OR edit it using PMX Editor.
+
+ --------------
+ 
+#### Q: My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.
+
+
+
+A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. THis can be fixed by deleting the extra clothing pieces, then leveraging the built-in shape keys to adjust the size.

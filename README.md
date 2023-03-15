@@ -7,6 +7,22 @@ For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/relea
 
 If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel.
 
+
+
+https://user-images.githubusercontent.com/19479648/225201036-c3c85e70-ea17-4100-89c9-f22462ae71b9.mp4
+
+
+
+https://user-images.githubusercontent.com/19479648/225201333-e3e72554-bf2a-4cea-9fe5-b503e51946b8.mp4
+
+
+
+https://user-images.githubusercontent.com/19479648/225201368-46c79f71-307e-4130-91c6-0342e539fbc6.mp4
+
+
+
+
+
 ------------
 While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.
 

@@ -91,7 +91,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 ------------
 # MMD external video publishing etiquette
 
-It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. There are some 'popular' MMD youtubers out there that do not do this, and quite frankly I would consider it 'stealing' since MMD is a collaborative effort made by lots of people. 
+It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. There are some 'popular' MMD youtubers out there that do not do this, and quite frankly I would consider it 'stealing' since MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online.
 
 Meaning, in the video's description, always put the person who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
 

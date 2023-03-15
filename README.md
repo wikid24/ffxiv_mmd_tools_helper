@@ -14,20 +14,21 @@ Sample Video 1: Thancred & Sadu - skirt physics testing
 https://user-images.githubusercontent.com/19479648/225201036-c3c85e70-ea17-4100-89c9-f22462ae71b9.mp4
 
 Credits: 
-Video/model conversion by me (wikid24)
-Model by Square Enix
-MMD Body Motion by sn - https://sp.nicovideo.jp/watch/sm36532472
-MMD Facial Motion & Cameria by sn - https://www.nicovideo.jp/watch/sm36532472
-
+- Video/model conversion by me (wikid24)
+- Model by Square Enix
+- MMD Body Motion by sn - https://sp.nicovideo.jp/watch/sm36532472
+- MMD Facial Motion & Cameria by sn - https://www.nicovideo.jp/watch/sm36532472
+- Song - Honeymoon Un Deux Trois (cover) by dongdang - https://www.youtube.com/watch?v=z8i6JnznAi8
 
 Sample Video 2: Hythlodaeus, Gauis and Erenville - testing conversion in less than 30 minutes (no physics on the hair)
 
 https://user-images.githubusercontent.com/19479648/225201333-e3e72554-bf2a-4cea-9fe5-b503e51946b8.mp4
 
 Credits: 
-Video/model conversion by me (wikid24)
-Model by Square Enix
-MMD Body/Facial/Camera Motion by Temporal7Lizardo - http://www.mediafire.com/file/935qedyecesu9t5/Everybody.7z/file
+- Video/model conversion by me (wikid24)
+- Model by Square Enix
+- MMD Body/Facial/Camera Motion by Temporal7Lizardo - http://www.mediafire.com/file/935qedyecesu9t5/Everybody.7z/file
+- Song - Everybody by Backstreet Boys
 
 
 Sample Video 3: Random WOL - Manually-created hair physics testing
@@ -35,8 +36,9 @@ Sample Video 3: Random WOL - Manually-created hair physics testing
 https://user-images.githubusercontent.com/19479648/225201368-46c79f71-307e-4130-91c6-0342e539fbc6.mp4
 
 Credits:
-Test Video created by me (wikid24)
-MMD Body Motion by 
+- Video/model conversion by me (wikid24)
+- Model by Square Enix
+- MMD Body Motion by 
 
 ------------
 While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.

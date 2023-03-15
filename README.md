@@ -19,7 +19,7 @@ Credits:
 - MMD Body Motion, Facial and Camera by sn - https://sp.nicovideo.jp/watch/sm36532472
 - Song - Honeymoon Un Deux Trois (cover) by dongdang - https://www.youtube.com/watch?v=z8i6JnznAi8
 
-Sample Video 2: Hythlodaeus, Gauis and Erenville - testing conversion in less than 30 minutes (no physics on the hair)
+Sample Video 2: Hythlodaeus, Gauis and Erenville - testing rigging/conversion/rendering in less than 30 minutes (no physics on the hair)
 
 https://user-images.githubusercontent.com/19479648/225201333-e3e72554-bf2a-4cea-9fe5-b503e51946b8.mp4
 

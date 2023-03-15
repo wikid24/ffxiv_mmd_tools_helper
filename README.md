@@ -16,8 +16,7 @@ https://user-images.githubusercontent.com/19479648/225201036-c3c85e70-ea17-4100-
 Credits: 
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
-- MMD Body Motion by sn - https://sp.nicovideo.jp/watch/sm36532472
-- MMD Facial Motion & Cameria by sn - https://www.nicovideo.jp/watch/sm36532472
+- MMD Body Motion, Facial and Camera by sn - https://sp.nicovideo.jp/watch/sm36532472
 - Song - Honeymoon Un Deux Trois (cover) by dongdang - https://www.youtube.com/watch?v=z8i6JnznAi8
 
 Sample Video 2: Hythlodaeus, Gauis and Erenville - testing conversion in less than 30 minutes (no physics on the hair)
@@ -38,7 +37,8 @@ https://user-images.githubusercontent.com/19479648/225201368-46c79f71-307e-4130-
 Credits:
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
-- MMD Body Motion by 
+- MMD Body Motion by かりんとう - https://www.nicovideo.jp/watch/sm33513391
+- Song - Elephant (Ignite) by Funkin Matt
 
 ------------
 While this tool is geared towards FFXIV model conversion, the majority of it's features can be used for conversion for any MMD models.

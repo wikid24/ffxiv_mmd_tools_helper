@@ -9,7 +9,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel.
 
-I need your help to improve this plugin! Please leave suggestions / comments here: https://github.com/wikid24/ffxiv_mmd_tools_helper/issues
+I need your help to improve this plugin! Please leave suggestions / comments [here](https://github.com/wikid24/ffxiv_mmd_tools_helper/issues)
 
 ------------
 

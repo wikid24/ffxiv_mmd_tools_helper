@@ -63,8 +63,8 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 ------------
 # Useful Guides:
+- [FFXIV TexTools Hex Color Reference List](https://docs.google.com/spreadsheets/d/18Z1ph1Xa-rFvC8FtB7X6IgSbjwPAom5XuDuCtVeNRvo)
 - [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
-
 - [XIV Mod Archive - Useful guides to exporting](https://www.xivmodarchive.com/modid/9408) 
 - [MMD Skirt Rigging Tutorial: Video Tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
 - [UuuNyaa's Physics Adjuster: Video Tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)

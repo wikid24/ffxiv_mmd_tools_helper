@@ -209,25 +209,6 @@ That being said, try to limit the amount of bones/rigid bodies that are needed f
 
 After you're finished with tweaking the physics settings, you can bake the physics into the animation (using MMD Tools) so that Blender does not need to calculate the physics any more. Since baking the physics into an animation is a time-comsuming process, I generally only bake my physics in once I'm happy with the results of my tweaking and I'm close to the rendering an output file out of Blender.
 
---------------
-#### Q: I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?
-
-A: Assuming you did all the steps correctly and the rigid bodies are lined up correctly with their respective meshes, the last available option is to increase the width/length on the skirt's rigid bodies OR increase the width of the leg rigid bodies. Or both. This can be done using the rigid body transform 'Bulk Apply', 'Bone Chain', or 'All Bone Chains' tools.
-
-
-- **Bulk Apply** will apply the the rigid body's settings you change EXACTLY the same for all selected rigids.
-
-- **Bone Chain** and **All Bone Chains** will apply a 'gradient' so of the selected rigid bodies, the highest bone parent's rigid body  will get that (starting) value, and lowest bone child's rigid body will get that (ending) value.
-
-Perhaps maybe a visual explanation is better for the differences between each tool:
-
-https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
-
-
-
-In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this case):
-![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
-
 
 --------------
 #### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
@@ -261,6 +242,25 @@ Then go to the **Joints** panel and click on 'Get Joints from Rigid Bodies', the
 With the joints you want selected you should now be able to delete them.
 
 After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results. 
+
+--------------
+#### Q: I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?
+
+A: Assuming you did all the steps correctly and the rigid bodies are lined up correctly with their respective meshes, the last available option is to increase the width/length on the skirt's rigid bodies OR increase the width of the leg rigid bodies. Or both. This can be done using the rigid body transform 'Bulk Apply', 'Bone Chain', or 'All Bone Chains' tools.
+
+
+- **Bulk Apply** will apply the the rigid body's settings you change EXACTLY the same for all selected rigids.
+
+- **Bone Chain** and **All Bone Chains** will apply a 'gradient' so of the selected rigid bodies, the highest bone parent's rigid body  will get that (starting) value, and lowest bone child's rigid body will get that (ending) value.
+
+Perhaps maybe a visual explanation is better for the differences between each tool:
+
+https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
+
+
+In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this case):
+![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
+
 
 --------------
 

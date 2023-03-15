@@ -374,7 +374,7 @@ The character should now be fully rigged and exported into PMX Format. From here
 
 ![image](https://user-images.githubusercontent.com/19479648/225433632-36181fc9-38a3-4062-b17b-c4ed376b3cdd.png)
 
-A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. This can be fixed by deleting the extra chest clothing pieces, then leveraging the built-in shape keys to adjust the remaining clothes' size.
+A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size for the remaining pieces. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. This can be fixed by deleting the extra chest clothing pieces, then leveraging the built-in shape keys to adjust the remaining clothes' size.
 
 To fix this, we need to go into **MMD Tools** -> **Morph Tools** -> **Vertex** tab, and play with the shape key sliders that show up in this section setting the values from 0 to 1. 
 

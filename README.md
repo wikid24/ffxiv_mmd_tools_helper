@@ -189,6 +189,8 @@ Note: When playing an animation, if you are running into issues with legs clippi
 
 That being said, try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to run the physics.
 
+After you're finished playing around with the physics settings / bones / rigid bodies, you can BAKE the physics into the animation, so blender will not need to preform the calculations again. If you're not happy with the results __after__ baking, you'll have to delete the baked physics before you modify the physics settings again (otherwise you cannot see the changes you've made).
+
 --------------
 #### Q: My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
 

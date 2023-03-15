@@ -93,9 +93,9 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. There are some 'popular' MMD youtubers out there that do not do this, and quite frankly I would consider it 'stealing' since MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online.
 
-Meaning, in the video's description, always put the person who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
+Meaning, in the video's description, always put the author(s) who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
 
-When I say 'with a link' I mean, provide a link to the original source you got it from so OTHER people can download the files as well.
+When I say 'with a link' I mean, provide a link to the original author's source you got it from so OTHER people can download the files as well.
 
 ------------
 

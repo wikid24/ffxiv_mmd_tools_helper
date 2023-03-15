@@ -21,7 +21,7 @@ Credits:
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
 - MMD Body Motion by sn - https://www.nicovideo.jp/watch/sm36532472
-- MMD Facial Motion/Camera by Marshmellow Machine - https://bowlroll.net/user/334866
+- MMD Facial Motion/Camera by Marshmallow Machine - https://bowlroll.net/file/221190
 - Song - Honeymoon Un Deux Trois (cover) by dongdang - https://www.youtube.com/watch?v=z8i6JnznAi8
 
 #### Sample Video 2: Hythlodaeus, Gauis and Erenville - testing rigging/conversion/rendering in less than 30 minutes (no physics on the hair)

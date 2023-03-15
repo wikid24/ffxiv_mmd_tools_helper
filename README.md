@@ -138,13 +138,12 @@ Your character is now rigged and ready for animating using MMD Tools!
 
 ![image](https://user-images.githubusercontent.com/19479648/225124664-93fae3b8-333d-42fc-a6f2-9d236a7643c1.png)
 
-Your character's **body** will now be animated.
-
 16) Use MMD Tools to import a motion dance VMD file:
     - 'Treat Current Pose as Rest Pose' should be checked
 
 ![image](https://user-images.githubusercontent.com/19479648/225125072-ac90a801-1f93-459e-88ce-27d00b4ff651.png)
 
+Your character's **body** will now be animated.
 
 17) On the Scene Outliner View, click on **.placeholder**, and click on **Motion Import** again
 

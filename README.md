@@ -248,7 +248,7 @@ A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's
 
 ![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
 
-Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others, your mileage may vary. 
+Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others.For example, on one MMD animation it ended up twisting the bone arm in a weird way, but on another animation it fixed all my hand/arm clipping issues, so your mileage may vary.
 
 --------------
 

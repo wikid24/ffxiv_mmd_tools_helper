@@ -202,6 +202,18 @@ Your character's **face** will now be animated.
 
 --------------
 # Frequently Asked Questions:
+
+- How do I get better physics working on the skirt? The default one sucks.
+- My character's skirt isn't complete all around, there are cuts in-between. How do I fix?
+- I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?
+- Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?
+- When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
+- Why are the textures all weird and black? They don't look like this in game.
+- I want to export my model to PMX Format. How do I do that?
+
+
+--------------
+
 #### Q: How do I get better physics working on the skirt? The default one sucks.
 
 A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
@@ -290,7 +302,7 @@ In this example below, increase the rigid body width/radius/size until it is jus
 
 --------------
 
-#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, unused bones that are not used by your gear, etc) that my character does not use?
+#### Q: Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?
 
 A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these two commands:
 - Flag unused bones as '_unused_'
@@ -302,7 +314,7 @@ In general it is safer to run this step immediately after Step 1 in the [convers
 
 --------------
 
-#### Q: When I run the an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
+#### Q: When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
 
 A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the FFXIV bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow): 
 

@@ -76,7 +76,7 @@ While this tool is geared towards FFXIV model conversion, the majority of it's f
 
 # How to Install
 
- - Download the latest release package.zip
+ - Download the [latest release package](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases).zip
  - Go to Edit -> Preferences -> Add-ons -> Install and select the zip file you downloaded
   ![image](https://user-images.githubusercontent.com/19479648/215303847-8a5b34de-b8be-4070-9ab7-dc51ada3fc10.png)
   

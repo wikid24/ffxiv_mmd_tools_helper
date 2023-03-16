@@ -437,7 +437,7 @@ Repeat this process for however many bones you would like the hair physics to ha
 
 ** Insert image of final look**
 
-Next we will apply weight painting to the bone. Go to 'object' mode and select the armature, then control+click on the mesh. Then go to 'weight-painting' mode. 
+Next we will apply weight painting to all the bones. Go to 'object' mode and select the armature, then control+click on the mesh. Then go to 'weight-painting' mode. 
 
 ** Insert image of weight painting mode **
 

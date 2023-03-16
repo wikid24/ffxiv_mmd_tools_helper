@@ -116,7 +116,7 @@ MMD is a collaborative effort made by lots of people building on each other's wo
 
 Meaning, in the video's description, I always put the author(s) who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
 
-When I say 'with a link', I mean try to provide a link to the original author's source you got it from so OTHER people can download the files as well. It is, after all, how most of us got into this hobby of making MMD videos in the first place. :)
+When I say 'with a link', I mean try to provide a link to the original author's source that I got it from so OTHER people can download the files as well. It is, after all, how most of us got into this hobby of making MMD videos in the first place. :)
 
 ------------
 

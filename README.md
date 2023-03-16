@@ -246,7 +246,7 @@ Note: When playing an animation, if you are running into issues with legs clippi
 
 ![image](https://user-images.githubusercontent.com/19479648/225157902-02e4cb80-310f-4fc9-b023-62149c334a72.png)
 
-I've found the adding 20 to 26 bone parents usually fixes the legs going through the skirt.
+I've found that adding 20 to 26 bone parents usually fixes the legs going through the skirt.
 
 That being said, try to limit the amount of bones/rigid bodies that are needed for physics, as the more skirt bones that you add, the more physics calculations Blender has to do in order to animate the rigid bodies, so it will slow down your PC when trying to animate the physics in real-time.
 

@@ -421,11 +421,11 @@ In general these are the high-level steps required:
 
 In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
 
-First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, then you can turn Physics ON again.
+First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, SAVE OFTEN (as Blender likes to crash a lot whenever Physics are involved) and then you can turn Physics ON again.
 
 With the Au Ra model, find the hair mesh you would like to change. There should already be some bones attached that are weight painted on it. If your model does not have an existing bone to use on the place you would like add physics, create one from where you would like the physics to **start** on the mesh.
 
-**Insert Image of hair model**
+** Insert Image of hair model **
 
 Next, we will extrude some bones from the existing bone that will match the shape of the mesh. Go to 'edit' mode for the bones. If you are lucky and there are bones on both side of your model (left and right), you can use the 'X Axis Mirror' to cut the amount of work in half. Find the 'tail' of the bone and press 'E' to extrude. You can manipulate the bone tail position by selecting it and pressing 'G' on the tail.  Repeat this process for however many bones you would like the hair physics to have. 
 

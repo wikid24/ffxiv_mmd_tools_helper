@@ -472,18 +472,17 @@ Your rigid bodies should now be configured. You can always change the settings l
 
 Next we will create joints between the rigid bodies. With the rigid bodies selected, go to the Joints panel and select Create: **From Selected Rigid Bodies**. 
 
-** Insert image of the rigid bodies used **
+![image](https://user-images.githubusercontent.com/19479648/225775565-c70af677-97b7-4d00-921c-98ddae89b0e4.png)
 
 You can configure always the settings later using 'Get Joints from Rigid Bodies' and 'Bulk Apply' on the Joints panel.
 
-Here is the settings that I used on this hair.
+![image](https://user-images.githubusercontent.com/19479648/225776232-8848acd5-877b-4e59-9266-dcd647516ad1.png)
 
-** Insert image of the joints configuration settings**
 
 #### Part 5: Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
 Last thing to do is attach the hair stem rigid bodies to the head rigid body. Control + Click on the hair stem and the 'head' rigid body. Then click on Create: ** From Selected Rigid Bodies **
 
-** Insert image of this **
+![image](https://user-images.githubusercontent.com/19479648/225776867-8598f660-e5ab-4c73-804e-7a876f1aebee.png)
 
 You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.

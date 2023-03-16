@@ -396,7 +396,7 @@ Please note you may have MULTIPLE sliders under this section that need to be set
 
 ![image](https://user-images.githubusercontent.com/19479648/225436383-ca1699a1-e277-4cbb-b6db-3b14ea5a9f88.png)
 
-The same result can be found by going into each individual mesh and using Blender's Shape Key panel, but I find it easier to do this using MMD Tools since MMD Tools groups all the meshes for your model's shape keys together under one easy-to-use panel:
+An alternate way is by going into each individual mesh and using Blender's Shape Key panel, but personally I find it easier to do this using MMD Tools since MMD Tools groups all the meshes for your model's shape keys together under one easy-to-use panel:
 
 ![image](https://user-images.githubusercontent.com/19479648/225437354-02209e0b-1afd-40c5-8ef2-441b6b59950c.png)
 

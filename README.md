@@ -112,7 +112,7 @@ Credits:
 ------------
 # MMD Video Publishing Etiquette
 
-MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online. It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources.
+MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online. It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. Don't be like some 'popular' MMD youtubers that make money from donations by stealing other people's work that the got for free, without giving proper credits to the people they're making money off of.
 
 Meaning, in the video's description, I always put the author(s) who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
 

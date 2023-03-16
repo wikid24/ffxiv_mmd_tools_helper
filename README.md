@@ -267,9 +267,9 @@ There are a few ways to fix:
 
 Or you can use a combination of all three.
 
-In this example we will to delete the **horizontal joints** that are connecting the rigid bodies together. 
+In this example we delete the **horizontal joints** that are connecting the rigid bodies together. 
 
-Note: Whenever you need to change __anything__ related to adding or removing bones/rigid bodies/joints, **make sure Physics is turn OFF** in MMD Tools (or use this shortcut), otherwise you risk breaking your model:
+Note: Whenever you need to change __anything__ related to adding or removing bones/rigid bodies/joints, **make sure Physics is turned OFF** in MMD Tools (or use this shortcut), otherwise you risk breaking your model:
 
 ![image](https://user-images.githubusercontent.com/19479648/225162913-e236ad64-3375-486b-8853-9dec7c2b8569.png)
 
@@ -282,7 +282,7 @@ Then go to the **Joints** panel and click on 'Get Joints from Rigid Bodies', the
 
 ![image](https://user-images.githubusercontent.com/19479648/225163385-7eda5e1a-2f67-4a6f-b22b-7d61a2b59b97.png)
 
-With the joints you want selected you should now be able to delete them.
+With the joints you want selected, you should now be able to delete them.
 
 After you're finished making your modifications, SAVE your .blend file(just incase Blender crashes), turn physics ON again, and press play to see if it made a difference. If not, UNDO you steps, or turn Physics off again and play with the model until you get your desired results. 
 
@@ -301,7 +301,7 @@ Perhaps maybe a visual explanation is better for the differences between each to
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
 
-In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this case):
+In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this specific example):
 ![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
 
 
@@ -325,7 +325,7 @@ A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's
 
 ![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
 
-Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others.For example, on one MMD animation it ended up twisting the bone arm in a weird way, but on another animation it fixed all my hand/arm clipping issues, so your mileage may vary.
+Note: This is an **experimental** feature so it's not guaranteed to work exactly, as I haven't found a proper solution yet, but it does seem to work better in some cases then others. For example, on one MMD animation it ended up twisting the bone arm in a weird way, but on another animation it fixed all my hand/arm clipping issues, so your mileage may vary.
 
 --------------
 
@@ -335,7 +335,7 @@ Note: This is an **experimental** feature so it's not guaranteed to work exactly
 
 A: Textools unfortunately doesn't export ALL of the texture files needed to render some textures properly for some gear (like dyed gear or metallic gear).
 
-Using Textools you'd need to individually export each affected body part's normal/multi/colorset texture(read:DDS files) and use this [Blender Plugin ](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) & [video guide](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) to fix it. 
+Using Textools, you'd need to individually export each affected body part's normal/multi/colorset texture(read: DDS files) and use this [Blender Plugin ](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) & [video guide](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) to fix it. 
 
 You'll need to perform this immediately after step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow). On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
  
@@ -349,7 +349,7 @@ Immediately after step 4 on the [conversion guide](https://github.com/wikid24/ff
 
 ![image](https://user-images.githubusercontent.com/19479648/225155767-6f97c683-edb0-44e3-b17a-9cb35eba3293.png)
 
-After step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), then follow these steps:
+Next, after step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), follow these steps:
 
 1) On the **Export MMD Preparation** Panel -> Click on **Add Display Panels** 
 
@@ -361,11 +361,11 @@ After step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tool
 
 ![image](https://user-images.githubusercontent.com/19479648/225152213-4dffae74-5e2e-4de6-b992-a9baec4066af.png)
 
-5) Back in FFXIV MMD Tools Plugin, Click on all of these buttons
+5) Back in FFXIV MMD Tools Plugin, click on all of these buttons
 
 ![image](https://user-images.githubusercontent.com/19479648/225152849-f2339f03-ca85-477b-803d-f2144f880f19.png)
 
-6) On the MMD Tools Plugin -> Click on **Model** -> **Export**
+6) On the MMD Tools Plugin -> click on **Model** -> **Export**
 
 ![image](https://user-images.githubusercontent.com/19479648/225153368-5a104ea7-58f5-47de-b95a-c70e34b69648.png)
 
@@ -377,7 +377,9 @@ The character should now be fully rigged and exported into PMX Format. From here
 
 ![image](https://user-images.githubusercontent.com/19479648/225433632-36181fc9-38a3-4062-b17b-c4ed376b3cdd.png)
 
-A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then uses special shape keys to adjust the size for the remaining pieces. For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. This can be fixed by deleting the extra chest clothing pieces, then leveraging the built-in shape keys to adjust the remaining clothes' size.
+A: This is because FFXIV uses a system of cutting clothes into smaller pieces, then it uses special shape keys to adjust the size for the remaining pieces. 
+
+For example a glove may go all the way up to the biceps, while the chest gear may go all the way up to the wrist. This can be fixed by deleting the extra chest clothing pieces, then leveraging the built-in shape keys to adjust the remaining clothes' size.
 
 To fix this, we need to go into **MMD Tools** -> **Morph Tools** -> **Vertex** tab, and play with the shape key sliders that show up in this section setting the values from 0 to 1. 
 
@@ -388,7 +390,7 @@ To fix any FFXIV clothing, the value should either be 0 or 1 (nothing in-between
 ![image](https://user-images.githubusercontent.com/19479648/225436534-171ea31a-a913-41ea-96ce-fd56559678c3.png)
 
 
-Setting this particular slider to 1 (shp_kat) fixed my issue. 
+In this example, setting this particular slider to 1 (shp_kat) fixed my issue. 
 
 Please note you may have MULTIPLE sliders under this section that need to be set to 1. 
 

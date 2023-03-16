@@ -416,7 +416,7 @@ In general these are the high-level steps required:
 1) Create the Bones on top of the the mesh you would like to apply physics to
 2) Weight paint the bones for the mesh
 3) Create the rigid bodies and configure the rigid body parameters
-4) Create the joints for between the rigid bodies and configure the joint parameters
+4) Create the joints between the rigid bodies and configure the joint parameters
 5) Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
 You would want to do this _after step 8_ on the [Conversion Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
@@ -424,6 +424,8 @@ You would want to do this _after step 8_ on the [Conversion Guide](https://githu
 In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
 
 First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, SAVE OFTEN (as Blender likes to crash a lot whenever Physics are involved) and then you can turn Physics ON again.
+
+#### Part 1: Create the Bones on top of the the mesh you would like to apply physics to
 
 With the Au Ra model, find the hair mesh you would like to change. There should already be some bones attached that are weight painted on it. If your model does not have an existing bone to use on the place you would like add physics, create one from where you would like the physics to **start** on the mesh.
 
@@ -437,6 +439,8 @@ Repeat this process for however many bones you would like the hair physics to ha
 
 ** Insert image of final look**
 
+#### Part 2: Weight paint the bones for the mesh
+
 Next we will apply weight painting to all the bones. Go to 'object' mode and select the armature, then control+click on the mesh. Then go to 'weight-painting' mode. 
 
 ** Insert image of weight painting mode **
@@ -446,6 +450,8 @@ Control + Click on all the bones that need weight painting, then go to the menu 
 ** Insert image of weight painting menu **
 
 The hair should now be weight painted. You can check if they are weight painted correctly by control+clicking on a bone and seeing if the weight paint is applied properly in all the correct areas. If not, you will have to manually fix the weight paint (Don't ask me how, there are lots of videos and it is a tedious process). 
+
+#### Part 3: Create the rigid bodies and configure the rigid body parameters
 
 Now that we have weight painted the bones, we will create the rigid bodies. Go back to 'object' mode, then select the armature and go to 'edit' mode. Control+click on all of the hair bones so they are all selected that you would like to apply physics to. In the FFXIV MMD Tools -> Rigid Bodies panel, select Create: **From Selected Bones**.
 
@@ -459,6 +465,8 @@ Here is the menu options that I used:
 
 Your rigid bodies should now be configured. You can always change the settings later using the 'Bulk Apply'/'Bone Chain'/'All Bone Chain' options in the FFXIV MMD Tools Rigid Bodies panel.
 
+#### Part 4: Create the joints between the rigid bodies and configure the joint parameters
+
 Next we will create joints between the rigid bodies. With the rigid bodies selected, go to the Joints panel and select Create: **From Selected Rigid Bodies**. 
 
 ** Insert image of the rigid bodies used **
@@ -468,6 +476,8 @@ You can configure always the settings later using 'Get Joints from Rigid Bodies'
 Here is the settings that I used on this hair.
 
 ** Insert image of the joints configuration settings**
+
+#### Part 5: Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
 Last thing to do is attach the hair stem rigid bodies to the head rigid body. Control + Click on the hair stem and the 'head' rigid body. Then click on Create: ** From Selected Rigid Bodies **
 

@@ -410,7 +410,7 @@ A: There are a few ways to do it, and depending on the method some are easier th
 
 For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtube.com/watch?v=f9LA6_XnFIg) as it is very easy to use. But only if you are staying in Blender as this will not work if you want to export to PMX format.
 
-I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints. 
+I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. 
 
 In general these are the high-level steps required:
 1) Create the Bones on top of the the mesh you would like to apply physics to
@@ -419,6 +419,54 @@ In general these are the high-level steps required:
 4) Create the joints for between the rigid bodies and configure the joint parameters
 5) Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
-In this example we will go over creating physics for a FFXIV model's pony tail, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
+In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
 
+First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, then you can turn Physics ON again.
 
+With the Au Ra model, find the hair mesh you would like to change. There should already be some bones attached that are weight painted on it. If your model does not have an existing bone to use on the place you would like add physics, create one from where you would like the physics to **start** on the mesh.
+
+**Insert Image of hair model**
+
+Next, we will extrude some bones from the existing bone that will match the shape of the mesh. Go to 'edit' mode for the bones. If you are lucky and there are bones on both side of your model (left and right), you can use the 'X Axis Mirror' to cut the amount of work in half. Find the 'tail' of the bone and press 'E' to extrude. You can manipulate the bone tail position by selecting it and pressing 'G' on the tail.  Repeat this process for however many bones you would like the hair physics to have. 
+
+** Insert image of extrude **
+
+** Insert image of final look**
+
+Next we will apply weight painting to the bone. Go to 'object' mode and select the armature, then control+select the mesh. Then go to 'weight-painting' mode. 
+
+** Insert image of weight painting mode **
+
+Control + Click on all the bones that need weight painting, then go to the menu that says Weight Painting -> Bones -> Apply from Bones
+
+** Insert image of weight painting menu **
+
+The hair should now be weight painted. You can check if they are weight painted correctly by control+clicking on a bone and seeing if the weight paint is applied properly in all the correct areas. If not, you will have to manually fix the weight paint (Don't ask me how, there are lots of videos and it is a tedious process). 
+
+Now that we have weight painted the bones, we will create the rigid bodies. Go back to 'object' mode, then select the armature and go to 'edit' mode. Control+click on all of the hair bones so they are all selected that you would like to apply physics to. In the FFXIV MMD Tools -> Rigid Bodies panel, select Create: **From Selected Bones**.
+
+** Insert Image of menu option **
+
+Configure the shape of the rigid bodies, as well as the parameters (In this case I selected 'capsule', and make sure the collision group is a different from than the skeletion. make sure the rigid body type is 'Physics'.)
+
+Here is the menu options that I used:
+
+** Insert image of the menu options I used **
+
+Your rigid bodies should now be configured. You can always change the settings later using the 'Bulk Apply'/'Bone Chain'/'All Bone Chain' options in the FFXIV MMD Tools Rigid Bodies panel.
+
+Next we will create joints between the rigid bodies. With the rigid bodies selected, go to the Joints panel and select Create: **From Selected Rigid Bodies**. 
+
+** Insert image of the rigid bodies used **
+
+You can configure always the settings later using 'Get Joints from Rigid Bodies' and 'Bulk Apply' on the Joints panel.
+
+Here is the settings that I used on this hair.
+
+** Insert image of the joints configuration settings**
+
+Last thing to do is attach the hair stem rigid bodies to the head rigid body. Control + Click on the hair stem and the 'head' rigid body. Then click on Create: ** From Selected Rigid Bodies **
+
+** Insert image of this **
+
+You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.

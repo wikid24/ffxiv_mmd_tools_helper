@@ -301,7 +301,9 @@ Perhaps maybe a visual explanation is better for the differences between each to
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
 
-In this example below, increase the rigid body width/radius/size until it is just slightly larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this specific example):
+You can see on [Sample Video 1](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-1-thancred--sadu---skirt-physics-testing) that there is clipping on Thancred's legs through the skirt (I did leave this in the video intentionally). This is because the Rigid bodies with the skirt are colliding with the rigid bodies on the legs, unfortunately because the leg's rigid bodies are smaller than the leg's mesh, it is causing clipping to occurr.
+
+In this example below, increase the rigid body width/radius/size until it is __slightly__ larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this specific example):
 ![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
 
 

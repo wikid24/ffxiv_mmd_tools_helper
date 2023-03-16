@@ -429,27 +429,27 @@ First thing I will say is make sure **Physics is turned OFF** whenever you are c
 
 With the Au Ra model, find the hair mesh you would like to change. There should already be some bones attached that are weight painted on it. If your model does not have an existing bone to use on the place you would like add physics, create one from where you would like the physics to **start** on the mesh.
 
-** Insert Image of hair model **
+![image](https://user-images.githubusercontent.com/19479648/225772659-c7486053-88e2-4660-9e15-02591a0bb2d3.png)
 
 Next, we will extrude some bones from the existing bone that will match the shape of the mesh. Go to 'edit' mode for the bones. If you are lucky and there are bones on both side of your model (left and right, the bone names should end with 'l' and 'r'), you can use the 'X Axis Mirror' to cut the amount of work in half. Select the **tail**  of the bone (ONLY the tail, not the entire bone) and press 'E' to extrude. You can manipulate the bone tail position by selecting it and pressing 'G' on the tail.  
 
-** Insert image of extrude **
+![image](https://user-images.githubusercontent.com/19479648/225773313-860dc1f3-038d-4af7-88ab-10c4149e1d8a.png)
 
 Repeat this process for however many bones you would like the hair physics to have, until you are finished. The more bones you add, the more detailed the physics will look. But I am lazy, so I only add a few bones :)
 
-** Insert image of final look**
+![image](https://user-images.githubusercontent.com/19479648/225773672-34ff8d19-5276-43e2-85f3-f39ec7234eb7.png)
 
 #### Part 2: Weight paint the bones for the mesh
 
 Next we will apply weight painting to all the bones. Go to 'object' mode and select the armature, then control+click on the mesh. Then go to 'weight-painting' mode. 
 
-** Insert image of weight painting mode **
+![image](https://user-images.githubusercontent.com/19479648/225773985-8ad42e64-1bf9-4e45-8347-637a30f095b0.png)
 
 Control + Click on all the bones that need weight painting, then go to the menu that says Weight Painting -> Bones -> Apply from Bones
 
-** Insert image of weight painting menu **
+![image](https://user-images.githubusercontent.com/19479648/225774216-61f38aa6-3b5c-4354-a4d1-ff037948e3f3.png)
 
-The hair should now be weight painted. You can check if they are weight painted correctly by control+clicking on a bone and seeing if the weight paint is applied properly in all the correct areas. If not, you will have to manually fix the weight paint (Don't ask me how, there are lots of videos and it is a tedious process). 
+The hair should now be weight painted. You can check if they are weight painted correctly by control+clicking on a bone and seeing if the weight paint is applied properly in all the correct areas. If not, you will have to manually fix the weight paint (Don't ask me how, there are lots of videos on the internet and it is a tedious process). 
 
 #### Part 3: Create the rigid bodies and configure the rigid body parameters
 

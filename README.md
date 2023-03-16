@@ -402,3 +402,23 @@ An alternate way is by going into each individual mesh and using Blender's Shape
 
 ![image](https://user-images.githubusercontent.com/19479648/225437354-02209e0b-1afd-40c5-8ef2-441b6b59950c.png)
 
+ --------------
+ 
+#### Q: There are other parts of my model that I want to apply physics to. How do I do it?
+
+A: There are a few ways to do it, and depending on the method some are easier than others. 
+
+For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtube.com/watch?v=f9LA6_XnFIg) as it is very easy to use. But only if you are staying in Blender as this will not work if you want to export to PMX format.
+
+I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints. 
+
+In general these are the high-level steps required:
+1) Create the Bones on top of the the mesh you would like to apply physics to
+2) Weight paint the bones for the mesh
+3) Create the rigid bodies and configure the rigid body parameters
+4) Create the joints for between the rigid bodies and configure the joint parameters
+5) Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
+
+In this example we will go over creating physics for a FFXIV model's pony tail, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
+
+

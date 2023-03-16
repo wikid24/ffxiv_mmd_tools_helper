@@ -274,7 +274,7 @@ Note: Whenever you need to change __anything__ related to adding or removing bon
 ![image](https://user-images.githubusercontent.com/19479648/225162913-e236ad64-3375-486b-8853-9dec7c2b8569.png)
 
 
-Using the **Rigid Body** panel shift+select (or control+select) the rigid bodies that you need to remove. These tools will help you make it easy to select what you need to:
+Using the **Rigid Body** panel shift+select (or control+select) the rigid bodies that you need to remove the joints from. These tools will help you make it easy to select what you need to:
 
 ![image](https://user-images.githubusercontent.com/19479648/225162948-3a4a2d60-7a28-4ce4-8d79-65d0b5bff4fc.png)
 

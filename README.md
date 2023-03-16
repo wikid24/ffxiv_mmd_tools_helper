@@ -445,7 +445,7 @@ Next we will apply weight painting to all the bones. Go to 'object' mode and sel
 
 ![image](https://user-images.githubusercontent.com/19479648/225773985-8ad42e64-1bf9-4e45-8347-637a30f095b0.png)
 
-Control + Click on all the bones that need weight painting, then go to the menu that says Weight Painting -> Bones -> Apply from Bones
+Shift + Click on all the bones that need weight painting, then go to the menu that says Weight Painting -> Bones -> Apply from Bones
 
 ![image](https://user-images.githubusercontent.com/19479648/225774216-61f38aa6-3b5c-4354-a4d1-ff037948e3f3.png)
 
@@ -455,13 +455,16 @@ The hair should now be weight painted. You can check if they are weight painted 
 
 Now that we have weight painted the bones, we will create the rigid bodies. Go back to 'object' mode, then select the armature and go to 'edit' mode. Control+click on all of the hair bones so they are all selected that you would like to apply physics to. In the FFXIV MMD Tools -> Rigid Bodies panel, select Create: **From Selected Bones**.
 
-** Insert Image of menu option **
+![image](https://user-images.githubusercontent.com/19479648/225774808-187ea52d-2bf1-4036-a653-f60b03cb2849.png)
 
 Configure the shape of the rigid bodies, as well as the parameters (In this case I selected 'capsule', and make sure the collision group is a different from than the skeletion. make sure the rigid body type is 'Physics'.)
 
 Here is the menu options that I used:
 
-** Insert image of the menu options I used **
+![image](https://user-images.githubusercontent.com/19479648/225775093-f137c2ec-6414-4949-b961-cbe5ca15ce4f.png)
+
+![image](https://user-images.githubusercontent.com/19479648/225775248-c6968387-75cd-4da1-b66b-f8c190cc667e.png)
+
 
 Your rigid bodies should now be configured. You can always change the settings later using the 'Bulk Apply'/'Bone Chain'/'All Bone Chain' options in the FFXIV MMD Tools Rigid Bodies panel.
 

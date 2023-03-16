@@ -110,13 +110,13 @@ Credits:
 - [FFXIV TexTools Reference Data](https://docs.google.com/spreadsheets/d/1kIKvVsW3fOnVeTi9iZlBDqJo6GWVn6K6BCUIRldEjhw/edit#gid=296196266)
 
 ------------
-# MMD external video publishing etiquette
+# MMD Video Publishing Etiquette
 
-It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources. There are some 'popular' MMD youtubers out there that do not do this, and quite frankly I would consider it 'stealing' since MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online.
+MMD is a collaborative effort made by lots of people building on each other's work to create the final product that you published online. It is customary whenever publishing videos (on youtube or other social networking platforms) to CREDIT your sources.
 
-Meaning, in the video's description, always put the author(s) who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
+Meaning, in the video's description, I always put the author(s) who created the MMD Model (with a link), MMD Model's Motion (with a link) MMD Camera (with a link), Stage (with a link), the song used etc...
 
-When I say 'with a link' I mean, provide a link to the original author's source you got it from so OTHER people can download the files as well.
+When I say 'with a link', I mean try to provide a link to the original author's source you got it from so OTHER people can download the files as well. It is, after all, how most of us got into this hobby of making MMD videos in the first place. :)
 
 ------------
 

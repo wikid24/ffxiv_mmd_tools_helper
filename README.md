@@ -419,7 +419,7 @@ In general these are the high-level steps required:
 4) Create the joints between the rigid bodies and configure the joint parameters
 5) Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
-You would want to do this _after step 8_ on the [Conversion Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
+You would want to do this _after step 7_ on the [Conversion Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 
 In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
 

@@ -427,13 +427,15 @@ With the Au Ra model, find the hair mesh you would like to change. There should 
 
 ** Insert Image of hair model **
 
-Next, we will extrude some bones from the existing bone that will match the shape of the mesh. Go to 'edit' mode for the bones. If you are lucky and there are bones on both side of your model (left and right, the bone names should end with 'l' and 'r'), you can use the 'X Axis Mirror' to cut the amount of work in half. Find the 'tail' of the bone and press 'E' to extrude. You can manipulate the bone tail position by selecting it and pressing 'G' on the tail.  Repeat this process for however many bones you would like the hair physics to have. 
+Next, we will extrude some bones from the existing bone that will match the shape of the mesh. Go to 'edit' mode for the bones. If you are lucky and there are bones on both side of your model (left and right, the bone names should end with 'l' and 'r'), you can use the 'X Axis Mirror' to cut the amount of work in half. Find the 'tail' of the bone and press 'E' to extrude. You can manipulate the bone tail position by selecting it and pressing 'G' on the tail.  
 
 ** Insert image of extrude **
 
+Repeat this process for however many bones you would like the hair physics to have. 
+
 ** Insert image of final look**
 
-Next we will apply weight painting to the bone. Go to 'object' mode and select the armature, then control+select the mesh. Then go to 'weight-painting' mode. 
+Next we will apply weight painting to the bone. Go to 'object' mode and select the armature, then control+click on the mesh. Then go to 'weight-painting' mode. 
 
 ** Insert image of weight painting mode **
 

@@ -414,7 +414,7 @@ For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtu
 I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
 
 In general these are the high-level steps required:
-1) Create the Bones on top of the the mesh you would like to apply physics to
+1) Create the Bones you would like to apply physics to
 2) Weight paint the bones for the mesh
 3) Create the rigid bodies and configure the rigid body parameters
 4) Create the joints between the rigid bodies and configure the joint parameters
@@ -426,7 +426,7 @@ In this example we will go over creating physics for a FFXIV model's hair pony t
 
 First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, SAVE OFTEN (as Blender likes to crash a lot whenever Physics are involved) and then you can turn Physics ON again.
 
-#### Part 1: Create the Bones on top of the the mesh you would like to apply physics to
+#### Part 1: Create the Bones you would like to apply physics to
 
 With the Au Ra model, find the hair mesh you would like to change. There should already be some bones attached that are weight painted on it. If your model does not have an existing bone to use on the place you would like add physics, create one from where you would like the physics to **start** on the mesh.
 
@@ -446,7 +446,7 @@ Next we will apply weight painting to all the bones. Go to 'object' mode and sel
 
 ![image](https://user-images.githubusercontent.com/19479648/225773985-8ad42e64-1bf9-4e45-8347-637a30f095b0.png)
 
-Shift + Click on all the bones that need weight painting, then go to the menu that says Weight Painting -> Bones -> Apply from Bones
+Shift + Click on all the bones that need weight painting, then go to the menu option that says Weight Painting -> Assign Automatic from Bones
 
 ![image](https://user-images.githubusercontent.com/19479648/225774216-61f38aa6-3b5c-4354-a4d1-ff037948e3f3.png)
 

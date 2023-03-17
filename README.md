@@ -446,7 +446,7 @@ Next we will apply weight painting to all the bones. Go to 'object' mode and sel
 
 ![image](https://user-images.githubusercontent.com/19479648/225773985-8ad42e64-1bf9-4e45-8347-637a30f095b0.png)
 
-Shift + Click on all the bones that need weight painting, then go to the menu option that says Weight Painting -> Assign Automatic from Bones
+Shift + Click on all the bones that need weight painting, then go to the menu option that says Weights -> Assign Automatic from Bones
 
 ![image](https://user-images.githubusercontent.com/19479648/225774216-61f38aa6-3b5c-4354-a4d1-ff037948e3f3.png)
 

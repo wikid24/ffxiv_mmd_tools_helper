@@ -510,7 +510,7 @@ Vertex Morphs (shape keys) vs Bone Morphs:
 - MMD Facial animations are animated using shape keys (or 'Vertex Morphs' as MMD Tools calls them) under the **.placeholder** object in Blender
 - When you animate facial expressions in Blender, those shape keys have special names in Japanese that are used by VMD/MMD motion files for animation.
 - 'Vertex Morphs' manipulate a mesh's verticies, while 'Bone Morphs' manipulating a pose bone transform data.
-- **Bone Morphs** is an __intermediary__ step to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object:
+- **Bone Morphs** is an __intermediary__ step to creating shape keys. It allows someone in Blender to manipulate a pose bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object:
 
 ![image](https://user-images.githubusercontent.com/19479648/225810013-18549aab-72e8-4ca4-b21b-ace79b3f79de.png)
 

@@ -499,26 +499,30 @@ You're all done! Turn Physics ON and Press Play to see if everything is working 
  
 #### Q: I want to add new facial expressions or change the existing facial expressions. How?
 
-A: First thing I would reccommend doing is looking at this [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917) as these are the reference charts I used when creating MMD facial expressions, and these are the "common" facial expressions that VMD motion files used. The facial expressions I created for FFXIV characters were fine-tuned manually (it doesn't use any data from Square Enix) so there is always room for improvement!
+A: First thing I would recommend doing is looking at this [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917) as these are the reference charts I used when creating MMD facial expressions. 
 
-Ok, so before getting into the how to change facial expressions, I need to go into some theory discussion on how Facial Expressions work in Blender's MMD Tools:
-- MMD Facial animations are animated using **shape keys** under the **.placeholder** object in Blender
-- When you animate facial expressions in Blender, those shape keys have special names in japanese that are 'mostly' used across all VMD motion files (see the expression chart I provided above).
-- Shape keys are a Blender concept are used for controlling a **mesh's verticies**. Because it is manually manipulating the verticies of a mesh, and verticies are something that cannot be transferred from one model to another model it is almost impossible to create a 'press one button to add all the facial expressions' that will work on a variety of different faces/models/etc., such as with FFXIV model which are a collection of different face shapes/face bones/face sizes etc...
-- While you can create 'Vertex Morphs' (which is really just a special MMD Tools term for 'shape keys'), those are very hard to create in bulk because you're manipulating a mesh's verticies, while 'Bone Morphs' are very easy to create.
-- **Bone Morphs** is an __intermediary__ step (invented by those smart lads who created MMD Tools) to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object:
+The facial expressions I created for FFXIV characters were fine-tuned manually (it doesn't use any data from Square Enix) so there is always room for improvement!
 
+Ok, so before getting into the how to change facial expressions, I need to go into some theory discussion on how Facial Expressions work in Blender's MMD Tools.
+
+Vertex Morphs vs Bone Morphs:
+- **Shape keys** are a Blender concept are used for controlling a **mesh's verticies**
+- MMD Facial animations are animated using shape keys (or 'Vertex Morphs' as MMD Tools calls them) under the **.placeholder** object in Blender
+- When you animate facial expressions in Blender, those shape keys have special names in Japanese that are used by VMD/MMD motion files.
+- While you can create 'Vertex Morphs' for MMD Tools those are very hard to create because you're manipulating a mesh's verticies, while 'Bone Morphs' are very easy to create.
+- **Bone Morphs** is an __intermediary__ step to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object:
 ![image](https://user-images.githubusercontent.com/19479648/225810013-18549aab-72e8-4ca4-b21b-ace79b3f79de.png)
-
-
 - A bone morph is simply a way of storing multiple pose bone location/rotation data in a collection.
-- The simplest example I can give is the 'left wink' bone morph-- It is simply a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. Similarily, the 'blink' bone morph is a collection of 4 pose bones being rotated on the Z axis (yup, you guessed it, the left/right upper/lower eyelids).
+- For example, the 'left wink' bone morph-- It is a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. 
 - Bone Morphs can always be converted into shape keys, but it is impossible to convert a shape key back into a bone morph... Meaning, if you want to modify a shape key, you're stuck manually modifying the verticies of a mesh at that point.
-- In order to create the facial animations that can be used across all of FFXIV Characters (that are various different shapes and sizes), I heavily leverage the Bone Morphs concept to do it-- It only works because I have an assumption that _all models within the same races_ have similar face shapes. For example, I assume that all lalafell have all the same massive eye sockets, and all roegadyn have tiny eye sockets. Though this may not always be the case, such as with certain NPC's that are hand-modeled from Square Enix, but as a general rule it seems to work well enough.
+- I heavily leverage the Bone Morphs. It only works because I have an assumption that _all models within the same races_ have similar face shapes. For example, I assume that all lalafell have all the same massive eye sockets, and all roegadyn have tiny eye sockets. As a general rule it seems to work well enough.
 
+The bone morph data for each race is stored in a CSV File that contains a few columns of data:
+- Bone Morph Name
+- Bone Name
+- Location/rotation changes for each bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) )
 
-The bone morph data I created for each race is stored in a CSV File that contains a few columns of data:
-the bone morph name, the bone name, as well location/rotation changes for each bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) ). It is easy enough to read and access the data if you have Excel by pressing on this button:
+It is easy enough to read and access the data if you have Excel by pressing on this button:
 
 ![image](https://user-images.githubusercontent.com/19479648/225806409-b93c9b43-925a-41ef-8ebd-c161952c4f31.png)
 

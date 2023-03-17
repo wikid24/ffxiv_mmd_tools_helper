@@ -505,7 +505,11 @@ Ok, so before getting into the how to change facial expressions, I need to go in
 - When you animate facial expressions in Blender, those shape keys have special names in japanese that are 'mostly' used across all VMD motion files (see the expression chart I provided above).
 - Shape keys are a Blender concept are used for controlling a **mesh's verticies**. Because it is manually manipulating the verticies of a mesh, and verticies are something that cannot be transferred from one model to another model it is almost impossible to create a 'press one button to add all the facial expressions' that will work on a variety of different faces/models/etc., such as with FFXIV model which are a collection of different face shapes/face bones/face sizes etc...
 - While you can create 'Vertex Morphs' (which is really just a special MMD Tools term for 'shape keys'), those are very hard to create in bulk because you're manipulating a mesh's verticies, while 'Bone Morphs' are very easy to create.
-- **Bone Morphs** is an __intermediary__ step (invented by those smart lads who created MMD Tools) to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object.
+- **Bone Morphs** is an __intermediary__ step (invented by those smart lads who created MMD Tools) to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object:
+
+![image](https://user-images.githubusercontent.com/19479648/225810013-18549aab-72e8-4ca4-b21b-ace79b3f79de.png)
+
+
 - A bone morph is simply a way of storing multiple pose bone location/rotation data in a collection.
 - The simplest example I can give is the 'left wink' bone morph-- It is simply a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. Similarily, the 'blink' bone morph is a collection of 4 pose bones being rotated on the Z axis (yup, you guessed it, the left/right upper/lower eyelids).
 - Bone Morphs can always be converted into shape keys, but it is impossible to convert a shape key back into a bone morph... Meaning, if you want to modify a shape key, you're stuck manually modifying the verticies of a mesh at that point.

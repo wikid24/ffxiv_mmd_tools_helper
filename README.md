@@ -521,15 +521,15 @@ Vertex Morphs (shape keys) vs Bone Morphs:
 
 The bone morph data for each race is stored in a CSV File that contains a few columns of data:
 - Bone Morph Name
-- Bone Name
-- Location/rotation changes for each bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) )
+- Pose bone Name
+- Location/rotation changes for each pose bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) )
 
 It is easy enough to read and access the data if you have Excel by pressing on this button:
 
 ![image](https://user-images.githubusercontent.com/19479648/225806409-b93c9b43-925a-41ef-8ebd-c161952c4f31.png)
 
 You can also see these exact same numbers used in MMD Tools if you:
-1) Change the bone facial data to XYZ Euler using this button:
+1) Change the pose bone facial data to XYZ Euler using this button:
 
 ![image](https://user-images.githubusercontent.com/19479648/225806550-ded22bc0-1739-42a0-a568-d776f53e5a12.png)
 

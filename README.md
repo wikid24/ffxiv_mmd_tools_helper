@@ -492,3 +492,19 @@ Last thing to do is attach the hair stem rigid bodies to the head rigid body. Co
 ![image](https://user-images.githubusercontent.com/19479648/225776867-8598f660-e5ab-4c73-804e-7a876f1aebee.png)
 
 You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.
+
+
+ --------------
+ 
+#### Q: I want to add new facial expressions or change the existing facial expressions. How?
+
+A: First thing I would reccommend doing is looking at this [MMD Facial Expression Reference guide](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917) as these are the reference charts I used when creating MMD facial expressions, and these are the "common" facial expressions that VMD motion files used. The facial expressions I created for FFXIV characters were fine-tuned manually (it doesn't use any data from Square Enix) so there is always room for improvement!
+
+Ok, so before getting into the how to change facial expressions, I need to go into some theory discussion on how Facial Expressions work in Blender's MMD Tools:
+- Facial animations are animated using **shape keys** under the **.placeholder** object in Blender
+- Shape keys are a Blender concept are used for controlling a **mesh's verticies**. Because it is manually manipulating the verticies of a mesh, and verticies are something that cannot be transferred from one model to another model it is almost impossible to create a 'press one button to add all the facial expression shape keys' that will work on a variety of different faces/models/etc. 
+- **Bone Morphs** is an __intermediary__ step (invented by those smart lads who created MMD Tools) to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys in the **.placeholder** object.
+- A bone morph is simply a way of storing multiple pose bone location/rotation data in a collection.
+- The simplest example I can give is the 'left wink' bone morph-- It is simply a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. Similarily, the 'blink' bone morph is a collection of 4 pose bones being rotated on the Z axis (yup, you guessed it, the left/right upper/lower eyelids).
+- In order to create the facial animations that can be used across all of FFXIV Characters (that are various different shapes and sizes), I heavily leverage the Bone Morphs concept to do it-- It only works because I have an assumption that _all models within the same races_ have similar face shapes. For example, I assume that all lalafell have all the same massive eyes, and all roegadyn have tiny eyes. Though this may not always be the case, such as with certain NPC's that are hand-modeled from Square Enix.
+

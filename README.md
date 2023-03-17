@@ -515,7 +515,7 @@ Ok, so before getting into the how to change facial expressions, I need to go in
 The bone morph data I created for each race is stored in a CSV File that contains a few columns of data:
 the bone morph name, the bone name, as well location/rotation changes for each bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) ). It is easy enough to read and access the data if you have Excel by pressing on this button:
 
-** insert image **
+![image](https://user-images.githubusercontent.com/19479648/225806298-5ce9ef02-624b-452d-8fce-4e6bef5ec7fa.png)
 
 That being said, if you wanted to add or change the bone morph data, There are a few ways to do it:
 1) You can always modify these files, save it, and then press the 'Generate' button, and then press the 'Morph' button in MMD Tools

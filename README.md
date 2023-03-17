@@ -458,11 +458,17 @@ Now that we have weight painted the bones, we will create the rigid bodies. Go b
 
 ![image](https://user-images.githubusercontent.com/19479648/225774808-187ea52d-2bf1-4036-a653-f60b03cb2849.png)
 
-Configure the shape of the rigid bodies, as well as the parameters (In this case I selected 'capsule', and make sure the collision group is a different from than the skeletion. make sure the rigid body type is 'Physics'.)
+Configure the shape of the rigid bodies, as well as the parameters.
+
+For this particular example I selected:
+- Rigid Body Shape: Capsule
+- Make sure the collision group is a different from than the skeletion (I used '9' because I know it's currently not used by any other rigid body groups)
+- Make sure the collision group mask is selected to **ignore itself** (I set the collision group mask to ignore all rigid bodies from group 9)
+- Make sure the rigid body type is 'Physics'
 
 Here is the menu options that I used:
 
-![image](https://user-images.githubusercontent.com/19479648/225783096-99028e1c-18a7-4e39-ad2d-2c39860bb406.png)
+![image](https://user-images.githubusercontent.com/19479648/225783387-d7f527b9-41a8-4387-bae2-73733136c99d.png)
 
 ![image](https://user-images.githubusercontent.com/19479648/225775248-c6968387-75cd-4da1-b66b-f8c190cc667e.png)
 

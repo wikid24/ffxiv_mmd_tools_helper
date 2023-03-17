@@ -508,6 +508,7 @@ Ok, so before getting into the how to change facial expressions, I need to go in
 - **Bone Morphs** is an __intermediary__ step (invented by those smart lads who created MMD Tools) to creating shape keys. It allows someone in Blender to manipulate a bone's location & rotation data. When you press this 'Morph' button in MMD Tools, those Bone Morphs are then copied and converted into shape keys that are stored in the **.placeholder** object.
 - A bone morph is simply a way of storing multiple pose bone location/rotation data in a collection.
 - The simplest example I can give is the 'left wink' bone morph-- It is simply a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. Similarily, the 'blink' bone morph is a collection of 4 pose bones being rotated on the Z axis (yup, you guessed it, the left/right upper/lower eyelids).
+- Bone Morphs can always be converted into shape keys, but it is impossible to convert a shape key back into a bone morph... Meaning, if you want to modify a shape key, you're stuck manually modifying the verticies of a mesh at that point.
 - In order to create the facial animations that can be used across all of FFXIV Characters (that are various different shapes and sizes), I heavily leverage the Bone Morphs concept to do it-- It only works because I have an assumption that _all models within the same races_ have similar face shapes. For example, I assume that all lalafell have all the same massive eye sockets, and all roegadyn have tiny eye sockets. Though this may not always be the case, such as with certain NPC's that are hand-modeled from Square Enix, but as a general rule it seems to work well enough.
 
 
@@ -517,5 +518,5 @@ the bone morph name, the bone name, as well location/rotation changes for each b
 ** insert image **
 
 That being said, if you wanted to add or change the bone morph data, There are a few ways to do it:
-1) You can always modify these files, save it, and then press the 'Generate' button 
-2) Manually do it via MMD Tools
+1) You can always modify these files, save it, and then press the 'Generate' button, and then press the 'Morph' button in MMD Tools
+3) Manually do it via MMD Tools using the data 

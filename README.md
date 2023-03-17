@@ -215,7 +215,7 @@ Your character's **face** will now be animated.
 - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
 - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
 - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
--[There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
+- [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
 
 
 --------------

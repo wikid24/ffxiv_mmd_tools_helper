@@ -462,10 +462,9 @@ Configure the shape of the rigid bodies, as well as the parameters (In this case
 
 Here is the menu options that I used:
 
-![image](https://user-images.githubusercontent.com/19479648/225775093-f137c2ec-6414-4949-b961-cbe5ca15ce4f.png)
+![image](https://user-images.githubusercontent.com/19479648/225783096-99028e1c-18a7-4e39-ad2d-2c39860bb406.png)
 
 ![image](https://user-images.githubusercontent.com/19479648/225775248-c6968387-75cd-4da1-b66b-f8c190cc667e.png)
-
 
 Your rigid bodies should now be configured. You can always change the settings later using the 'Bulk Apply'/'Bone Chain'/'All Bone Chain' options in the FFXIV MMD Tools Rigid Bodies panel.
 

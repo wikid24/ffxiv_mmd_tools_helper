@@ -509,3 +509,13 @@ Ok, so before getting into the how to change facial expressions, I need to go in
 - A bone morph is simply a way of storing multiple pose bone location/rotation data in a collection.
 - The simplest example I can give is the 'left wink' bone morph-- It is simply a collection of two pose bones, the 'left upper eyelid' and 'left lower eyelid' being rotated on the Z axis from the rest position. Similarily, the 'blink' bone morph is a collection of 4 pose bones being rotated on the Z axis (yup, you guessed it, the left/right upper/lower eyelids).
 - In order to create the facial animations that can be used across all of FFXIV Characters (that are various different shapes and sizes), I heavily leverage the Bone Morphs concept to do it-- It only works because I have an assumption that _all models within the same races_ have similar face shapes. For example, I assume that all lalafell have all the same massive eye sockets, and all roegadyn have tiny eye sockets. Though this may not always be the case, such as with certain NPC's that are hand-modeled from Square Enix, but as a general rule it seems to work well enough.
+
+
+The bone morph data I created for each race is stored in a CSV File that contains a few columns of data:
+the bone morph name, the bone name, as well location/rotation changes for each bone in XYZ Euler format ( *not* in 'Quaternion' because 'Quaternion' sucks :) ). It is easy enough to read and access the data if you have Excel by pressing on this button:
+
+** insert image **
+
+That being said, if you wanted to add or change the bone morph data, There are a few ways to do it:
+1) You can always modify these files, save it, and then press the 'Generate' button 
+2) Manually do it via MMD Tools

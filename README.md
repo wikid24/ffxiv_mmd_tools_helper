@@ -411,7 +411,7 @@ A: There are a few ways to do it, and depending on the method some are easier th
 
 For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtube.com/watch?v=f9LA6_XnFIg) as it is very easy to use. But only if you are staying in Blender as this will not work if you want to export to PMX format.
 
-I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. 
+I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
 
 In general these are the high-level steps required:
 1) Create the Bones on top of the the mesh you would like to apply physics to

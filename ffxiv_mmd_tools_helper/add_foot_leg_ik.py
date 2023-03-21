@@ -43,6 +43,7 @@ def clear_IK(context):
 	IK_target_bones = []
 	IK_target_tip_bones = []
 	bpy.context.view_layer.objects.active = get_armature()
+	armature = get_armature()
 	bpy.ops.object.mode_set(mode='POSE')
 	english = ["knee_L", "knee_R", "ankle_L", "ankle_R", "toe_L", "toe_R"]
 	japanese = ["左ひざ", "右ひざ", "左足首", "右足首", "左つま先", "右つま先"]
@@ -65,8 +66,8 @@ def clear_IK(context):
 	bones_to_be_deleted = set(IK_target_bones + IK_target_tip_bones)
 	print("bones to be deleted = ", bones_to_be_deleted)
 	bpy.ops.object.mode_set(mode='EDIT')
-	for b in bones_to_be_deleted:
-		edit_bones.remove(edit_bones[b])
+	#for b in bones_to_be_deleted:
+		#armature.data.edit_bones.remove(edit_bones[b])
 	bpy.ops.object.mode_set(mode='POSE')
 	for b in bpy.context.active_object.pose.bones.keys():
 		if b in leg_foot_bones:

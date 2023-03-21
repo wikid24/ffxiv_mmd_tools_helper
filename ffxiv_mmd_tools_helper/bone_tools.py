@@ -42,12 +42,22 @@ def create_ik_constraint(bone_name, subtarget, chain_count, use_tail, iterations
 
 	bone = bpy.context.object.pose.bones[bone_name]
 
+	"""
 	bone.constraints.new("IK")
 	bone.constraints["IK"].target = bpy.context.active_object
 	bone.constraints["IK"].subtarget = subtarget
 	bone.constraints["IK"].chain_count = chain_count
 	bone.constraints["IK"].use_tail = use_tail
 	bone.constraints["IK"].iterations = iterations
+
+	"""
+
+	ik_const = bone.constraints.new("IK")
+	ik_const.target = bpy.context.active_object
+	ik_const.subtarget = subtarget
+	ik_const.chain_count = chain_count
+	ik_const.use_tail = use_tail
+	ik_const.iterations = iterations
 
 	if ik_min_x is not None:
 		bone.ik_min_x = ik_min_x
@@ -66,6 +76,7 @@ def create_ik_constraint(bone_name, subtarget, chain_count, use_tail, iterations
 def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_limit_z,min_x,max_x,min_y,max_y,min_z,max_z,owner_space):
 
 		bone = bpy.context.object.pose.bones[bone_name]
+		"""
 		bone.constraints.new("LIMIT_ROTATION")
 		bone.constraints["Limit Rotation"].use_limit_x = use_limit_x
 		bone.constraints["Limit Rotation"].use_limit_y = use_limit_y
@@ -78,6 +89,21 @@ def create_MMD_limit_rotation_constraint(bone_name,use_limit_x,use_limit_y,use_l
 		bone.constraints["Limit Rotation"].max_z = max_z
 		bone.constraints["Limit Rotation"].owner_space = owner_space
 		bone.constraints["Limit Rotation"].name = "mmd_ik_limit_override"
+		"""
+
+		limit_rot_const = bone.constraints.new("LIMIT_ROTATION")
+		limit_rot_const.use_limit_x = use_limit_x
+		limit_rot_const.use_limit_y = use_limit_y
+		limit_rot_const.use_limit_z = use_limit_z
+		limit_rot_const.min_x = min_x
+		limit_rot_const.max_x = max_x
+		limit_rot_const.min_y = min_y
+		limit_rot_const.max_y = max_y
+		limit_rot_const.min_z = min_z
+		limit_rot_const.max_z = max_z
+		limit_rot_const.owner_space = owner_space
+		limit_rot_const.name = "mmd_ik_limit_override"
+
 
 		#fixes axis issue on bone roll
 		bpy.ops.object.mode_set(mode='EDIT')

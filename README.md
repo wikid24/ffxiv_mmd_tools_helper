@@ -113,7 +113,7 @@ Credits:
 
 # How to Install
 
- - Before you install, make sure you have all the [prerequisites installed first](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#in-order-to-use-this-tool-you-need)
+ - Before you install, make sure you have all the [prerequisites installed first](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#in-order-to-use-this-tool-you-need)
  - Download the [latest release package](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases).zip
  - Go to Edit -> Preferences -> Add-ons -> Install and select the zip file you downloaded
   ![image](https://user-images.githubusercontent.com/19479648/215303847-8a5b34de-b8be-4070-9ab7-dc51ada3fc10.png)

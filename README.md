@@ -201,7 +201,7 @@ Your character's **face** will now be animated.
 
 19) In the **Scene Setup** panel -> Click on **Rigid Body Physics:** -> **Update World**
 
-![image](https://user-images.githubusercontent.com/19479648/227046852-5152b411-3b17-492c-9cc3-fc0e116396e5.png)
+![image](https://user-images.githubusercontent.com/19479648/227049123-5c62d250-ece8-4c7f-b11b-de4beb3153f7.png)
 
 
 20) Press play to watch your character dance. All done!! :D

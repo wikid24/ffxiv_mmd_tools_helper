@@ -142,8 +142,8 @@ On the **FFXIV MMD** tab
 ![image](https://user-images.githubusercontent.com/19479648/225117950-33924dbb-8d9d-4198-8053-fbd744618704.png)
 
 
-6) With your model selected, go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
-7) With your model selected, go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
+6) With your model's bones(read:armature) selected, go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
+7) With your model's bones(read:armature) selected, go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
 
 ![image](https://user-images.githubusercontent.com/19479648/225118718-6baf26b6-6b6f-497d-9b08-50c7cfe56458.png)
 

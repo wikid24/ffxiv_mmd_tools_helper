@@ -222,6 +222,7 @@ Your character's **face** will now be animated.
 - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
 - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
 - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
+- [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
 
 
 --------------
@@ -565,3 +566,34 @@ By default the margin will be set to '5'. Margin is the starting MMD animation f
 To fix this, upon importing a VMD motion file, set the margin to '30' or higher. Using multiples of **30** are ideal, as all VMD animations (well, all the keyframes anyway) are animated at 30 fps. What this will do is give Blender more time to 'safely' move a model with physics on so that they can settle easily before the VMD animation starts on frame 30. 
 
 And if you're using a multiple of 30 it is easy to tell that the MMD animation starts on a specific second. For example if I set the margin to 120, and I render out a video at 30 fps, I can easily tell that I need to sync the music to the video on the 4 second mark.
+
+--------------
+ 
+#### Q: Why are the leg meshes not following the leg bones? What kind of witchcraft is this??
+
+![image](https://user-images.githubusercontent.com/19479648/227060435-01edd03b-e899-4b10-a80c-dbacea463786.png)
+
+
+A: There are certain 'special' bones that were invented due to how Inverse Kinematics work in MMD. Inverse Kinematics are great as they allow you to animate a whole leg by using a single 'controller' IK bone, but once you apply them, it means you can no longer physically move the 'controlled' bones (and therefore the mesh) _directly_ anymore. 
+
+Someone in the MMD world invented these 'special' bones that allows you to move a mesh _even after_ IK was applied to the bones. This is so that if IK is not achieving the desired leg movement, you can always apply a slight nudge here or there in the right direction by adjusting these special bones.
+
+These bones (at least, in this plugin) are called:
+- waist_cancel_l
+- waist_cancel_r
+- leg_l_D
+- leg_r_D
+- knee_l_D
+- knee_r_D
+- knee_2_l_D
+- knee_2_r_D
+- toe_l_EX
+- toe_r_EX
+
+The problem is that sometimes these special bones tend to cause more issues on some VMD motion files than others. I've found (in at least two VMD motion files) that the culprit was **waist_cancel_l** and **waist_cancel_r**. To adjust these, you can turn down the 'influence' of these special bones to the mesh or turn it off completely. 
+
+To do this, Select the Armature, go to 'pose' mode, then find the bones special bones you want to adjust (for this example we are using **waist_cancel_l** and **waist_cancel_r**) bones. Select the bone, go to 'bone constraints' and turn the 'Influence' down to 0.
+
+![image](https://user-images.githubusercontent.com/19479648/227062268-e26b18f3-49bd-4fd9-8342-63ded2d51df8.png)
+
+All fixed :)

@@ -137,17 +137,17 @@ On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
 2) Click on **Initialize MMD Structure**
 3) With your model's bones (read: armature) selected, on the **Language and Translation** panel, click on "**Mass Rename Bones**" (from FFXIV to MMD English)
-4) With your model's bones (read: armature) selected, on the **Bones and IK** panel, select "Run steps 1 to 9" -> **Run**
+4) On the **Bones and IK** panel, select "Run steps 1 to 9" -> **Run**
 
 ![image](https://user-images.githubusercontent.com/19479648/225116978-fc9d2dbd-c3b4-4d27-b2a2-97929b9d785c.png)
 
-5) With your model's bones(read:armature) selected, on the **Bones and IK** panel, click on **Leg/foot IK**
+5) On the **Bones and IK** panel, click on **Leg/foot IK**
 
 ![image](https://user-images.githubusercontent.com/19479648/225117950-33924dbb-8d9d-4198-8053-fbd744618704.png)
 
 
-6) With your model's bones (read: armature) selected, go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
-7) With your model's bones (read: armature) selected, go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
+6) Go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
+7) Go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
 
 ![image](https://user-images.githubusercontent.com/19479648/225118718-6baf26b6-6b6f-497d-9b08-50c7cfe56458.png)
 

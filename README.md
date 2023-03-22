@@ -199,7 +199,7 @@ Your character's **body** will now be animated.
 
 Your character's **face** will now be animated.
 
-19) In the **Scene Setup** panel -> Click on **Rigid Bodies: ** -> **Update World**
+19) In the **Scene Setup** panel -> Click on **Rigid Body Physics:** -> **Update World**
 
 ![image](https://user-images.githubusercontent.com/19479648/227046852-5152b411-3b17-492c-9cc3-fc0e116396e5.png)
 

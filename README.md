@@ -222,7 +222,7 @@ Your character's **face** will now be animated.
 - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
 - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
 - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
-- [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/edit/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
+- [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
 
 
 --------------

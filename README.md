@@ -550,3 +550,17 @@ That being said, if you wanted to add or change the bone morph data, There are a
 
 ![image](https://user-images.githubusercontent.com/19479648/225808828-b92bd39a-738e-4e10-9da4-8684b06bffbe.png)
 
+
+ --------------
+ 
+#### Q: When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs and skirt to warp in weird ways! How to fix?
+
+A: When physics are applied to any animations in blender, the time that it takes to move from one frame to the next frame is important. A lot of VMD motion animation files start by transporting a charater to a specified spot _very quickly_. This is controlled by the 'margin' setting when importing an animation. 
+
+![image](https://user-images.githubusercontent.com/19479648/227057740-437cae34-eef4-48c9-8307-65142d0cd10d.png)
+
+By default the margin will be set to '5'. Margin is the starting MMD animation frame offset from frame 0. Meaning, if frame 0 is the 'rest' position for your model, and 5 is the MMD animation 'start' frame, this gives Blender exactly 5 frames to move a model, and transport the physics along with it... Which causes physics to warp your model in weird ways.
+
+To fix this, upon importing a VMD motion file, set the margin to '30' or higher. Using multiples of **30** are ideal, as all VMD animations (well, all the keyframes anyway) are animated at 30 fps. What this will do is give Blender more time to 'safely' move a model with physics on so that they can settle easily before the VMD animation starts on frame 30. 
+
+And if you're using a multiple of 30 it is easy to tell that the MMD animation starts on a specific second. For example if I set the margin to 120, and I render out a video at 30 fps, I can easily tell that I need to sync the music to the video on the 4 second mark.

@@ -157,7 +157,9 @@ On the **FFXIV MMD** tab
 ![image](https://user-images.githubusercontent.com/19479648/225119958-7208b241-9cdc-4753-9aec-9997c717e633.png)
 
 
-Your character is now rigged and ready for animating using MMD Tools!
+Your character is now rigged and ready for animating using MMD Tools! 
+
+I may suggest saving your Blender file at this point so you can easily switch between different motion files in Part 2 below.
 
 --------------
 

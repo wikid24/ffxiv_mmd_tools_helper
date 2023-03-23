@@ -223,6 +223,7 @@ Your character's **face** will now be animated.
 - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
 - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
 - [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
+- Physics is turned on -- Why is my character's skirt/tail going through the floor?(https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
 
 
 --------------
@@ -597,3 +598,53 @@ To do this, Select the Armature, go to 'pose' mode, then find the bones special 
 ![image](https://user-images.githubusercontent.com/19479648/227062268-e26b18f3-49bd-4fd9-8342-63ded2d51df8.png)
 
 All fixed :)
+
+
+--------------
+ 
+#### Q: Physics is turned on -- Why is my character's skirt/tail going through the floor?
+
+![image](https://user-images.githubusercontent.com/19479648/227067679-e5f976fb-c78b-4faa-98a5-717759900b46.png)
+
+
+A: The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing. 
+
+Done reading? Ok. So you have 'collision-based' rigid bodies, and 'physics-based' rigid bodies. All of the skirt/tail rigid bodies are 'physics-based'. The issue is that they have nothing to collide _into_. Right now, the tail rigids pass right through our imaginary floor. 
+
+To fix this, we need to create a 'collision-based' rigid body that simulates an actual floor for the 'physics-based' rigid bodies to interact with. 
+
+The best bone to use to simulate a floor is the 'root' bone, since it naturally should be directly below your model at all times, and also it's already on the xyz 0,0,0 point so we don't need to move it around anywhere. 
+
+Anyway, the steps:
+1) Turn Physics OFF.
+2) Go to 'edit' mode, then select the 'root' bone. 
+3) Click on **Rigid Body Create** -> **From Selected Bones**
+
+![image](https://user-images.githubusercontent.com/19479648/227069077-8e0e5af3-56e5-41bb-ac61-9ca2c8684319.png)
+
+4) On the rigid body settings, change the Shape to 'Box'
+
+![image](https://user-images.githubusercontent.com/19479648/227069556-4c3eb09b-2e78-4356-b84d-c6dba9b9998c.png)
+
+5) With the Rigid Body selected, Under **Rigid Body Transform** -> Select **Bulk Apply**
+6) Change the following settings and press 'OK':
+  - Location Z to 0
+  - Size Z to 0
+  - Size Y and X to anything you want, as long as it's below your model at all times
+
+![image](https://user-images.githubusercontent.com/19479648/227070532-354f0073-583c-407c-ae8b-da74bbe39836.png)
+
+
+If done properly, should now have something that looks like this:
+
+![image](https://user-images.githubusercontent.com/19479648/227070606-6c3501ff-9fd3-4785-a741-530fca1ed728.png)
+
+
+You're all done. Now Turn Physics ON again and observe that your physics-based rigid bodies will no longer pass through the imaginary floor (as it has a real collision-based rigid body to interact with now).
+
+![image](https://user-images.githubusercontent.com/19479648/227070959-1899e16c-0f1f-4476-84b1-9cbc94415eec.png)
+
+If you notice any weird issues such as the floor being too 'sticky' when the tail or skirt collide with it, you can try setting the 'friction' parameter to 0 on the floor rigid body to see if that changes anything.
+
+![image](https://user-images.githubusercontent.com/19479648/227071122-a991e50d-8867-4985-91a9-35c5003c573e.png)
+

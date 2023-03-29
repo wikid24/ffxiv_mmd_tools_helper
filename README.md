@@ -212,19 +212,25 @@ Your character's **face** will now be animated.
 --------------
 # Frequently Asked Questions:
 
-- [How do I get better physics working on the skirt? The default one sucks.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-how-do-i-get-better-physics-working-on-the-skirt-the-default-one-sucks)
-- [My character's skirt isn't complete all around, there are cuts in-between. How do I fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-characters-skirt-isnt-complete-all-around-there-are-cuts-in-between-how-do-i-fix)
-- [I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-am-using-the-new-skirt-method-but-i-still-get-clipping-on-the-legs-with-the-skirt-what-gives)
-- [Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-can-i-get-rid-all-these-extra-bones-other-viera-ear-bonesmiquote-ears-on-a-non-miqote-character-equipment-attachment-points-that-are-not-used-etc-that-my-character-does-not-use)
-- [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
-- [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
-- [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
-- [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
-- [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
-- [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
-- [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
-- [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
-- [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
+- Animation:
+    - [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
+    - [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
+
+- Physics:
+    - [How do I get better physics working on the skirt? The default one sucks.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-how-do-i-get-better-physics-working-on-the-skirt-the-default-one-sucks)
+    - [My character's skirt isn't complete all around, there are cuts in-between. How do I fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-characters-skirt-isnt-complete-all-around-there-are-cuts-in-between-how-do-i-fix)
+    - [I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-am-using-the-new-skirt-method-but-i-still-get-clipping-on-the-legs-with-the-skirt-what-gives)
+    - [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
+    - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
+    - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
+
+- Other/Miscellaneous:
+
+    - [Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-can-i-get-rid-all-these-extra-bones-other-viera-ear-bonesmiquote-ears-on-a-non-miqote-character-equipment-attachment-points-that-are-not-used-etc-that-my-character-does-not-use)
+    - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
+    - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
+    - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
+    - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
 
 
 --------------

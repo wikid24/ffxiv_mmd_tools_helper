@@ -5,7 +5,7 @@ Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game as it is a full conversion to the MMD model structure (which is not compatible with FFXIV). If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit)
 
-For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-install), simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#frequently-asked-questions) below. 
+For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install), simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
 
 While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage MMD Tools.
 
@@ -116,7 +116,7 @@ Credits:
 
 # How to Install
 
- - Before you install, make sure you have all the [prerequisites installed first](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#in-order-to-use-this-tool-you-need)
+ - Before you install, make sure you have all the [prerequisites installed first](https://github.com/wikid24/ffxiv_mmd_tools_helper#in-order-to-use-this-tool-you-need)
  - Download the [latest release package](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases).zip
  - Go to Edit -> Preferences -> Add-ons -> Install and select the zip file you downloaded
 
@@ -213,24 +213,24 @@ Your character's **face** will now be animated.
 # Frequently Asked Questions:
 
 - Animation:
-    - [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
-    - [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
+    - [When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this)
+    - [Why are the leg meshes not following the leg bones? What kind of witchcraft is this??](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)
 
 - Physics:
-    - [How do I get better physics working on the skirt? The default one sucks.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-how-do-i-get-better-physics-working-on-the-skirt-the-default-one-sucks)
-    - [My character's skirt isn't complete all around, there are cuts in-between. How do I fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-characters-skirt-isnt-complete-all-around-there-are-cuts-in-between-how-do-i-fix)
-    - [I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-am-using-the-new-skirt-method-but-i-still-get-clipping-on-the-legs-with-the-skirt-what-gives)
-    - [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
-    - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
-    - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
+    - [How do I get better physics working on the skirt? The default one sucks.](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-how-do-i-get-better-physics-working-on-the-skirt-the-default-one-sucks)
+    - [My character's skirt isn't complete all around, there are cuts in-between. How do I fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-my-characters-skirt-isnt-complete-all-around-there-are-cuts-in-between-how-do-i-fix)
+    - [I am using the new skirt method but I still get clipping on the legs with the skirt. What gives?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-am-using-the-new-skirt-method-but-i-still-get-clipping-on-the-legs-with-the-skirt-what-gives)
+    - [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
+    - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
+    - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
 
 - Other/Miscellaneous:
 
-    - [Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-can-i-get-rid-all-these-extra-bones-other-viera-ear-bonesmiquote-ears-on-a-non-miqote-character-equipment-attachment-points-that-are-not-used-etc-that-my-character-does-not-use)
-    - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
-    - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
-    - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
-    - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
+    - [Can I get rid all these extra bones (other viera ear bones,miquote ears on a non-miqote character, equipment attachment points that are not used, etc.) that my character does not use?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-can-i-get-rid-all-these-extra-bones-other-viera-ear-bonesmiquote-ears-on-a-non-miqote-character-equipment-attachment-points-that-are-not-used-etc-that-my-character-does-not-use)
+    - [Why are the textures all weird and black? They don't look like this in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-are-the-textures-all-weird-and-black-they-dont-look-like-this-in-game)
+    - [I want to export my model to PMX Format. How do I do that?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)
+    - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
+    - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
 
 
 --------------
@@ -239,7 +239,7 @@ Your character's **face** will now be animated.
 
 A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
 
-In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_. 
+In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_. 
 
 Note: Blender tends to crash when there is anything related to physics involved. SAVE OFTEN, especially before you press 'Play' to animate a model.
 
@@ -317,7 +317,7 @@ Perhaps maybe a visual explanation is better for the differences between each to
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
 
-You can see on [Sample Video 1](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-1-thancred--sadu---skirt-physics-testing) that there is clipping on Thancred's legs through the skirt (I did leave this in the video intentionally). This is because the Rigid bodies with the skirt are colliding with the rigid bodies on the legs, unfortunately because the leg's rigid bodies are smaller than the leg's mesh, it is causing clipping to occurr.
+You can see on [Sample Video 1](https://github.com/wikid24/ffxiv_mmd_tools_helper#sample-video-1-thancred--sadu---skirt-physics-testing) that there is clipping on Thancred's legs through the skirt (I did leave this in the video intentionally). This is because the Rigid bodies with the skirt are colliding with the rigid bodies on the legs, unfortunately because the leg's rigid bodies are smaller than the leg's mesh, it is causing clipping to occurr.
 
 In this example below, increase the rigid body width/radius/size until it is __slightly__ larger than mesh using these tools (I'd use the 'Bulk Apply' tool in this specific example):
 ![image](https://user-images.githubusercontent.com/19479648/225213419-a2e040ad-0db0-415f-bf95-663411398a9d.png)
@@ -333,13 +333,13 @@ A: Yes you can get rid of them! In the **Miscellaneous Tools** panel, run these 
 
 ![image](https://user-images.githubusercontent.com/19479648/225139856-80f9efc0-5ec6-455a-8be0-aef79c5da27a.png)
 
-In general it is safer to run this step immediately after Step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) (before starting to manipulate all the bones on the model).
+In general it is safer to run this step immediately after Step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) (before starting to manipulate all the bones on the model).
 
 --------------
 
 #### Q: When I play an animation, the arms don't line up __exactly__ to the animation or clip/collide into the head/body/other hand at certain parts. How do I fix this?
 
-A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the FFXIV bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow): 
+A: The FFXIV bone structure isn't _exactly_ lined up with a standard MMD model's A-Pose (the 'rest pose'). In general, FFXIV shoulders / arms / forearms / wrists are longer than a regular MMD model and it requires changes to the FFXIV bone structure. I've implemented an 'experimental' feature that adjusts the shoulder / arm / forearm / wrists positions. You'd need to run this step immediately after step 4 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow): 
 
 ![image](https://user-images.githubusercontent.com/19479648/225142650-e640c4f8-96a3-48fc-bda8-10f5d1bac701.png)
 
@@ -355,7 +355,7 @@ A: Textools unfortunately doesn't export ALL of the texture files needed to rend
 
 Using Textools, you'd need to individually export each affected body part's normal/multi/colorset texture(read: DDS files) and use this [Blender Plugin ](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) & [video guide](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) to fix it. 
 
-You'll need to perform this immediately after step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow). On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
+You'll need to perform this immediately after step 1 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow). On step 2, __uncheck__ this box: ![image](https://user-images.githubusercontent.com/19479648/225148216-89bd0dbc-dc54-47b8-b074-47a24ec352ce.png)
  
  --------------
  
@@ -363,11 +363,11 @@ You'll need to perform this immediately after step 1 in the [conversion guide](h
 
 A: Everything that is needed to export to PMX format is included in this plugin. 
 
-Immediately after step 4 on the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), run this command:
+Immediately after step 4 on the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), run this command:
 
 ![image](https://user-images.githubusercontent.com/19479648/225155767-6f97c683-edb0-44e3-b17a-9cb35eba3293.png)
 
-Next, after step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), follow these steps:
+Next, after step 9 in the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow), follow these steps:
 
 1) On the **Export MMD Preparation** Panel -> Click on **Add Display Panels** 
 
@@ -435,9 +435,9 @@ In general these are the high-level steps required:
 4) Create the joints between the rigid bodies and configure the joint parameters
 5) Create a joint to attach the rigid body stem to a 'collision-based' rigid body so it stays attached to your model's skeleton
 
-You would want to do this _after step 7_ on the [Conversion Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
+You would want to do this _after step 7_ on the [Conversion Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 
-In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#sample-video-3-random-wol---manually-created-hair-physics-testing).
+In this example we will go over creating physics for a FFXIV model's hair pony tails, we will use this Au Ra model found in [Sample Video 3](https://github.com/wikid24/ffxiv_mmd_tools_helper#sample-video-3-random-wol---manually-created-hair-physics-testing).
 
 First thing I will say is make sure **Physics is turned OFF** whenever you are changing/adding bones/rigid bodies/joints on anything related to physics. Once you are done making changes, SAVE OFTEN (as Blender likes to crash a lot whenever Physics are involved) and then you can turn Physics ON again.
 

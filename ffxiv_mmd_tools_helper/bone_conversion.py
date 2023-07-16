@@ -25,15 +25,18 @@ def correct_root_center():
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 		# if the "center" bone has a vertex group, it is renamed to "lower body"
-		#mesh_objects = model.find_MMD_MeshesList(bpy.context.active_object)
-		#for o in mesh_objects:
-		#	if "center" in o.vertex_groups.keys():
-		#		if "center" in bpy.context.active_object.data.bones.keys():
-		#			bpy.context.active_object.data.bones["center"].name = "lower body"
-		#			print("Renamed center bone to lower body bone.")
-		#			bpy.ops.object.mode_set(mode='EDIT')
-		#			bpy.context.active_object.data.edit_bones["lower body"].tail.z = 0.5 * (bpy.context.active_object.data.edit_bones["leg_L"].head.z + bpy.context.active_object.data.edit_bones["leg_R"].head.z)
-		#bpy.ops.object.mode_set(mode='OBJECT')
+		mesh_objects = model.find_MMD_MeshesList(bpy.context.active_object)
+		if mesh_objects is None:
+			mesh_objects = model.findMeshesList(bpy.context.active_object)
+		if mesh_objects is not None:
+			for o in mesh_objects:
+				if "center" in o.vertex_groups.keys():
+					if "center" in bpy.context.active_object.data.bones.keys():
+						bpy.context.active_object.data.bones["center"].name = "lower body"
+						print("Renamed center bone to lower body bone.")
+						bpy.ops.object.mode_set(mode='EDIT')
+						bpy.context.active_object.data.edit_bones["lower body"].tail.z = 0.5 * (bpy.context.active_object.data.edit_bones["leg_L"].head.z + bpy.context.active_object.data.edit_bones["leg_R"].head.z)
+			bpy.ops.object.mode_set(mode='OBJECT')
 
 		# if there is no "center" bone in the armature, a center bone is added
 		if "center" not in bpy.context.active_object.data.bones.keys():

@@ -189,9 +189,9 @@ def get_joints_from_rigid_body(rigid_body_obj):
 
 		if joints_obj:
 			for joint in joints_obj.children:
-				if joint.rigid_body_constraint.object1.name == rigid_body_obj.name:
+				if joint.rigid_body_constraint.object1 and joint.rigid_body_constraint.object1.name == rigid_body_obj.name:
 					rigid_body_joints.append(joint)
-				if joint.rigid_body_constraint.object2.name == rigid_body_obj.name:
+				if joint.rigid_body_constraint.object2 and joint.rigid_body_constraint.object2.name == rigid_body_obj.name:
 					rigid_body_joints.append(joint)
 
 		return rigid_body_joints

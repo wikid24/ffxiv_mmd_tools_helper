@@ -45,7 +45,7 @@ Credits:
 - Video/model conversion by me (wikid24)
 - Model by Square Enix
 - MMD Facial/Body Motion by かりんとう - https://www.nicovideo.jp/watch/sm33513391
-- Song - Elephant (Ignite) by Funkin Matt
+- Song - Elephant (Ignite) by Funkin Matt - 
 
 
 #### Sample Video 4: Random WOL vs Aura WOL - Importing Kugane
@@ -60,6 +60,7 @@ Credits:
 - Model by Square Enix
 - Background by Square Enix - https://www.nexusmods.com/finalfantasy14/mods/1709
 - MMD Facial/Body Motion by mahlazer - https://www.youtube.com/watch?v=HuzxtZj-AYI
+- Song - U Got That - Halogen (Little V cover) - https://www.youtube.com/watch?v=j8xoV-v1Yl0&t=0s
 
 ------------
 

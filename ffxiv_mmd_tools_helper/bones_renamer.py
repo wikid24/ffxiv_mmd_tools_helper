@@ -119,6 +119,7 @@ class MassBonesRenamer(bpy.types.Operator):
 	, ('valvebiped', 'ValveBiped', 'ValveBiped bone names')\
 	, ('iClone7', 'iClone7', 'iClone7 bone names')\
 	,('ffxiv', 'FFXIV', 'FFXIV bone names')\
+	,('yakuza', 'Yakuza', 'Yakuza Series bone names')\
 	,('autorig_pro', 'AutoRig Pro', 'AutoRig Pro bone names')\
 	,('mixamo', 'Adobe Mixamo', 'Adobe Mixamo bone names')\
 	], name = "From", default = 'ffxiv')
@@ -146,6 +147,7 @@ class MassBonesRenamer(bpy.types.Operator):
 	, ('valvebiped', 'ValveBiped', 'ValveBiped bone names')\
 	, ('iClone7', 'iClone7', 'iClone7 bone names')\
 	,('ffxiv', 'FFXIV', 'FFXIV bone names')\
+	,('yakuza', 'Yakuza', 'Yakuza Series bone names')\
 	,('autorig_pro', 'AutoRig Pro', 'AutoRig Pro bone names')\
 	,('mixamo', 'Adobe Mixamo', 'Adobe Mixamo bone names')\
 	], name = "To", default = 'mmd_english')

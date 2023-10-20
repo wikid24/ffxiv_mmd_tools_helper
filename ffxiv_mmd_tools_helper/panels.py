@@ -389,7 +389,7 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 	bl_label = "Camera and Lighting"
 	bl_idname = "OBJECT_PT_CameraLightingPanel_MTH"
 	bl_space_type = "VIEW_3D"
-	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"value
 	bl_category = "FFXIV MMD"
 	bl_options = {'DEFAULT_CLOSED'}
 	bl_order = 7
@@ -425,7 +425,28 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd.select_materials_folder", text="Apply Colorset")
 		row = layout.row()
-		row.prop(context.active_object, "active_material",text="Material")
+		if context.active_object:
+			row.prop(context.active_object, "active_material",text="Material")
+		row = layout.row()
+		row.operator("ffxiv_mmd.apply_glossy_shader", text="Apply Glossy Shader")
+		row = layout.row()
+		if context.active_object.type == 'MESH':
+			active_object = bpy.context.active_object
+			active_material = active_object.active_material if active_object else None
+
+			if active_material and active_material.use_nodes:
+				node_tree = active_material.node_tree
+				glossy_bsdf_node = None
+
+				# Find the Glossy BSDF node
+				for node in node_tree.nodes:
+					if node.type == 'BSDF_GLOSSY':
+						glossy_bsdf_node = node
+
+				if glossy_bsdf_node:
+					row.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossiness")
+
+
 		
 		
 		"""

@@ -377,6 +377,8 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='RIGID_BODY')
 		row = layout.row()
 		row.operator("ffxiv_mmd.generate_skirt_joints", text = "Generate Skirt Joints",icon='RIGID_BODY_CONSTRAINT')
+		row = layout.row()
+		row.template_list("MESH_UL_vgroups", "list", context.object, "vertex_groups", context.object.vertex_groups, "active_index")
 		
 		
 
@@ -402,12 +404,12 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd.background_color_picker", text = "MMD background color picker", icon="COLOR")
 		layout.prop(context.scene, "BackgroundColor")
 		row = layout.row()
-
+"""
 @register_wrap
 class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 	#User can modify the rendering of toon texture color
 	bl_idname = "OBJECT_PT_ShadingAndToonsPanel_MTH"
-	bl_label = "Shading and Toons"
+	bl_label = "Shaders"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "FFXIV MMD"
@@ -417,19 +419,61 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
+		row.label(text="Texture Folder:")
+		row = layout.row()
+		row.prop(context.scene,"shaders_texture_folder", text = "")
+		row = layout.row()
+		row.operator("ffxiv_mmd.select_materials_folder", text="Apply Colorset")
+		row = layout.row()
+		row.prop(context.active_object, "active_material",text="Material")
+		
+		
+		"""
+		row = layout.row()
+		row.operator("ffxiv_mmd.fix_normal_maps", text="Fix Normal Maps")
+		
+		row = layout.row()
+		row.label(text="FFXIV Colorset Editor", icon="MATERIAL")
+		row = layout.row()
+		if(context.object.active_material):
+			if(context.object.active_material.is_colorset):
+				normal = context.object.active_material.node_tree.nodes['Normal']
+				multi = context.object.active_material.node_tree.nodes['Multi']
+				normal_closest = context.object.active_material.node_tree.nodes['Normal.001']
+				
+				row = layout.row()
+				row.operator("import.colorsetdds")
+				row.operator("export.colorsetdds")
+				layout.label(text="Multi Map")
+				row = layout.row()
+				row.template_ID(multi, 'image', open="image.open")
+				layout.label(text="Normal Map")
+				row = layout.row()
+				row.template_ID(normal, 'image', open="image.open")
+				layout.label(text="Normal Map (Closest)")
+				row = layout.row()
+				row.template_ID(normal_closest, 'image', open="image.open")
 
+			else:
+				row = layout.row()
+				row.operator("object.add_cs_material", text="Add")
+		row = layout.row()
+		"""
+
+		"""
 		row.label(text="MMD Render toon textures (broken)", icon="MATERIAL")
 		row = layout.row()
 		row.operator("ffxiv_mmd.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes (broken)",icon='MATERIAL')
 		row = layout.row()
-
+		
 		row.label(text="MMD Toon modifier (broken)", icon='NODE_MATERIAL')
 		layout.prop(context.scene, "ToonModifierBlendType")
 		row = layout.row()
 		layout.prop(context.scene, "ToonModifierColor")
 		row = layout.row()
 		row.operator("ffxiv_mmd.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
-"""
+		"""
+
 
 
 @register_wrap

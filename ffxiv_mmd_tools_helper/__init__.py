@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 844),
+	"version": (0, 845),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -57,6 +57,7 @@ if "bpy" in locals():
 	importlib.reload(rigid_body)
 	importlib.reload(shape_keys)
 	importlib.reload(skirt)
+	importlib.reload(shaders)
 	importlib.reload(toon_textures_to_node_editor_shader)
 	importlib.reload(toon_modifier)
 	importlib.reload(panels)
@@ -89,6 +90,7 @@ else:
 	from . import rigid_body
 	from . import shape_keys
 	from . import skirt
+	from . import shaders
 	from . import toon_textures_to_node_editor_shader
 	from . import toon_modifier
 	from . import panels

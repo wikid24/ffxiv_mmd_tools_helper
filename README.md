@@ -670,3 +670,27 @@ If you notice any weird issues such as the floor being too 'sticky' when the tai
 
 ![image](https://user-images.githubusercontent.com/19479648/227071122-a991e50d-8867-4985-91a9-35c5003c573e.png)
 
+--------------
+
+#### Q: Why does my characters hair have bald patches! HALP!
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/df35e420-2163-47cf-ab30-a2a4c45e38ce)
+
+A: This is because Blender is using the wrong UV Map. To fix:
+
+1) Go the the "Shading" tab in blender
+2) While in "Object" mode, select the hair material with the hald patches in the viewport
+3) Add a "UV Map" node
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d2cb3643-7268-445b-8eb0-4f8dc6a0ed20)
+
+4) You should see a node with the name "Diffuse" on it. Connect the UV Map node's "UV" output to the Diffuse node's "Vector" input
+5) Set the UV Map node's dropdown to "uv2"
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f4ff66a8-b091-4d66-8e0a-31afe6b589f3)
+
+
+All fixed!
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6b3fa76b-338f-443c-a3f3-16b7cbaa81c8)
+

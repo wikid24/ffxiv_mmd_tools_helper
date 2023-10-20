@@ -680,7 +680,7 @@ If you notice any weird issues such as the floor being too 'sticky' when the tai
 A: This is because Blender is using the wrong UV Map. To fix:
 
 1) Go the the "Shading" tab in blender
-2) While in "Object" mode, select the hair material with the hald patches in the viewport
+2) While in "Object" mode, select the hair material with the bald patches in the viewport
 3) Add a "UV Map" node
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d2cb3643-7268-445b-8eb0-4f8dc6a0ed20)

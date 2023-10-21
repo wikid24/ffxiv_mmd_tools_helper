@@ -77,7 +77,7 @@ Credits:
   - Auto Sort the MMD Bone Order and Deformation Tiers
   - Auto-fix/Translate MMD Bone Names
   - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
-  - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it [faster](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fc155d0b-4367-4324-be24-424f19bf63d4)
+  - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it [faster](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fc155d0b-4367-4324-be24-424f19bf63d4))
   - A bunch of important useful stuff. Will list them later.
 
 # To do:

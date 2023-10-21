@@ -77,6 +77,7 @@ Credits:
   - Auto Sort the MMD Bone Order and Deformation Tiers
   - Auto-fix/Translate MMD Bone Names
   - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
+  - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it faster)
   - A bunch of important useful stuff. Will list them later.
 
 # To-Do Conversion/upgrade to Blender 2.8+ (from original Hogarth-MMD plugin):
@@ -93,7 +94,6 @@ Credits:
 - Create 'bulk-add joints' with min/max values:
     - Add presets for skirt/hair (skirts heaviest on the bottom, hair heaviest on the top?)
 - Automate MMD Tools material sorter
-- Automate the fix for materials/shaders - ([ffxiv material shader fix plugin](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) )
 ------------
 
 # In order to use this tool, you need:

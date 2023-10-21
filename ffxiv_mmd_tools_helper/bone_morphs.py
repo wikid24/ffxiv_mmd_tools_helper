@@ -146,22 +146,22 @@ def generate_bone_morph (armature,bone_morph_name,bone_morph_bones_data):
 
 	bpy.ops.object.mode_set(mode='POSE')
 
-	name = bone_morph_name
-	name_e = bone_morph_name
-	category = 'OTHER'
+	bm_name = bone_morph_name
+	bm_name_e = bone_morph_name
+	bm_category = 'OTHER'
 
 	#pull data from mmd_bone_morphs_list to get the metadata
 	mmd_bone_morphs_list = import_csv.use_csv_bone_morphs_list()
 	for mmd_bone_morph in mmd_bone_morphs_list:
 		if bone_morph_name in (mmd_bone_morph[1],mmd_bone_morph[2]):
-			name = mmd_bone_morph[0]
-			name_e = mmd_bone_morph[1]
-			category = mmd_bone_morph[2]
+			bm_name = mmd_bone_morph[0]
+			bm_name_e = mmd_bone_morph[1]
+			bm_category = mmd_bone_morph[2]
 			break
 
 	#if a bone_morph exists with the same name, delete it first
 	remove_bone_morph(bone_morph_name)
-	bone_morph_obj = create_bone_morph(name,name_e,category)
+	bone_morph_obj = create_bone_morph(bm_name,bm_name_e,bm_category)
 
 	i = 0
 	

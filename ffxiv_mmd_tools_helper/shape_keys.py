@@ -3,6 +3,59 @@ import math
 from . import register_wrap
 from . import import_csv
 
+import mmd_tools.core.model as mmd_model
+from mmd_tools.utils import ItemOp
+from mmd_tools.core import model as mmd_model
+
+
+def create_vertex_morph(vertex_morph_name,vertex_morph_e_name,vertex_morph_category):
+	obj = bpy.context.active_object
+	root = mmd_model.Model.findRoot(obj)
+	mmd_root = root.mmd_root
+	morph_type = 'vertex_morphs' #mmd_root.active_morph_type
+	morphs = getattr(mmd_root, morph_type)
+	morph,mmd_root.active_morph = ItemOp.add_after(morphs, mmd_root.active_morph)
+	morph.name = vertex_morph_name
+	morph.name_e = vertex_morph_e_name
+	morph.category = vertex_morph_category
+	
+	#items=[
+	#        ('SYSTEM', 'Hidden', '', 0),
+	#        ('EYEBROW', 'Eye Brow', '', 1),
+	#        ('EYE', 'Eye', '', 2),
+	#        ('MOUTH', 'Mouth', '', 3),
+	#        ('OTHER', 'Other', '', 4),
+	#    ]
+	
+	return morph
+
+def get_vertex_morph(vertex_morph_name):
+	
+	obj = bpy.context.active_object
+	root = mmd_model.Model.findRoot(obj)
+	mmd_root = root.mmd_root
+
+	for morph in mmd_root.bone_morphs:
+		if (morph.name == vertex_morph_name) or (morph.name_e == vertex_morph_name):
+			return morph
+			break
+
+
+def remove_vertex_morph(vertex_morph_name):
+	
+	obj = bpy.context.active_object
+	root = mmd_model.Model.findRoot(obj)
+	mmd_root = root.mmd_root
+	
+	morphs = getattr(mmd_root, 'vertex_morphs') 
+	
+	for index,morph in enumerate(mmd_root.bone_morphs):
+		if (morph.name == vertex_morph_name) or (morph.name_e == vertex_morph_name):
+			morphs.remove(index)
+			mmd_root.active_morph = max(0, mmd_root.active_morph-1)
+			print(f"vertex morph {vertex_morph_name} removed")
+			break
+
 def get_meshes_of_armature (armature):
 	bpy.ops.object.mode_set(mode='OBJECT')
 	#Loop through all the objects, if it is a mesh, select it
@@ -109,12 +162,30 @@ def transform_pose_bone (armature,pbone_name,delta_coords):
 		pbone.rotation_mode = 'QUATERNION'
 
 
-def create_shape_key (armature,shape_key_name,shape_key_bones_data):
+def generate_shape_key (armature,shape_key_name,shape_key_bones_data):
 	
 	bpy.ops.object.mode_set(mode='POSE')
 
 	#save the rest position before making any changes
 	rest_position = save_rest_position(armature)
+	
+	vm_name = shape_key_name
+	vm_name_e = shape_key_name
+	vm_category = 'OTHER'
+
+	#pull data from mmd_bone_morphs_list to get the metadata
+	mmd_bone_morphs_list = import_csv.use_csv_bone_morphs_list()
+	for mmd_bone_morph in mmd_bone_morphs_list:
+		if shape_key_name in (mmd_bone_morph[1],mmd_bone_morph[2]):
+			vm_name = mmd_bone_morph[0]
+			vm_name_e = mmd_bone_morph[1]
+			vm_category = mmd_bone_morph[2]
+			break
+
+	#if a vertex_morph exists with the same name, delete it first
+	remove_vertex_morph(vm_name)
+	vertex_morph_obj = create_vertex_morph(vm_name,vm_name_e,vm_category)
+	
 
 	#if a shape key exists with the same name, delete it first
 	for mesh in get_meshes_of_armature(armature):
@@ -165,7 +236,7 @@ def create_shape_key (armature,shape_key_name,shape_key_bones_data):
 			obj = bpy.context.active_object
 
 			# Create a new Armature modifier
-			mod = obj.modifiers.new(name=shape_key_name, type='ARMATURE')
+			mod = obj.modifiers.new(name=vm_name, type='ARMATURE')
 
 			# Assign the armature object
 			mod.object = armature
@@ -266,10 +337,10 @@ def main(context):
 	if bpy.context.scene.ffxiv_model_list == 'none':
 		pass
 	else:
-		SHAPE_KEYS_DICTIONARY = read_shape_keys_file(bpy.context.scene.ffxiv_model_list)	
+		SHAPE_KEYS_DICTIONARY = read_shape_keys_file(bpy.context.scene.bone_morph_ffxiv_model_list)	
 		shape_keys = parse_shape_key_data_from_csv(SHAPE_KEYS_DICTIONARY)
 		for shape_key in shape_keys:
-			create_shape_key(armature,shape_key,shape_keys[shape_key])
+			generate_shape_key(armature,shape_key,shape_keys[shape_key])
 
 
 
@@ -280,6 +351,8 @@ class Shape_Keys(bpy.types.Operator):
 	bl_label = "Import Shape Keys"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	#not needed b/c we're using the same dropdown as bone morphs
+	"""
 	bpy.types.Scene.ffxiv_model_list = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
 	, ("hyur", "Import Hyur (Human) Shape Keys","Import Hyur Shape Keys") \
@@ -293,7 +366,7 @@ class Shape_Keys(bpy.types.Operator):
 	], name = "FFXIV Race", default = 'hyur')
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
-
+	"""
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
@@ -301,4 +374,15 @@ class Shape_Keys(bpy.types.Operator):
 
 	def execute(self, context):
 		main(context)
+		return {'FINISHED'}
+	
+
+@register_wrap
+class OpenShapeKeysFile(bpy.types.Operator):
+	"""Open Shape Keys CSV File for the selected race"""
+	bl_idname = "ffxiv_mmd.open_shape_keys_file"
+	bl_label = "Open Shape Keys CSV File"
+
+	def execute(self, context):
+		import_csv.open_shape_keys_dictionary(context.scene.bone_morph_ffxiv_model_list)
 		return {'FINISHED'}

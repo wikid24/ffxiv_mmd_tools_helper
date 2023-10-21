@@ -323,14 +323,7 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		layout = self.layout
 		row = layout.row()
 		row.label(text="Add Bone Morphs (MMD Model Only)", icon="SHAPEKEY_DATA")
-		"""
-		row = layout.row()
-		col = row.column(align=True)
-		split = col.split(factor = 0.55,align=True)
-		split.prop(context.scene, "bone_morph_ffxiv_model_list")
-		split.operator("ffxiv_mmd.add_bone_morphs", text = "Create",icon='SHAPEKEY_DATA')
-		split.operator("ffxiv_mmd.open_bone_morphs_file", text="File",icon='FILE')
-		"""
+		#bone morphs ########################################
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True)
@@ -338,6 +331,16 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene, "bone_morph_ffxiv_model_list")
 		row.operator("ffxiv_mmd.add_bone_morphs", text = "Generate",icon='SHAPEKEY_DATA')
 		row.operator("ffxiv_mmd.open_bone_morphs_file", text="",icon='CURRENT_FILE')
+		#shape keys ########################################
+		#row = layout.row()
+		#col = layout.column(align=True)
+		#grid = col.grid_flow(row_major=True)
+		#row = grid.row(align=True)
+		##row.prop(context.scene, "bone_morph_ffxiv_model_list")
+		#row.operator("ffxiv_mmd.add_shape_keys_btn", text = "Generate",icon='SHAPEKEY_DATA')
+		#row.operator("ffxiv_mmd.open_shape_keys_file", text="",icon='CURRENT_FILE')
+		####################################################
+
 		#row = layout.row()
 		#layout.prop(context.scene, "alternate_folder_cbx", text="Use Alternate Folder for CSVs (broken)")
 		row = layout.row(align=True)
@@ -430,7 +433,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd.apply_glossy_shader", text="Apply Glossy Shader")
 		row = layout.row()
-		if context.active_object.type == 'MESH':
+		if context.active_object and context.active_object.type == 'MESH':
 			active_object = bpy.context.active_object
 			active_material = active_object.active_material if active_object else None
 

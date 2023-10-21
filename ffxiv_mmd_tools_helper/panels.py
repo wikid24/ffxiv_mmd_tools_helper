@@ -17,13 +17,13 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		row.operator("ffxiv_mmd.ffxiv_file_browser_operator", text="Import FFXIV Model from .fbx File", icon='IMPORT')
+		row.operator("ffxiv_mmd.ffxiv_file_browser_operator", text="Import FFXIV .fbx File", icon='IMPORT')
 		row = layout.row()
 		col = layout.column(align=True)
 		grid = col.grid_flow(row_major=True, align=True)
 		#split = row.split(factor=0.66)
 		grid.row(align=True).prop(context.scene, "selected_ffxiv_test_model")
-		grid.row(align=True).operator("ffxiv_mmd.import_ffxiv_model", text = "Import", icon='IMPORT')
+		grid.row(align=True).operator("ffxiv_mmd.import_ffxiv_model", text = "Load Sample", icon='IMPORT')
 		row = layout.row()
 		row.label(text="FFXIV Conversion:")
 		row = layout.row()
@@ -225,7 +225,7 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		row = grid.row(align=True)
 		row.operator('ffxiv_mmd.create_rigid_bodies', text='From Selected Bones')
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "From FFXIV Skeleton (CSV)")
+		row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "From FFXIV Template")
 
 		
 		
@@ -291,7 +291,7 @@ class JointsPanel_MTH(bpy.types.Panel):
 		row = grid.row(align=True)
 		row.operator('ffxiv_mmd.create_joints', text='From Selected Rigid Bodies')	
 		row = grid.row(align=True)
-		row.operator("ffxiv_mmd.create_joints_from_csv", text = "From FFXIV Skeleton (CSV)")
+		row.operator("ffxiv_mmd.create_joints_from_csv", text = "From FFXIV Template")
 		#row = layout.row()
 		#col = layout.column()
 		#grid = row.grid_flow(row_major=True,align=True,columns=1)
@@ -348,10 +348,10 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		col.column(align=True).prop(context.scene,'bone_morph_rotation_mode_list')
 		col = row.column(align=True)
 		col.column(align=True).operator("ffxiv_mmd.change_face_rotation_mode",text='Change Rotation Mode')
-		row = layout.row()
-		row.label(text='**TODO** Open Dictionary File')
-		row = layout.row()
-		row.label(text='**TODO** Restore Defaults')
+		#row = layout.row()
+		#row.label(text='**TODO** Open Dictionary File')
+		#row = layout.row()
+		#row.label(text='**TODO** Restore Defaults')
 		
 
 @register_wrap

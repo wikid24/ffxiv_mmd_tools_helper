@@ -173,7 +173,7 @@ class ImportFFXIVModel(bpy.types.Operator):
 	, ("Roegadyn Female", "Roegadyn Female","Roegadyn Female") \
 	, ("Viera Female", "Viera Female","Viera Female") \
 	
-	], name = "Model", default = 'none')
+	], name = "Sample", default = 'none')
 	
 	"""
 	@classmethod

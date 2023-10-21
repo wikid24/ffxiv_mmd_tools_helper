@@ -80,11 +80,6 @@ Credits:
   - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it [faster](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fc155d0b-4367-4324-be24-424f19bf63d4)
   - A bunch of important useful stuff. Will list them later.
 
-# To-Do Conversion/upgrade to Blender 2.8+ (from original Hogarth-MMD plugin):
-  - mmd_lamp_setup.py
-  - mmd_view.py
-  - toon_textures_to_node_editor_shader.py (it works, sort of... I need to understand shaders more)
-
 # To do:
 - Better skin/hair/clothing shaders so that the textures don't look so flat in Blender
 -  FFXIV Bone Morphs (facial animation sliders):

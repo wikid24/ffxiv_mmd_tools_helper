@@ -7,6 +7,8 @@ from mmd_tools.core.bone import FnBone
 #import mmd_tools.core.model as mmd_model
 from . import miscellaneous_tools
 from . import bone_tools
+from . import add_foot_leg_ik
+from . import add_hand_arm_ik
 
 def correct_root_center():
 	print('\ncorrect_root_center():')
@@ -692,7 +694,10 @@ def main(context):
 
 
 	selected_bone_tool = bpy.context.scene.selected_bone_tool
-
+	if selected_bone_tool == "delete_unused_bones":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		miscellaneous_tools.flag_unused_bones()
+		miscellaneous_tools.delete_unused_bones()
 	if selected_bone_tool == "correct_root_center":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		correct_root_center()
@@ -720,6 +725,25 @@ def main(context):
 	if selected_bone_tool == "add_shoulder_control_bones":
 		armature = bpy.context.view_layer.objects.active
 		add_shoulder_control_bones()
+	if selected_bone_tool == "add_leg_foot_ik":
+		armature = bpy.context.view_layer.objects.active
+		bpy.ops.object.mode_set(mode='OBJECT')
+		add_foot_leg_ik.clear_IK(context)
+		add_foot_leg_ik.main(context)
+		bpy.ops.object.mode_set(mode='OBJECT')
+	if selected_bone_tool == "auto_fix_mmd_bone_names":
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		bone_tools.auto_fix_mmd_bone_names(armature)
+		bpy.ops.object.mode_set(mode='OBJECT')
+	if selected_bone_tool == "add_hand_arm_ik":
+		armature = bpy.context.view_layer.objects.active
+		bpy.ops.object.mode_set(mode='OBJECT')
+		add_hand_arm_ik.clear_IK(context)
+		add_hand_arm_ik.main(context)
+		bpy.ops.object.mode_set(mode='OBJECT')
+
+
 	if selected_bone_tool == "add_extra_finger_bones":
 		mesh = bpy.context.view_layer.objects.active
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
@@ -733,9 +757,12 @@ def main(context):
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		merge_double_jointed_knee(armature)
-	if selected_bone_tool == "run_1_to_9":
+	if selected_bone_tool == "run_1_to_12":
+		#delete unused bones
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
+		miscellaneous_tools.flag_unused_bones()
+		miscellaneous_tools.delete_unused_bones()
 		correct_root_center()
 		correct_groove()
 		correct_waist()
@@ -745,6 +772,14 @@ def main(context):
 		add_eye_control_bone()
 		add_arm_wrist_twist()
 		add_shoulder_control_bones()
+		#leg_IK
+		bpy.ops.object.mode_set(mode='OBJECT')
+		add_foot_leg_ik.clear_IK(context)
+		add_foot_leg_ik.main(context)
+		#auto_fix bone names
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		bone_tools.auto_fix_mmd_bone_names(armature)
 		bpy.ops.object.mode_set(mode='OBJECT')
 	if selected_bone_tool == 'adjust_arm_position':
 		bpy.ops.object.mode_set(mode='EDIT')
@@ -798,21 +833,25 @@ class BoneTools(bpy.types.Operator):
 
 	bpy.types.Scene.selected_bone_tool = bpy.props.EnumProperty(items = \
 	[('none', 'none', 'none')\
-	, ("run_1_to_9", "Run Steps 1 to 9", "Run Steps 1 to 9")\
-	, ("correct_root_center", "1  -  Correct MMD Root and Center bones", "Correct MMD root and center bones")\
-	, ("correct_groove", "2  -  Correct MMD Groove bone", "Correct MMD Groove bone")\
-	, ("correct_waist", "3  -  Correct MMD Waist bone", "Correct MMD Waist bone")\
-	, ("correct_waist_cancel", "4  -  Correct Waist Cancel L/R bones", "Correct waist cancel left and right bones")\
-	, ("correct_view_cnt", "5  -  Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
-	, ("correct_bones_lengths", "6  -  Correct Shoulder/Arm/Elbow Bone Lengths", "Correct Shoulder/Arm/Elbow Bone Lengths")\
-	, ("add_eye_control_bone", "7  -  Add Eyes Control Bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
-	, ("add_arm_wrist_twist", "8  -  Add Arm Twist Bones", "Add Arm Twist Bones")\
-	, ("add_shoulder_control_bones", "9  -  Add Shoulder Control Bones", "Add Shoulder Control Bones")\
-	, ("add_extra_finger_bones", "10- Add Extra Finger Bones (select finger mesh first)", "Add Extra Finger Bones (select finger mesh first)")\
-	, ("add_breast_tip_bones", "11- Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
-	, ("merge_double_jointed_knee", "12- Merge Double-Jointed Knee (FFXIV PMX Export Only)", "Merge Double-Jointed Knee (FFXIV PMX Export Only)")\
+	, ("run_1_to_12", "Run Steps 1 to 12", "Run Steps 1 to 12")\
+	, ("delete_unused_bones", "1  -  Remove unused bones (no vertex groups)", "Remove unused bones (no vertex groups)")\
+	, ("correct_root_center", "2  -  Correct MMD Root and Ce nter bones", "Correct MMD root and center bones")\
+	, ("correct_groove", "3  -  Correct MMD Groove bone", "Correct MMD Groove bone")\
+	, ("correct_waist", "4  -  Correct MMD Waist bone", "Correct MMD Waist bone")\
+	, ("correct_waist_cancel", "5  -  Correct Waist Cancel L/R bones", "Correct waist cancel left and right bones")\
+	, ("correct_view_cnt", "6  -  Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
+	, ("correct_bones_lengths", "7  -  Correct Shoulder/Arm/Elbow Bone Lengths", "Correct Shoulder/Arm/Elbow Bone Lengths")\
+	, ("add_eye_control_bone", "8  -  Add Eyes Control Bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
+	, ("add_arm_wrist_twist", "9  -  Add Arm Twist Bones", "Add Arm Twist Bones")\
+	, ("add_shoulder_control_bones", "10-  Add Shoulder Control Bones", "Add Shoulder Control Bones")\
+	, ("add_leg_foot_ik", "11-  Add Leg/Foot IK", "Add Leg/Foot IK")\
+	, ("auto_fix_mmd_bone_names", "12-  Auto-Fix MMD Japanese/English Bone Names", "Auto-Fix MMD Japanese/English Bone Names")\
+	, ("add_hand_arm_ik", "13-  Add Hand/Arm IK", "Add Hand/Arm IK")\
+	, ("add_extra_finger_bones", "14- Add Extra Finger Bones (select finger mesh first)", "Add Extra Finger Bones (select finger mesh first)")\
+	, ("add_breast_tip_bones", "15- Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
+	, ("merge_double_jointed_knee", "16- Merge Double-Jointed Knee (FFXIV PMX Export Only)", "Merge Double-Jointed Knee (FFXIV PMX Export Only)")\
 	, ("adjust_arm_position", "EXPERIMENTAL - Adjust Arm Position for FFXIV Models", "Hard-Coded values to better align arms")\
-	], name = "", default = 'run_1_to_9')
+	], name = "", default = 'run_1_to_12')
 
 	@classmethod
 	def poll(cls, context):

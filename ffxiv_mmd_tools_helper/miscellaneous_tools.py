@@ -5,6 +5,7 @@ from . import model
 from mmd_tools.core.bone import FnBone
 from . import rigid_body
 from . import bone_tools
+from . import joints
 
 
 def all_materials_mmd_ambient_white():
@@ -228,6 +229,7 @@ def fix_object_axis():
 	#	bone.roll = 0
 	#bpy.ops.object.mode_set(mode='OBJECT')
 
+
 def main(context):
 	# print(bpy.context.scene.selected_miscellaneous_tools)
 
@@ -253,7 +255,23 @@ def main(context):
 	if selected_miscellaneous_tools == "fix_object_axis":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		fix_object_axis()
-	
+	if selected_miscellaneous_tools == "remove_orphaned_rigid_bodies":
+		armature = None
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		if armature:
+			bpy.ops.object.mode_set(mode='OBJECT')
+			rigid_body.remove_orphaned_rigid_bodies(armature)
+	if selected_miscellaneous_tools == "remove_orphaned_joints":
+		armature = None
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		if armature:
+			bpy.ops.object.mode_set(mode='OBJECT')
+			joints.remove_orphaned_joints(armature)
+
+
+		
 
 
 @register_wrap
@@ -270,6 +288,8 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("combine_2_bones", "Combine 2 bones", "Combine a parent-child pair of bones and their vertex groups to 1 bone and 1 vertex group")\
 	, ("flag_unused_bones", "Flag unused bones as '_unused_'", "Flag non-special bones with no vertex groups/constraints/rigid bodies as '_unused_'")\
 	, ("delete_unused_bones", "Delete '_unused_' bones", "Delete all bones which start with '_unused_' in them")\
+	, ("remove_orphaned_rigid_bodies", "Remove Orphaned Rigid Bodies", "Delete all rigid bodies that have no assigned bones")\
+	, ("remove_orphaned_joints", "Remove Orphaned Joints", "Delete all joints that are missing a rigid body")\
 	#, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
 	], name = "", default = 'none')
 

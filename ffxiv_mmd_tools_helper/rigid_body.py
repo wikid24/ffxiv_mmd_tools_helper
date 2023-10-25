@@ -97,6 +97,15 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			bpy.context.view_layer.objects.active = armature
 			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
 	
+def remove_orphaned_rigid_bodies(armature):
+	for obj in armature.parent.children_recursive:
+		if obj.mmd_type == 'RIGID_BODY':
+			bone = None
+			bone = get_bone_from_rigid_body(obj)
+			if bone == None:
+				print ('deleting orphaned rigid_body:', obj.name)
+				bpy.data.objects.remove(obj, do_unlink=True)
+
 
 def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
 
@@ -1211,6 +1220,7 @@ class AddRigidBodyFromFile(bpy.types.Operator):
 
 	def execute(self, context):
 		create_rigid_bodies_from_csv(context)
+		bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}
 
 

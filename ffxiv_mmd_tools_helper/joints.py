@@ -58,6 +58,18 @@ def read_joints_file():
 	
 	return JOINTS_DICTIONARY
 
+def remove_orphaned_joints(armature):
+	for obj in armature.parent.children_recursive:
+		if obj.mmd_type == 'JOINT': 
+			#error handling: delete a joint where the a rigid body has been removed
+			if (obj.rigid_body_constraint is None):
+				bpy.data.objects.remove(obj, do_unlink=True)
+			#error handling: delete a joint if it does not have both object 1 AND object 2 filled out
+			elif (obj.rigid_body_constraint.object1 is None or obj.rigid_body_constraint.object2 is None ):
+				print ('deleting joint with missing rigid body object1 or object2:', obj.name)
+				bpy.data.objects.remove(obj, do_unlink=True)
+
+
 def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation=None
 				,limit_linear_lower=None,limit_linear_upper=None
 				,limit_angular_lower=None,limit_angular_upper=None

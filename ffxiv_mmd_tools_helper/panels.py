@@ -122,12 +122,12 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		grid.prop(context.scene,"replace_bone_string",text='')
 		grid.operator("ffxiv_mmd.replace_bones_renaming", text = "Replace", icon='CON_ROTLIMIT')
 		grid.prop(context.scene, "bones_all_or_selected",text='Selected Only')
-		row = layout.row(align=True)
-		col = row.column(align=True)
-		grid = col.grid_flow(row_major=True,align=True)
-		grid.label(text="IK", icon="CONSTRAINT_BONE")
-		grid.operator("ffxiv_mmd.add_foot_leg_ik", text = "Leg/Foot IK")
-		grid.operator("ffxiv_mmd.add_hand_arm_ik", text = "Hand/Arm IK")
+		#row = layout.row(align=True)
+		#col = row.column(align=True)
+		#grid = col.grid_flow(row_major=True,align=True)
+		#grid.label(text="IK", icon="CONSTRAINT_BONE")
+		#grid.operator("ffxiv_mmd.add_foot_leg_ik", text = "Leg/Foot IK")
+		#grid.operator("ffxiv_mmd.add_hand_arm_ik", text = "Hand/Arm IK")
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.label(text="Bone Groups", icon="GROUP_BONE")
@@ -226,6 +226,8 @@ class RigidBodiesPanel_MTH(bpy.types.Panel):
 		row.operator('ffxiv_mmd.create_rigid_bodies', text='From Selected Bones')
 		row = grid.row(align=True)
 		row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "From FFXIV Template")
+
+		
 
 		
 		

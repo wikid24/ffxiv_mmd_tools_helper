@@ -361,15 +361,18 @@ def add_eye_control_bone():
 		if armature.data.edit_bones.get("eyes") is None:
 			eyes_bone = armature.data.edit_bones.new("eyes")
 			eyes_bone.head = 0.5 * (eye_L_bone.head + eye_R_bone.head)
-			eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
+			#eyes_bone.head.z = eyes_bone.head.z + (2 * (eye_L_bone.length + eye_R_bone.length))
+			eyes_bone.head.y = eye_L_bone.head.y
 			eyes_bone.length = eye_L_bone.length
+			eyes_bone.tail.y = eyes_bone.head.y - eye_L_bone.length
+			eyes_bone.tail.z = eyes_bone.head.z
 			eyes_bone.parent = head_bone
 			
 			#flip the orientation of the bone
-			eye_controller_bone_head = eyes_bone.head.copy()
-			eye_controller_bone_tail = eyes_bone.tail.copy()
-			eyes_bone.head = eye_controller_bone_tail
-			eyes_bone.tail = eye_controller_bone_head
+			#eye_controller_bone_head = eyes_bone.head.copy()
+			#eye_controller_bone_tail = eyes_bone.tail.copy()
+			#eyes_bone.head = eye_controller_bone_tail
+			#eyes_bone.tail = eye_controller_bone_head
 
 			print ('added eyes control bone' )
 				

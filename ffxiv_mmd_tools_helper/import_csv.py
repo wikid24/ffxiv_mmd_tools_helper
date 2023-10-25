@@ -144,6 +144,13 @@ def use_csv_joints_dictionary():
 	JOINTS_DICTIONARY = csv_cleanup(JOINTS_DICTIONARY,True,True,True,False)
 	return JOINTS_DICTIONARY
 
+def use_csv_charafile_dictionary():
+	file_path = (__file__ + r"data\chara_file_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	CHARAFILE_DICTIONARY = try_read_file(file_path)
+	CHARAFILE_DICTIONARY = csv_cleanup(CHARAFILE_DICTIONARY,True,False,False,False)
+	return CHARAFILE_DICTIONARY
+
 def open_csv(file_path):
     #subprocess.Popen(["start", file_path], shell=True)
 	os.startfile(file_path)

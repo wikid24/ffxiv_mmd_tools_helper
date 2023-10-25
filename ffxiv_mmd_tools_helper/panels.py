@@ -29,6 +29,8 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
+		row = layout.row()
+		row.operator("ffxiv_mmd.ffxiv_chara_file_browser_operator", text="Import FFXIV .chara File", icon='IMPORT')
 		#row = layout.row()
 		#row.operator("ffxiv_mmd.create_rigid_bodies_from_csv", text = "Add Base Rigid Bodies", icon="RIGID_BODY")
 		#row = layout.row()

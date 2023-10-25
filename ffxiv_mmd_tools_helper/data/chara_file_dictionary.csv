@@ -1,0 +1,63 @@
+chara_key,chara_value,shape_key,comments
+Eyes,>= 128,shp_irs_a,"if less than 128, do not apply shape key"
+Eyebrows,0,,do nothing
+Eyebrows,1,shp_brw_a,
+Eyebrows,2,shp_brw_b,
+Eyebrows,3,shp_brw_c,
+Eyebrows,4,shp_brw_d,
+Jaw,0,,do nothing
+Jaw,1,shp_chk_a,
+Jaw,2,shp_chk_b,
+Jaw,3,shp_chk_c,
+Jaw,4,shp_chk_d,
+Eyes,0,,do nothing
+Eyes,1,shp_eye_a,
+Eyes,2,shp_eye_b,
+Eyes,3,shp_eye_c,
+Eyes,4,shp_eye_d,
+Eyes,5,shp_eye_e,
+Mouth,0,,do nothing
+Mouth,1,shp_mth_a,
+Mouth,2,shp_mth_b,
+Mouth,3,shp_mth_c,
+Nose,0,,do nothing
+Nose,1,shp_nse_a,
+Nose,2,shp_nse_b,
+Nose,3,shp_nse_c,
+Nose,4,shp_nse_d,
+Nose,5,shp_nse_e,
+Race,Hyur,,
+Race,Elezen,,
+Race,Lalafel,,
+Race,Miqote,,
+Race,Roegadyn,,
+Race,Hrothgar,,
+Race,AuRa,,
+Race,Viera,,
+Tribe,Highlander,,
+Tribe,Midlander,,
+Tribe,Wildwood,,
+Tribe,Duskwight,,
+Tribe,Plainsfolk,,
+Tribe,Dunesfolk,,
+Tribe,SeekerOfTheSun,,
+Tribe,KeeperOfTheMoon,,
+Tribe,SeaWolf,,
+Tribe,Hellsguard,,
+Tribe,Raen,,
+Tribe,Xaela,,
+Tribe,Rava,,
+Tribe,Helions,,
+Tribe,Veena,,
+Gender,Feminine,,
+Gender,Masculine,,
+SkinGloss,,,array of 3 values. Apply to skin shader 'roughness' value and see what happens?
+BustScale,,,array of 3 values. Take XYZ values and apply to bust_L and bust_R scale and see what happens?
+FacialFeatures,First,,Eyebrow thickness? WTF? Then what is the purpose of shp_brow? Is this a decal that can be deleted?
+FacialFeatures,Second,,Dot in Head
+FacialFeatures,Third,,Eye-Liner makeup
+FacialFeatures,Fourth,,False Eye Lashes
+FacialFeatures,Fifth,,Cheek Mole
+FacialFeatures,Sixth,,Face Paint
+FacialFeatures,Seventh,,Nose Paint
+FacialFeatures,Eigth,,Neck Tattoo

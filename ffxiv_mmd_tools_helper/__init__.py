@@ -49,6 +49,7 @@ if "bpy" in locals():
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(display_panel_groups)
 	importlib.reload(import_ffxiv_model)
+	importlib.reload(import_ffxiv_charafile)
 	importlib.reload(joints)
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(mmd_lamp_setup)
@@ -82,6 +83,7 @@ else:
 	from . import convert_to_blender_camera
 	from . import display_panel_groups
 	from . import import_ffxiv_model
+	from . import import_ffxiv_charafile
 	from . import joints
 	from . import miscellaneous_tools
 	from . import mmd_lamp_setup

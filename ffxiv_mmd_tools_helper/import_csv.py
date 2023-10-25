@@ -99,7 +99,7 @@ def use_csv_bone_morphs_list():
 	#path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
 	#file_path= (path + r"\data\bone_morph_list.csv").replace("import_csv.py" , "")
 	file_path = (__file__ + r"data\bone_morph_list.csv").replace("import_csv.py" , "")
-	print(file_path)
+	#print(file_path)
 
 	BONE_MORPHS_LIST = try_read_file(file_path)
 	BONE_MORPHS_LIST = csv_cleanup(BONE_MORPHS_LIST,False,False,False,False)
@@ -113,7 +113,7 @@ def use_csv_bone_morphs_dictionary(ffxiv_race):
 	#path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
 	#file_path= (path + r"\data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
 	file_path = (__file__ + r"data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
-	print(file_path)
+	#print(file_path)
 	
 	BONE_MORPHS_DICTIONARY = try_read_file(file_path)
 	BONE_MORPHS_DICTIONARY = csv_cleanup(BONE_MORPHS_DICTIONARY,False,True,True,False)

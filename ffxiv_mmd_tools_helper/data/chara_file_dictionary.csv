@@ -1,5 +1,6 @@
 chara_key,chara_value,shape_key,comments
 Eyes,>= 128,shp_irs_a,"if less than 128, do not apply shape key"
+SmallIris,1,shp_irs_a,
 Eyebrows,0,,do nothing
 Eyebrows,1,shp_brw_a,
 Eyebrows,2,shp_brw_b,
@@ -16,6 +17,7 @@ Eyes,2,shp_eye_b,
 Eyes,3,shp_eye_c,
 Eyes,4,shp_eye_d,
 Eyes,5,shp_eye_e,
+Mouth,>=128,,"mouth colour checkbox is checked, maybe try mod by 4?"
 Mouth,0,,do nothing
 Mouth,1,shp_mth_a,
 Mouth,2,shp_mth_b,

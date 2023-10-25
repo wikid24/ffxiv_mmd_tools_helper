@@ -17,94 +17,199 @@ def import_ffxiv_model(file_path):
 
 	#file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
 	#print(file_path)
+	#deselect all objects
+	bpy.ops.object.select_all(action='DESELECT')
 	
 	bpy.ops.import_scene.fbx( \
-	filepath = file_path \
-	, global_scale = 1
-	, primary_bone_axis='X' \
-	, secondary_bone_axis='Y' \
-	, use_manual_orientation=True \
-	, axis_forward='Y' \
-	, axis_up='Z'
+		filepath = file_path \
+		, global_scale = 1
+		, primary_bone_axis='X' \
+		, secondary_bone_axis='Y' \
+		, use_manual_orientation=True \
+		, axis_forward='Y' \
+		, axis_up='Z'
 	)
 	
-	#get the most recently added armature
-	armature = bpy.data.armatures[-1]
-	armature = bpy.data.objects.get(armature.name)
 	
+	armature = None
 	
-	
-	#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
-	# Get the selected object
-	selected_obj = bpy.context.object #should be n_root
-	selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
+	if bpy.context.selected_objects:
+		for i in bpy.context.selected_objects:
+			if i.type =='ARMATURE':
+				armature = i
 
-	bpy.context.view_layer.objects.active = selected_obj_parent
+	if armature:
+		print (f"{armature.name}:{armature.type}")
 
-	#rotate the model 90 degrees on the x axis
-	miscellaneous_tools.fix_object_axis()
 
-	# Create a new empty object to store all the junk that comes from FFXIV
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Empty Groups'
-	#print (new_empty)
+		#####move all 'Group' objects to an empty object called 'FFXIV Junk'####
+		# Get the selected object
+		selected_obj = bpy.context.selected_objects[0] #should be n_root
+		#print(f"{selected_obj}:{selected_obj.type}")
+		selected_obj_parent = selected_obj.parent #should be imported object name (Nala V3)
+		#print(f"{selected_obj_parent}:{selected_obj_parent.type}")
 
-	# Parent the new empty object to the selected object
-	new_empty.parent = selected_obj_parent
+		bpy.context.view_layer.objects.active = selected_obj_parent
 
-	# Iterate through all children of the selected object
-	for child in selected_obj_parent.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Group' in child.name:
-			if len(child.children) == 0:
+		#rotate the model 90 degrees on the x axis
+		miscellaneous_tools.fix_object_axis()
+
+		
+		# Create a new empty object to store all the junk that comes from FFXIV
+		bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
+		new_empty = bpy.context.object
+		new_empty.name = 'FFXIV Empty Groups'
+		#print (new_empty)
+
+		# Parent the new empty object to the selected object
+		new_empty.parent = selected_obj_parent
+
+		# Iterate through all children of the selected object
+		for child in selected_obj_parent.children:
+			# Check if the child object contains the substring 'Group' in its name
+			if 'Group' in child.name:
+				if len(child.children) == 0:
+					# Parent the child object to the new empty object
+					child.parent = new_empty
+				
+		#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
+		bpy.context.view_layer.objects.active = selected_obj
+			
+		"""		
+		# Create a new empty object to store all the Mesh Objects
+		bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
+		new_empty = bpy.context.object
+		new_empty.name = 'FFXIV Mesh'
+		new_empty.parent = selected_obj
+
+		# Iterate through all children of the selected object
+		for child in selected_obj.children:
+			# Check if the child object contains the substring 'Group' in its name
+			if 'Part' in child.name:
 				# Parent the child object to the new empty object
 				child.parent = new_empty
-			
-	#####move all 'Mesh-type' objects to an empty object called 'Mesh'####
-	bpy.context.view_layer.objects.active = selected_obj
+		"""
+
+		###### Fix the alpha blend mode so that all the textures can be viewed properly ######
+		mats = bpy.data.materials
+		for mat in mats:
+			mat.blend_method = 'HASHED'
 		
-	"""		
-	# Create a new empty object to store all the Mesh Objects
-	bpy.ops.object.add(type='EMPTY', location=(0, 0, 0))
-	new_empty = bpy.context.object
-	new_empty.name = 'FFXIV Mesh'
-	new_empty.parent = selected_obj
+		##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
+		# Get the first mesh object that is a child of the armature
+		mesh = [child for child in armature.children if child.type == 'MESH'][0]
 
-	# Iterate through all children of the selected object
-	for child in selected_obj.children:
-		# Check if the child object contains the substring 'Group' in its name
-		if 'Part' in child.name:
-			# Parent the child object to the new empty object
-			child.parent = new_empty
-	"""
+		mmd_bone_order_override_modifier = None
 
-	###### Fix the alpha blend mode so that all the textures can be viewed properly ######
-	mats = bpy.data.materials
-	for mat in mats:
-		mat.blend_method = 'HASHED'
-	
-	##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
-	# Get the first mesh object that is a child of the armature
-	mesh = [child for child in armature.children if child.type == 'MESH'][0]
+		for modifier in mesh.modifiers:
+			if modifier.type == 'ARMATURE' and modifier.object.name in (armature.name,'mmd_bone_order_override'):
+				mmd_bone_order_override_modifier = modifier
+				mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
+				break
 
-	mmd_bone_order_override_modifier = None
+		if mmd_bone_order_override_modifier == None:
+			# Add the armature modifier to the mesh
+			mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
+			# Set the armature as the object to which the modifier applies
+			mmd_bone_order_override_modifier.object = armature
+		
+		#set the last selected armature as the active object
+		x = bpy.data.objects[armature.name]
+		x.select_set(True)
 
-	for modifier in mesh.modifiers:
-		if modifier.type == 'ARMATURE' and modifier.object.name in (armature.name,'mmd_bone_order_override'):
-			mmd_bone_order_override_modifier = modifier
-			mmd_bone_order_override_modifier.name = 'mmd_bone_order_override'
-			break
+		print(x.name + ' ' +x.type)
+		
+		#loop through all the meshes and rename them to something human-readable
+		if x.type =='ARMATURE':
+			for obj in x.parent.children_recursive:
+				if obj.type == 'MESH':
+					print("renaming!" + obj.name)
+					rename_ffxiv_mesh(obj)
+					
+		
 
-	if mmd_bone_order_override_modifier == None:
-		# Add the armature modifier to the mesh
-		mmd_bone_order_override_modifier = mesh.modifiers.new(name="mmd_bone_order_override", type='ARMATURE')
-		# Set the armature as the object to which the modifier applies
-		mmd_bone_order_override_modifier.object = armature
-	
-	#set the last selected armature as the active object
-	x = bpy.data.objects[armature.name]
-	x.select_set(True)
+def rename_ffxiv_mesh(obj):
+	# Input string
+	input_string = obj.name
+	#input_string = "c0801h0105_hir Part 1.80"
+	if obj.type =='MESH' and (input_string.startswith("c1") or input_string.startswith("c0")):
+		# Define the lengths for each part
+		part_lengths = [5, 1, 4, 1, 3, 1, 4,1,4]
+
+		# Initialize variables to store the parsed parts
+		parsed_parts = []
+
+		# Loop through the parts and extract them
+		start_index = 0
+		for length in part_lengths:
+			part = input_string[start_index:start_index + length]
+			parsed_parts.append(part)
+			start_index += length
+
+		# Print the parsed parts
+		for i, part in enumerate(parsed_parts):
+			print(f"Part {i + 1}: {part}")
+			
+			
+		# Define the replacement dictionary
+		race_dict = {
+			"c0101": "Hyur_Mid_M",
+			"c0104": "Hyur_Mid_M_NPC",
+			"c0201": "Hyur_Mid_F",
+			"c0301": "Hyur_Hig_M",
+			"c0401": "Hyur_Hig_F",
+			"c0501": "Elez_M",
+			"c0601": "Elez_F",
+			"c0701": "Miqo_M",
+			"c0801": "Miqo_F",
+			"c0804": "Miqo_F_NPC",
+			"c0901": "Roeg_M",
+			"c1001": "Roeg_F",
+			"c1101": "Lala_M",
+			"c1201": "Lala_F",
+			"c1301": "Aura_M",
+			"c1401": "Aura_F",
+			"c1501": "Hrot_M",
+			"c1601": "Hrot_F",
+			"c1701": "Vier_M",
+			"c1801": "Vier_F",
+		}
+
+
+		# Replace part 1 using the dictionary
+		if parsed_parts[0] in race_dict:
+			parsed_parts[0] = race_dict[parsed_parts[0]]
+			
+		part_dict = {    
+			"wrs":"Wrists",
+			"ear":"Earring",
+			"nek":"Neck",
+			"rir":"Rings",
+			"ril":"Rings",
+			"dwn":"Legs",
+			"met":"Head",
+			"sho":"Feet",
+			"glv":"Hands",
+			"top":"Body",
+			"fac":"Face",
+			"hir":"Hair",
+			"til":"Tail",
+			"zer":"Ears",
+		}
+
+		# Replace part 5 using the dictionary
+		if parsed_parts[4] in part_dict:
+			parsed_parts[4] = part_dict[parsed_parts[4]]
+
+			
+		# Print the parsed parts
+		#for i, part in enumerate(parsed_parts):
+			#print(f"Part {i + 1}: {part}")
+
+		new_mesh_name = parsed_parts[4]+"-"+parsed_parts[1]+parsed_parts[2]+"-"+parsed_parts[8]+"-"+parsed_parts[0]
+
+		obj.name = new_mesh_name
+
 
 def main(context):
 

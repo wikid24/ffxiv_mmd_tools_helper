@@ -1221,6 +1221,11 @@ class AddRigidBodyFromFile(bpy.types.Operator):
 	def execute(self, context):
 		create_rigid_bodies_from_csv(context)
 		bpy.ops.object.mode_set(mode='OBJECT')
+		armature = model.findArmature (context.selected_objects[0])
+		# Deselect all selected objects and set the armature as the active & selected object
+		bpy.ops.object.select_all(action='DESELECT')
+		armature.select_set(True)
+		bpy.context.view_layer.objects.active = armature
 		return {'FINISHED'}
 
 

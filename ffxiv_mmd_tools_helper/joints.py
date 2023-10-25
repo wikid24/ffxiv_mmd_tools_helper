@@ -153,6 +153,8 @@ def apply_all_joints(armature,joints_data):
 			spring_angular= [joint['angular_spring_x'],joint['angular_spring_y'],joint['angular_spring_z']]
 
 			create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
+
+	return armature
 			
 def is_joint_horizontal(joint_obj):
 
@@ -463,6 +465,8 @@ def create_rigid_bodies_from_csv(context):
 	JOINTS_DICTIONARY = read_joints_file ()
 	apply_all_joints(armature, JOINTS_DICTIONARY)
 
+	return armature
+
 
 @register_wrap
 class AddJointsFromFile(bpy.types.Operator):
@@ -478,7 +482,13 @@ class AddJointsFromFile(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
-		create_rigid_bodies_from_csv(context)
+		armature = create_rigid_bodies_from_csv(context)
+		bpy.ops.object.mode_set(mode='OBJECT')
+		#armature = model.findArmature (context.selected_objects[0])
+		# Deselect all selected objects and set the armature as the active & selected object
+		bpy.ops.object.select_all(action='DESELECT')
+		armature.select_set(True)
+		bpy.context.view_layer.objects.active = armature
 		return {'FINISHED'}
 
 @register_wrap

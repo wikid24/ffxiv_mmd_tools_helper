@@ -151,6 +151,56 @@ def use_csv_charafile_dictionary():
 	CHARAFILE_DICTIONARY = csv_cleanup(CHARAFILE_DICTIONARY,True,False,False,False)
 	return CHARAFILE_DICTIONARY
 
+def use_csv_color_eye_dictionary():
+	file_path = (__file__ + r"data\color_eye_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_EYE_DICTIONARY = try_read_file(file_path)
+	COLOR_EYE_DICTIONARY = csv_cleanup(COLOR_EYE_DICTIONARY,True,False,False,False)
+	return COLOR_EYE_DICTIONARY
+
+def use_csv_color_facepaint_dictionary():
+	file_path = (__file__ + r"data\color_facepaint_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_FACEPAINT_DICTIONARY = try_read_file(file_path)
+	COLOR_FACEPAINT_DICTIONARY = csv_cleanup(COLOR_FACEPAINT_DICTIONARY,True,False,False,False)
+	return COLOR_FACEPAINT_DICTIONARY
+
+def use_csv_color_hair_dictionary():
+	file_path = (__file__ + r"data\color_hair_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_HAIR_DICTIONARY = try_read_file(file_path)
+	COLOR_HAIR_DICTIONARY = csv_cleanup(COLOR_HAIR_DICTIONARY,True,False,False,False)
+	return COLOR_HAIR_DICTIONARY
+
+def use_csv_color_hairhighlights_dictionary():
+	file_path = (__file__ + r"data\color_hairhighlights_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_HAIRHIGHLIGHTS_DICTIONARY = try_read_file(file_path)
+	COLOR_HAIRHIGHLIGHTS_DICTIONARY = csv_cleanup(COLOR_HAIRHIGHLIGHTS_DICTIONARY,True,False,False,False)
+	return COLOR_HAIRHIGHLIGHTS_DICTIONARY
+
+def use_csv_color_lips_dictionary():
+	file_path = (__file__ + r"data\color_lips_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_LIPS_DICTIONARY = try_read_file(file_path)
+	COLOR_LIPS_DICTIONARY = csv_cleanup(COLOR_LIPS_DICTIONARY,True,False,False,False)
+	return COLOR_LIPS_DICTIONARY
+
+def use_csv_color_skin_dictionary():
+	file_path = (__file__ + r"data\color_skin_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_SKIN_DICTIONARY = try_read_file(file_path)
+	COLOR_SKIN_DICTIONARY = csv_cleanup(COLOR_SKIN_DICTIONARY,True,False,False,False)
+	return COLOR_SKIN_DICTIONARY
+
+def use_csv_color_tattoo_limbalring_dictionary():
+	file_path = (__file__ + r"data\color_tattoo_limbalring_dictionary.csv").replace("import_csv.py" , "")
+	print(file_path)
+	COLOR_TATTOO_LIMBALRING_DICTIONARY = try_read_file(file_path)
+	COLOR_TATTOO_LIMBALRING_DICTIONARY = csv_cleanup(COLOR_TATTOO_LIMBALRING_DICTIONARY,True,False,False,False)
+	return COLOR_TATTOO_LIMBALRING_DICTIONARY
+
+
 def open_csv(file_path):
     #subprocess.Popen(["start", file_path], shell=True)
 	os.startfile(file_path)

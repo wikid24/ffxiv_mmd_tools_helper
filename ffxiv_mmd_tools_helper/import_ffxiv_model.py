@@ -118,15 +118,29 @@ def import_ffxiv_model(file_path):
 		x.select_set(True)
 
 		print(x.name + ' ' +x.type)
+
+		#get name of the root object and add it as a custom property to the armature (needed becuase MMD moves the armature to a new root)
+		if x.type=='ARMATURE':
+			root = x.parent
+			add_custom_property(x,'original_root_name',root.name)
+
+
+
 		
 		#loop through all the meshes and rename them to something human-readable
 		if x.type =='ARMATURE':
 			for obj in x.parent.children_recursive:
 				if obj.type == 'MESH':
+					add_custom_property(obj,'original_mesh_name',obj.name) 
 					print("renaming!" + obj.name)
 					rename_ffxiv_mesh(obj)
 					
-		
+def add_custom_property(obj,prop_name,prop_value):
+	
+	obj.data[prop_name] = prop_value
+
+
+
 
 def rename_ffxiv_mesh(obj):
 	# Input string
@@ -149,7 +163,14 @@ def rename_ffxiv_mesh(obj):
 		# Print the parsed parts
 		for i, part in enumerate(parsed_parts):
 			print(f"Part {i + 1}: {part}")
-			
+		
+		#add mesh details as a custom property
+		Model_ID = parsed_parts[0]+parsed_parts[1]+parsed_parts[2]+parsed_parts[3]+parsed_parts[4]
+		add_custom_property(obj,'ModelID',Model_ID)
+		add_custom_property(obj,'ModelRaceID',int(parsed_parts[0].lstrip('c')))
+		add_custom_property(obj,'ModelNumberID',int(parsed_parts[2]))
+		add_custom_property(obj,'ModelTypeID',parsed_parts[4])
+		add_custom_property(obj,'MeshPartNumber',parsed_parts[8])
 			
 		# Define the replacement dictionary
 		race_dict = {
@@ -175,17 +196,20 @@ def rename_ffxiv_mesh(obj):
 			"c1801": "Vier_F",
 		}
 
+		
 
 		# Replace part 1 using the dictionary
 		if parsed_parts[0] in race_dict:
 			parsed_parts[0] = race_dict[parsed_parts[0]]
+
+		add_custom_property(obj,'ModelRaceType',parsed_parts[0])
 			
 		part_dict = {    
 			"wrs":"Wrists",
 			"ear":"Earring",
 			"nek":"Neck",
-			"rir":"Rings",
-			"ril":"Rings",
+			"rir":"Ring_L",
+			"ril":"Ring_R",
 			"dwn":"Legs",
 			"met":"Head",
 			"sho":"Feet",
@@ -201,11 +225,12 @@ def rename_ffxiv_mesh(obj):
 		if parsed_parts[4] in part_dict:
 			parsed_parts[4] = part_dict[parsed_parts[4]]
 
-			
+		add_custom_property(obj,'ModelType',parsed_parts[4])
+
 		# Print the parsed parts
 		#for i, part in enumerate(parsed_parts):
 			#print(f"Part {i + 1}: {part}")
-
+		
 		new_mesh_name = parsed_parts[4]+"-"+parsed_parts[1]+parsed_parts[2]+"-"+parsed_parts[8]+"-"+parsed_parts[0]
 
 		obj.name = new_mesh_name

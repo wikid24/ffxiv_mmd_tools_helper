@@ -5,6 +5,8 @@ import mmd_tools.core.model as mmd_model
 import json
 import math
 
+def add_custom_property(obj,prop_name,prop_value):
+	obj.data[prop_name] = prop_value
 
 def parse_chara_file(file_path):
 	
@@ -16,16 +18,20 @@ def parse_chara_file(file_path):
 	
 	# Define CHARAFILE_DICTIONARY containing the list of keys to check
 	CHARAFILE_KEYS = {
-		#faceshape
+		#faceshape shapekey stuff
 		'Eyes',
 		'Eyebrows',
 		'Mouth',
 		'Nose',
 		'Jaw',
-		#race stuff
+		#body type stuff
 		'Race',
 		'Tribe',
 		'Gender',
+		'Head',
+		'Hair',
+		'TailEarsType',
+		'Bust',
 		#Colors
 		'Skintone',
 		'HairTone',
@@ -48,7 +54,7 @@ def parse_chara_file(file_path):
 		for key in charafile_data:
 			if charafile_key == key:
 
-				#if value for these keys >= 128, then subtract 128 
+				#if value for some of these keys >= 128, then subtract 128 
 				#values higher than 128 is a modifier for some checkboxes in Anamnesis
 				#for example if Eyes=128, then Eyes is actually '0' and the 'Small Iris' checkbox is checked in Anamnesis
 				#don't ask me why it's coded this way, it's just weird AF
@@ -302,9 +308,28 @@ def convert_srgb_to_linear_rgb(srgb_color_component):
 
 		return linear_color_component
 
+def add_custom_properties_to_armature (selected_armature,RESULTS_DICT):
+	selected_armature = bpy.context.active_object
+
+	if selected_armature and selected_armature.type == 'ARMATURE':
+		for key in RESULTS_DICT:
+			if key in ('BustScale','SkinGloss'):
+				x = [float(x) for x in RESULTS_DICT[key].split(',')]
+				add_custom_property(selected_armature,key,x)
+			else:
+				add_custom_property(selected_armature,key,RESULTS_DICT[key])
+
 def main(context,filepath):
 	#print (filepath)
+
+	obj = bpy.context.active_object
+	selected_armature = None
+
+	if obj and obj.type == 'ARMATURE':
+		selected_armature = obj
+
 	RESULTS_DICT=parse_chara_file(filepath)
+	add_custom_properties_to_armature(selected_armature,RESULTS_DICT)
 	apply_face_shape_keys(RESULTS_DICT)
 	apply_face_bone_morphs(RESULTS_DICT)
 	color_key = get_color_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
@@ -316,6 +341,15 @@ def main(context,filepath):
 	context.scene.color_eyes = hex_to_rgba(color_hex_data['eyes'])
 	context.scene.color_lips = hex_to_rgba(color_hex_data['lips'])
 	context.scene.color_facepaint = hex_to_rgba(color_hex_data['facepaint'])
+
+	#add the hex properties to the armature
+	add_custom_property(selected_armature,'color_hex_skin',color_hex_data['skin'])
+	add_custom_property(selected_armature,'color_hex_hair',color_hex_data['hair'])
+	add_custom_property(selected_armature,'color_hex_hair_highlights',color_hex_data['hair_highlights'])
+	add_custom_property(selected_armature,'color_hex_tattoo_limbal',color_hex_data['tattoo_limbal'])
+	add_custom_property(selected_armature,'color_hex_eyes',color_hex_data['eyes'])
+	add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
+	add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
 
 
 from bpy_extras.io_utils import ImportHelper

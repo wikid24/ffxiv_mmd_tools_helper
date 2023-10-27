@@ -8,9 +8,10 @@
 - Joints connect TWO RIGID BODIES together so that when any one of them moves, the other one moves with it.
 - Joints properties control how stiff the connection is, such as if there is elasticity (linear limit) and hinge flexibility (angular limit) between them.
 
-- When Physics is turned ON, gravity is enabled so any object from any height at frame 0, will start falling starting on frame 1.
+- When Physics is turned ON, gravity is enabled so any rigid body from any height at frame 0, will start falling starting on frame 1.
 - When the physics are NOT baked, the physics will be calculated in REAL TIME. Hopping around various parts on the timeline will MESS IT UP badly, you play every single frame sequentially from frame 0 if you wanna see it work properly.
 - When the physics are BAKED, the physics are already baked into the frame so you can feel free to jump to various parts on the timeline as much as you want.
+- IF YOU WANT TO CHANGE RIGID BODY OR JOINT PROPERTIES AFTER YOU TURNED PHYSICS ON AND/OR BAKED, DELETE THE BAKE AND TURN PHYSICS OFF FIRST. IF YOU DON'T YOU MIGHT NOT BE ABLE TO RECOVER FROM BLENDER ISSUES/ERRORS.
 
 
 # Intro

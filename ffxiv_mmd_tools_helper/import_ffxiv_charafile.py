@@ -1,9 +1,11 @@
 import bpy
 from . import register_wrap
 from . import import_csv
+from . import bone_conversion
 import mmd_tools.core.model as mmd_model
 import json
 import math
+
 
 def add_custom_property(obj,prop_name,prop_value):
 	obj.data[prop_name] = prop_value
@@ -484,6 +486,9 @@ def main(context,filepath,apply_charafile_to_selected=None):
 		add_custom_property(selected_armature,'color_hex_eyes',color_hex_data['eyes'])
 		add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
 		add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
+
+		
+		bone_conversion.set_bust_size(bust_xyz=[float(x) for x in RESULTS_DICT['BustScale'].split(',')])
 	
 
 

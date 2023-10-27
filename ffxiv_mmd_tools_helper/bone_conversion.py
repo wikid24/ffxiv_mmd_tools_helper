@@ -662,7 +662,7 @@ def merge_double_jointed_knee(armature):
 	else:
 		print("Rename bones to MMD_English and then try again.")
 
-def set_bust_size(bust_scale=None):
+def set_bust_size(bust_scale=None,bust_xyz=None):
 	print('\n')
 	armature = model.find_MMD_Armature(bpy.context.active_object)
 
@@ -678,13 +678,36 @@ def set_bust_size(bust_scale=None):
 		scale_z = 1
 			
 		if bust_L is not None and bust_R is not None:
-			if bust_scale is not None:
+
+			if bust_xyz is not None:
+				scale_x = bust_xyz[0]
+				scale_y = bust_xyz[1]
+				scale_z = bust_xyz[2]
+
+			elif bust_scale is not None:
 				scale_x = 0.92 + (bust_scale * 0.16)
 				scale_y = 0.816 + (bust_scale * 0.368)
 				scale_z = 0.8 + (bust_scale * 0.4)
 
+				#x @ 1 = 0.922
+				#y @ 1 = 0.804
+				#z @ 1 = 0.82
+
+
+				#x @ 100 = 1.08
+				#y @ 100 = 1.2
+				#z @ 100 = 1.184
+
+
 			bust_L.scale= (scale_z,scale_y,scale_x)
 			bust_R.scale= (scale_z,scale_y,scale_x)
+
+			
+			#insert a keyframe at frame 0 to set the bust size
+			bust_L.keyframe_insert(data_path='scale', frame=0)
+			bust_R.keyframe_insert(data_path='scale', frame=0)
+
+
 
 		
 

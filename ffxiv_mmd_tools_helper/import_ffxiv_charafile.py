@@ -137,69 +137,76 @@ def apply_face_bone_morphs(result_dict):
 	else:
 		print("Bone Morphs not applied since this has not been converted into an MMD Model")
 	
-def diagnose_meshes_against_charafile(armature,CHARAFILE):
+def diagnose_meshes_against_charafile(CHARAFILE,armature=None):
 
-	results = True
+	if armature:
+		results = True
 
-	chara_prop_mapping = [
-		["Head","e","met","HeadGear",],
-		["Body","e","top","Body",],
-		["Hands","e","glv","Hands",],
-		["Legs","e","dwn","Legs",],
-		["Feet","e","sho","Feet",],
-		["Earrings","a","ear","Ears",],
-		["Neck","a","nek","Neck",],
-		["RingL","a","ril","LeftRing",],
-		["RingR","a","rir","RightRing",],
-		["Wrists","a","wrs","Wrists",],
-		["Face","f","fac","Head",],
-		["Hair","h","hir","Hair",],
-		["Tail","t","til","TailEarsType",],
-		["Ears","z","zer","TailEarsType",],
+		chara_prop_mapping = [
+			["Head","e","met","HeadGear",],
+			["Body","e","top","Body",],
+			["Hands","e","glv","Hands",],
+			["Legs","e","dwn","Legs",],
+			["Feet","e","sho","Feet",],
+			["Earrings","a","ear","Ears",],
+			["Neck","a","nek","Neck",],
+			["RingL","a","ril","LeftRing",],
+			["RingR","a","rir","RightRing",],
+			["Wrists","a","wrs","Wrists",],
+			["Face","f","fac","Head",],
+			["Hair","h","hir","Hair",],
+			["Tail","t","til","TailEarsType",],
+			["Ears","z","zer","TailEarsType",],
 
-		]
+			]
 
-	meshlist = {}
+		meshlist = {}
 
-	#loop through all meshes in armature, check the custom properties and add to the meshlist
-	for obj in armature.parent.children_recursive:
-		if obj.type == 'MESH':
-			#check if the custom properties were added
-			if 'ModelID' in obj.data and 'ModelType' in obj.data:
-				model_type = obj.data['ModelType']
-				model_number_id = obj.data['ModelNumberID']
-				model_id = obj.data['ModelID']
-				#meshlist[model_type] = model_number_id
-				meshlist[model_type] = (model_number_id, model_id)
-				
-	print('----------------')
-	print('DIAGNOSIS:')
-	for i in meshlist:
-		#print(i,":",meshlist[i][0])
-		
-		for prop in chara_prop_mapping:
+		#loop through all meshes in armature, check the custom properties and add to the meshlist
+		for obj in armature.parent.children_recursive:
+			if obj.type == 'MESH':
+				#check if the custom properties were added
+				if 'ModelID' in obj.data and 'ModelType' in obj.data:
+					model_type = obj.data['ModelType']
+					model_number_id = obj.data['ModelNumberID']
+					model_id = obj.data['ModelID']
+					#meshlist[model_type] = model_number_id
+					meshlist[model_type] = (model_number_id, model_id)
+					
+		print('----------------')
+		print('DIAGNOSIS:')
+		for i in meshlist:
+			#print(i,":",meshlist[i][0])
+			
+			for prop in chara_prop_mapping:
 
-			#check if i is on the chara_prop_mapping table        
-			if i == prop[0]:        
+				#check if i is on the chara_prop_mapping table        
+				if i == prop[0]:        
 
-				chara_prop = prop[3]
-				#check if prop[3] is in the CHARAFILE
-				if chara_prop in CHARAFILE:
-					chara_prop_value = CHARAFILE[chara_prop]		
-					if meshlist[i][0] == chara_prop_value:
-						#print(f"{i} : {meshlist[i][1]} mesh matches the chara file")
-						break
+					chara_prop = prop[3]
+					#check if prop[3] is in the CHARAFILE
+					if chara_prop in CHARAFILE:
+						chara_prop_value = CHARAFILE[chara_prop]		
+						if meshlist[i][0] == chara_prop_value:
+							#print(f"{i} : {meshlist[i][1]} mesh matches the chara file")
+							break
+						else:
+							print(f"{i} : {meshlist[i][1]} mesh DOES NOT MATCH the chara file {prop[3]}: {CHARAFILE[chara_prop]}")
+							results = False
+							break
 					else:
-						print(f"{i} : {meshlist[i][1]} mesh DOES NOT MATCH the chara file {prop[3]}: {CHARAFILE[chara_prop]}")
-						results = False
-						break
-				else:
-					print(f"{i} : {meshlist[i][1]} does not exist in the chara file")
+						print(f"{i} : {meshlist[i][1]} does not exist in the chara file")
 
-	
-	print('----------------')
+		
+		if results == True:
+			print("ALL meshes from armature match the chara file!")
 
-	return results
+		print('----------------')
+		
+
+		return results
+	else:
+		print("DIAGNOSIS: To check if armature matches chara file, select an armature first")
 
 
 def reset_all_shape_keys():
@@ -515,7 +522,8 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 
 
 def main(context,filepath,apply_charafile_to_selected=None):
-	#print (filepath)
+	print('----------------')
+	print (f".chara file: {filepath}")
 
 	obj = bpy.context.active_object
 	selected_armature = None
@@ -524,8 +532,6 @@ def main(context,filepath,apply_charafile_to_selected=None):
 		selected_armature = obj
 
 	RESULTS_DICT=parse_chara_file(filepath)
-
-	diagnose_meshes_against_charafile(selected_armature,RESULTS_DICT)
 
 	color_key = get_color_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
 	color_hex_data = get_all_color_data(color_key,RESULTS_DICT)
@@ -537,7 +543,11 @@ def main(context,filepath,apply_charafile_to_selected=None):
 	context.scene.color_lips = hex_to_rgba(color_hex_data['lips'])
 	context.scene.color_facepaint = hex_to_rgba(color_hex_data['facepaint'])
 
+	
+	diagnose_meshes_against_charafile(RESULTS_DICT,selected_armature)
+
 	print_textools_data(RESULTS_DICT,color_hex_data)
+	
 
 	
 	if apply_charafile_to_selected == True:

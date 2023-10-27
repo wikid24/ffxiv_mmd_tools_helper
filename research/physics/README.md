@@ -1,3 +1,14 @@
+#Simple Summary
+- Rigid Bodies control **GRAVITY** properties (such as mass and friction)
+- Rigid Bodies are attached to a model's **bones**
+- When a rigid body moves, the bone moves with it (and likewise, any mesh that is weight painted to the bone will also move)
+- Rigid Bodies' purpose is to collide with OTHER rigid bodies when gravity is applied
+- Rigid Bodies can be set to a "Group" from 0 to 15, as well as "ignore" colliding other rigid body groups via "Rigid Body MASK"
+- Joints connect TWO RIGID BODIES together so that when any one of them moves, the other is attached to it
+- Joints properties control how stiff the connection is, such as if there is elasticity (linear limit) and hinge flexibility (angular limit) between them
+
+
+#Intro
 Physically-based objects are never 'animated' like you would for a regular bone. When physics are turned on, gravity does the work to move them. This is where rigid bodies and joints come in. When you import a rig from FFXIV, it should already have bones and meshes, but there are no rigid bodies or joints attached. You need to add them.
 
 The relationship between rigid bodies, bones, meshes, and joints is important. Bones control a mesh and how it deforms. However, if you turn physics on, rigid bodies control a bone (and therefore, the mesh). The important thing about that rigid bodies is that they have "gravity" properties, therefore depending on the settings applied, they will move according to the gravity parameters set on them, and will affect (or be affected by) other rigid bodies when they collide due to the gravity properties. Joints are used to pin rigid bodies together so that they move as if the rigid bodies are attached, and they control how much rigid bodies are allowed to move/rotate in relation to eachother when they are attached.

@@ -25,6 +25,7 @@ def parse_chara_file(file_path):
 		'Nose',
 		'Jaw',
 		#body type stuff
+		'ObjectKind',
 		'Race',
 		'Tribe',
 		'Gender',
@@ -32,6 +33,19 @@ def parse_chara_file(file_path):
 		'Hair',
 		'TailEarsType',
 		'Bust',
+		'EnableHighlights',
+		#gear
+		'HeadGear',
+		'Body',
+		'Hands',
+		'Legs',
+		'Feet',
+		#accessories
+		'Ears',
+		'Neck',
+		'Wrists',
+		'LeftRing',
+		'RightRing',
 		#Colors
 		'Skintone',
 		'HairTone',
@@ -63,6 +77,8 @@ def parse_chara_file(file_path):
 					if key == 'Eyes':
 						result_dict['SmallIris'] = 1
 						print ("SmallIris:" + str(result_dict['SmallIris']))
+				if key in ['HeadGear','Body','Hands','Legs','Feet','Ears','Neck','Wrists','LeftRing','RightRing']:
+					result_dict[key] = str(charafile_data[key]['ModelBase'])
 				else:
 					result_dict[key] = charafile_data[key]
 
@@ -221,6 +237,55 @@ def get_color_key(race,tribe,gender):
 	return color_key
 
 
+def get_model_race_key(race,tribe,gender):
+
+	race_key = None
+
+	race_dictionary = [
+		["AuRa","Raen","Masculine","aura_raen_m","c1301"],
+		["AuRa","Raen","Feminine","aura_raen_f","c1401"],
+		["AuRa","Xaela","Masculine","aura_xael_m","c1301"],
+		["AuRa","Xaela","Feminine","aura_xael_f","c1401"],
+		["Elezen","Duskwight","Masculine","elez_dusk_m","c0501"],
+		["Elezen","Duskwight","Feminine","elez_dusk_f","c0601"],
+		["Elezen","Wildwood","Masculine","elez_wild_m","c0501"],
+		["Elezen","Wildwood","Feminine","elez_wild_f","c0601"],
+		["Hrothgar","Helions","Masculine","hrot_heli_m","c1501"],
+		#["Hrothgar","Helions","Feminine","hrot_heli_f","c1601"],
+		["Hrothgar","TheLost","Masculine","hrot_lost_m","c1501"],
+		#["Hrothgar","TheLost","Feminine","hrot_lost_f","c1601"],
+		["Hyur","Highlander","Masculine","hyur_high_m","c0301"],
+		["Hyur","Highlander","Feminine","hyur_high_f","c0401"],
+		["Hyur","Midlander","Masculine","hyur_midl_m","c0101"],
+		["Hyur","Midlander","Feminine","hyur_midl_f","c0201"],
+		["Lalafel","Dunesfolk","Masculine","lala_dune_m","c1101"],
+		["Lalafel","Dunesfolk","Feminine","lala_dune_f","c1201"],
+		["Lalafel","Plainsfolk","Masculine","lala_plai_m","c1101"],
+		["Lalafel","Plainsfolk","Feminine","lala_plai_f","c1201"],
+		["Miqote","KeeperOfTheMoon","Masculine","miqo_keep_m","c0701"],
+		["Miqote","KeeperOfTheMoon","Feminine","miqo_keep_f","c0801"],
+		["Miqote","SeekerOfTheSun","Masculine","miqo_seek_m","c0701"],
+		["Miqote","SeekerOfTheSun","Feminine","miqo_seek_f","c0801"],
+		["Roegadyn","Hellsguard","Masculine","roeg_hell_m","c0901"],
+		["Roegadyn","Hellsguard","Feminine","roeg_hell_f","c1001"],
+		["Roegadyn","SeaWolf","Masculine","roeg_seaw_m","c0901"],
+		["Roegadyn","SeaWolf","Feminine","roeg_seaw_f","c1001"],
+		["Viera","Rava","Masculine","vier_rava_m","c1701"],
+		["Viera","Rava","Feminine","vier_rava_f","c1801"],
+		["Viera","Veena","Masculine","vier_veen_m","c1701"],
+		["Viera","Veena","Feminine","vier_veen_f","c1801"],
+
+	]
+
+	for i in race_dictionary:
+		#print (i[0] + i[1]+i[2]+i[3])
+		if race==i[0] and tribe == i[1] and gender == i[2]:
+			race_key = i[4]
+			break
+		
+	print (f"race_key={race_key}")
+
+	return race_key
 
 
 
@@ -316,10 +381,71 @@ def add_custom_properties_to_armature (selected_armature,RESULTS_DICT):
 			if key in ('BustScale','SkinGloss'):
 				x = [float(x) for x in RESULTS_DICT[key].split(',')]
 				add_custom_property(selected_armature,key,x)
+			#if key in ('EnableHighlights'):
+				#add_custom_property(selected_armature,key,bool(RESULTS_DICT[key]))
 			else:
 				add_custom_property(selected_armature,key,RESULTS_DICT[key])
 
-def main(context,filepath):
+def print_textools_data(RESULTS_DICT,color_hex_data):
+
+	#print the export .FBX cheatsheet for textools
+	print('TEXTOOLS DATA:')
+	print('----------------')
+	print(f"Skin Color: {color_hex_data['skin']}")
+	print(f"Hair Color: {color_hex_data['hair']}")
+	if RESULTS_DICT['EnableHighlights'] == True:
+		print(f"Hair Highlights Color: {color_hex_data['hair_highlights']}")
+	else:
+		print(f"Hair Highlights Color: {color_hex_data['hair']}")
+	print(f"Iris Color: {color_hex_data['eyes']}")
+	print(f"Lip/Fur Color: {color_hex_data['lips']}")
+	print(f"Tattoo/Limbal Color: {color_hex_data['tattoo_limbal']}")
+	print('----------------')
+	print(f"Race: {RESULTS_DICT['Race']} | Tribe: {RESULTS_DICT['Tribe']} | Gender: {RESULTS_DICT['Gender']}")
+	model_race_key = get_model_race_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
+	print(f"Model Race: {model_race_key}")
+	#print(f"Head: {int(RESULTS_DICT['Head']):04}")
+	print('----------------')
+	
+
+	#body
+	if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Raen","Helions","Rava"]:
+		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
+	elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Xaela","TheLost","Veena"]:
+		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
+		#only 'special' NPC faces will use the +200s, I think normal NPC's use the regular 100s, its on a case by case basis tbh
+	
+	print(f"Hair Model: {model_race_key}h{int(RESULTS_DICT['Hair']):04}_hir")
+	
+	if RESULTS_DICT['Race'] in ['Miqote','Hrothgar','AuRa']:
+		print(f"Tail Model: {model_race_key}t{int(RESULTS_DICT['TailEarsType']):04}_til")
+	#gear
+	print('----------------')
+	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04}")
+	print(f"Legs Gear: e{int(RESULTS_DICT['Legs']):04}")
+	print(f"Head Gear: e{int(RESULTS_DICT['HeadGear']):04}")
+	print(f"Hand Gear: e{int(RESULTS_DICT['Hands']):04}")
+	print(f"Feet Gear: e{int(RESULTS_DICT['Feet']):04}")
+	print('----------------')
+	#accessories
+	print(f"Earring Gear: a{int(RESULTS_DICT['Ears']):04}")
+	print(f"Necklace Gear: a{int(RESULTS_DICT['Neck']):04}")
+	print(f"Wrists Gear: a{int(RESULTS_DICT['Wrists']):04}")	
+	print(f"Ring Left Gear: a{int(RESULTS_DICT['LeftRing']):04}")
+	print(f"Ring Right Gear: a{int(RESULTS_DICT['RightRing']):04}")
+	
+	# hyur mid m
+	# hyur high
+	# wild, dusk
+	# plains, dunes
+	# seek, keep
+	# seaw, hells
+	# raen, xael
+	# heli, lost
+	# rava, veena
+
+
+def main(context,filepath,apply_charafile_to_selected=None):
 	#print (filepath)
 
 	obj = bpy.context.active_object
@@ -329,9 +455,7 @@ def main(context,filepath):
 		selected_armature = obj
 
 	RESULTS_DICT=parse_chara_file(filepath)
-	add_custom_properties_to_armature(selected_armature,RESULTS_DICT)
-	apply_face_shape_keys(RESULTS_DICT)
-	apply_face_bone_morphs(RESULTS_DICT)
+
 	color_key = get_color_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
 	color_hex_data = get_all_color_data(color_key,RESULTS_DICT)
 	context.scene.color_skin = hex_to_rgba(color_hex_data['skin'])
@@ -342,21 +466,31 @@ def main(context,filepath):
 	context.scene.color_lips = hex_to_rgba(color_hex_data['lips'])
 	context.scene.color_facepaint = hex_to_rgba(color_hex_data['facepaint'])
 
-	#add the hex properties to the armature
-	add_custom_property(selected_armature,'color_hex_skin',color_hex_data['skin'])
-	add_custom_property(selected_armature,'color_hex_hair',color_hex_data['hair'])
-	add_custom_property(selected_armature,'color_hex_hair_highlights',color_hex_data['hair_highlights'])
-	add_custom_property(selected_armature,'color_hex_tattoo_limbal',color_hex_data['tattoo_limbal'])
-	add_custom_property(selected_armature,'color_hex_eyes',color_hex_data['eyes'])
-	add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
-	add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
+	print_textools_data(RESULTS_DICT,color_hex_data)
+
+	
+	if apply_charafile_to_selected == True:
+		add_custom_properties_to_armature(selected_armature,RESULTS_DICT)
+		apply_face_shape_keys(RESULTS_DICT)
+		apply_face_bone_morphs(RESULTS_DICT)
+		#add the hex properties to the armature
+		add_custom_property(selected_armature,'color_hex_skin',color_hex_data['skin'])
+		add_custom_property(selected_armature,'color_hex_hair',color_hex_data['hair'])
+		add_custom_property(selected_armature,'color_hex_hair_highlights',color_hex_data['hair_highlights'])
+		add_custom_property(selected_armature,'color_hex_tattoo_limbal',color_hex_data['tattoo_limbal'])
+		add_custom_property(selected_armature,'color_hex_eyes',color_hex_data['eyes'])
+		add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
+		add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
+	
+
+
 
 
 from bpy_extras.io_utils import ImportHelper
 @register_wrap
 class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
-	"""Operator that opens the file browser dialog for .chara files from Anamnesis"""
-	bl_idname = "ffxiv_mmd.ffxiv_chara_file_browser_operator"
+	"""Operator that opens the file browser dialog for .chara files from Anamnesis and applies it to currently selected armature"""
+	bl_idname = "ffxiv_mmd.apply_ffxiv_chara_file_browser_operator"
 	bl_label = "Chara File Browser Operator"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -366,18 +500,42 @@ class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 		options={'HIDDEN'},
 	)
 
+	#apply_charafile_to_selected = bpy.props.BoolProperty(name="Apply To Selected", default=False)
+
 	@classmethod
 	def poll(cls, context):
-			if context.active_object:
-				return context.active_object.type == 'ARMATURE'
+		if context.active_object:
+			return context.active_object.type == 'ARMATURE'
+
 
 	def execute(self, context):
 		filepath = self.filepath
-		# Add code here to process the selected file
-		main(context,filepath)
+		main(context,filepath,apply_charafile_to_selected=True)
+
 
 
 		return {'FINISHED'}
+	
+@register_wrap
+class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
+	"""Operator that opens the file browser dialog for .chara files from Anamnesis"""
+	bl_idname = "ffxiv_mmd.read_ffxiv_chara_file_browser_operator"
+	bl_label = "Chara File Browser Operator"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	filename_ext = ".chara"
+	filter_glob: bpy.props.StringProperty(
+		default="*.chara",
+		options={'HIDDEN'},
+	)
+
+	def execute(self, context):
+		filepath = self.filepath
+		main(context,filepath,apply_charafile_to_selected=False)
+
+
+		return {'FINISHED'}
+
 
 
 
@@ -397,28 +555,12 @@ class ImportFFXIVModel(bpy.types.Operator):
 	bpy.types.Scene.color_lips= bpy.props.FloatVectorProperty(name="Lips", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	bpy.types.Scene.color_facepaint= bpy.props.FloatVectorProperty(name="Facepaint", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	
-
-	bpy.types.Scene.selected_ffxiv_test_model2 = bpy.props.EnumProperty(items = \
-	[('none', 'none', 'none')\
-	, ("import_nala", "import_nala","import_nala") \
-	, ("import_nala_deluxe", "import_nala_deluxe","import_nala_deluxe") \
-	, ("AuRa female", "AuRa female","AuRa female") \
-	, ("Elezen Female", "Elezen Female","Elezen Female") \
-	, ("Hrothgar Male", "Hrothgar Male","Hrothgar Male") \
-	, ("Hyur Highlander Female", "Hyur Highlander Female","Hyur Highlander Female") \
-	, ("Hyur Midlander Female", "Hyur Midlander Female","Hyur Midlander Female") \
-	, ("Lalafell Female", "Lalafell Female","Lalafell Female") \
-	, ("Miqote Female", "Miqote Female","Miqote Female") \
-	, ("Roegadyn Female", "Roegadyn Female","Roegadyn Female") \
-	, ("Viera Female", "Viera Female","Viera Female") \
-	
-	], name = "Sample", default = 'none')
-	
 	"""
 	@classmethod
 	def poll(cls, context):
 		return context.active_object is not None
-	"""
+	
 	def execute(self, context):
 		main(context)
 		return {'FINISHED'}
+	"""

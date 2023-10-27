@@ -29,8 +29,11 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
-		row = layout.row()
-		row.operator("ffxiv_mmd.ffxiv_chara_file_browser_operator", text="Import FFXIV .chara File", icon='IMPORT')
+		col = layout.column(align=True)
+		grid = col.grid_flow(row_major=True, align=True)
+		split = row.split(factor=0.5)
+		grid.row(align=True).operator("ffxiv_mmd.read_ffxiv_chara_file_browser_operator", text="Read .chara File", icon='IMPORT')
+		grid.row(align=True).operator("ffxiv_mmd.apply_ffxiv_chara_file_browser_operator", text="Apply .chara File", icon='IMPORT')
 		row = layout.row()
 		row.prop(context.scene,"color_skin", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		row.prop(context.scene,"color_hair", text='',icon_only=True,icon='OUTLINER_DATA_MESH')

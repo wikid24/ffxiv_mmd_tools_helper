@@ -409,11 +409,14 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 	
 
 	#body
-	if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Raen","Helions","Rava"]:
+	if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Rava","Helions","TheLost"]:
 		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
-	elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Xaela","TheLost","Veena"]:
+
+	elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Veena"]:
 		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
-		#only 'special' NPC faces will use the +200s, I think normal NPC's use the regular 100s, its on a case by case basis tbh
+
+
+		#only 'special' NPC faces will use the +200s, I think normal NPC's use the regular 0s and 100s, its on a case by case basis tbh
 	
 	print(f"Hair Model: {model_race_key}h{int(RESULTS_DICT['Hair']):04}_hir")
 	

@@ -1,12 +1,16 @@
 # Simple Summary
-- Rigid Bodies control **GRAVITY** properties (such as mass and friction)
-- Rigid Bodies are attached to a model's **bones**
-- When a rigid body moves, the bone moves with it (and likewise, any mesh that is weight painted to the bone will also move)
-- Rigid Bodies' purpose is to collide with OTHER rigid bodies when gravity is applied
-- Rigid Bodies can be set to a "Group" from 0 to 15, as well as "ignore" colliding other rigid body groups via "Rigid Body MASK"
+- Rigid Bodies control **GRAVITY** properties (such as mass and friction).
+- Rigid Bodies are attached to a model's **bones**.
+- When a rigid body moves, the bone moves with it (and likewise, any mesh that is weight painted to the bone will also move).
+- Rigid Bodies' purpose is to collide with OTHER rigid bodies when gravity is applied.
+- Rigid Bodies can be set to a "Group" from 0 to 15, as well as "ignore" colliding other rigid body groups via "Rigid Body MASK".
   
-- Joints connect TWO RIGID BODIES together so that when any one of them moves, the other one moves with it
-- Joints properties control how stiff the connection is, such as if there is elasticity (linear limit) and hinge flexibility (angular limit) between them
+- Joints connect TWO RIGID BODIES together so that when any one of them moves, the other one moves with it.
+- Joints properties control how stiff the connection is, such as if there is elasticity (linear limit) and hinge flexibility (angular limit) between them.
+
+- When Physics is turned ON, gravity is enabled so any object from any height at frame 0, will start falling starting on frame 1.
+- When the physics are NOT baked, the physics will be calculated in REAL TIME. Hopping around various parts on the timeline will MESS IT UP badly, you play every single frame sequentially from frame 0 if you wanna see it work properly.
+- When the physics are BAKED, the physics are already baked into the frame so you can feel free to jump to various parts on the timeline as much as you want.
 
 
 # Intro

@@ -4,7 +4,8 @@
 - When a rigid body moves, the bone moves with it (and likewise, any mesh that is weight painted to the bone will also move)
 - Rigid Bodies' purpose is to collide with OTHER rigid bodies when gravity is applied
 - Rigid Bodies can be set to a "Group" from 0 to 15, as well as "ignore" colliding other rigid body groups via "Rigid Body MASK"
-- Joints connect TWO RIGID BODIES together so that when any one of them moves, the other is attached to it
+  
+- Joints connect TWO RIGID BODIES together so that when any one of them moves, the other one moves with it
 - Joints properties control how stiff the connection is, such as if there is elasticity (linear limit) and hinge flexibility (angular limit) between them
 
 

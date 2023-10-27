@@ -206,10 +206,10 @@ def rename_ffxiv_mesh(obj):
 			
 		part_dict = {    
 			"wrs":"Wrists",
-			"ear":"Earring",
+			"ear":"Earrings",
 			"nek":"Neck",
-			"rir":"Ring_L",
-			"ril":"Ring_R",
+			"rir":"RingL",
+			"ril":"RingR",
 			"dwn":"Legs",
 			"met":"Head",
 			"sho":"Feet",

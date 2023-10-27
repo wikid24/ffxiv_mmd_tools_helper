@@ -80,7 +80,7 @@ def parse_chara_file(file_path):
 						result_dict['SmallIris'] = 1
 						print ("SmallIris:" + str(result_dict['SmallIris']))
 				if key in ['HeadGear','Body','Hands','Legs','Feet','Ears','Neck','Wrists','LeftRing','RightRing']:
-					result_dict[key] = str(charafile_data[key]['ModelBase'])
+					result_dict[key] = int(charafile_data[key]['ModelBase'])
 				else:
 					result_dict[key] = charafile_data[key]
 
@@ -137,6 +137,70 @@ def apply_face_bone_morphs(result_dict):
 	else:
 		print("Bone Morphs not applied since this has not been converted into an MMD Model")
 	
+def diagnose_meshes_against_charafile(armature,CHARAFILE):
+
+	results = True
+
+	chara_prop_mapping = [
+		["Head","e","met","HeadGear",],
+		["Body","e","top","Body",],
+		["Hands","e","glv","Hands",],
+		["Legs","e","dwn","Legs",],
+		["Feet","e","sho","Feet",],
+		["Earrings","a","ear","Ears",],
+		["Neck","a","nek","Neck",],
+		["RingL","a","ril","LeftRing",],
+		["RingR","a","rir","RightRing",],
+		["Wrists","a","wrs","Wrists",],
+		["Face","f","fac","Head",],
+		["Hair","h","hir","Hair",],
+		["Tail","t","til","TailEarsType",],
+		["Ears","z","zer","TailEarsType",],
+
+		]
+
+	meshlist = {}
+
+	#loop through all meshes in armature, check the custom properties and add to the meshlist
+	for obj in armature.parent.children_recursive:
+		if obj.type == 'MESH':
+			#check if the custom properties were added
+			if 'ModelID' in obj.data and 'ModelType' in obj.data:
+				model_type = obj.data['ModelType']
+				model_number_id = obj.data['ModelNumberID']
+				model_id = obj.data['ModelID']
+				#meshlist[model_type] = model_number_id
+				meshlist[model_type] = (model_number_id, model_id)
+				
+	print('----------------')
+	print('DIAGNOSIS:')
+	for i in meshlist:
+		#print(i,":",meshlist[i][0])
+		
+		for prop in chara_prop_mapping:
+
+			#check if i is on the chara_prop_mapping table        
+			if i == prop[0]:        
+
+				chara_prop = prop[3]
+				#check if prop[3] is in the CHARAFILE
+				if chara_prop in CHARAFILE:
+					chara_prop_value = CHARAFILE[chara_prop]		
+					if meshlist[i][0] == chara_prop_value:
+						#print(f"{i} : {meshlist[i][1]} mesh matches the chara file")
+						break
+					else:
+						print(f"{i} : {meshlist[i][1]} mesh DOES NOT MATCH the chara file {prop[3]}: {CHARAFILE[chara_prop]}")
+						results = False
+						break
+				else:
+					print(f"{i} : {meshlist[i][1]} does not exist in the chara file")
+
+	
+	print('----------------')
+
+	return results
+
 
 def reset_all_shape_keys():
 	# Get the currently selected armature
@@ -234,7 +298,7 @@ def get_color_key(race,tribe,gender):
 			color_key = i[3]
 			break
 		
-	print (f"color_key={color_key}")
+	#print (f"color_key={color_key}")
 
 	return color_key
 
@@ -285,7 +349,7 @@ def get_model_race_key(race,tribe,gender):
 			race_key = i[4]
 			break
 		
-	print (f"race_key={race_key}")
+	#print (f"race_key={race_key}")
 
 	return race_key
 
@@ -405,7 +469,7 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 	print('----------------')
 	print(f"Race: {RESULTS_DICT['Race']} | Tribe: {RESULTS_DICT['Tribe']} | Gender: {RESULTS_DICT['Gender']}")
 	model_race_key = get_model_race_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
-	print(f"Model Race: {model_race_key}")
+	#print(f"Model Race: {model_race_key}")
 	#print(f"Head: {int(RESULTS_DICT['Head']):04}")
 	print('----------------')
 	
@@ -461,6 +525,8 @@ def main(context,filepath,apply_charafile_to_selected=None):
 
 	RESULTS_DICT=parse_chara_file(filepath)
 
+	diagnose_meshes_against_charafile(selected_armature,RESULTS_DICT)
+
 	color_key = get_color_key(RESULTS_DICT['Race'],RESULTS_DICT['Tribe'],RESULTS_DICT['Gender'])
 	color_hex_data = get_all_color_data(color_key,RESULTS_DICT)
 	context.scene.color_skin = hex_to_rgba(color_hex_data['skin'])
@@ -489,6 +555,8 @@ def main(context,filepath,apply_charafile_to_selected=None):
 
 		
 		bone_conversion.set_bust_size(bust_xyz=[float(x) for x in RESULTS_DICT['BustScale'].split(',')])
+
+		
 	
 
 

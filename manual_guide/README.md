@@ -140,10 +140,21 @@ In addition to above, also:
         - SkinGloss (rgb)? I dunno.
         - BustScale (x,y,z)
         - FacialFeatures (Facial Checkbox flags)
+     
+    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/81be8212-ce57-4a19-ad65-c2119be822a1)
+
  
 3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
+
  
-4) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format)
+5) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1217c7d4-9dc7-427c-9004-7c52cc90dc8e)
+
+   Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression [Aura file for example](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
+
 
 #### Color Swatches
 

@@ -252,3 +252,19 @@ Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match so
 Since most standard MMD Models don't have these 'double-jointed' knees, this will merge the FFXIV- 'j_asi_c_l' and 'j_asi_b_l'(or Knee_L if you've renamed the bone) bones into one, and attempt merging the weight painting into the newly merged bone.  Only useful if you're planning to export to PMX format and continue rigging using PMX Editor, otherwise if you're planning on staying in Blender, stick with the double-jointed knee to avoid extra headache.
 #### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
 Attempt to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
+
+### Find & Replace
+
+#### Find 
+Will search for any bone of the selected armature (in edit mode or pose mode) containing the search text provided
+
+#### Replace
+Combined with the find textbox, will rename any found bones to the new name provided
+
+#### Selected only checkbox
+Will limit the 'replace' to only _selected_ bone
+
+### Bone Groups
+
+#### Auto Generate
+Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column

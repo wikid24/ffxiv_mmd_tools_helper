@@ -16,7 +16,7 @@
 
 - Moves all 'Group' objects to an empty object called 'FFXIV Empty Groups'
 - Fixes the alpha blend mode so that all the textures can be viewed properly (blend_method = 'HASHED')
-- Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)
+- Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the [MMD Tools instructions](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual#mmd_bone_order_override))
 - Adds custom object/data properties:
     - Armature object:
         - original_root_name (needed because MMD Tools moves the armature to a new object called 'New MMD Model')    

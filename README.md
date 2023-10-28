@@ -1,11 +1,11 @@
 # FFXIV MMD Tools Helper
 ## EVERYONE in FFXIV can make their FFXIV characters move to MMD (Miku Miku Dance) animation files with as _little effort_ as possible. 
 
-Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. This plugin has massively been updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
+Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install), the superfast [60 second model conversion process](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
+
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a full model conversion to the MMD model structure (which is not compatible _within_ the FFXIV game). If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit)
 
-For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install), simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
 
 While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender.
 

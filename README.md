@@ -1,11 +1,26 @@
-# FFXIV MMD Tools Helper
-## This is a fork of Hogarth-MMD's [mmd_tools_helper](https://github.com/Hogarth-MMD/mmd_tools_helper), massively updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
+# FFXIV MMD Tools Helper (Blender Addon)
+## EVERYONE in FFXIV can make their FFXIV characters move to MMD (Miku Miku Dance) animation files with as _little effort_ as possible. 
 
-Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD so we can all make memes of dancing and music videos with as little effort as possible. Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. 
+This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-What this tool will NOT do is allow you to import these motions back into the FFXIV game as it is a full conversion to the MMD model structure (which is not compatible with FFXIV). If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit)
+- Export models out of FFXIV TexTools (leveraging data from Anamnesis)
+- Update the standard textures to the detailed ones (leveraging the Colorsetter Addon)
+- Convert the model MMD Format
+- Add MMD-style physics in Blender
+- Animate it it in Blender (Including _Facial_ Animation!)
+- Export to .PMX Format (if you want to use it in the Miku Miku Dance program)
 
-For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install), simple [60 second conversion](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
+All can be done in **minutes**.
+
+- [Download Blender Addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases)
+- [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
+- [60 second Model Conversion & Animation Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial
+- [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
+
+
+What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
+
+If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). I've been thinking about how I can integrate it into the XAT workflow, but most of the features and benefits of MMD format will be cut out if I do, considering there are a lot restrictions as everything needs to be ported back into the FFXIV game engine. For now it's on the back burner.
 
 While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender.
 
@@ -92,24 +107,32 @@ Credits:
 ------------
 
 # In order to use this tool, you need:
-- A FFXIV Model exported into FBX file format - [FFXIV TexTools](https://www.ffxiv-textools.net/) - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
-- [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, but it may work on later versions.
-- [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
-- VMD files (MMD character/camera animation/dance files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
+   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, but it may work on later versions.
+   - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
+   - A FFXIV Model exported into .FBX file format
+   - .VMD animation files (MMD animation files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
 
 # Not really needed but recommended:
-- The original MMD model that the VMD animation files were based on (useful for animation scaling reasons)
-- [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
-- [FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4)
-- [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
-- [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
-- PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
-- [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
-- [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import)
-- A bunch of MMD effects: (will list them later)
-- [MikuMikuEffects](https://learnmmd.com/downloads/) - [Install Tutorial](https://www.youtube.com/watch?v=qPOX1eLg3nY)
-- [Ray MMD](https://github.com/ray-cast/ray-mmd/releases) - [Install Tutorial/Beginner's Guide](https://learnmmd.com/http:/learnmmd.com/using-ray-mmd-ver-1-5-0-beginners-guide/)
-- [Alpha Textures Fix](https://www.deviantart.com/dendewa/art/RayMMD-Alpha-Fix-DOWNLOAD-848877809)
+### FFXIV Export Stuff:
+   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV leveraging the .chara file
+   - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data into .FBX format - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
+
+### Blender Addon Stuff:
+   - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2]([url](https://www.youtube.com/watch?v=AhVzU_BK6zk))
+   - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import)
+
+### MMD Animation Stuff:
+   - The original MMD model that the VMD animation files were based on (useful for animation scaling reasons)
+   - [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
+   - [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
+   - [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
+   - PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
+   - [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
+### MMD Rendering Stuff:
+   - A bunch of MMD effects: (will list them later)
+   - [MikuMikuEffects](https://learnmmd.com/downloads/) - [Install Tutorial](https://www.youtube.com/watch?v=qPOX1eLg3nY)
+   - [Ray MMD](https://github.com/ray-cast/ray-mmd/releases) - [Install Tutorial/Beginner's Guide](https://learnmmd.com/http:/learnmmd.com/using-ray-mmd-ver-1-5-0-beginners-guide/)
+   - [Alpha Textures Fix](https://www.deviantart.com/dendewa/art/RayMMD-Alpha-Fix-DOWNLOAD-848877809)
 
 ------------
 # Useful Guides:

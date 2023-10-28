@@ -20,6 +20,7 @@
 - Moves all 'Group' objects to an empty object called 'FFXIV Empty Groups'
 - Fixes the alpha blend mode so that all the textures can be viewed properly (blend_method = 'HASHED')
 - Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the [MMD Tools instructions](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual#mmd_bone_order_override))
+- Renames the meshes objects to something that is more human-readable
 - Adds custom object/data properties:
     - Armature object:
         - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)    
@@ -34,8 +35,9 @@
         - MaterialType - Parsed from active material name
         - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
         - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
-        
- - Renames the meshes objects to something that is more human-readable
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0742b581-f962-4c7c-ad55-a653a2ce407e)
+
+
  
 #### Load Sample
  
@@ -97,6 +99,8 @@ Reads the .chara file and outputs to the results to Blender's System Console.
 In addition to above, also:
  
 1) Adds .chara file custom properties to the armature object:
+    
+
     - Facial Deformation ID (based on the FFXIV tribe & gender's face part selectors in-game)
         - Eyes
         - Eyebrows
@@ -137,9 +141,9 @@ In addition to above, also:
         - BustScale (x,y,z)
         - FacialFeatures (Facial Checkbox flags)
  
-2) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0
+3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0
  
-3) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format)
+4) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format)
 
 #### Color Swatches
 
@@ -216,7 +220,7 @@ Adds 'view_cnt' bone. Not really needed in Blender, but it's a placeholder bone 
 #### 7  -  Correct Shoulder/Arm/Elbow Bone Lengths
 Adjusts the standard FFXIV Bone lengths and positions to be closer to a standard MMD model. THIS IS NOT PERFECT, but it definitely helps. I still haven't figured out the exact position in order to get VMD files to animate the arms 100%. If there are issues upon importing a VMD file, refer to this [FAQ question](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this).
 #### 8  -  Add Eyes Control Bone
-Adds the special MMD 'Eyes' controller bone. 
+Adds the special MMD 'Eyes' controller bone that is used to control 'eye_L' and 'eye_r' at the same time. Applies rotation to both bones
 #### 9  -  Add Arm Twist Bones
 Adds the special MMD 'arm_twist_1','arm_twist_2','arm_twist_3', 'wrist_twist_1', 'wrist_twist_2', 'wrist_twist_3' twist bones, for additional arm fine-tuneing for animations. Needed for some VMD animation files. 
 #### 10 -  Add Shoulder Control Bones

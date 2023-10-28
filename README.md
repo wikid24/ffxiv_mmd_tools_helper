@@ -1,7 +1,12 @@
 # FFXIV MMD Tools Helper
 ## EVERYONE in FFXIV can make their FFXIV characters move to MMD (Miku Miku Dance) animation files with as _little effort_ as possible. 
 
-Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. For now, [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases), check the [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install), the superfast [60 second model conversion process](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial, and the [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
+Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. 
+
+- [download here](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases)
+- [install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
+- [60 second conversion & animation process](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) tutorial
+- [frequently asked questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below. 
 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a full model conversion to the MMD model structure (which is not compatible _within_ the FFXIV game). If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit)

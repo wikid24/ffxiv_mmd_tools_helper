@@ -1,4 +1,5 @@
 import bpy
+import os
 from . import register_wrap
 from . import miscellaneous_tools
 from . import bones_renamer
@@ -13,7 +14,7 @@ def get_test_model_file_path(ffxiv_model):
 
 	return file_path
 
-def import_ffxiv_model(file_path):
+def import_ffxiv_model(context,file_path):
 
 	#file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
 	#print(file_path)
@@ -124,8 +125,9 @@ def import_ffxiv_model(file_path):
 			root = x.parent
 			add_custom_property(x,'original_root_name',root.name)
 
+		
 
-
+		mesh_list = {}
 		
 		#loop through all the meshes and rename them to something human-readable
 		if x.type =='ARMATURE':
@@ -134,10 +136,91 @@ def import_ffxiv_model(file_path):
 					add_custom_property(obj,'original_mesh_name',obj.name) 
 					#print("renaming!" + obj.name)
 					rename_ffxiv_mesh(obj)
+
+					original_material_name = obj.data['original_material_name']
+					model_type = obj.data['ModelType']
+					material_folder=''
+					immediate_folder_name=''
+					#if mesh doesn't exist on the mesh_list add to the mesh_list
+					if original_material_name not in mesh_list:
+						mesh_list[original_material_name] = (model_type,material_folder,immediate_folder_name)
+
+
+		#loop through the mesh_list and search for the target files
+		for i in mesh_list:
+			
+			material_folder = find_TexTools_material_texture_folder(context.scene.textools_model_folder,mesh_list[i][0],i)
+
+			#if material folder is found, update mesh_list with the details
+			if material_folder:
+				immediate_folder_name = material_folder.split(os.path.sep)[-1]
+				mesh_list[i] = (mesh_list[i][0],material_folder,immediate_folder_name)
+			
+			print(f"{i}: {mesh_list[i][0]}, {mesh_list[i][1]},{mesh_list[i][2]}")
+
 					
 def add_custom_property(obj,prop_name,prop_value):
 	
 	obj.data[prop_name] = prop_value
+
+
+
+def find_TexTools_material_texture_folder(root_folder_path,ModelType,original_material_name):
+
+	#root_folder_path = r'C:\Users\wikid\OneDrive\Documents\TexTools\Saved'
+	#ModelType = 'Body'
+	#original_material_name = 'mt_c0501e9152_top_a'
+	#target_filename = 'mt_c0501e9152_top_a.dat'
+	target_filename = original_material_name+'.dat'
+	target_folder_path = None
+	ModelType_subfolder = None
+
+	prop_textools_subfolder_dict = {    
+			"Wrists":"Wrists",
+			"Earrings":"Earring",
+			"Neck":"Neck",
+			"RingL":"Rings",
+			"RingR":"Rings",
+			"Legs":"Legs",
+			"Head":"Head",
+			"Feet":"Feet",
+			"Hands":"Hands",
+			"Body":"Body",
+			"Face":"Character\Face",
+			"Hair":"Character\Hair",
+			"Tail":"Character\Tail",
+			"Ears":"Character\Ear",
+			"EquipmentDecal":"Character\Equipment Decals",
+			"FacePaint":"Character\Face Paint",
+		}
+	
+	if ModelType in prop_textools_subfolder_dict:
+		ModelType_subfolder = prop_textools_subfolder_dict[ModelType]
+	else:
+		ModelType_subfolder = ""  # Set it to an empty string if not found
+
+	def find_target_file(folder_path, target_filename):
+		for root, dirs, files in os.walk(folder_path):
+			if target_filename in files:
+				return os.path.abspath(root)
+		return None
+
+	# Ensure ModelType_subfolder is a string before using it in os.path.join
+	#if not isinstance(ModelType_subfolder, str):
+		#ModelType_subfolder = str(ModelType_subfolder)
+
+	subfolder_path = os.path.join(root_folder_path, ModelType_subfolder)
+	if os.path.exists(subfolder_path):
+		target_folder_path = find_target_file(subfolder_path, target_filename)
+
+	#if target_folder_path:
+	#	print("Target Folder:", target_folder_path)
+	#else:
+	#	print(f"Filename {target_filename} not found in folder {subfolder_path}.")
+
+	return target_folder_path
+
+
 
 
 
@@ -161,8 +244,8 @@ def rename_ffxiv_mesh(obj):
 			start_index += length
 
 		# Print the parsed parts
-		for i, part in enumerate(parsed_parts):
-			print(f"Part {i + 1}: {part}")
+		#for i, part in enumerate(parsed_parts):
+			#print(f"Part {i + 1}: {part}")
 		
 		#add mesh details as a custom property
 		Model_ID = parsed_parts[0]+parsed_parts[1]+parsed_parts[2]+parsed_parts[3]+parsed_parts[4]
@@ -171,8 +254,9 @@ def rename_ffxiv_mesh(obj):
 		add_custom_property(obj,'ModelNumberID',int(parsed_parts[2]))
 		add_custom_property(obj,'ModelTypeID',parsed_parts[4])
 		add_custom_property(obj,'MeshPartNumber',parsed_parts[8])
-		add_custom_property(obj,'original_material_name',obj.active_material.name)
+		add_custom_property(obj,'original_material_name',obj.active_material.name.split('.')[0])
 			
+
 		# Define the replacement dictionary
 		race_dict = {
 			"c0101": "Hyur_Mid_M",
@@ -242,12 +326,12 @@ def main(context):
 	if bpy.context.scene.selected_ffxiv_test_model == "import_nala":
 		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
-		import_ffxiv_model(filepath)
+		import_ffxiv_model(context,filepath)
 
 	elif bpy.context.scene.selected_ffxiv_test_model == "import_nala_deluxe":
 		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
-		import_ffxiv_model(filepath)
+		import_ffxiv_model(context,filepath)
 		miscellaneous_tools.fix_object_axis()
 		bones_renamer.main(context)
 		miscellaneous_tools.correct_root_center()
@@ -256,7 +340,7 @@ def main(context):
 		miscellaneous_tools.correct_waist_cancel()
 		add_foot_leg_ik.main(context)
 	else:
-		import_ffxiv_model(get_test_model_file_path(bpy.context.scene.selected_ffxiv_test_model))
+		import_ffxiv_model(context,get_test_model_file_path(bpy.context.scene.selected_ffxiv_test_model))
 
 
 from bpy_extras.io_utils import ImportHelper
@@ -277,7 +361,7 @@ class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 		file = self.filepath
 		# Add code here to process the selected file
 		print (file)
-		import_ffxiv_model(file)
+		import_ffxiv_model(context,file)
 
 		return {'FINISHED'}
 
@@ -313,4 +397,28 @@ class ImportFFXIVModel(bpy.types.Operator):
 	"""
 	def execute(self, context):
 		main(context)
+		return {'FINISHED'}
+	
+
+
+@register_wrap
+class SelectTexToolsModelFolder(bpy.types.Operator):
+	"""User can select the folder for materials"""
+	bl_idname = "ffxiv_mmd.select_textools_model_folder"
+	bl_label = "Select TexTools Model Folder"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	#folder_path = "yoooooo"
+	bpy.types.Scene.textools_model_folder = bpy.props.StringProperty(name="TexTools Model Folder", description="Folder for where TexTools stores FFXIV gear files", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
+
+	#@classmethod
+	#def poll(cls, context):
+	#	return context.active_object is not None and context.active_object.type == 'MESH'
+
+	def execute(self, context):
+		context.scene.textools_model_folder = bpy.path.abspath(context.scene.textools_model_folder)
+		folder_path = context.scene.textools_model_folder
+		print(folder_path)
+		
+
 		return {'FINISHED'}

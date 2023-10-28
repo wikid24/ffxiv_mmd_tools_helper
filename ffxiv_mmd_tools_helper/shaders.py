@@ -47,52 +47,6 @@ def apply_texture_file_to_colorset_node(node_label,texture_file):
 							node.image = texture_file
 
 
-"""
-
-def apply_multimap_file(multimap_file):
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			for slot in obj.material_slots:
-					mat = slot.material
-
-					for node in mat.node_tree.nodes:
-						if node.label =='MultiTexture':
-							node.image = multimap_file
-
-
-def apply_normalmap_file(normalmap_file):
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			for slot in obj.material_slots:
-					mat = slot.material
-					
-					for node in mat.node_tree.nodes:
-						if node.label =='Normal Texture':
-							node.image = normalmap_file
-							fix_normalmap()
-
-def apply_specular_file(specular_file):
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			for slot in obj.material_slots:
-					mat = slot.material
-					
-					for node in mat.node_tree.nodes:
-						if node.label =='Specular Texture':
-							node.image = specular_file
-
-def apply_diffuse_file(diffuse_file):
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			for slot in obj.material_slots:
-					mat = slot.material
-					
-					for node in mat.node_tree.nodes:
-						if node.label =='Diffuse Texture':
-							node.image = diffuse_file							
-							
-"""							
-
 
 def fix_normalmap ():
 	for obj in bpy.context.selected_objects:
@@ -167,17 +121,6 @@ def apply_colorset_plugin():
 
 					return old_material
 				
-					new_material = obj.active_material
-
-					if check_if_cs_plugin_error(obj):
-						#if error detected, delete the material node and reset the material to it's original material
-						if old_material == new_material:
-							print("")
-						else:
-							obj.active_material = old_material
-							# Remove the material
-							bpy.data.materials.remove(new_material)
-
 
 def apply_textures_to_colorset_material(context,folder_path):
 	if bpy.context.active_object:

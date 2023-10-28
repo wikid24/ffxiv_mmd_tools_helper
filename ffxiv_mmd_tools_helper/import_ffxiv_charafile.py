@@ -658,23 +658,3 @@ class ImportFFXIVModel(bpy.types.Operator):
 
 
 
-@register_wrap
-class SelectTexToolsModelFolder(bpy.types.Operator):
-	"""User can select the folder for materials"""
-	bl_idname = "ffxiv_mmd.select_textools_model_folder"
-	bl_label = "Select TexTools Model Folder"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	#folder_path = "yoooooo"
-	bpy.types.Scene.textools_model_folder = bpy.props.StringProperty(name="TexTools Model Folder", description="Folder for where TexTools stores FFXIV gear files", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
-
-	#@classmethod
-	#def poll(cls, context):
-	#	return context.active_object is not None and context.active_object.type == 'MESH'
-
-	def execute(self, context):
-		folder_path = context.scene.textools_model_folder
-		print(context.scene.ffxiv_mmd.select_materials_folder.folder_path)
-		
-
-		return {'FINISHED'}

@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 850),
+	"version": (0, 851),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -35,6 +35,7 @@ if "bpy" in locals():
 		import imp as importlib
 	else:
 		import importlib
+	importlib.reload(addon_preferences)
 	importlib.reload(model)
 	importlib.reload(import_csv)
 	importlib.reload(add_foot_leg_ik)
@@ -69,6 +70,7 @@ else:
 
 	__make_annotations = (bpy.app.version >= (2, 80, 0))
 	__bpy_property = (bpy.props._PropertyDeferred if hasattr(bpy.props, '_PropertyDeferred') else tuple)
+	from . import addon_preferences
 	from . import model
 	from . import import_csv
 	from . import add_foot_leg_ik

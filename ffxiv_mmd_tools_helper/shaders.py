@@ -383,7 +383,12 @@ class SelectMaterialsFolder(bpy.types.Operator):
 
 	@classmethod
 	def poll(cls, context):
-		return context.active_object is not None and context.active_object.type == 'MESH'
+
+		if 	context.active_object is not None \
+			and context.active_object.type == 'MESH' \
+			and os.path.exists(context.scene.shaders_texture_folder):
+			return True
+
 
 	def execute(self, context):
 		context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)

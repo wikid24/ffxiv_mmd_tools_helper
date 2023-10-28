@@ -134,7 +134,7 @@ In addition to above, also:
         - BustScale (x,y,z)
         - FacialFeatures (Facial Checkbox flags)
  
-2) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the selected armature by setting them to 1.0
+2) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0
  
 3) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format)
 

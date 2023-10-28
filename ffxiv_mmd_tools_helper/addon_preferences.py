@@ -19,10 +19,27 @@ class FFXIV_MMDAddonPreferences(bpy.types.AddonPreferences):
         layout = self.layout
         layout.prop(self, "textools_saved_folder")
 
+        """
         if not self.textools_saved_folder:
             # If the property is not set, set a default value here
             user_profile = os.environ.get('USERPROFILE')
             if user_profile:
                 documents_folder = os.path.join(user_profile, 'Documents', 'TexTools', 'Saved')
                 self.textools_saved_folder = documents_folder
+        """
 
+   # def update_textools_saved_folder(self, context):
+        if not self.textools_saved_folder:
+            # If the property is not set, set a default value here
+            user_profile = os.environ.get('USERPROFILE')
+            if user_profile:
+                documents_folder = os.path.join(user_profile, 'OneDrive', 'Documents', 'TexTools', 'Saved')
+                if os.path.exists(documents_folder):
+                    self.textools_saved_folder = documents_folder
+                else:
+                    documents_folder = os.path.join(user_profile, 'Documents', 'TexTools', 'Saved')
+                    if os.path.exists(documents_folder):
+                        self.textools_saved_folder = documents_folder
+                    else:
+                        # Fallback to a different location if the folder doesn't exist
+                        self.textools_saved_folder = ""  # Set your desired fallback path here

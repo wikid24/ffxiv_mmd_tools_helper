@@ -1,5 +1,5 @@
 # FFXIV MMD Tools Helper
-## Purpose of this tool is for EVERYONE in FFXIV to start exporting their favorite FFXIV characters to MMD (Miku Miku Dance) so we can all make memes of dancing and music videos with as _little effort_ as possible. 
+## EVERYONE in FFXIV can make their FFXIV characters move to MMD (Miku Miku Dance) animation files with as _little effort_ as possible. 
 
 Once I get this tool out of alpha, detailed tutorials on how to export FFXIV characters to MMD will come. This plugin has massively been updated to be compatible with FFXIV Models and Blender 2.8+. It's a work in progress.
 

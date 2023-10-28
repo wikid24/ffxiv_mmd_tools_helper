@@ -114,8 +114,8 @@ Credits:
 
 # Not really needed but recommended:
 ### FFXIV Export Stuff:
-   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV
-   - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
+   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV leveraging the .chara file
+   - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data into .FBX format - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
 
 ### Blender Addon Stuff:
    - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2]([url](https://www.youtube.com/watch?v=AhVzU_BK6zk))

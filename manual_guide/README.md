@@ -198,8 +198,36 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 
 ### MMD Conversion
 
-Various steps to add/remove certain bones to MMD Format
+Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from 'FFXIV' to 'MMD English' format for most of these to work._
 
-- Run Steps 1 to 12 - Shortcut to running steps 1 to 12 in order
-- 
+#### Run Steps 1 to 12 - Shortcut to running steps 1 to 12 in order
+#### 1  -  Remove unused bones (no vertex groups)
+Removes any bones without any meshes attached. Useful since the stanard FFXIV bone struture the is imported includes bones even when there are no meshes attached to it. Removing them makes the armature cleaner / easier to see in Blender
+#### 2  -  Correct MMD Root and Center bones
+Adds the MMD 'root' and 'center' bones if they don't already exist on the model, and move the bones to the correct position while at rest pose
+#### 3  -  Correct MMD Groove bone
+Adds the MMD 'groove' bone if they don't already exist on the model, and move the bones to the correct position while at rest pose
+#### 4  -  Correct MMD Waist bone
+Moves the 'waist' bone to the correct position while at rest pose
+#### 5  -  Correct Waist Cancel L/R bones
+Adds the _special_ MMD 'waist_cancel_l' and 'waist_cancel_r' bones to the correct position, and sets the legs as their parent bones. These are modifiers that prevent the rest of the armature moving from the waist down. Useful for some certain MMD Models. Sometimes it's needed for VMD files, some times it is not. If there are issues with these bones, refer to the FAQ [question](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)  to fix
+#### 6  -  Correct MMD 'view cnt' bone
+Adds 'view_cnt' bone. Not really needed in Blender, but it's a placeholder bone useful sometimes for animating stuff in Miku Miku Dance, as some properties are keyframed to this bone.
+#### 7  -  Correct Shoulder/Arm/Elbow Bone Lengths
+Adjusts the standard FFXIV Bone lengths and positions to be closer to a standard MMD model. THIS IS NOT PERFECT, but it definitely helps. I still haven't figured out the exact position in order to get VMD files to animate the arms 100%. If there are issues upon importing a VMD file, refer to this [FAQ question](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this).
+#### 8  -  Add Eyes Control Bone
+Adds the special MMD 'Eyes' controller bone. 
+#### 9  -  Add Arm Twist Bones
+Adds the special MMD 'arm_twist_1','arm_twist_2','arm_twist_3', 'wrist_twist_1', 'wrist_twist_2', 'wrist_twist_3' twist bones, for additional arm fine-tuneing for animations. Needed for some VMD animation files. 
+#### 10 -  Add Shoulder Control Bones
+Adds the special MMD 'should_C','shoulder_P' bones. Needed for some VMD animation files. 
+#### 11 -  Add Leg/Foot IK
+#### 12 -  Auto-Fix MMD Japanese/English Bone Names
+#### 13 -  Add Hand/Arm IK
+#### 14 - Add Extra Finger Bones (select finger mesh first)
+#### 15 - Add Extra Breast Tip Bones
+#### 16 - Merge Double-Jointed Knee (FFXIV PMX Export Only)
+#### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3fd42dd5-236c-4c90-9240-21ed5b70d758)
+
 

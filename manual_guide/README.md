@@ -34,22 +34,22 @@
 #### Load Sample
  
  - Import an example .fbx model that is included with the plugin:
-        - AuRa Female
-        - Elezen Female
-        - Hrothgar Male
-        - Hyur Highlander Female
-        - Hyur Midlander Female
-        - Lalafell Female
-        - Miqote Female
-        - Roegadyn Female
-        - Viera Female
+    - AuRa Female
+    - Elezen Female
+    - Hrothgar Male
+    - Hyur Highlander Female
+    - Hyur Midlander Female
+    - Lalafell Female
+    - Miqote Female
+    - Roegadyn Female
+    - Viera Female
         
 #### TexTools 'Saved' Folder
   
 Saved' Folder where TexTools exports all textures and models by default. Used for pulling in extra custom properties details upon .FBX Import:
-    - Mesh data:  
-        - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
-        - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
+- Mesh data:  
+    - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
+    - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
         
 #### Anamnesis .chara File Read:
 

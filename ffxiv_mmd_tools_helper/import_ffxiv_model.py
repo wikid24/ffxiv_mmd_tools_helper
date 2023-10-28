@@ -186,9 +186,9 @@ def import_ffxiv_model(context,file_path):
 						if mesh_list[matname][3] != '':
 							print(f"{obj.name}: {mesh_list[matname][0]},{mesh_list[matname][1]},{mesh_list[matname][2]},{mesh_list[matname][3]}")
 		
-							#obj.data['ModelName']='yabbadabbadoooooo'
-							add_custom_property(obj,'ModelName',mesh_list[matname][1])
-							add_custom_property(obj,'material_filepath', mesh_list[matname][2])
+							
+							add_custom_property(obj,'ModelName',mesh_list[matname][2])
+							add_custom_property(obj,'material_filepath', mesh_list[matname][3])
 		
 
 					
@@ -208,7 +208,7 @@ def find_TexTools_material_texture_folder(root_folder_path,ModelType,MaterialTyp
 	target_folder_path = None
 	ModelType_subfolder = None
 
-	prop_textools_subfolder_dict = {    
+	textools_subfolder_gear_dict = {    
 			"Wrists":"Wrists",
 			"Earrings":"Earring",
 			"Neck":"Neck",
@@ -219,6 +219,9 @@ def find_TexTools_material_texture_folder(root_folder_path,ModelType,MaterialTyp
 			"Feet":"Feet",
 			"Hands":"Hands",
 			"Body":"Body",
+		}
+	
+	prop_textools_subfolder_char_dict ={
 			"Body":"Character\Body",
 			"Face":"Character\Face",
 			"Hair":"Character\Hair",
@@ -236,8 +239,12 @@ def find_TexTools_material_texture_folder(root_folder_path,ModelType,MaterialTyp
 	
 	
 	if root_folder_path and os.path.exists(root_folder_path):
-		if ModelType in prop_textools_subfolder_dict:
-			ModelType_subfolder = prop_textools_subfolder_dict[ModelType]
+		if ModelType in textools_subfolder_gear_dict and MaterialType in ['e','a']:
+			ModelType_subfolder = textools_subfolder_gear_dict[ModelType]
+
+		elif ModelType in prop_textools_subfolder_char_dict and MaterialType in ['b','f','h','t','z']:
+			ModelType_subfolder = prop_textools_subfolder_char_dict[ModelType]
+
 		else:
 			ModelType_subfolder = ""  # Set it to an empty string if not found
 

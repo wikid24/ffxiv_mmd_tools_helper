@@ -173,29 +173,20 @@ On the **FFXIV MMD** tab
 1) On the **Import an FFXIV Model** panel, click on  **Import your model FBX File**
 2) Click on **Initialize MMD Structure**
 3) With your model's bones (read: armature) selected, on the **Language and Translation** panel, click on "**Mass Rename Bones**" (from FFXIV to MMD English)
-4) On the **Bones and IK** panel, select "Run steps 1 to 9" -> **Run**
+4) On the **Bones and IK** panel, select "Run steps 1 to 12" -> **Run**
 
-![image](https://user-images.githubusercontent.com/19479648/225116978-fc9d2dbd-c3b4-4d27-b2a2-97929b9d785c.png)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/50d0d3d4-1768-4a47-bff4-43ddcdf86f02)
 
-5) On the **Bones and IK** panel, click on **Leg/foot IK**
+5) Go to **Rigid Bodies** Panel -> Click on **From FFXIV Template**
+6) Go to **Joints** Panel -> Click on **From FFXIV Template**
 
-![image](https://user-images.githubusercontent.com/19479648/225117950-33924dbb-8d9d-4198-8053-fbd744618704.png)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/37bc5584-05e0-4a81-a5b4-13d07d6bc9db)
 
-
-6) Go to **Rigid Bodies** Panel -> Click on **From FFXIV Skeleton (CSV)**
-7) Go to **Joints** Panel -> Click on **From FFXIV Skeleton (CSV)**
-
-![image](https://user-images.githubusercontent.com/19479648/225118718-6baf26b6-6b6f-497d-9b08-50c7cfe56458.png)
-
+**Note: Step 7 skipped because the images are out of date**
 
 8) On the **Bone Morphs (Facial Expressions)** Panel, select your model's race and click on **Generate**
 
 ![image](https://user-images.githubusercontent.com/19479648/225119028-099a122f-b3aa-4c36-b400-86c108d210c9.png)
-
-9) On the **Export MMD Preparation** Panel -> Click on **Auto-Fix MMD Japanese/English Bone Names**
-
-![image](https://user-images.githubusercontent.com/19479648/225119958-7208b241-9cdc-4753-9aec-9997c717e633.png)
-
 
 Your character is now rigged and ready for animating using MMD Tools! 
 
@@ -204,6 +195,8 @@ I may suggest saving your Blender file at this point so you can easily switch be
 --------------
 
 ## Part 2: Animating your FFXIV Character using MMD Tools
+
+**Note: Step 9 skipped because the images are out of date**
  
 10) On the Scene Outliner View, click on **New MMD Model**
 11) Go to **MMD** tab

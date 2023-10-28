@@ -149,9 +149,10 @@ In addition to above, also:
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
 
  
-5) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+5) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/manual_guide/README.md#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
 
-   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1217c7d4-9dc7-427c-9004-7c52cc90dc8e)
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
+
 
 
 #### Color Swatches

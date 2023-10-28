@@ -3,7 +3,7 @@
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)
 
 
-## FFXIV MMD -> Import FFXIV Model
+## Import FFXIV Model
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/80e3a3ba-cd96-4897-a73e-b82bfe8b11eb)
 
@@ -174,10 +174,10 @@ Will push the Blender Bone name to the MMD Tool's PMX Japanese Bone name (found 
 Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, and material names. Useful if you're in the MMD-only workflow
 
 
-# Bones and IK
+## Bones and IK
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1fcd5396-ca1b-40bd-9056-7a144297acf3)
 
-## Visibility Shortcuts
+### Visibility Shortcuts
 
 Shortcuts to the standard visibility options found on **Armature** -> **Viewport Display** panel:
 
@@ -196,7 +196,7 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/71e10b43-b181-46b9-bc40-5cdbb10ad650)
 
-## MMD Conversion
+### MMD Conversion
 
 Various steps to add/remove certain bones to MMD Format
 

@@ -114,7 +114,7 @@ Credits:
 
 # Not really needed but recommended:
 ### FFXIV Export Stuff:
-   - [Anamnesis]([url](https://github.com/imchillin/Anamnesis)) - Used for finding out the character data in FFXIV
+   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV
    - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
 
 ### Blender Addon Stuff:

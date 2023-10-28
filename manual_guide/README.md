@@ -222,12 +222,33 @@ Adds the special MMD 'arm_twist_1','arm_twist_2','arm_twist_3', 'wrist_twist_1',
 #### 10 -  Add Shoulder Control Bones
 Adds the special MMD 'should_C','shoulder_P' bones. Needed for some VMD animation files. 
 #### 11 -  Add Leg/Foot IK
+Adds the 'stanard' MMD Leg/Foot IK Bones:
+- leg IK_root_L
+- leg IK_root_R
+- leg IK_L
+- leg IK_R
+- toe IK_L
+- toe IK_R
+And also adds the 'special' MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone)
+- leg_L_D
+- leg_R_D
+- knee_L_D
+- knee_R_D
+- ankle_L_D
+- ankle_R_D
+- toe_L_EX
+- toe_R_EX
+- knee_2_L_D
+- knee_2_R_D
 #### 12 -  Auto-Fix MMD Japanese/English Bone Names
+Fixes the MMD Japanes & English PMX Bone names (while not changing the Blender Bone Name) to their MMD Japanese equivalent. Useful so that you can import a VMD animation file using the MMD Japanese (PMX) bone name without needed to read Japanese in Blender :P
 #### 13 -  Add Hand/Arm IK
+Adds some IK to hands/arms, similar to Leg/IK. Unlike Leg/Arm IK, this one is rarely if ever used in a VMD motion file, and is recommended that you don't use it unless it is actually called for. 
 #### 14 - Add Extra Finger Bones (select finger mesh first)
+Added a third finger bone (the last bone tip of a finger) to FFXIV models, since they only have 2 finger bones. Script will attempt to automatically weight paint the bones, but it is hit or miss. I'd avoid doing this unless you like weight painting manually. Ensure that the hand mesh is selected first _before_ running this command.
 #### 15 - Add Extra Breast Tip Bones
+Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match some other similar looking MMD Models, though it is not needed in Blender. Only useful if you're planning to export to PMX format and continue rigging using PMX Editor.
 #### 16 - Merge Double-Jointed Knee (FFXIV PMX Export Only)
+Since most standard MMD Models don't have these 'double-jointed' knees, this will merge the FFXIV- 'j_asi_c_l' and 'j_asi_b_l'(or Knee_L if you've renamed the bone) bones into one, and attempt merging the weight painting into the newly merged bone.  Only useful if you're planning to export to PMX format and continue rigging using PMX Editor, otherwise if you're planning on staying in Blender, stick with the double-jointed knee to avoid extra headache.
 #### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3fd42dd5-236c-4c90-9240-21ed5b70d758)
-
-
+Attempt to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S

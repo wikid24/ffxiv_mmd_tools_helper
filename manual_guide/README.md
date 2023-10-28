@@ -7,7 +7,7 @@
 
 ### Import FFXIV .fbx File
 
-- Imports a FFXIV Model into Blender
+- Imports a FFXIV Model into Blender and presses 'Apply all transformations' so that Blender will treat this orientation as the 'rest' position. _Important_ to apply transforamtions before importing MMD animation files as it starts using this data for keyframes.
     - primary_bone_axis='X'
     - secondary_bone_axis='Y'
     - use_manual_orientation=True

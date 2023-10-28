@@ -287,15 +287,69 @@ Will limit the 'replace' to only _selected_ bone
 #### Auto Generate
 Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column
 
-# Rigid Bodies
+## Rigid Bodies
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
 
+### Visibility Shortcuts
+
 TBD
 
-# Joints
+### Active Rigid Body / Bone
+
+TBD
+
+### Rigid Body Search
+
+TBD
+
+### Bone Chain Select
+
+TBD
+
+### Skirt Select
+
+TBD
+
+### Rigid Body Transform
+
+TBD
+
+### Rigid Body Create
+
+TBD
+
+## Joints
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
+
+TBD
+
+### Visibility Shortcuts
+
+TBD
+
+### Active Joint / Rigid 1 / Rigid 2
+
+TBD
+
+### Get Joints from Rigid Bodies
+
+TBD
+
+### Vertical Select
+
+TBD
+
+### Horizontal Select
+
+TBD
+
+### Joint Transform
+
+TBD
+
+### Joint Create
 
 
 TBD
@@ -307,29 +361,110 @@ TBD
 
 Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression [Aura file for example](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
 
-# Skirt
+
+## Skirt
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
+
+### Generate a New Skirt Object
+
+TBD
+
+### Move Mesh To New Skirt Object
+
+TBD
+
+### Weight Paint Transfer to Mesh
+
+TBD
+
+### Delete FFXIV & Unused Skirt Vertex Groups
+
+TBD
+
+### Move Bones and Meshes to Armature
+
+TBD
+
+### Generate Skirt Rigid Bodies
+
+TBD
+
+### Generate Skirt Joints
+
+TBD
+
+### Vertex Group List
+
+TBD
 
 
 TBD
 
-# Shaders
+## Shaders
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
 
 TBD
 
-# Miscellaneous Tools
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
-
+### Texture Folder
 
 TBD
 
-# Export MMD Preparation
+### Apply Colorset
+
+TBD
+
+### Active Material
+
+TBD
+
+### Apply Glossy Shader
+
+TBD
+
+### Glossy Roughness Slider
+
+TBD
+
+## Miscellaneous Tools
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+
+### Dropdown List
+
+TBD
+
+### Bust Slider
+
+TBD
+
+## Export MMD Preparation
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
 
+TBD
+
+### Auto-Fix MMD Japanese / English Bone Names
+
+TBD
+
+### Add Display Panels
+
+TBD
+
+### Sort Bone Order / Deform Tools
+
+TBD
+
+### Lock Position & Rotation
+
+TBD
+
+### Set Fixed Axis / Local Axis
+
+TBD
+
+### High Special & Physics Bones
 
 TBD

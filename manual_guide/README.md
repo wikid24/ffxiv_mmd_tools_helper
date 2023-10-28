@@ -153,8 +153,6 @@ In addition to above, also:
 
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1217c7d4-9dc7-427c-9004-7c52cc90dc8e)
 
-   Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression [Aura file for example](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
-
 
 #### Color Swatches
 
@@ -288,3 +286,50 @@ Will limit the 'replace' to only _selected_ bone
 
 #### Auto Generate
 Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column
+
+# Rigid Bodies
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
+
+TBD
+
+# Joints
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
+
+
+TBD
+
+# Bone Morphs (Facial Expressions)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
+
+
+Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression [Aura file for example](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
+
+# Skirt
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
+
+
+TBD
+
+# Shaders
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
+
+TBD
+
+# Miscellaneous Tools
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+
+
+TBD
+
+# Export MMD Preparation
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
+
+
+TBD

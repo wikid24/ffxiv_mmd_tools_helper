@@ -482,14 +482,19 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 	
 
 	#body
-	if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Rava","Helions","TheLost"]:
-		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
-
-	elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Veena"]:
-		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
-
-
+	
+	if int(RESULTS_DICT['Head']) >= 200:
 		#only 'special' NPC faces will use the +200s, I think normal NPC's use the regular 0s and 100s, its on a case by case basis tbh
+		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
+	else:
+		if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Rava","Helions","TheLost"]:
+			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
+
+		elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Veena"]:
+			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
+
+
+		
 	
 	print(f"Hair Model: {model_race_key}h{int(RESULTS_DICT['Hair']):04}_hir")
 	
@@ -650,3 +655,26 @@ class ImportFFXIVModel(bpy.types.Operator):
 		main(context)
 		return {'FINISHED'}
 	"""
+
+
+
+@register_wrap
+class SelectTexToolsModelFolder(bpy.types.Operator):
+	"""User can select the folder for materials"""
+	bl_idname = "ffxiv_mmd.select_textools_model_folder"
+	bl_label = "Select TexTools Model Folder"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	#folder_path = "yoooooo"
+	bpy.types.Scene.textools_model_folder = bpy.props.StringProperty(name="TexTools Model Folder", description="Folder for where TexTools stores FFXIV gear files", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
+
+	#@classmethod
+	#def poll(cls, context):
+	#	return context.active_object is not None and context.active_object.type == 'MESH'
+
+	def execute(self, context):
+		folder_path = context.scene.textools_model_folder
+		print(context.scene.ffxiv_mmd.select_materials_folder.folder_path)
+		
+
+		return {'FINISHED'}

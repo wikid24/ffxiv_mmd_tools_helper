@@ -132,7 +132,7 @@ def import_ffxiv_model(file_path):
 			for obj in x.parent.children_recursive:
 				if obj.type == 'MESH':
 					add_custom_property(obj,'original_mesh_name',obj.name) 
-					print("renaming!" + obj.name)
+					#print("renaming!" + obj.name)
 					rename_ffxiv_mesh(obj)
 					
 def add_custom_property(obj,prop_name,prop_value):
@@ -171,6 +171,7 @@ def rename_ffxiv_mesh(obj):
 		add_custom_property(obj,'ModelNumberID',int(parsed_parts[2]))
 		add_custom_property(obj,'ModelTypeID',parsed_parts[4])
 		add_custom_property(obj,'MeshPartNumber',parsed_parts[8])
+		add_custom_property(obj,'original_material_name',obj.active_material.name)
 			
 		# Define the replacement dictionary
 		race_dict = {

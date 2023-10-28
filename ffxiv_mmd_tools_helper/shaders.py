@@ -1,6 +1,7 @@
 import bpy
 import os
 from . import register_wrap
+from . import model
 from struct import unpack, pack
 from os.path import isfile
 
@@ -34,6 +35,19 @@ def apply_colorset_file(file_name):
 				colorset.close()
 			if colorsetdat:
 				colorsetdat.close()
+
+def apply_texture_file_to_colorset_node(node_label,texture_file):
+	for obj in bpy.context.selected_objects:
+		if obj.type =='MESH' and obj.active_material.is_colorset:
+			for slot in obj.material_slots:
+					mat = slot.material
+
+					for node in mat.node_tree.nodes:
+						if node.label == node_label:
+							node.image = texture_file
+
+
+"""
 
 def apply_multimap_file(multimap_file):
 	for obj in bpy.context.selected_objects:
@@ -77,7 +91,7 @@ def apply_diffuse_file(diffuse_file):
 						if node.label =='Diffuse Texture':
 							node.image = diffuse_file							
 							
-							
+"""							
 
 
 def fix_normalmap ():
@@ -137,7 +151,201 @@ def apply_colorset_plugin():
 
 			if obj.type =='MESH':
 				if not obj.active_material.is_colorset:
+					#get model_id and material name
+					model_id = obj.data['ModelID']
+	
+					# Duplicate the material
+					old_material = obj.active_material.copy()
+					old_material.name = "backup_" + obj.active_material.name  # Rename the duplicated material if needed
+
+					# Add the duplicated material to the material slots of the active object
+					#bpy.context.object.data.materials.append(old_material)
+    
+
 					bpy.ops.object.add_cs_material()
+
+
+					return old_material
+				
+					new_material = obj.active_material
+
+					if check_if_cs_plugin_error(obj):
+						#if error detected, delete the material node and reset the material to it's original material
+						if old_material == new_material:
+							print("")
+						else:
+							obj.active_material = old_material
+							# Remove the material
+							bpy.data.materials.remove(new_material)
+
+
+def apply_textures_to_colorset_material(context,folder_path):
+	if bpy.context.active_object:
+			obj = bpy.context.active_object
+
+			if obj.type =='MESH' and obj.active_material.is_colorset :
+
+				#model_id = obj.data['ModelID']
+				#new_material = obj.active_material
+
+				colorset_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_a.dds') ]
+				multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_m.png')]
+				normalmap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_n.bmp') or f.endswith('_n.png')]
+				specular_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_s.bmp') or f.endswith('_s.png')]
+				diffuse_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_d.bmp') or f.endswith('_d.png')]
+				colorset_filename = None
+				multimap_filename = None
+				normalmap_filename = None
+				specular_filename = None
+
+
+				if colorset_files:
+					colorset_filename = folder_path+colorset_files[0]
+					#print(f"Colorset file found: {colorset_filename}")
+					try:
+						apply_colorset_file(colorset_filename)
+					except:
+						#display_error_message=  "ERROR: could not apply ",colorset_filename
+						print("ERROR: could not apply ",colorset_filename)
+						#bpy.context.window_manager.popup_menu(display_error_message, title="Error Message", icon='ERROR')
+						return obj.active_material
+
+				else:
+					print("No colorset file ending with '_a' found in the folder.")
+										
+						
+				if multimap_files:
+					multimap_filename = folder_path+multimap_files[0]
+					# Specify the name of the image you want to check
+					if multimap_files[0] not in bpy.data.images:
+						multimap = bpy.data.images.load(multimap_filename)
+						
+					else:
+						multimap = bpy.data.images[multimap_files[0]]
+						print(f"Multimap file found: {multimap_filename}")
+						print(f"Multimap: {multimap}")
+					#apply_multimap_file(multimap)
+					apply_texture_file_to_colorset_node('MultiTexture',multimap)
+				else:
+					print("No multimap file ending with '_m' found in the folder.")
+					
+						
+				if normalmap_files:
+					normalmap_filename = folder_path+normalmap_files[0]
+					if normalmap_files[0] not in bpy.data.images:
+						normalmap = bpy.data.images.load(normalmap_filename)
+					
+					else:
+						normalmap = bpy.data.images[normalmap_files[0]]
+					#print(f"Normalmap file found: {normalmap_filename}")
+					#apply_normalmap_file(normalmap)
+					apply_texture_file_to_colorset_node('Normal Texture',normalmap)
+					fix_normalmap()
+				else:
+					print("No normalmap file ending with '_n' found in the folder.")
+
+				if specular_files:
+					specular_filename = folder_path+specular_files[0]
+					if specular_files[0] not in bpy.data.images:
+						specular = bpy.data.images.load(specular_filename)
+						#apply_normalmap_file(normalmap)
+					else:
+						specular = bpy.data.images[specular_files[0]]
+					#print(f"Specular file found: {normalmap_filename}")
+					#apply_specular_file(specular)
+					apply_texture_file_to_colorset_node('Specular Texture',specular)
+				else:
+					print("No specular file ending with '_s' found in the folder.")
+
+
+				if diffuse_files:
+					diffuse_filename = folder_path+diffuse_files[0]
+					if diffuse_files[0] not in bpy.data.images:
+						diffuse = bpy.data.images.load(diffuse_filename)
+						#apply_normalmap_file(normalmap)
+					else:
+						diffuse = bpy.data.images[diffuse_files[0]]
+					#print(f"Diffuse file found: {normalmap_filename}")
+					#apply_diffuse_file(diffuse)
+					apply_texture_file_to_colorset_node('Diffuse Texture',diffuse)
+				else:
+					print("No diffuse file ending with '_d' found in the folder.")						
+										
+
+				fix_material_output_node()
+			
+				return obj.active_material
+
+
+def undo_if_colorset_plugin_error(obj,old_material,new_material):
+
+	if new_material.is_colorset:
+
+
+		diffuse_node = None
+		specular_node = None
+		multitexture_node = None
+		normaltexture_node = None
+		normaltexture_closest_node = None
+		specularmask_node = None
+
+		#for slot in obj.material_slots:
+		#	mat = slot.material
+		for node in new_material.node_tree.nodes:
+			if node.label =='Diffuse Texture':
+				diffuse_node = node
+			if node.label =='Specular Texture':
+				specular_node = node
+			if node.label == 'MultiTexture':
+				multitexture_node = node
+			if node.label == 'Normal Texture':
+				normaltexture_node = node
+			if node.label == 'Normal Texture (Closest)':
+				normaltexture_closest_node = node
+			if node.label == 'Specular Mask Texture (SET TO NON-COLOR)':
+
+				specularmask_node = node
+
+		#for i in [diffuse_node.image,specular_node.image,multitexture_node.image,normaltexture_node.image,normaltexture_closest_node.image,specularmask_node.image]:
+			#print (i)
+
+		if (diffuse_node.image or specular_node.image or multitexture_node.image or normaltexture_node.image or normaltexture_closest_node.image or specularmask_node.image):
+			return True
+		else:
+			#if error detected, delete the material node and reset the material to it's original material
+			if old_material == new_material:
+				print("")
+			else:
+				print ("old_material:",old_material)
+				print ("new_material:",new_material)
+				
+				obj.active_material = old_material
+
+				# Remove the material
+				bpy.data.materials.remove(new_material)
+				old_material.name = old_material.name.lstrip('backup_')
+			return False
+
+		#if not(diffuse_node,specular_node,multitexture_node,normaltexture_node,normaltexture_closest_node, specularmask_node):
+
+def apply_material_to_all_matching_ffxiv_meshes (source_object):
+	
+	#model_id = None
+	armature = model.findArmature(source_object)
+
+	if source_object.data["original_material_name"]:
+		model_id = source_object.data["original_material_name"]
+
+	print(source_object)
+	print (source_object.data["original_material_name"])
+	print (model_id)
+
+	if source_object.data["original_material_name"]:
+		for obj in armature.children_recursive:
+			if obj.type == 'MESH' and obj.data["original_material_name"]:
+				if obj.data["original_material_name"] == source_object.data["original_material_name"]:
+					obj.active_material = source_object.active_material
+	
 
 
 def apply_glossy_shader():
@@ -235,117 +443,43 @@ class SelectMaterialsFolder(bpy.types.Operator):
 		return context.active_object is not None and context.active_object.type == 'MESH'
 
 	def execute(self, context):
+		context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)
 		folder_path = context.scene.shaders_texture_folder
+		print (folder_path)
 		#context.scene.ffxiv_mmd.select_materials_folder.folder_path
 		
-		apply_colorset_plugin()
-
-		#print (context.scene.shaders_texture_folder)
+		old_material = None
+		new_material = None
+		
 		if bpy.context.active_object:
+
 			obj = bpy.context.active_object
 
-			if obj.type =='MESH' and obj.active_material.is_colorset :
+			if obj.type == 'MESH':
 
-				colorset_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_a.dds') ]
-				multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_m.png')]
-				normalmap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_n.bmp') or f.endswith('_n.png')]
-				specular_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_s.bmp') or f.endswith('_s.png')]
-				diffuse_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_d.bmp') or f.endswith('_d.png')]
-				colorset_filename = None
-				multimap_filename = None
-				normalmap_filename = None
-				specular_filename = None
+				old_material = apply_colorset_plugin()
 
+				new_material = apply_textures_to_colorset_material(context,folder_path).id_data
 
-				if colorset_files:
-					colorset_filename = folder_path+colorset_files[0]
-					#print(f"Colorset file found: {colorset_filename}")
-					apply_colorset_file(colorset_filename)
+				
+				if undo_if_colorset_plugin_error(bpy.context.active_object,old_material, new_material):
+					#if no errors, apply to all materials 
+					print ("no errors ya'll!")
+					apply_material_to_all_matching_ffxiv_meshes (obj)
+
 				else:
-					print("No colorset file ending with '_a' found in the folder.")
-						
-						
-				if multimap_files:
-					multimap_filename = folder_path+multimap_files[0]
-					# Specify the name of the image you want to check
-					if multimap_files[0] not in bpy.data.images:
-						multimap = bpy.data.images.load(multimap_filename)
-						
-					else:
-						multimap = bpy.data.images[multimap_files[0]]
-						print(f"Multimap file found: {multimap_filename}")
-						print(f"Multimap: {multimap}")
-					apply_multimap_file(multimap)
-				else:
-					print("No multimap file ending with '_m' found in the folder.")
-					
-						
-				if normalmap_files:
-					normalmap_filename = folder_path+normalmap_files[0]
-					if normalmap_files[0] not in bpy.data.images:
-						normalmap = bpy.data.images.load(normalmap_filename)
-					
-					else:
-						normalmap = bpy.data.images[normalmap_files[0]]
-					#print(f"Normalmap file found: {normalmap_filename}")
-					apply_normalmap_file(normalmap)
-				else:
-					print("No normalmap file ending with '_n' found in the folder.")
+					print ("ERRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRR")
 
-				if specular_files:
-					specular_filename = folder_path+specular_files[0]
-					if specular_files[0] not in bpy.data.images:
-						specular = bpy.data.images.load(specular_filename)
-						#apply_normalmap_file(normalmap)
-					else:
-						specular = bpy.data.images[specular_files[0]]
-					#print(f"Specular file found: {normalmap_filename}")
-					apply_specular_file(specular)
-				else:
-					print("No specular file ending with '_s' found in the folder.")
-
-
-				if diffuse_files:
-					diffuse_filename = folder_path+diffuse_files[0]
-					if diffuse_files[0] not in bpy.data.images:
-						diffuse = bpy.data.images.load(diffuse_filename)
-						#apply_normalmap_file(normalmap)
-					else:
-						diffuse = bpy.data.images[diffuse_files[0]]
-					#print(f"Diffuse file found: {normalmap_filename}")
-					apply_diffuse_file(diffuse)
-				else:
-					print("No diffuse file ending with '_d' found in the folder.")						
 					
-				#if colorset_filename and multimap_filename and normalmap_filename:
-					
-					
-					
+				
+			"""
+			#print (context.scene.shaders_texture_folder)
+			
 
+					#print(f"Selected folder: {folder_path}")
+			"""
+			
+			# return {"CANCELLED"}
 
-				fix_material_output_node()
-
-				#print(f"Selected folder: {folder_path}")
-				return {'FINISHED'}
+			return {'FINISHED'}
 	
-
-@register_wrap
-class FixNormalMaps(bpy.types.Operator):
-	"""User can select the folder for materials"""
-	bl_idname = "ffxiv_mmd.fix_normal_maps"
-	bl_label = "Fix the Normal Maps"
-	bl_options = {'REGISTER', 'UNDO'}
-
-
-
-	def main (context):
-		fix_normalmap()
-
-
-	@classmethod
-	def poll(cls, context):
-		return context.active_object is not None
-
-	def execute(self, context):
-		FixNormalMaps.main(context)
-		return {'FINISHED'}

@@ -157,7 +157,8 @@ Displays for:
 
 ## Mass Rename Bones
 
-Used to rename bones according to the Bone Dictionary table. If bone name in 'From' match found on the selected armature, bone will be renamed to the 'To' target bone name
+Used to rename bones according to the [Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_dictionary.csv) and [Finger Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_fingers_dictionary.csv) . If bone name in 'From' match found on the selected armature, bone will be renamed to the 'To' target bone name.
+
 
 ## Blender to MMD Jap
 

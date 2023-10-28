@@ -233,7 +233,8 @@ Adds the 'stanard' MMD Leg/Foot IK Bones:
 - leg IK_R
 - toe IK_L
 - toe IK_R
-And also adds the 'special' MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone)
+
+And also adds the 'special' MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone):
 - leg_L_D
 - leg_R_D
 - knee_L_D

@@ -144,7 +144,7 @@ In addition to above, also:
     ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/81be8212-ce57-4a19-ad65-c2119be822a1)
 
  
-3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0
+3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0. Values are mapped in the [Chara File Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/chara_file_dictionary.csv)
 
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
 

@@ -360,8 +360,15 @@ TBD
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
 
 
-Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression [Aura file for example](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
-
+Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression:
+- [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
+- [Elezen](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
+- [Hrothgar](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
+- [Hyur](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_hyur.csv)
+- [Lalafell](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_lalafell.csv)
+- [Miqo'te](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_miqote.csv)
+- [Roegadyn](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_roegadyn.csv)
+- [Viera](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_viera.csv)
 
 ## Skirt
 

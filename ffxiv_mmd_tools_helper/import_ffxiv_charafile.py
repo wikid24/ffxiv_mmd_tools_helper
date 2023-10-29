@@ -487,10 +487,10 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 		#only 'special' NPC faces will use the +200s, I think normal NPC's use the regular 0s and 100s, its on a case by case basis tbh
 		print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
 	else:
-		if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Rava","Helions","TheLost"]:
+		if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Veena","Rava","Helions","TheLost"]:
 			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
 
-		elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard","Veena"]:
+		elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard"]:
 			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
 
 
@@ -500,6 +500,8 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 	
 	if RESULTS_DICT['Race'] in ['Miqote','Hrothgar','AuRa']:
 		print(f"Tail Model: {model_race_key}t{int(RESULTS_DICT['TailEarsType']):04}_til")
+	if RESULTS_DICT['Race'] in ['Viera']:
+		print(f"Ears Model: {model_race_key}z{int(RESULTS_DICT['TailEarsType']):04}_zer")
 	#gear
 	print('----------------')
 	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04}")

@@ -359,11 +359,11 @@ TBD
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
 
 
-Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression.
+Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression. The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 
-Each race's Bone Morphs:
+Each race's Bone Morphs were manually tuned by myself, so there are no guarantees that they are '100% accurate', there is always room for improvement here:
 - [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
 - [Elezen](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
 - [Hrothgar](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)

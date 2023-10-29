@@ -377,7 +377,7 @@ The list below contains each FFXIV Race's own list of preset pose bone offsets (
 - [Roegadyn](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_roegadyn.csv)
 - [Viera](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_viera.csv)
 
-With worth noting that were manually tuned by myself, so there are no guarantees that they are '100% accurate' to any facial expressions that could be made in-game, there is always room for improvement here
+It's worth noting that these were manually tuned by myself (it's not a conversion from FFXIV animation files, they are completely something new I created added), so there are no guarantees that they are '100% accurate' to any facial expressions that could be made in-game, there is always room for improvement here
 
 #### Change Rotation Mode
 

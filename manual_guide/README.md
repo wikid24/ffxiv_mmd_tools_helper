@@ -367,7 +367,7 @@ The facial expressions that are 'commonly' used by MMD animation files are refer
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 
-in each FFXIV Race's own list of preset, thatEach race's Bone Morphs were manually tuned by myself, so there are no guarantees that they are '100% accurate', there is always room for improvement here:
+in each FFXIV Race's own list of preset, that were manually tuned by myself, so there are no guarantees that they are '100% accurate' to any facial expressions that could be made in-game, there is always room for improvement here:
 - [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
 - [Elezen](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
 - [Hrothgar](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)

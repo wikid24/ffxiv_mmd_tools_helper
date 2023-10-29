@@ -1,10 +1,16 @@
 # 3D Viewport -> Sidebar
 
-## FFXIV MMD -> Import FFXIV Model
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)
+
+
+## Import FFXIV Model
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/80e3a3ba-cd96-4897-a73e-b82bfe8b11eb)
+
 
 ### Import FFXIV .fbx File
 
-- Imports a FFXIV Model into Blender
+- Imports a FFXIV Model into Blender and presses 'Apply all transformations' so that Blender will treat this orientation as the 'rest' position. _Important_ to apply transforamtions before importing MMD animation files as it starts using this data for keyframes.
     - primary_bone_axis='X'
     - secondary_bone_axis='Y'
     - use_manual_orientation=True
@@ -13,10 +19,11 @@
 
 - Moves all 'Group' objects to an empty object called 'FFXIV Empty Groups'
 - Fixes the alpha blend mode so that all the textures can be viewed properly (blend_method = 'HASHED')
-- Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)
+- Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the [MMD Tools instructions](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual#mmd_bone_order_override))
+- Renames the meshes objects to something that is more human-readable
 - Adds custom object/data properties:
     - Armature object:
-        - original_root_name (needed because MMD Tools moves the armature to a new object called 'New MMD Model')    
+        - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)    
     - Mesh data:
         - ModelID - Parsed from original object name
         - ModelRaceID - Parsed from original object name
@@ -28,8 +35,9 @@
         - MaterialType - Parsed from active material name
         - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
         - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
-        
- - Renames the meshes objects to something that is more human-readable
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0742b581-f962-4c7c-ad55-a653a2ce407e)
+
+
  
 #### Load Sample
  
@@ -43,7 +51,13 @@
     - Miqote Female
     - Roegadyn Female
     - Viera Female
-        
+
+#### Initialize MMD Struture
+Shortcut to the MMD Tools addon's Convert Model feature. Will convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model. Will move your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8171954b-d271-4a19-8806-cd68412eae7d)
+
+
 #### TexTools 'Saved' Folder
   
 Saved' Folder where TexTools exports all textures and models by default. Used for pulling in extra custom properties details upon .FBX Import:
@@ -80,11 +94,13 @@ Reads the .chara file and outputs to the results to Blender's System Console.
     - Ring Right Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     
     
- #### Anamnesis .chara File Apply To Model:
+#### Anamnesis .chara File Apply To Model:
  
- In addition to above, also:
+In addition to above, also:
  
- 1) Adds .chara file custom properties to the armature object:
+1) Adds .chara file custom properties to the armature object:
+    
+
     - Facial Deformation ID (based on the FFXIV tribe & gender's face part selectors in-game)
         - Eyes
         - Eyebrows
@@ -124,16 +140,357 @@ Reads the .chara file and outputs to the results to Blender's System Console.
         - SkinGloss (rgb)? I dunno.
         - BustScale (x,y,z)
         - FacialFeatures (Facial Checkbox flags)
+     
+    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/81be8212-ce57-4a19-ad65-c2119be822a1)
+
  
- 2) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the selected armature by setting them to 1.0
+3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0. Values are mapped in the [Chara File Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/chara_file_dictionary.csv)
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
+
  
- 3) Adds the FFXIV Race's MMD Facial Expression Bone Morphs (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format)
+5) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/manual_guide/README.md#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
+
+
+
+#### Color Swatches
+
+Various colors displayed for the colors from the .chara file. Color Swatches are based on the [FFXIV Color Hex Reference Guide](https://docs.google.com/spreadsheets/d/18Z1ph1Xa-rFvC8FtB7X6IgSbjwPAom5XuDuCtVeNRvo). 
+
+Displays for:
+- [Skin](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_skin_dictionary.csv) - Colors vary depending on the Race, Tribe and Gender of the what is in the .Chara file 
+- [Hair](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hair_dictionary.csv) - Colors vary depending on the Race, Tribe and Gender of the what is in the .Chara file 
+- [Hair Highlights](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hairhighlights_dictionary.csv)
+- [Eyes](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_eye_dictionary.csv)
+- [Tattoo / Limbal Ring](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_tattoo_limbalring_dictionary.csv) (colored circle around the Iris for Au Ra characters) 
+- [Lips / Fur (for Hrothgar chracters)](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_lips_dictionary.csv)
+- [Facepaint](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_facepaint_dictionary.csv)
+
+# Language and Translation
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2705ac60-cca6-4ace-bd53-6db4a3c239b0)
+
+
+## Mass Rename Bones
+
+Used to rename bones according to the [Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_dictionary.csv) and [Finger Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_fingers_dictionary.csv) . If bone name in 'From' match found on the selected armature, bone will be renamed to the 'To' target bone name.
+
+
+## Blender to MMD Jap
+
+Will push the Blender Bone name to the MMD Tool's PMX Japanese Bone name (found in the Bone Properties -> **MMD Bone Tools** panel), assuming the MMD Tools application is installed in Blender.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/af6885ba-63cd-4e0e-9e31-bf15e0c6455c)
  
- 
- 
- 
- 
- 
- 
- 
- 
+## Swap Jap / Eng
+
+Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, and material names. Useful if you're in the MMD-only workflow
+
+
+## Bones and IK
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1fcd5396-ca1b-40bd-9056-7a144297acf3)
+
+### Visibility Shortcuts
+
+Shortcuts to the standard visibility options found on **Armature** -> **Viewport Display** panel:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/793ed8c3-755c-4c2e-8308-1213454cdf3d)
+
+- Hide/Show bones
+- Hide/Show bone names
+- Show bones in front of all other objects
+- Display bones as:
+    - Octahedral
+    - Stick
+    - Envelope
+    - B-Bone
+    - Wire
+- Hide/Show armature (shortcut to the **MMD Tools** hide/show armature button, assuming the model has been converted to MMD Model format):
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/71e10b43-b181-46b9-bc40-5cdbb10ad650)
+
+### MMD Conversion
+
+Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from 'FFXIV' to 'MMD English' format for most of these to work._
+
+#### Run Steps 1 to 12 - Shortcut to running steps 1 to 12 in order
+#### 1  -  Remove unused bones (no vertex groups)
+Removes any bones without any meshes attached. Useful since the stanard FFXIV bone struture the is imported includes bones even when there are no meshes attached to it. Removing them makes the armature cleaner / easier to see in Blender
+#### 2  -  Correct MMD Root and Center bones
+Adds the MMD 'root' and 'center' bones if they don't already exist on the model, and move the bones to the correct position while at rest pose
+#### 3  -  Correct MMD Groove bone
+Adds the MMD 'groove' bone if they don't already exist on the model, and move the bones to the correct position while at rest pose
+#### 4  -  Correct MMD Waist bone
+Moves the 'waist' bone to the correct position while at rest pose
+#### 5  -  Correct Waist Cancel L/R bones
+Adds the _special_ MMD 'waist_cancel_l' and 'waist_cancel_r' bones to the correct position, and sets the legs as their parent bones. These are modifiers that prevent the rest of the armature moving from the waist down. Useful for some certain MMD Models. Sometimes it's needed for VMD files, some times it is not. If there are issues with these bones, refer to the FAQ [question](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-are-the-leg-meshes-not-following-the-leg-bones-what-kind-of-witchcraft-is-this)  to fix
+#### 6  -  Correct MMD 'view cnt' bone
+Adds 'view_cnt' bone. Not really needed in Blender, but it's a placeholder bone useful sometimes for animating stuff in Miku Miku Dance, as some properties are keyframed to this bone.
+#### 7  -  Correct Shoulder/Arm/Elbow Bone Lengths
+Adjusts the standard FFXIV Bone lengths and positions to be closer to a standard MMD model. THIS IS NOT PERFECT, but it definitely helps. I still haven't figured out the exact position in order to get VMD files to animate the arms 100%. If there are issues upon importing a VMD file, refer to this [FAQ question](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this).
+#### 8  -  Add Eyes Control Bone
+Adds the special MMD 'Eyes' controller bone that is used to control 'eye_L' and 'eye_r' at the same time. Applies rotation to both bones
+#### 9  -  Add Arm Twist Bones
+Adds the special MMD 'arm_twist_1','arm_twist_2','arm_twist_3', 'wrist_twist_1', 'wrist_twist_2', 'wrist_twist_3' twist bones, for additional arm fine-tuneing for animations. Needed for some VMD animation files. 
+#### 10 -  Add Shoulder Control Bones
+Adds the special MMD 'should_C','shoulder_P' bones. Needed for some VMD animation files. 
+#### 11 -  Add Leg/Foot IK
+Adds the 'stanard' MMD Leg/Foot IK Bones:
+- leg IK_root_L
+- leg IK_root_R
+- leg IK_L
+- leg IK_R
+- toe IK_L
+- toe IK_R
+
+And also adds the 'special' MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone):
+- leg_L_D
+- leg_R_D
+- knee_L_D
+- knee_R_D
+- ankle_L_D
+- ankle_R_D
+- toe_L_EX
+- toe_R_EX
+- knee_2_L_D
+- knee_2_R_D
+#### 12 -  Auto-Fix MMD Japanese/English Bone Names
+
+Shortcut to the button in 'Export
+
+#### 13 -  Add Hand/Arm IK
+Adds some IK to hands/arms, similar to Leg/IK. Unlike Leg/Arm IK, this one is rarely if ever used in a VMD motion file, and is recommended that you don't use it unless it is actually called for. 
+#### 14 - Add Extra Finger Bones (select finger mesh first)
+Added a third finger bone (the last bone tip of a finger) to FFXIV models, since they only have 2 finger bones. Script will attempt to automatically weight paint the bones, but it is hit or miss. I'd avoid doing this unless you like weight painting manually. Ensure that the hand mesh is selected first _before_ running this command.
+#### 15 - Add Extra Breast Tip Bones
+Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match some other similar looking MMD Models, though it is not needed in Blender. Only useful if you're planning to export to PMX format and continue rigging using PMX Editor.
+#### 16 - Merge Double-Jointed Knee (FFXIV PMX Export Only)
+Since most standard MMD Models don't have these 'double-jointed' knees, this will merge the FFXIV- 'j_asi_c_l' and 'j_asi_b_l'(or Knee_L if you've renamed the bone) bones into one, and attempt merging the weight painting into the newly merged bone.  Only useful if you're planning to export to PMX format and continue rigging using PMX Editor, otherwise if you're planning on staying in Blender, stick with the double-jointed knee to avoid extra headache.
+#### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
+Attempt to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
+
+### Find & Replace
+
+#### Find 
+Will search for any bone of the selected armature (in edit mode or pose mode) containing the search text provided
+
+#### Replace
+Combined with the find textbox, will rename any found bones to the new name provided
+
+#### Selected only checkbox
+Will limit the 'replace' to only _selected_ bone
+
+### Bone Groups
+
+#### Auto Generate
+Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column
+
+## Rigid Bodies
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
+
+### Visibility Shortcuts
+
+TBD
+
+### Active Rigid Body / Bone
+
+TBD
+
+### Rigid Body Search
+
+TBD
+
+### Bone Chain Select
+
+TBD
+
+### Skirt Select
+
+TBD
+
+### Rigid Body Transform
+
+TBD
+
+### Rigid Body Create
+
+TBD
+
+## Joints
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
+
+TBD
+
+### Visibility Shortcuts
+
+TBD
+
+### Active Joint / Rigid 1 / Rigid 2
+
+TBD
+
+### Get Joints from Rigid Bodies
+
+TBD
+
+### Vertical Select
+
+TBD
+
+### Horizontal Select
+
+TBD
+
+### Joint Transform
+
+TBD
+
+### Joint Create
+
+
+TBD
+
+# Bone Morphs (Facial Expressions)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
+
+
+Bone Morphs defines how much each posebone should move in order to make a facial expression.
+
+In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's rotation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. For example, how many degrees an eyelid bone should rotate down on the Z axis in order for a model to wink. These location/rotation offsets are then stored in a 'Bone Morph', with the value of 1 meaning that the pose bones are 100% applied, and 0 meaning 0% of it is apply (the bone is at the original rest position).
+
+The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
+
+- [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
+
+The list below contains each FFXIV Race's own list of preset pose bone offsets (from rest position) to either their location or rotation on the XYZ axis (in XYZ Euler mode):
+- [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
+- [Elezen](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
+- [Hrothgar](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)
+- [Hyur](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_hyur.csv)
+- [Lalafell](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_lalafell.csv)
+- [Miqo'te](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_miqote.csv)
+- [Roegadyn](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_roegadyn.csv)
+- [Viera](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_viera.csv)
+
+It's worth noting that these were manually tuned by myself (it's not a conversion from FFXIV animation files, they are completely something new I created added), so there are no guarantees that they are '100% accurate' to any facial expressions that could be made in-game, there is always room for improvement here
+
+#### Change Rotation Mode
+
+Change the rotation mode of the facial pose bones. By default, all pose bones are rotated in quaternion (XYZ+W), which is very difficult to work with. 
+By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adjust the pose bones, in order to make your own bone morphs / facial expressions, or when adjusting the ones that come built into this plugin.
+
+## Skirt
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
+
+### Generate a New Skirt Object
+
+TBD
+
+### Move Mesh To New Skirt Object
+
+TBD
+
+### Weight Paint Transfer to Mesh
+
+TBD
+
+### Delete FFXIV & Unused Skirt Vertex Groups
+
+TBD
+
+### Move Bones and Meshes to Armature
+
+TBD
+
+### Generate Skirt Rigid Bodies
+
+TBD
+
+### Generate Skirt Joints
+
+TBD
+
+### Vertex Group List
+
+TBD
+
+
+TBD
+
+## Shaders
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
+
+TBD
+
+### Texture Folder
+
+TBD
+
+### Apply Colorset
+
+TBD
+
+### Active Material
+
+TBD
+
+### Apply Glossy Shader
+
+TBD
+
+### Glossy Roughness Slider
+
+TBD
+
+## Miscellaneous Tools
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+
+### Dropdown List
+
+TBD
+
+### Bust Slider
+
+TBD
+
+## Export MMD Preparation
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
+
+TBD
+
+### Auto-Fix MMD Japanese / English Bone Names
+
+Fixes the MMD Japanes & English PMX Bone names (while not changing the Blender Bone Name) to their MMD Japanese equivalent. Useful so that you can import a VMD animation file using the MMD Japanese (PMX) bone name without needing to read Japanese in Blender :P.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/af6885ba-63cd-4e0e-9e31-bf15e0c6455c)
+
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to do the PMX Bone group mapping. If Blender bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the 'mmd_english',	'mmd_japanese' bone name MMD Tool's PMX Japanese/English Bone name fields respectively (found in the Bone Properties -> **MMD Bone Tools** panel). If no match is found, and the PMX field is empty, it puts the Blender bone name verbatim so at least the MMD field is not empty and has a name.
+
+### Add Display Panels
+
+TBD
+
+### Sort Bone Order / Deform Tools
+
+TBD
+
+### Lock Position & Rotation
+
+TBD
+
+### Set Fixed Axis / Local Axis
+
+TBD
+
+### High Special & Physics Bones
+
+TBD

@@ -163,9 +163,11 @@ Displays for:
 - [Skin](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_skin_dictionary.csv) - Colors vary depending on the Race, Tribe and Gender of the what is in the .Chara file 
 - [Hair](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hair_dictionary.csv) - Colors vary depending on the Race, Tribe and Gender of the what is in the .Chara file 
 - [Hair Highlights](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hairhighlights_dictionary.csv)
-- [Limbal Ring](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_tattoo_limbalring_dictionary.csv) (colored circle around the Iris for Au Ra characters) 
-- [Lips / Fur (for Hrothgar chracters)](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_lips_dictionary.csv) 
 - [Eyes](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_eye_dictionary.csv)
+- [Tattoo / Limbal Ring](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_tattoo_limbalring_dictionary.csv) (colored circle around the Iris for Au Ra characters) 
+- [Lips / Fur (for Hrothgar chracters)](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_lips_dictionary.csv)
+- [Facepaint](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_facepaint_dictionary.csv)
+
  
 # Language and Translation
 

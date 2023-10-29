@@ -375,7 +375,7 @@ Each race's Bone Morphs:
 
 #### Change Rotation Mode
 
-Used to change the rotation mode of the facial expession's pose bones. By default all pose bones are rotated in quaternion, which makes it very difficult to manually modify a pose bone. It is useful to change rotation mode to 'XYZ Euler', as this is much easier to work with when manually adjusting the pose bones in order to make your own bone morphs / facial expressions 
+Used to change the rotation mode of the facial expession's pose bones. By default, all pose bones are rotated in quaternion (XYZ+W), which makes it very difficult when manually modify a pose bone. By changing rotation mode to 'XYZ Euler', it is much easier when manually adjusting the pose bones in order to make your own bone morphs / facial expressions, or when adjusting the ones that come built into this plugin.
 
 ## Skirt
 

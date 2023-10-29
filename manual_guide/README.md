@@ -363,6 +363,7 @@ TBD
 Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression.
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) (used to define the overall 'list' of Bone Morphs that are useable by each FFXIV race:
+
 Each race's Bone Morphs:
 - [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)
 - [Elezen](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_elezen.csv)

@@ -168,11 +168,6 @@ Displays for:
 - [Lips / Fur (for Hrothgar chracters)](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_lips_dictionary.csv)
 - [Facepaint](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_facepaint_dictionary.csv)
 
-#### Change Rotation Mode
-
-Used to change the rotation mode of the facial expession's pose bones. By default all pose bones are rotated in quaternion, which makes it very difficult to manually modify a pose bone. It is useful to change rotation mode to 'XYZ Euler', as this is much easier to work with when manually adjusting the pose bones in order to make your own bone morphs / facial expressions 
-
- 
 # Language and Translation
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2705ac60-cca6-4ace-bd53-6db4a3c239b0)
@@ -377,6 +372,10 @@ Each race's Bone Morphs:
 - [Miqo'te](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_miqote.csv)
 - [Roegadyn](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_roegadyn.csv)
 - [Viera](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_viera.csv)
+
+#### Change Rotation Mode
+
+Used to change the rotation mode of the facial expession's pose bones. By default all pose bones are rotated in quaternion, which makes it very difficult to manually modify a pose bone. It is useful to change rotation mode to 'XYZ Euler', as this is much easier to work with when manually adjusting the pose bones in order to make your own bone morphs / facial expressions 
 
 ## Skirt
 

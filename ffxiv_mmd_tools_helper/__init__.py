@@ -6,7 +6,7 @@ bl_info = {
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
 	"warning": "",
-	"doc_url": "https://mmd-blender.fandom.com/wiki/MMD_Tools",
+	"doc_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation",
 	"wiki_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper",
 	"tracker_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper/issues",
 	"category": "Object",

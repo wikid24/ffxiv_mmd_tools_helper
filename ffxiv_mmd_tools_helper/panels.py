@@ -16,10 +16,6 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-		#row = layout.row()
-		#row.label(text="TexTools 'Saved' Folder:")
-		#row = layout.row()
-		#row.prop(context.scene,"textools_model_folder", text = "")
 		row = layout.row()
 		row.operator("ffxiv_mmd.ffxiv_file_browser_operator", text="Import FFXIV .fbx File", icon='IMPORT')
 		row = layout.row()
@@ -34,7 +30,10 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
 
-
+		row = layout.row()
+		row.label(text="TexTools 'Saved' Folder:")
+		row = layout.row()
+		row.prop(context.scene,"textools_model_folder", text = "")
 		#row.operator("ffxiv_mmd.select_textools_model_folder", text="Select TexTools 'Saved' Folder")
 
 		row = layout.row()

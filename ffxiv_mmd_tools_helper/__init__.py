@@ -1,11 +1,12 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 851),
+	"version": (0, 852),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
 	"warning": "",
+	"doc_url": "https://mmd-blender.fandom.com/wiki/MMD_Tools",
 	"wiki_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper",
 	"tracker_url": "https://github.com/wikid24/ffxiv_mmd_tools_helper/issues",
 	"category": "Object",

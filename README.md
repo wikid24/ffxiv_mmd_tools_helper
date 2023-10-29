@@ -7,7 +7,7 @@ This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models.
 - Update the standard textures to the detailed ones (leveraging the Colorsetter Addon)
 - Convert the model MMD Format
 - Add MMD-style physics in Blender
-- Animate it it in Blender (Including _Facial_ Animation!)
+- Animate it it in Blender (Including MMD _Facial_ Animation!)
 - Export to .PMX Format (if you want to use it in the Miku Miku Dance program)
 
 All can be done in **minutes**.

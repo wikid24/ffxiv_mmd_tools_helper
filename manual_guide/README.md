@@ -359,7 +359,7 @@ TBD
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
 
 
-Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression. The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917)
+Bone Morphs are defined in each Race's Bone-Morph list, that defines how much each bone should move in order to make a facial expression. In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's roation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 

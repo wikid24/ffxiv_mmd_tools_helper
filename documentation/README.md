@@ -360,9 +360,9 @@ By default it will show the values on the highest parent rigid body (based on th
 Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
 
 For example if there are 3 selected rigid bodies in a bone chain, with the starting value being 1, and the ending value being 2, the rigid bodies values will be:
-Rigid body 1: 1.0
-Rigid body 2: 1.5
-Rigid body 3: 2.0
+- Rigid body 1: 1.0
+- Rigid body 2: 1.5
+- Rigid body 3: 2.0
 
 Can be used when you need to edit multiple rigid bodies' shape at once, such as a skirt that is uniformly shaped at the top, but gradually gets larger and more angular at the bottom.
 

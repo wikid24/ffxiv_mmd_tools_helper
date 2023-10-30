@@ -373,10 +373,13 @@ Same as above but applies the values to ALL selected rigid body bone chains. Sin
 
 ### Rigid Body Create
 
+#### From Selected Bones
 Shortcut to the MMD Tools' Rigid Body Create button:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9ed7ece8-3eb2-4ae8-b7cc-ece5b16bedca)
 
-
+#### From FFXIV Template
+Creates a Rigid Body skeletion based on the FFXIV general bone body structure, with all these presets created.
+To see the preset values applied to each bone and the values, check out the [Rigid Body Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/rigid_body_dictionary.csv)
 
 ## Joints
 

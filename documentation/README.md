@@ -341,16 +341,35 @@ TBD
 ### Rigid Body Transform
 
 #### Bulk Apply Rigid Bodies
-Applies changes to ALL selected rigid bodies. 
+Used to apply changes to ALL selected rigid bodies. 
+
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/dc4f98da-7e11-41e4-8be7-62895cbdb552)
 
+By default it will show the values on the ACTIVE rigid body.
+
+Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
+
 #### Rigid Body Bone Chain
+
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7b30110f-ba6c-497c-826f-8887240758a5)
 
+Used to apply a 'gradient' change to MMD Tools' rigid bodies.
+
+By default it will show the values on the highest parent rigid body (based on the bone structure) as the START value,with the lowest child bone's rigid body as the END value.
+
+Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
+
+For example if there are 3 selected rigid bodies in a bone chain, with the starting value being 1, and the ending value being 2, the rigid bodies values will be:
+Rigid body 1: 1.0
+Rigid body 2: 1.5
+Rigid body 3: 2.0
+
+Can be used when you need to edit multiple rigid bodies' shape at once, such as a skirt that is uniformly shaped at the top, but gradually gets larger and more angular at the bottom.
 
 #### All Rigid Body Bone Chains
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e0800c28-922b-4b8c-a64a-396ed7bde7c5)
 
+Same as above but applies the values to ALL selected rigid body bone chains. Since each rigid body bone chain has it's own unique start and end value, this doesn't  the 'absolute' values, but rather a delta value.
 
 ### Rigid Body Create
 

@@ -287,25 +287,52 @@ Will limit the 'replace' to only _selected_ bone
 #### Auto Generate
 Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c07eeed1-8a29-41e8-a027-8faf496404ba)
+
+
 ## Rigid Bodies
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
 
 ### Visibility Shortcuts
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/15d1c5c8-6d9b-4b27-9d9d-22c3147f3ccb)
+
+
+#### Hide/Show Rigid Body
+Shortcut to the hide/show button on MMD Tools
+
+#### Hide/Show Rigid Body Name
+Shortcut to the hide/show button on MMD Tools
+
+#### Hide/Show Mesh
+Shortcut to the hide/show button on MMD Tools
+
+#### Enable/Disable Physics
+Shortcut to the enable/disable physics button on MMD Tools
 
 ### Active Rigid Body / Bone
 
-TBD
+Show the actively selected Rigid body's name, as well as it's connected bone's name. Clicking on the bone name will select the bone in edit mode
 
 ### Rigid Body Search
 
-TBD
+Searches for rigid body name(s) based on the parameters provided (starts /w, contains, ends/w)
+
+- 'Find' will deselect all selected objects first before showing the results
+- 'Find + Add' is the same as 'Find' but will append the results to the currently selected objects
+- 'Trashcan' will clear the 'starts w/', 'contains', and 'ends w/' textboxes
 
 ### Bone Chain Select
 
-TBD
+#### Up
+Based on the 'active' rigid body selected's **bone**, will append the bone's parent's rigid bodies recursively. Useful if you want to apply change in bulk to all the rigid bodies attached to the bones
+
+#### Down
+Same as 'Up', but looks for the bone's children recusively.
+
+#### All
+It does both 'Up' and 'Down' at the same time
 
 ### Skirt Select
 

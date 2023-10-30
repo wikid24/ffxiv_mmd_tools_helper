@@ -369,7 +369,7 @@ Can be used when you need to edit multiple rigid bodies' shape at once, such as 
 #### All Rigid Body Bone Chains
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e0800c28-922b-4b8c-a64a-396ed7bde7c5)
 
-Same as above but applies the values to ALL selected rigid body bone chains. Since each rigid body bone chain has it's own unique start and end value, this doesn't  the 'absolute' values, but rather a delta value.
+Same as above but applies the values to ALL selected rigid body bone chains. Since each rigid body bone chain has it's own unique start and end value, this doesn't use the 'absolute' values, but rather applies a delta value based on the inputs.
 
 ### Rigid Body Create
 

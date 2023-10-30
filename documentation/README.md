@@ -340,11 +340,24 @@ TBD
 
 ### Rigid Body Transform
 
-TBD
+#### Bulk Apply Rigid Bodies
+Applies changes to ALL selected rigid bodies. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/dc4f98da-7e11-41e4-8be7-62895cbdb552)
+
+#### Rigid Body Bone Chain
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7b30110f-ba6c-497c-826f-8887240758a5)
+
+
+#### All Rigid Body Bone Chains
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e0800c28-922b-4b8c-a64a-396ed7bde7c5)
+
 
 ### Rigid Body Create
 
-TBD
+Shortcut to the MMD Tools' Rigid Body Create button:
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9ed7ece8-3eb2-4ae8-b7cc-ece5b16bedca)
+
+
 
 ## Joints
 

@@ -425,9 +425,11 @@ TBD
 
 Bone Morphs defines how much each posebone should move in order to make a facial expression.
 
-In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's rotation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. For example, how many degrees an eyelid bone should rotate down on the Z axis in order for a model to wink. These location/rotation offsets are then stored in a 'Bone Morph', with the value of 1 meaning that the pose bones are 100% applied, and 0 meaning 0% of it is apply (the bone is at the original rest position).
+In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's rotation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. For example, how many degrees an eyelid bone should rotate down on the Z axis in order for a model to wink. These location/rotation offsets are then stored in a 'Bone Morph', with the value of 1 meaning that the pose bones are 100% applied, and 0 meaning 0% of it is applied (the bone is at it's original rest position).
 
-The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
+Typically these pose bones are grouped together to make a Bone Morph. For example a 'blink' bone morph is a combination of both the left _and_ right eyelid bones together.
+
+The facial expressions that are commonly used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 

@@ -18,13 +18,19 @@
     - axis_up='Z'
 
 - Moves all 'Group' objects to an empty object called 'FFXIV Empty Groups'
-- Fixes the alpha blend mode so that all the textures can be viewed properly (blend_method = 'HASHED')
-- Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the [MMD Tools instructions](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual#mmd_bone_order_override))
-- Renames the meshes objects to something that is more human-readable
+
+- Update all material properties:
+    - Fixes the alpha blend mode so that all the textures can be viewed properly (blend_method = 'HASHED')
+    - Turns on backface culling (use_backface_culling = True)
+
+- Update meshes:
+    - Adds the"mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the [MMD Tools instructions](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual#mmd_bone_order_override))
+    - Renames the meshes objects to something that is more human-readable
+
 - Adds custom object/data properties:
-    - Armature object:
+    - Armature **object**:
         - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)    
-    - Mesh data:
+    - Mesh **data**:
         - ModelID - Parsed from original object name
         - ModelRaceID - Parsed from original object name
         - ModelNumberID - Parsed from original object name
@@ -149,7 +155,7 @@ In addition to above, also:
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
 
  
-5) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/manual_guide/README.md#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+5) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
 
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
 
@@ -287,25 +293,52 @@ Will limit the 'replace' to only _selected_ bone
 #### Auto Generate
 Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel, according to the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv). If bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the bone to the bone group specified in the 'blender_bone_group' column
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c07eeed1-8a29-41e8-a027-8faf496404ba)
+
+
 ## Rigid Bodies
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
 
 ### Visibility Shortcuts
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/15d1c5c8-6d9b-4b27-9d9d-22c3147f3ccb)
+
+
+#### Hide/Show Rigid Body
+Shortcut to the hide/show button on MMD Tools
+
+#### Hide/Show Rigid Body Name
+Shortcut to the hide/show button on MMD Tools
+
+#### Hide/Show Mesh
+Shortcut to the hide/show button on MMD Tools
+
+#### Enable/Disable Physics
+Shortcut to the enable/disable physics button on MMD Tools
 
 ### Active Rigid Body / Bone
 
-TBD
+Show the actively selected Rigid body's name, as well as it's connected bone's name. Clicking on the bone name will select the bone in edit mode
 
 ### Rigid Body Search
 
-TBD
+Searches for rigid body name(s) based on the parameters provided (starts /w, contains, ends/w)
+
+- 'Find' will deselect all selected objects first before showing the results
+- 'Find + Add' is the same as 'Find' but will append the results to the currently selected objects
+- 'Trashcan' will clear the 'starts w/', 'contains', and 'ends w/' textboxes
 
 ### Bone Chain Select
 
-TBD
+#### Up
+Based on the 'active' rigid body selected's **bone**, will append the bone's parent's rigid bodies recursively. Useful if you want to apply change in bulk to all the rigid bodies attached to the bones
+
+#### Down
+Same as 'Up', but looks for the bone's children recusively.
+
+#### All
+It does both 'Up' and 'Down' at the same time
 
 ### Skirt Select
 
@@ -313,11 +346,48 @@ TBD
 
 ### Rigid Body Transform
 
-TBD
+https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
+
+#### Bulk Apply Rigid Bodies
+Used to apply changes to ALL selected rigid bodies. 
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/dc4f98da-7e11-41e4-8be7-62895cbdb552)
+
+By default it will show the values on the ACTIVE rigid body.
+
+Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
+
+#### Rigid Body Bone Chain
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7b30110f-ba6c-497c-826f-8887240758a5)
+
+Used to apply a 'gradient' change to MMD Tools' rigid bodies.
+
+By default it will show the values on the highest parent rigid body (based on the bone structure) as the START value,with the lowest child bone's rigid body as the END value.
+
+Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
+
+For example if there are 3 selected rigid bodies in a bone chain, with the starting value being 1, and the ending value being 2, the rigid bodies values will be:
+- Rigid body 1: 1.0
+- Rigid body 2: 1.5
+- Rigid body 3: 2.0
+
+Can be used when you need to edit multiple rigid bodies' shape at once, such as a skirt that is uniformly shaped at the top, but gradually gets larger and more angular at the bottom.
+
+#### All Rigid Body Bone Chains
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e0800c28-922b-4b8c-a64a-396ed7bde7c5)
+
+Same as above but applies the values to ALL selected rigid body bone chains. Since each rigid body bone chain has it's own unique start and end value, this doesn't use the 'absolute' values, but rather applies a delta value based on the inputs.
 
 ### Rigid Body Create
 
-TBD
+#### From Selected Bones
+Shortcut to the MMD Tools' Rigid Body Create button:
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9ed7ece8-3eb2-4ae8-b7cc-ece5b16bedca)
+
+#### From FFXIV Template
+Creates a Rigid Body skeletion based on the FFXIV general bone body structure, with all these presets created.
+To see the preset values applied to each bone and the values, check out the [Rigid Body Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/rigid_body_dictionary.csv)
 
 ## Joints
 
@@ -361,9 +431,11 @@ TBD
 
 Bone Morphs defines how much each posebone should move in order to make a facial expression.
 
-In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's rotation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. For example, how many degrees an eyelid bone should rotate down on the Z axis in order for a model to wink. These location/rotation offsets are then stored in a 'Bone Morph', with the value of 1 meaning that the pose bones are 100% applied, and 0 meaning 0% of it is apply (the bone is at the original rest position).
+In Blender's MMD Tools, these bone morphs are made by manually adjusting a model's pose bone's rotation on the X/Y/Z axis, or offsetting their location on the X/Y/Z axis. For example, how many degrees an eyelid bone should rotate down on the Z axis in order for a model to wink. These location/rotation offsets are then stored in a 'Bone Morph', with the value of 1 meaning that the pose bones are 100% applied, and 0 meaning 0% of it is applied (the bone is at it's original rest position).
 
-The facial expressions that are 'commonly' used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
+Typically these pose bones are grouped together to make a Bone Morph. For example a 'blink' bone morph is a combination of both the left _and_ right eyelid bones together.
+
+The facial expressions that are commonly used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
 
 - [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 

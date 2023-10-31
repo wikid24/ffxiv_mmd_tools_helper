@@ -8,6 +8,7 @@ from os.path import isfile
 def read_i(file, i):
 	return [unpack('e', file.read(2))[0] for x in range(i)]
 
+
 def apply_colorset_file(file_name):
 	for obj in bpy.context.selected_objects:
 		if obj.type =='MESH' and obj.active_material.is_colorset:
@@ -35,6 +36,7 @@ def apply_colorset_file(file_name):
 				colorset.close()
 			if colorsetdat:
 				colorsetdat.close()
+
 
 def apply_texture_file_to_colorset_node(node_label,texture_file):
 	for obj in bpy.context.selected_objects:
@@ -416,7 +418,7 @@ class SelectMaterialsFolder(bpy.types.Operator):
 					apply_material_to_all_matching_ffxiv_meshes (obj)
 
 				else:
-					print ("ERRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRR")
+					print ("ERROR: COULD NOT APPLY THE COLORSETTER PLUGIN (probably a 'Import DDS' error in Colorsetter addon)")
 
 					
 				

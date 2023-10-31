@@ -81,6 +81,8 @@ def parse_chara_file(file_path):
 						print ("SmallIris:" + str(result_dict['SmallIris']))
 				if key in ['HeadGear','Body','Hands','Legs','Feet','Ears','Neck','Wrists','LeftRing','RightRing']:
 					result_dict[key] = int(charafile_data[key]['ModelBase'])
+					result_dict[key+'_v'] = int(charafile_data[key]['ModelVariant'])
+					result_dict[key+'_d'] = int(charafile_data[key]['DyeId'])
 				else:
 					result_dict[key] = charafile_data[key]
 
@@ -309,6 +311,149 @@ def get_color_key(race,tribe,gender):
 
 	return color_key
 
+def get_dye_name(dye_id):
+    
+    dye_name= None
+
+    dye_dictionary = [
+        [0,'none'],
+        [1,'Snow White'],
+        [2,'Ash Grey'],
+        [3,'Gobbue Grey'],
+        [4,'Slate Grey'],
+        [5,'Charcoal Grey'],
+        [6,'Soot Black'],
+        [7,'Rose Pink'],
+        [8,'Lilac Purple'],
+        [9,'Rolanberry Red'],
+        [10,'Dalamud Red'],
+        [11,'Rust Ret'],
+        [12,'Wine Red'],
+        [13,'Coral Pink'],
+        [14,'Blood Red'],
+        [15,'Salmon Pink'],
+        [16,'Sunset Orange'],
+        [17,'Mesa Red'],
+        [18,'Bark Brown'],
+        [19,'Chocolate Brown'],
+        [20,'Russet Brown'],
+        [21,'Kobold Brown'],
+        [22,'Cork Brown'],
+        [23,'Qiqirn Brown'],
+        [24,'Opo-opo Brown'],
+        [25,'Aldgoat Brown'],
+        [26,'Pumpkin Orange'],
+        [27,'Acorn Brown'],
+        [28,'Orchard Brown'],
+        [29,'Chestnut Brown'],
+        [30,'Gobbiebag Brown'],
+        [31,'Shale Brown'],
+        [32,'Mole Brown'],
+        [33,'Loam Brown'],
+        [34,'Bone White'],
+        [35,'Ul Brown'],
+        [36,'Desert  Yellow'],
+        [37,'Honey Yellow'],
+        [38,'Millioncorn Yellow'],
+        [39,'Coeurl Yellow'],
+        [40,'Cream Yellow'],
+        [41,'Halatali Yellow'],
+        [42,'Raisin Brown'],
+        [43,'Mud Green'],
+        [44,'Sylph Green'],
+        [45,'Lime Green'],
+        [46,'Moss Green'],
+        [47,'Meadow Green'],
+        [48,'Olive Green'],
+        [49,'Marsh Green'],
+        [50,'Apple Green'],
+        [51,'Cactuar Green'],
+        [52,'Gunter Green'],
+        [53,'Ochu Green'],
+        [54,'Adamantoise Green'],
+        [55,'Nophica Green'],
+        [56,'Deepwood Green'],
+        [57,'Celeste Green'],
+        [58,'Turquoise Green'],
+        [59,'Morbol Green'],
+        [60,'Ice Blue'],
+        [61,'Sky Blue'],
+        [62,'Seafog Blue'],
+        [63,'Peacock Blue'],
+        [64,'Rhotano Blue'],
+        [65,'Corpse Blue'],
+        [66,'Ceruleum Blue'],
+        [67,'Woad Blue'],
+        [68,'Ink Blue'],
+        [69,'Raptor Blue'],
+        [70,'Othard Blue'],
+        [71,'Storm Blue'],
+        [72,'Void Blue'],
+        [73,'Royal Blue'],
+        [74,'Midnight Blue'],
+        [75,'Shadow Blue'],
+        [76,'Abyssal Blue'],
+        [77,'Lavendar Purple'],
+        [78,'Gloom Purplse'],
+        [79,'Currant Purple'],
+        [80,'Iris Purple'],
+        [81,'Grape Purple'],
+        [82,'Lotus Pink'],
+        [83,'Colibri Punk'],
+        [84,'Plum Purple'],
+        [85,'Regal Purple'],
+        [86,'Ruby Red'],
+        [87,'Cherry Pink'],
+        [88,'Canary Yellow'],
+        [89,'Vanilla Yellow'],
+        [90,'Dragoon Blue'],
+        [91,'Turqoise Blue'],
+        [92,'Gunmetal Black'],
+        [93,'Pearl White'],
+        [94,'Dye 94'],
+        [95,'Dye 95'],
+        [96,'Dye 96'],
+        [97,'Dye 97'],
+        [98,'Dye 98'],
+        [99,'Dye 99'],
+        [100,'Pure White'],
+        [101,'Jet Black'],
+        [102,'Pastel Pink'],
+        [103,'Dark Red'],
+        [104,'Dark Brown'],
+        [105,'Pastel Green'],
+        [106,'Dark Green'],
+        [107,'Pastel Blue'],
+        [108,'Dark Blue'],
+        [109,'Pastel Purple'],
+        [110,'Dark Purple'],
+        [111,'Metallic Silver'],
+        [112,'Metallic Gold'],
+        [113,'Metallic Red'],
+        [114,'Metallic Orange'],
+        [115,'Metallic Yellow'],
+        [116,'Metallic Green'],
+        [117,'Metallic Sky Blue'],
+        [118,'Metallic Blue'],
+        [119,'Metallic Purple'],
+        [120,'Dye 120'],
+        [121,'Dye 121'],
+        [122,'Dye 122'],
+        [123,'Dye 123'],
+        [124,'Dye 124'],
+        [125,'Dye 125'],
+        [126,'Dye 126'],
+        [127,'Dye 127'],
+        [128,'Dye 128'],
+    ]
+
+    for dye in dye_dictionary:
+        if dye[0] == dye_id:
+            dye_name = dye[1]
+            break
+
+    return dye_name
+
 
 def get_model_race_key(race,tribe,gender):
 
@@ -504,18 +649,18 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 		print(f"Ears Model: {model_race_key}z{int(RESULTS_DICT['TailEarsType']):04}_zer")
 	#gear
 	print('----------------')
-	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04}")
-	print(f"Legs Gear: e{int(RESULTS_DICT['Legs']):04}")
-	print(f"Head Gear: e{int(RESULTS_DICT['HeadGear']):04}")
-	print(f"Hand Gear: e{int(RESULTS_DICT['Hands']):04}")
-	print(f"Feet Gear: e{int(RESULTS_DICT['Feet']):04}")
+	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04} variant:{ int(RESULTS_DICT['Body_v'])} dye: {get_dye_name(RESULTS_DICT['Body_d'])}" )
+	print(f"Legs Gear: e{int(RESULTS_DICT['Legs']):04} variant:{ int(RESULTS_DICT['Legs_v'])} dye: {get_dye_name(RESULTS_DICT['Legs_d'])}")
+	print(f"Head Gear: e{int(RESULTS_DICT['HeadGear']):04} variant:{ int(RESULTS_DICT['HeadGear_v'])} dye: {get_dye_name(RESULTS_DICT['HeadGear_d'])}")
+	print(f"Hand Gear: e{int(RESULTS_DICT['Hands']):04} variant:{ int(RESULTS_DICT['Hands_v'])} dye: {get_dye_name(RESULTS_DICT['Hands_d'])}")
+	print(f"Feet Gear: e{int(RESULTS_DICT['Feet']):04} variant:{ int(RESULTS_DICT['Feet_v'])} dye: {get_dye_name(RESULTS_DICT['Feet_d'])}")
 	print('----------------')
 	#accessories
-	print(f"Earring Gear: a{int(RESULTS_DICT['Ears']):04}")
-	print(f"Necklace Gear: a{int(RESULTS_DICT['Neck']):04}")
-	print(f"Wrists Gear: a{int(RESULTS_DICT['Wrists']):04}")	
-	print(f"Ring Left Gear: a{int(RESULTS_DICT['LeftRing']):04}")
-	print(f"Ring Right Gear: a{int(RESULTS_DICT['RightRing']):04}")
+	print(f"Earring Gear: a{int(RESULTS_DICT['Ears']):04} variant:{ int(RESULTS_DICT['Ears_v'])} dye: {get_dye_name(RESULTS_DICT['Ears_d'])}")
+	print(f"Necklace Gear: a{int(RESULTS_DICT['Neck']):04} variant:{ int(RESULTS_DICT['Neck_v'])} dye: {get_dye_name(RESULTS_DICT['Neck_d'])}")
+	print(f"Wrists Gear: a{int(RESULTS_DICT['Wrists']):04} variant:{ int(RESULTS_DICT['Wrists_v'])} dye: {get_dye_name(RESULTS_DICT['Wrists_d'])}")	
+	print(f"Ring Left Gear: a{int(RESULTS_DICT['LeftRing']):04} variant:{ int(RESULTS_DICT['LeftRing_v'])} dye: {get_dye_name(RESULTS_DICT['LeftRing_d'])}")
+	print(f"Ring Right Gear: a{int(RESULTS_DICT['RightRing']):04} variant:{ int(RESULTS_DICT['RightRing_v'])} dye: {get_dye_name(RESULTS_DICT['RightRing_d'])}")
 	
 	# hyur mid m
 	# hyur high
@@ -584,7 +729,7 @@ from bpy_extras.io_utils import ImportHelper
 class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	"""Operator that opens the file browser dialog for .chara files from Anamnesis and applies it to currently selected armature"""
 	bl_idname = "ffxiv_mmd.apply_ffxiv_chara_file_browser_operator"
-	bl_label = "Chara File Browser Operator"
+	bl_label = "Apply .chara File"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	filename_ext = ".chara"
@@ -613,7 +758,7 @@ class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	"""Operator that opens the file browser dialog for .chara files from Anamnesis"""
 	bl_idname = "ffxiv_mmd.read_ffxiv_chara_file_browser_operator"
-	bl_label = "Chara File Browser Operator"
+	bl_label = "Read .chara File"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	filename_ext = ".chara"

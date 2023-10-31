@@ -91,10 +91,11 @@ def import_ffxiv_model(context,file_path):
 				child.parent = new_empty
 		"""
 
-		###### Fix the alpha blend mode so that all the textures can be viewed properly ######
+		###### Fix the alpha blend mode so that all the textures can be viewed properly, and set backface culling to True ######
 		mats = bpy.data.materials
 		for mat in mats:
 			mat.blend_method = 'HASHED'
+			mat.use_backface_culling = True
 		
 		##### add the" mmd_bone_order_override" armature modifier to the FIRST mesh on n_root (as per the MMD Tools instructions)####
 		# Get the first mesh object that is a child of the armature
@@ -406,7 +407,7 @@ from bpy_extras.io_utils import ImportHelper
 class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	"""Operator that opens the file browser dialog"""
 	bl_idname = "ffxiv_mmd.ffxiv_file_browser_operator"
-	bl_label = "File Browser Operator"
+	bl_label = "Import FFXIV .fbx File"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	filename_ext = ".fbx"
@@ -448,11 +449,13 @@ class ImportFFXIVModel(bpy.types.Operator):
 	
 	], name = "Sample", default = 'none')
 	
-	"""
+	
 	@classmethod
 	def poll(cls, context):
-		return context.active_object is not None
-	"""
+
+		if context.scene.selected_ffxiv_test_model != 'none':	
+			return True#context.active_object is not None
+	
 	def execute(self, context):
 		main(context)
 		return {'FINISHED'}

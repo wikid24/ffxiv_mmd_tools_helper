@@ -457,6 +457,9 @@ Will create joints in bulk when there are 2 or more selected rigid bodies select
 
 #### Create Vertical Joints
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a7236bfa-bb3a-4f97-a275-2df7e36da535)
+
+
 Create joints in bulk where there are **multiple** **rigid body bone chains** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain) selected, with only joints being created between rigid bodies that have a bone parent & child relationship, with  the option to create a joint for each bone chain's highest parent to a common rigid body that is shared between tham  (such as selecting all the hair rigid bodies and pinning the highest rigid body in each bone chain to the "head" rigid body)
 
 Please be aware that this means that ONLY joints will be created between a rigid body bone's parents and children, meaning that there will be NO joints created between two separate bone chains. To create joints in bulk where there is no bone parent/child relationship refer to the Create Horizontal Joints section below.
@@ -467,14 +470,17 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-
 
 #### Create Horizontal Joints
 
-Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a 1) a common name AND and two numbers in the same position 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/73a80223-0233-46e6-af55-0ab3d05d3f3e)
+
+
+Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a 1) a common name AND and two numbers in the same position.
 
 Example rigid body name: skirt_0_1
 **common name:** skirt_
 **first number**: 0
 **second number** 1
 
-The search criteria will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name
+The search criteria (starts w/, contains, ends w/) will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name to do so upon pressing 'find'.
 
 Upon pressing 'Find', the search results will:
 1) Show ALL rigid bodies that contain that common name -- this becomes the scope of rigid bodies that will create joints

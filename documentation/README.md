@@ -429,11 +429,11 @@ When there are **multiple** rigid bodies selected, will scan the armature for **
 
 ### Vertical Select
 
-When there are **multiple** joints selected, will scan for any rigid bodies that are connected in a **rigid body bone chain** (see explanation) (meaning they are vertically connected) and filter the selection to ONLY these joints.
+When there are **multiple** joints selected, will scan for any rigid bodies that are connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are vertically connected) and filter the selection to ONLY these joints.
 
 ### Horizontal Select
 
-When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** (see explanation) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
+When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
 
 ### Joint Transform
 

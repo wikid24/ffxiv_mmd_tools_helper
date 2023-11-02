@@ -342,7 +342,23 @@ It does both 'Up' and 'Down' at the same time
 
 ### Skirt Select
 
-TBD
+#### Vertical Skirt Selection
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/35afe09f-c33f-497c-9773-84411f2a8952)
+
+When the skirt module is leveraged to create rigid bodies, will select all vertical skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active x)
+
+#### Horizontal Skirt Selection
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a420790d-c875-4c2e-acaa-b089696a2af3)
+
+
+When the skirt module is leveraged to create rigid bodies, will select all horizontal skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active y)
+
+#### All Skirt Selection
+
+When the skirt module is leveraged to create rigid bodies, will select all rigid bodies (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the the name 'skirt_')
+
 
 ### Rigid Body Transform
 

@@ -413,27 +413,36 @@ TBD
 
 ### Visibility Shortcuts
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a7982deb-ef97-46e5-ac36-3bb376518b09)
+
+Shortcuts to the MMD Tools show/hide joint, and show/hide joint name respectively.
 
 ### Active Joint / Rigid 1 / Rigid 2
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/69dd9c14-c279-4a79-95ac-9922db8cdc6b)
+
+When a joint is selected, will show the joint name, as well as its two associated rigid bodies. Clicking on the rigid body name will select it.
 
 ### Get Joints from Rigid Bodies
 
-TBD
+When there are **multiple** rigid bodies selected, will scan the armature for **all** the associated joints that are connecting them and select the joints.
 
 ### Vertical Select
 
-TBD
+When there are **multiple** joints selected, will scan for any rigid bodies that are connected in a **rigid body bone chain** (see explanation) (meaning they are vertically connected) and filter the selection to ONLY these joints.
 
 ### Horizontal Select
 
-TBD
+When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** (see explanation) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
 
 ### Joint Transform
 
-TBD
+Used to apply bulk changes to multiple selected joints. By default, all of the fields will be populated with the currently **active** joint.
+
+To apply changes, input a value to one of the properties, select the checkbox next to it and press 'OK'
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/402f9c24-7238-469d-af5e-6583fbf78cb9)
+
 
 ### Joint Create
 

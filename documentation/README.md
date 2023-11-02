@@ -462,6 +462,7 @@ Create joints in bulk where there are **multiple** **rigid body bone chains** ([
 Please be aware that this means that ONLY joints will be created between a rigid body bone's parents and children, meaning that there will be NO joints created between two separate bone chains. To create joints in bulk where there is no bone parent/child relationship refer to the Create Horizontal Joints section below.
 
 Sample video:
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-4e59-8fc1-6d05f855fe16
 
 #### Create Horizontal Joints

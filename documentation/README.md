@@ -475,9 +475,11 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-
 
 Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a 1) a common name AND and two numbers in the same position.
 
-Example rigid body name: skirt_0_1
+**Example rigid body name:** skirt_0_1
 **common name:** skirt_
+
 **first number**: 0
+
 **second number** 1
 
 The search criteria (starts w/, contains, ends w/) will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name to do so upon pressing 'find'.

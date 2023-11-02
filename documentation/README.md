@@ -346,18 +346,18 @@ It does both 'Up' and 'Down' at the same time
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0fa35b5e-cc6e-4d1b-a8aa-8a0620ba4e1e)
 
-When the skirt module is leveraged to create rigid bodies, will select all vertical skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active x)
+When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#skirt) is leveraged to create rigid bodies, will select all vertical skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active x)
 
 #### Horizontal Skirt Selection
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a420790d-c875-4c2e-acaa-b089696a2af3)
 
 
-When the skirt module is leveraged to create rigid bodies, will select all horizontal skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active y)
+When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#skirt) is leveraged to create rigid bodies, will select all horizontal skirt rigid bodies from the active selection (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the currently active y)
 
 #### All Skirt Selection
 
-When the skirt module is leveraged to create rigid bodies, will select all rigid bodies (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the the name 'skirt_')
+When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#skirt) is leveraged to create rigid bodies, will select all rigid bodies (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the the name 'skirt_')
 
 
 ### Rigid Body Transform

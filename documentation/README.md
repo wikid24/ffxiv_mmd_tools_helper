@@ -476,21 +476,19 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-
 Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a 1) a common name AND and two numbers in the same position.
 
 **Example rigid body name:** skirt_0_1
-**common name:** skirt_
+- **common name pattern shared on all rigid bodies:** skirt_
+- **first number**: 0
+- **second number** 1
 
-**first number**: 0
-
-**second number** 1
-
-The search criteria (starts w/, contains, ends w/) will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name to do so upon pressing 'find'.
+The search criteria (starts w/, contains, ends w/) will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name pattern to do so upon pressing 'find'.
 
 Upon pressing 'Find', the search results will:
-1) Show ALL rigid bodies that contain that common name -- this becomes the scope of rigid bodies that will create joints
+1) Show ALL rigid bodies that contain that common name pattern-- this becomes the scope of rigid bodies that will create  horizontal joints for
 2) Show (at minimum) **two** numbers that will indicate if eveything that shares that same number is a 'horizontal' rigid body chain. The two numbers provided will be based on a rigid body within the search scope at random
 
-Upon selecting one of the numbers, a box will be displayed with a **<--previous ** and **next -->** button on it
+Upon selecting one of the two (or more) numbers, a box will be displayed with a **<--previous ** and **next -->** button on it
 
-These two arrows will be used to iterate through **all** the  rigid bodies in the search scope that share that same number's position in the rigid body name. This is for **testing** if the correct number is selected (either the first number or second number in this example.
+These two arrows will be used to iterate through **all** the  rigid bodies in the search scope that share that same number's position in the rigid body name. This is for **testing** if the correct number position is selected (either the first number or second number in this example.
 
 'Connect ending and starting rigid body' checkbox is to determine if the **starting** rigid body is supposed to have a joint to the **ending** rigid body. If unchecked, no joint will be created between them. This is useful if the selected rigid bodies are supposed to form a **full** circle horizontally, or not.
 

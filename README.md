@@ -265,7 +265,7 @@ Your character's **face** will now be animated.
 
 #### Q: How do I get better physics working on the skirt? The default one sucks.
 
-A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
+A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing.
 
 In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_. 
 
@@ -454,7 +454,7 @@ A: There are a few ways to do it, and depending on the method some are easier th
 
 For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtube.com/watch?v=f9LA6_XnFIg) as it is very easy to use. But only if you are staying in Blender as this will not work if you want to export to PMX format.
 
-I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
+I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing.
 
 In general these are the high-level steps required:
 1) Create the Bones you would like to apply physics to
@@ -642,7 +642,7 @@ All fixed :)
 ![image](https://user-images.githubusercontent.com/19479648/227067679-e5f976fb-c78b-4faa-98a5-717759900b46.png)
 
 
-A: The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing. 
+A: The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing. 
 
 Done reading? Ok. So you have 'collision-based' rigid bodies, and 'physics-based' rigid bodies. All of the skirt/tail rigid bodies are 'physics-based'. The issue is that they have nothing to collide _into_. Right now, the tail rigids pass right through our imaginary floor. 
 

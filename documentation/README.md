@@ -417,21 +417,21 @@ TBD
 
 Shortcuts to the MMD Tools show/hide joint, and show/hide joint name respectively.
 
-### Active Joint / Rigid 1 / Rigid 2
+#### Active Joint / Rigid 1 / Rigid 2
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/69dd9c14-c279-4a79-95ac-9922db8cdc6b)
 
 When a joint is selected, will show the joint name, as well as its two associated rigid bodies. Clicking on the rigid body name will select it.
 
-### Get Joints from Rigid Bodies
+#### Get Joints from Rigid Bodies
 
 When there are **multiple** rigid bodies selected, will scan the armature for **all** the associated joints that are connecting them and select the joints.
 
-### Vertical Select
+#### Vertical Select
 
 When there are **multiple** joints selected, will scan for any rigid bodies that are connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are vertically connected) and filter the selection to ONLY these joints.
 
-### Horizontal Select
+#### Horizontal Select
 
 When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
 

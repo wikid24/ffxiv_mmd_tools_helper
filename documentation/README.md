@@ -435,6 +435,8 @@ When there are **multiple** joints selected, will scan for any rigid bodies that
 
 When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
 
+
+
 ### Joint Transform
 
 Used to apply bulk changes to multiple selected joints. By default, all of the fields will be populated with the currently **active** joint.
@@ -460,11 +462,39 @@ Create joints in bulk where there are **multiple** **rigid body bone chains** ([
 Please be aware that this means that ONLY joints will be created between a rigid body bone's parents and children, meaning that there will be NO joints created between two separate bone chains. To create joints in bulk where there is no bone parent/child relationship refer to the Create Horizontal Joints section below.
 
 Sample video:
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-4e59-8fc1-6d05f855fe16
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-4e59-8fc1-6d05f855fe16)
 
 #### Create Horizontal Joints
 
-Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a common name structure and two numbers (such as 'skirt_0_1' with 0 being 'x' and 1 being 'y')
+Create joints in bulk where there are **multiple** **rigid body bone chains** selected, however there is no hierarchal parent/child relationship between the bones. To do this, all rigid bodies need to share a 1) a common name AND and two numbers in the same position 
+
+Example rigid body name: skirt_0_1
+**common name:** skirt_
+**first number**: 0
+**second number** 1
+
+The search criteria will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name
+
+Upon pressing 'Find', the search results will:
+1) Show ALL rigid bodies that contain that common name -- this becomes the scope of rigid bodies that will create joints
+2) Show (at minimum) **two** numbers that will indicate if eveything that shares that same number is a 'horizontal' rigid body chain. The two numbers provided will be based on a rigid body within the search scope at random
+
+Upon selecting one of the numbers, a box will be displayed with a **<--previous ** and **next -->** button on it
+
+These two arrows will be used to iterate through **all** the  rigid bodies in the search scope that share that same number's position in the rigid body name. This is for **testing** if the correct number is selected (either the first number or second number in this example.
+
+'Connect ending and starting rigid body' checkbox is to determine if the **starting** rigid body is supposed to have a joint to the **ending** rigid body. If unchecked, no joint will be created between them. This is useful if the selected rigid bodies are supposed to form a **full** circle horizontally, or not.
+
+Upon pressing 'OK' the horizontal joints will be created.
+
+Sample video:
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bf936ddc-c184-42f4-8665-4cf670857cbd
+
+
+
+
 
 # Bone Morphs (Facial Expressions)
 

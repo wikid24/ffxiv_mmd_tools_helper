@@ -548,6 +548,8 @@ This will create a skirt object called 'skirt_obj' with it's own cone-shaped mes
 - The cone-shaped bones are intended to be your new skirt's bones for using leveraging MMD-style physics with rigid bodies & joints. These skirt bones will be transferred to your model once this whole skirt transfer process is complete.
 - The cone-shaped mesh will have **weight painted pre-applied** to the bones from the cone-shaped armature. This cone-shaped mesh needed in order to perform a 'weight paint transfer' from this cone to your model's current skirt mesh to use it's weight painting. This skirt will be **deleted** once this whole skirt transfer process is complete as it is only needed for the weight paint transfer to your model.
 
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b12906f1-55d1-4aae-8b59-b7e72eca9a5b
+
 The paramaters are as follows:
 
 - Bone Chains: Specifies the number of bone chains that will encircle the circumference of your model. For example specifying '4' will have a bone chain starting on your model's left side, back, right side, and front.
@@ -562,23 +564,30 @@ The paramaters are as follows:
 Upon pressing 'OK', it will create the skirt_obj and **remember** the parameters upon the next time you press the 'OK' button. **IT IS PERFECTLY FINE TO PRESS 'OK' EVEN IF YOU STILL WANT TO MAKE CHANGES** because every single time you press the OK button, it will **replace** the current skirt_obj with a **new** skirt object
 
 
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b12906f1-55d1-4aae-8b59-b7e72eca9a5b
-
-
-
 ### Move Mesh To New Skirt Object
 
-TBD
+Will move the currently selected active object to the 'skirt_obj' object. To prevent accidentally breaking things on the armature, all the weight paint transferring occurs only on meshes that exist within the 'skirt_obj' object.
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0959d3c8-2bec-4f95-bb6a-6630780eec51
+
+
 
 ### Weight Paint Transfer to Mesh
 
-TBD
+Will transfer the weight paint from 'new_skirt_shape' to the currently selected mesh, assuming it exists in the 'skirt_obj' object.
+
+Please note: Weight paint transfer will ONLY work if the selected mesh is as as physically close as possible to the new_skirt_shape mesh. If they are physically too far apart, the weight paint won't transfer properly.
+
+You can see if weight paint transferred properly by scrolling through the vertex group list:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a529aa5c-cc10-4b92-8b11-e1859cd59388
+
 
 ### Delete FFXIV & Unused Skirt Vertex Groups
 
-TBD
+Deletes any of the FFXIV vertex groups that start with 'j_sk_', or any vertex groups that start with 'skirt_' where it's corresponding bone can't be found. This is to prevent any weight paint conflicts between the _new_ weight painting that was applied in the previous step and the old FFXIV skirt bones.
 
-### Move Bones and Meshes to Armature
+### Move Skirt Bones and Meshes to Armature
 
 TBD
 

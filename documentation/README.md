@@ -607,10 +607,10 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4ee99bab-c998-
 
 If you used all the above steps to create the skirt bones generated the rigid bodies, this will create joints with all the joint linear & angular parameteres preapplied. By default, these settings are configured for a somewhat 'heavy' skirt.
 
-Searches for a rigid body name 'lower body' first. If 'lower body' is not found, this will not work.
+Searches for a rigid body name 'lower body' first. If 'lower body' does not exist, this will not work.
 
 
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/59692f73-6180-4bc8-8f20-1abc0ce5006a
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a64e1020-649c-4b0e-9ab1-2992f278a753
 
 
 

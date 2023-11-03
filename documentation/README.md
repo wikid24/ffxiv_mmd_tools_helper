@@ -613,12 +613,9 @@ Searches for a rigid body name 'lower body' first. If 'lower body' does not exis
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a64e1020-649c-4b0e-9ab1-2992f278a753
 
 
-
-
-
 ### Vertex Group List
 
-TBD
+Lists all the vertex groups for the currently selected mesh. Useful when trying to see if weight painting was applied correctly while in weight painting mode.
 
 
 TBD

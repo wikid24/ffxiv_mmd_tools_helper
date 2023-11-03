@@ -546,7 +546,7 @@ By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adj
 This will create a skirt object called 'skirt_obj' with it's own cone-shaped mesh called 'new_skirt_shape', and cone-shaped armature with all the included bones under 'new_skirt_arm'.
 
 - The cone-shaped bones are intended to be your new skirt's bones for using leveraging MMD-style physics with rigid bodies & joints. These skirt bones will be transferred to your model once this whole skirt transfer process is complete.
-- The cone-shaped mesh will have **weight painted pre-applied** to the bones from the cone-shaped armature. This cone-shaped mesh needed in order to perform a 'weight paint transfer' from your model's current skirt mesh to use the weight painting on your new model, and will be **deleted** once this whole skirt transfer process is complete as it is only needed for the weight paint transfer to your model.
+- The cone-shaped mesh will have **weight painted pre-applied** to the bones from the cone-shaped armature. This cone-shaped mesh needed in order to perform a 'weight paint transfer' from this cone to your model's current skirt mesh to use it's weight painting. This skirt will be **deleted** once this whole skirt transfer process is complete as it is only needed for the weight paint transfer to your model.
 
 The paramaters are as follows:
 

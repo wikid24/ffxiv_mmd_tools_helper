@@ -545,8 +545,8 @@ By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adj
 
 This will create a skirt object called 'skirt_obj' with it's own cone-shaped mesh called 'new_skirt_shape', and cone-shaped armature with all the included bones under 'new_skirt_arm'.
 
-- The cone-shaped bones are intended to be your new skirt's bones for using leveraging MMD-style physics with rigid bodies & joints. These skirt bones will be transferred to your model once this whole skirt transfer process is complete.
-- The cone-shaped mesh will have **weight painted pre-applied** to the bones from the cone-shaped armature. This cone-shaped mesh needed in order to perform a 'weight paint transfer' from this cone to your model's current skirt mesh to use it's weight painting. This skirt will be **deleted** once this whole skirt transfer process is complete as it is only needed for the weight paint transfer to your model.
+- The cone-shaped bones are intended to be your new skirt's bones for using leveraging MMD-style physics with rigid bodies & joints. These skirt bones will be **transferred** to your model's armature once this whole process is complete.
+- The cone-shaped mesh will have **weight painted pre-applied** to the bones. This cone-shaped mesh needed in order to perform a 'weight paint transfer' to your model's skirt mesh. This cone-shaped mesh will be **deleted** upon completing this whole process.
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b12906f1-55d1-4aae-8b59-b7e72eca9a5b
 
@@ -582,6 +582,7 @@ You can see if weight paint transferred properly by scrolling through the vertex
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a529aa5c-cc10-4b92-8b11-e1859cd59388
 
+Note: After running this, you may want to test if the weight paint was transferred properly by going into 'Pose' mode and applying some simple rotation & location bone testing. If there are any issues with weight paint transfer, you can always start over from 'Generate a New Skirt Object' 
 
 ### Delete FFXIV & Unused Skirt Vertex Groups
 
@@ -589,15 +590,31 @@ Deletes any of the FFXIV vertex groups that start with 'j_sk_', or any vertex gr
 
 ### Move Skirt Bones and Meshes to Armature
 
-TBD
+Will move the meshes and bones contained within 'skirt_obj' object to the currently selected armature, while 'new_skirt_shape' mesh will be deleted.
+
+The parent for all the skirt bones will be either 'lower body' (MMD English bone name),'下半身' (MMD Japanese bone name)  or 'j_kosi' (FFXIV lower body bone).
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d4c9c1b9-6a56-445c-a08d-e2d9e8614730
 
 ### Generate Skirt Rigid Bodies
 
-TBD
+If you used all the above steps to create the skirt bones and successfully transferred them to your armature, this will create a rigid bodies with **all** with gravity/friction/size/collision group settings preapplied. By default, these settings are configured for a somewhat 'heavy' skirt.
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4ee99bab-c998-48fd-9e68-ea3b9b7ef1d4
 
 ### Generate Skirt Joints
 
-TBD
+If you used all the above steps to create the skirt bones generated the rigid bodies, this will create joints with all the joint linear & angular parameteres preapplied. By default, these settings are configured for a somewhat 'heavy' skirt.
+
+Searches for a rigid body name 'lower body' first. If 'lower body' is not found, this will not work.
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/59692f73-6180-4bc8-8f20-1abc0ce5006a
+
+
+
+
 
 ### Vertex Group List
 

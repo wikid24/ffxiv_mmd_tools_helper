@@ -618,8 +618,6 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a64e1020-649c-
 Lists all the vertex groups for the currently selected mesh. Useful when trying to see if weight painting was applied correctly while in weight painting mode.
 
 
-TBD
-
 ## Shaders
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
@@ -628,7 +626,12 @@ TBD
 
 ### Texture Folder
 
-TBD
+Location of the FFXIV textures that you would like to apply the colorset addon's textures. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
+
+For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, it would be: 
+- %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending
+  or
+- %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending
 
 ### Apply Colorset
 

@@ -562,6 +562,8 @@ The paramaters are as follows:
 Upon pressing 'OK', it will create the skirt_obj and **remember** the parameters upon the next time you press the 'OK' button. **IT IS PERFECTLY FINE TO PRESS 'OK' EVEN IF YOU STILL WANT TO MAKE CHANGES** because every single time you press the OK button, it will **replace** the current skirt_obj with a **new** skirt object
 
 
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b12906f1-55d1-4aae-8b59-b7e72eca9a5b
+
 
 
 ### Move Mesh To New Skirt Object

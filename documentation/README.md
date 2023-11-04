@@ -736,17 +736,23 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
  ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c54d5852-7664-4c11-9f40-ebb99a96c870)
 
 
-If 'Auto Generate' is selected:
+If '**Auto Generate**' is selected:
+
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) then sends this data to the populate display panels in MMD Tools. 
 
-If 'From Blender Bone Name' is selected:
+If 'Copy from Blender Bone Groups' is selected:
+
 It will add the Blender Bone Group names to MMD Tools' Display Panels section 
+
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c364d81-eaa3-4008-9828-e1ce3a94142c)
 
 
 ### Sort Bone Order / Deform Tools
 
-Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. THIS IS VERY IMPORTANT FOR PMX EXPORT. 
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. THIS IS VERY IMPORTANT FOR PMX EXPORT NOT TO GET THIS WRONG. 
+
+To use this section properly:
+
 
 ### Lock Position & Rotation
 

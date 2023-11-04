@@ -749,19 +749,28 @@ It will add the Blender Bone Group names to MMD Tools' Display Panels section
 
 ### Sort Bone Order / Deform Tools
 
-Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. THIS IS VERY IMPORTANT FOR PMX EXPORT NOT TO GET THIS WRONG. 
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. 
 
-To use this section properly:
+
+THIS IS VERY IMPORTANT FOR PMX EXPORT TO FOLLOW THESE STEPS IN ORDER (taken from the [FAQ guide for exporting to PMX Format](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)):
+
+2) On the MMD Tools Plugin -> **Bone Order** Panel -> Click on that weird square shape on the bottom
+3) Click on the arrow to expand the menu
+4) Click on **Add Missing Vertex Groups from Bones**
+
+![image](https://user-images.githubusercontent.com/19479648/225152213-4dffae74-5e2e-4de6-b992-a9baec4066af.png)
+
+5) Back in FFXIV MMD Tools Plugin, click on all of these buttons
 
 
 ### Lock Position & Rotation
 
-TBD
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to lock position and rotation of bones ( you can see these flags in PMX Editor). This isn't really 'required' for PMX Export, but it doesn't hurt either
 
 ### Set Fixed Axis / Local Axis
 
-TBD
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to set bones to either 'fixed axis' or 'local axis'  ( you can see these flags in PMX Editor). This isn't really 'required' for PMX Export, but it doesn't hurt either
 
 ### High Special & Physics Bones
 
-TBD
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to set bones to be hidden from the Miku Miku Dance viewport so they won't clutter your screen.  ( you can see these flags in PMX Editor)

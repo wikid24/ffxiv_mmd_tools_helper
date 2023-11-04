@@ -16,6 +16,9 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
+		# Add a help button
+		row = layout.row()
+		row.operator("wm.url_open", text="Help / User Guide", icon='QUESTION').url = "https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation"
 		row = layout.row()
 		row.operator("ffxiv_mmd.ffxiv_file_browser_operator", text="Import FFXIV .fbx File", icon='IMPORT')
 		row = layout.row()
@@ -546,8 +549,7 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"bust_slider",slider=True)
 		row.operator("ffxiv_mmd.bust_slider",text='Run')
 		row = layout.row()
-		# Add a help button
-		row.operator("wm.url_open", text="Help", icon='QUESTION').url = "https://your-wiki-website.com/tutorial"
+
 
 
 @register_wrap

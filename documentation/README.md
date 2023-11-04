@@ -635,7 +635,9 @@ For example on my Windows 10 PC if I would like to apply the "Diados Jacket of F
 
 ### Apply Colorset
 
-Will automatically apply the colorset addon's material to ALL meshes that share this material. 
+Will automatically apply the colorset addon's material to ALL meshes that share this material, to a new material called 'Colorset Base'. 
+
+Unlike using the colorsetter addon on its own (that destroys the old material), THIS plugin will store a backup of the old material by prefixing it with 'backup_'
 
 In order for this to properly, you need:
 1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
@@ -643,7 +645,7 @@ In order for this to properly, you need:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
 
 
-Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied.
+Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent corruption. To see the error message, attempt to use the color setter plugin manually and review the Blender Window Console logs.
 
 
 

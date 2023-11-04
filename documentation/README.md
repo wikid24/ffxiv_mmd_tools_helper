@@ -686,7 +686,21 @@ Attempted to merge two bones into one one, as well as attempts to merge the weig
 
 #### Flag Unused bones as 'unused'
 
-Reviews the armature for any bones that are not used by any meshes, and adds a prefix of 'unused_' to them. Please note: any bones that are identified as 'special' bones on the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) are excluded from this
+Scans the armature for any bones that are not used by any meshes, and adds a prefix of 'unused_' to them. Please note: any bones that are identified as 'is_special' bones on the [metadata bone dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) are excluded from this
+
+#### Delete 'unused' bones
+
+Combined the the setting above, it does exactly that.
+
+#### Remove Orphaned Rigid Bodies
+
+Scans the armature for any rigid bodies that exist but it cannot find it's associated bone. This will delete these rigid bodies. 
+Used for making sure MMD Tools doesn't crash or act weird when physics is turned on. Sometimes you delete a bone, and this happens.
+
+#### Remove Orphaned Joints
+
+Scans the armature for any joints that exist but it cannot find either of the two rigid bodies that it is supposed to be attached to. This will delete these joints. 
+Used for making sure MMD Tools doesn't crash or act weird when physics is turned on. Sometimes you delete a rigid body, and this happens. I delete rigid bodies a lot, and this has been extremely useful to me.
 
 ### Bust Slider
 

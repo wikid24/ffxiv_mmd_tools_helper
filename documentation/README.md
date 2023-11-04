@@ -666,8 +666,6 @@ Applies a 'Glossy BSDF' shader to a material.
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
 
 
-
-
 ### Glossy Roughness Slider
 
 Adjusts the Gossy shader's roughness
@@ -678,7 +676,17 @@ Adjusts the Gossy shader's roughness
 
 ### Dropdown List
 
-TBD
+#### Fix object axis (90 degrees)
+
+Rotates an object's axis by (you guessed it) 90 degrees, and then does a 'Apply All Transformations' so that this becomes the new XYZ 0,0,0
+
+#### Combine 2 bones
+
+Attempted to merge two bones into one one, as well as attempts to merge the weight painting from the two bones together, but the weight painting might not be perfect and will probably still need to be fixed for any/all bones that used to leverage it.
+
+#### Flag Unused bones as 'unused'
+
+Reviews the armature for any bones that are not used by any meshes, and adds a prefix of 'unused_' to them. Please note: any bones that are identified as 'special' bones on the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) are excluded from this
 
 ### Bust Slider
 

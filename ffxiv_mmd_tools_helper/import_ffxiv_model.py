@@ -300,8 +300,8 @@ def rename_ffxiv_mesh(obj):
 			start_index += length
 
 		# Print the parsed parts
-		for i, part in enumerate(parsed_parts):
-			print(f"Part {i + 1}: {part}")
+		#for i, part in enumerate(parsed_parts):
+			#print(f"Part {i + 1}: {part}")
 		
 		#add mesh details as a custom property
 		Model_ID = parsed_parts[0]+parsed_parts[1]+parsed_parts[2]+parsed_parts[3]+parsed_parts[4]

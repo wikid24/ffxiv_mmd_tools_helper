@@ -460,39 +460,38 @@ def get_model_race_key(race,tribe,gender):
 	race_key = None
 
 	race_dictionary = [
-		["AuRa","Raen","Masculine","aura_raen_m","c1301"],
-		["AuRa","Raen","Feminine","aura_raen_f","c1401"],
-		["AuRa","Xaela","Masculine","aura_xael_m","c1301"],
-		["AuRa","Xaela","Feminine","aura_xael_f","c1401"],
-		["Elezen","Duskwight","Masculine","elez_dusk_m","c0501"],
-		["Elezen","Duskwight","Feminine","elez_dusk_f","c0601"],
-		["Elezen","Wildwood","Masculine","elez_wild_m","c0501"],
-		["Elezen","Wildwood","Feminine","elez_wild_f","c0601"],
-		["Hrothgar","Helions","Masculine","hrot_heli_m","c1501"],
-		#["Hrothgar","Helions","Feminine","hrot_heli_f","c1601"],
-		["Hrothgar","TheLost","Masculine","hrot_lost_m","c1501"],
-		#["Hrothgar","TheLost","Feminine","hrot_lost_f","c1601"],
-		["Hyur","Highlander","Masculine","hyur_high_m","c0301"],
-		["Hyur","Highlander","Feminine","hyur_high_f","c0401"],
 		["Hyur","Midlander","Masculine","hyur_midl_m","c0101"],
 		["Hyur","Midlander","Feminine","hyur_midl_f","c0201"],
-		["Lalafel","Dunesfolk","Masculine","lala_dune_m","c1101"],
-		["Lalafel","Dunesfolk","Feminine","lala_dune_f","c1201"],
-		["Lalafel","Plainsfolk","Masculine","lala_plai_m","c1101"],
-		["Lalafel","Plainsfolk","Feminine","lala_plai_f","c1201"],
+		["Hyur","Highlander","Masculine","hyur_high_m","c0301"],
+		["Hyur","Highlander","Feminine","hyur_high_f","c0401"],
+		["Elezen","Duskwight","Masculine","elez_dusk_m","c0501"],
+		["Elezen","Wildwood","Masculine","elez_wild_m","c0501"],
+		["Elezen","Duskwight","Feminine","elez_dusk_f","c0601"],		
+		["Elezen","Wildwood","Feminine","elez_wild_f","c0601"],
 		["Miqote","KeeperOfTheMoon","Masculine","miqo_keep_m","c0701"],
-		["Miqote","KeeperOfTheMoon","Feminine","miqo_keep_f","c0801"],
 		["Miqote","SeekerOfTheSun","Masculine","miqo_seek_m","c0701"],
+		["Miqote","KeeperOfTheMoon","Feminine","miqo_keep_f","c0801"],
 		["Miqote","SeekerOfTheSun","Feminine","miqo_seek_f","c0801"],
 		["Roegadyn","Hellsguard","Masculine","roeg_hell_m","c0901"],
-		["Roegadyn","Hellsguard","Feminine","roeg_hell_f","c1001"],
 		["Roegadyn","SeaWolf","Masculine","roeg_seaw_m","c0901"],
+		["Roegadyn","Hellsguard","Feminine","roeg_hell_f","c1001"],
 		["Roegadyn","SeaWolf","Feminine","roeg_seaw_f","c1001"],
+		["Lalafel","Dunesfolk","Masculine","lala_dune_m","c1101"],
+		["Lalafel","Plainsfolk","Masculine","lala_plai_m","c1101"],
+		["Lalafel","Dunesfolk","Feminine","lala_dune_f","c1201"],
+		["Lalafel","Plainsfolk","Feminine","lala_plai_f","c1201"],
+		["AuRa","Raen","Masculine","aura_raen_m","c1301"],
+		["AuRa","Xaela","Masculine","aura_xael_m","c1301"],
+		["AuRa","Raen","Feminine","aura_raen_f","c1401"],
+		["AuRa","Xaela","Feminine","aura_xael_f","c1401"],
+		["Hrothgar","Helions","Masculine","hrot_heli_m","c1501"],
+		["Hrothgar","TheLost","Masculine","hrot_lost_m","c1501"],
+		#["Hrothgar","Helions","Feminine","hrot_heli_f","c1601"],		
+		#["Hrothgar","TheLost","Feminine","hrot_lost_f","c1601"],
 		["Viera","Rava","Masculine","vier_rava_m","c1701"],
-		["Viera","Rava","Feminine","vier_rava_f","c1801"],
 		["Viera","Veena","Masculine","vier_veen_m","c1701"],
+		["Viera","Rava","Feminine","vier_rava_f","c1801"],
 		["Viera","Veena","Feminine","vier_veen_f","c1801"],
-
 	]
 
 	for i in race_dictionary:
@@ -635,6 +634,7 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 		if RESULTS_DICT['Tribe'] in ["Midlander","Wildwood","Plainsfolk","SeekerOfTheSun","SeaWolf","Xaela","Raen","Veena","Rava","Helions","TheLost"]:
 			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']):04}_fac")
 
+		#hyur, elezen, lalafell, miqote, roegadyn have a 100 variant, the others do not
 		elif RESULTS_DICT['Tribe'] in ["Highlander","Duskwight","Dunesfolk","KeeperOfTheMoon","Hellsguard"]:
 			print(f"Face Model: {model_race_key}f{int(RESULTS_DICT['Head']+100):04}_fac")
 
@@ -649,18 +649,19 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 		print(f"Ears Model: {model_race_key}z{int(RESULTS_DICT['TailEarsType']):04}_zer")
 	#gear
 	print('----------------')
-	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04} variant:{ int(RESULTS_DICT['Body_v'])} dye: {get_dye_name(RESULTS_DICT['Body_d'])}" )
-	print(f"Legs Gear: e{int(RESULTS_DICT['Legs']):04} variant:{ int(RESULTS_DICT['Legs_v'])} dye: {get_dye_name(RESULTS_DICT['Legs_d'])}")
 	print(f"Head Gear: e{int(RESULTS_DICT['HeadGear']):04} variant:{ int(RESULTS_DICT['HeadGear_v'])} dye: {get_dye_name(RESULTS_DICT['HeadGear_d'])}")
+	print(f"Body Gear: e{int(RESULTS_DICT['Body']):04} variant:{ int(RESULTS_DICT['Body_v'])} dye: {get_dye_name(RESULTS_DICT['Body_d'])}" )
 	print(f"Hand Gear: e{int(RESULTS_DICT['Hands']):04} variant:{ int(RESULTS_DICT['Hands_v'])} dye: {get_dye_name(RESULTS_DICT['Hands_d'])}")
+	print(f"Legs Gear: e{int(RESULTS_DICT['Legs']):04} variant:{ int(RESULTS_DICT['Legs_v'])} dye: {get_dye_name(RESULTS_DICT['Legs_d'])}")	
 	print(f"Feet Gear: e{int(RESULTS_DICT['Feet']):04} variant:{ int(RESULTS_DICT['Feet_v'])} dye: {get_dye_name(RESULTS_DICT['Feet_d'])}")
 	print('----------------')
 	#accessories
 	print(f"Earring Gear: a{int(RESULTS_DICT['Ears']):04} variant:{ int(RESULTS_DICT['Ears_v'])} dye: {get_dye_name(RESULTS_DICT['Ears_d'])}")
 	print(f"Necklace Gear: a{int(RESULTS_DICT['Neck']):04} variant:{ int(RESULTS_DICT['Neck_v'])} dye: {get_dye_name(RESULTS_DICT['Neck_d'])}")
 	print(f"Wrists Gear: a{int(RESULTS_DICT['Wrists']):04} variant:{ int(RESULTS_DICT['Wrists_v'])} dye: {get_dye_name(RESULTS_DICT['Wrists_d'])}")	
-	print(f"Ring Left Gear: a{int(RESULTS_DICT['LeftRing']):04} variant:{ int(RESULTS_DICT['LeftRing_v'])} dye: {get_dye_name(RESULTS_DICT['LeftRing_d'])}")
 	print(f"Ring Right Gear: a{int(RESULTS_DICT['RightRing']):04} variant:{ int(RESULTS_DICT['RightRing_v'])} dye: {get_dye_name(RESULTS_DICT['RightRing_d'])}")
+	print(f"Ring Left Gear: a{int(RESULTS_DICT['LeftRing']):04} variant:{ int(RESULTS_DICT['LeftRing_v'])} dye: {get_dye_name(RESULTS_DICT['LeftRing_d'])}")
+	
 	
 	# hyur mid m
 	# hyur high

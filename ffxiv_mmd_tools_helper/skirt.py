@@ -115,8 +115,8 @@ def create_skirt_bones(num_bone_parents, radius_tail, radius_head, height,floor_
         # Calculate the offset to the bone roll
         #if x_scale == 0:
             #offset = math.pi / 2.0
-       # else:
-           # offset = math.atan(y_scale / x_scale)
+    # else:
+        # offset = math.atan(y_scale / x_scale)
 
         # Apply the offset to the bone roll
         #bone.roll += offset
@@ -222,14 +222,14 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     # Create the skirt mesh and bones armature
     skirt_mesh = create_skirt_mesh(num_segments, radius_tail, radius_head, height,floor_offset , x_scale, y_scale,num_subdivisions)
     skirt_arm = create_skirt_bones(num_bone_parents, radius_tail, radius_head, height, floor_offset,x_scale, y_scale, num_bone_children)
-   
+
     #create skirt material and assign it to the mesh
     skirt_mat = bpy.data.materials.new(name="new_skirt_mat")
     skirt_mat.use_nodes = True
     skirt_mat.node_tree.nodes["Principled BSDF"].inputs[21].default_value = 0.1 #set alpha to 10%
     skirt_mesh.active_material = skirt_mat
     skirt_mesh.active_material.blend_method = 'BLEND'
-     
+    
             
             
     bpy.ops.object.mode_set(mode='OBJECT')
@@ -429,7 +429,7 @@ def delete_unused_skirt_vertex_groups(mesh_obj,armature_obj):
                     bone_found = True
             if bone_found==False:
                 mesh_obj.vertex_groups.remove(vg)
-     
+    
             
         
 
@@ -497,7 +497,7 @@ def move_bones_and_skirt_to_ffxiv_model(armature):
 
     #find the lower body bone
     lower_body_bone_names = ['lower body','下半身','j_kosi']
-    lower_bone_bone = None
+    lower_body_bone = None
     for bone in armature.data.edit_bones:
         if bone.name in lower_body_bone_names:
             lower_body_bone = bone
@@ -594,21 +594,21 @@ class GenerateSkirtModal(bpy.types.Operator):
                 )
     
     
-    num_bone_parents: bpy.props.IntProperty(name="Bone Parents", default=16, min =0, update =_skirt_shape_update)
-    num_bone_children: bpy.props.IntProperty(name="Number of Bone Children", default=13, min=3, update =_skirt_shape_update)
-    num_segments: bpy.props.IntProperty(name="Mesh Segments", default=16, min = 0, update =_skirt_shape_update)
+    num_bone_parents: bpy.props.IntProperty(name="Bone Chains:", default=16, min =0, update =_skirt_shape_update)
+    num_bone_children: bpy.props.IntProperty(name="Bone Chain Children:", default=13, min=3, update =_skirt_shape_update)
+    num_segments: bpy.props.IntProperty(name="Mesh Segments:", default=16, min = 0, update =_skirt_shape_update)
     num_subdivisions: bpy.props.IntProperty(name="Mesh Subdivisions:", default=5,min=1, update =_skirt_shape_update)
-    height: bpy.props.FloatProperty(name="Head Height", default=0.98,min=0, update =_skirt_shape_update)
-    radius_head: bpy.props.FloatProperty(name="Head Radius", default=0.12,min=0, update =_skirt_shape_update)
-    floor_offset: bpy.props.FloatProperty(name="Tail Height", default=0.05,min = 0, update =_skirt_shape_update)
-    radius_tail: bpy.props.FloatProperty(name="Tail Radius", default=0.32,min=0, update =_skirt_shape_update)
-    x_scale: bpy.props.FloatProperty(name="X Scale", default=1.3,min=0, update =_skirt_shape_update)
-    y_scale: bpy.props.FloatProperty(name="Y Scale", default=1.0,min=0, update =_skirt_shape_update)
+    height: bpy.props.FloatProperty(name="Top Height:", default=0.98,min=0, update =_skirt_shape_update)
+    radius_head: bpy.props.FloatProperty(name="Top Radius:", default=0.12,min=0, update =_skirt_shape_update)
+    floor_offset: bpy.props.FloatProperty(name="Bottom Height:", default=0.05,min = 0, update =_skirt_shape_update)
+    radius_tail: bpy.props.FloatProperty(name="Bottom Radius:", default=0.32,min=0, update =_skirt_shape_update)
+    x_scale: bpy.props.FloatProperty(name="X Scale:", default=1.3,min=0, update =_skirt_shape_update)
+    y_scale: bpy.props.FloatProperty(name="Y Scale:", default=1.0,min=0, update =_skirt_shape_update)
 
-       
+    
 
     def execute(self, context):
-       # props = GenerateSkirtModal
+    # props = GenerateSkirtModal
 
         generate_new_skirt(
             self.num_bone_parents
@@ -639,9 +639,15 @@ class MoveMeshToNewSkirt(bpy.types.Operator):
     bl_label = "Move Mesh to New Skirt"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # @classmethod
-    # def poll(cls, context):
-        # return context.active_object is not None
+    @classmethod
+    def poll(cls, context):
+        
+        # Get the object by name
+        skirt_obj = bpy.data.objects.get("skirt_obj")
+
+        # Check if the object exists
+        if skirt_obj:
+            return context.active_object is not None and context.active_object.type =='MESH'
 
     def execute(self, context):
         mesh_obj = bpy.context.view_layer.objects.active
@@ -657,9 +663,14 @@ class WeightPaintTransferToMesh(bpy.types.Operator):
     bl_label = "Weight Paint Transfer to Mesh"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # @classmethod
-    # def poll(cls, context):
-        # return context.active_object is not None
+    @classmethod
+    def poll(cls, context):
+        # Get the object by name
+        skirt_obj = bpy.data.objects.get("skirt_obj")
+
+        # Check if the object exists
+        if skirt_obj:
+            return context.active_object is not None and context.active_object.type =='MESH' and context.active_object.parent == skirt_obj
 
     def execute(self, context):
         mesh_obj = bpy.context.view_layer.objects.active
@@ -675,9 +686,9 @@ class DeleteFFXIVSkirtVertexGroups(bpy.types.Operator):
     bl_label = "Delete FFXIV/Unused Skirt Vertex Groups"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # @classmethod
-    # def poll(cls, context):
-        # return context.active_object is not None
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and context.active_object.type == 'MESH'
 
     def execute(self, context):
         mesh_obj = bpy.context.view_layer.objects.active
@@ -756,7 +767,7 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
                 bpy.data.meshes.remove(obj.data,do_unlink=True)
                 #bpy.data.objects.remove(obj, do_unlink=True)
                 
-           
+        
 
         bpy.context.view_layer.objects.active = armature
         bpy.ops.object.mode_set(mode='EDIT')
@@ -775,22 +786,22 @@ class GenerateSkirtRigidBodies(bpy.types.Operator):
         print ('Min Chain Number:',min_chain_number)
         print ('Min Head Chain Number:',min_chain_head_number)
 
-   
+
         #create all the rigid bodies with some presets
         bpy.ops.mmd_tools.rigid_body_add(
             name_j = "$name_j"
-			,name_e = "$name_e"
-			,collision_group_number= 6
-			,collision_group_mask= (False, False, False, False, False,False, True, False, False, False, False, False, False, False, False, False)
-			,rigid_type= "1" #'0'= Bone, '1' = Physics, '2' = Physics+Bone
-			,rigid_shape="BOX" #SPHERE, BOX, CAPSULE
-			,size= [0.6,0.15,0.6] #size #size[0] = X, size[1] = Y, size[2] = Z
-			,mass=0.5
-			#,friction=friction
-			#,bounce=bounce  #restitution
-			,linear_damping=0.9
-			,angular_damping= 0.999
-		)
+            ,name_e = "$name_e"
+            ,collision_group_number= 6
+            ,collision_group_mask= (False, False, False, False, False,False, True, False, False, False, False, False, False, False, False, False)
+            ,rigid_type= "1" #'0'= Bone, '1' = Physics, '2' = Physics+Bone
+            ,rigid_shape="BOX" #SPHERE, BOX, CAPSULE
+            ,size= [0.6,0.15,0.6] #size #size[0] = X, size[1] = Y, size[2] = Z
+            ,mass=0.5
+            #,friction=friction
+            #,bounce=bounce  #restitution
+            ,linear_damping=0.9
+            ,angular_damping= 0.999
+        )
 
         #get head to tail
         bpy.ops.object.mode_set(mode='OBJECT')
@@ -883,38 +894,52 @@ class GenerateSkirtJoints(bpy.types.Operator):
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
-        lower_body_rigid = rigid_body.find_rigid_bodies(startswith='lower body',append_to_selected=False)[0]
-        rigid_body_list = rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
-        rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
-        #create vertical joints, pinned to lower body rigid
-        joints.create_vertical_joints(rigid_body_pin_obj=lower_body_rigid
-                                    ,use_bone_rotation=True
-                                    ,limit_linear_lower=[0,0,0]
-                                    ,limit_linear_upper=[0,0,0]
-                                    ,limit_angular_lower=[0,0,0]
-                                    ,limit_angular_upper=[0,0,0]
-                                    ,spring_linear=[0,0,0]
-                                    ,spring_angular=[0,0,0])
+        #find the lower body bone
+        lower_body_bone_names = ['lower body','下半身','j_kosi']
+        lower_body_bone = None
+        for bone in armature.data.edit_bones:
+            if bone.name in lower_body_bone_names:
+                lower_body_bone = bone
+            #print(lower_body_bone)
 
-        
-        rigid_body_list_with_number_index = rigid_body.get_rigid_body_list_with_number_index(rigid_body_list)
-        grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (rigid_body_list_with_number_index,1)
-        #create horizontal joints, wrap around = True. This should really be a parameter that gets passed to this operator? If it is a half skirt (like on Neo-Ishgardian Top) or cape (like Obsolete Android's Cloak of Aiming)
-        joints.create_horizontal_joints(rigid_body_chains=grouped_rigid_bodies_by_index_pos
-                                        ,wrap_around=True
+       
+
+            lower_body_rigid = rigid_body.find_rigid_bodies(startswith=lower_body_bone.name,append_to_selected=False)[0]
+            rigid_body_list = rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
+            #rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
+
+        if lower_body_bone is None or lower_body_rigid is None:
+            print("Error: No rigid body or bone named 'lower body','下半身' or 'j_kosi' found to pin the skirt's joints to. Create this rigid body to continue")
+        else:
+            #create vertical joints, pinned to lower body rigid
+            joints.create_vertical_joints(rigid_body_pin_obj=lower_body_rigid
                                         ,use_bone_rotation=True
-                                    ,limit_linear_lower=[-0.05313,0,0]
-                                    ,limit_linear_upper=[0.05313,0,0]
-                                    ,limit_angular_lower=[0,0,0]
-                                    ,limit_angular_upper=[0,0,0]
-                                    ,spring_linear=[0,0,0]
-                                    ,spring_angular=[0,0,0]
-        )
+                                        ,limit_linear_lower=[0,0,0]
+                                        ,limit_linear_upper=[0,0,0]
+                                        ,limit_angular_lower=[0,0,0]
+                                        ,limit_angular_upper=[0,0,0]
+                                        ,spring_linear=[0,0,0]
+                                        ,spring_angular=[0,0,0])
 
-        
+            
+            rigid_body_list_with_number_index = rigid_body.get_rigid_body_list_with_number_index(rigid_body_list)
+            grouped_rigid_bodies_by_index_pos = rigid_body.get_grouped_rigid_body_list_by_index_position (rigid_body_list_with_number_index,1)
+            #create horizontal joints, wrap around = True. This should really be a parameter that gets passed to this operator? If it is a half skirt (like on Neo-Ishgardian Top) or cape (like Obsolete Android's Cloak of Aiming)
+            joints.create_horizontal_joints(rigid_body_chains=grouped_rigid_bodies_by_index_pos
+                                            ,wrap_around=True
+                                            ,use_bone_rotation=True
+                                        ,limit_linear_lower=[-0.05313,0,0]
+                                        ,limit_linear_upper=[0.05313,0,0]
+                                        ,limit_angular_lower=[0,0,0]
+                                        ,limit_angular_upper=[0,0,0]
+                                        ,spring_linear=[0,0,0]
+                                        ,spring_angular=[0,0,0]
+            )
 
-        rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
-        joints.get_joints_from_selected_rigid_bodies()
+            
+
+            rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
+            joints.get_joints_from_selected_rigid_bodies()
 
 
         return {'FINISHED'}

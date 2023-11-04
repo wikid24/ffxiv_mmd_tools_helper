@@ -398,7 +398,7 @@ class SkirtPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd.delete_ffxiv_skirt_vertex_groups", text = "Delete FFXIV & Unused Skirt Vertex Groups",icon='GPBRUSH_ERASE_HARD')
 		row = layout.row()
-		row.operator("ffxiv_mmd.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Bones And Meshes To Armature",icon='AUTOMERGE_ON')
+		row.operator("ffxiv_mmd.merge_bones_and_meshes_to_ffxiv_model", text = "Merge Skirt Bones & Meshes To Armature",icon='AUTOMERGE_ON')
 		row = layout.row()
 		row.operator("ffxiv_mmd.generate_skirt_rigid_bodies", text = "Generate Skirt Rigid Bodies",icon='RIGID_BODY')
 		row = layout.row()
@@ -545,6 +545,10 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.prop(context.scene,"bust_slider",slider=True)
 		row.operator("ffxiv_mmd.bust_slider",text='Run')
+		row = layout.row()
+		# Add a help button
+		row.operator("wm.url_open", text="Help", icon='QUESTION').url = "https://your-wiki-website.com/tutorial"
+
 
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):

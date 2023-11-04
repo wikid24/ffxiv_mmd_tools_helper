@@ -134,7 +134,7 @@ def apply_textures_to_colorset_material(context,folder_path):
 				#new_material = obj.active_material
 
 				colorset_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_a.dds') ]
-				multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_m.png')]
+				multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_d.png') or f.endswith('_d.bmp') or f.endswith('_s.png')]
 				normalmap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_n.bmp') or f.endswith('_n.png')]
 				specular_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_s.bmp') or f.endswith('_s.png')]
 				diffuse_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_d.bmp') or f.endswith('_d.png')]
@@ -172,7 +172,7 @@ def apply_textures_to_colorset_material(context,folder_path):
 					#apply_multimap_file(multimap)
 					apply_texture_file_to_colorset_node('MultiTexture',multimap)
 				else:
-					print("No multimap file ending with '_m' found in the folder.")
+					print("No multimap file ending with '_m' or '_s' found in the folder.")
 					
 						
 				if normalmap_files:

@@ -607,7 +607,7 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4ee99bab-c998-
 
 If you used all the above steps to create the skirt bones generated the rigid bodies, this will create joints with all the joint linear & angular parameteres preapplied. By default, these settings are configured for a somewhat 'heavy' skirt.
 
-Searches for a rigid body named 'lower body','下半身' or 'j_kosi' first. If it does not exist this will not work, as the skirt needs to be physically pinned to this rigid body.
+Searches for a rigid body named 'lower body','下半身' or 'j_kosi' first. If it does not exist this will not work, as the skirt's rigid bodies needs to be physically pinned to this 'lower body'.
 
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a64e1020-649c-4b0e-9ab1-2992f278a753
@@ -629,13 +629,24 @@ TBD
 Location of the FFXIV textures that you would like to apply the colorset addon's textures. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
 
 For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, it would be: 
-- %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending
+- C:\Users\%userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
   or
-- %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending
+- C:\Users\%userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
 
 ### Apply Colorset
 
-TBD
+Will automatically apply the colorset addon's material to ALL meshes that share this material. 
+
+In order for this to properly, you need:
+1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
+2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS. Make sure Alpha textbox (A) is also checked before export as well. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
+
+
+Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied.
+
+
+
 
 ### Active Material
 

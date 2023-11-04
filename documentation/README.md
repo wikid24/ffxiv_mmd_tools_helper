@@ -704,7 +704,15 @@ Used for making sure MMD Tools doesn't crash or act weird when physics is turned
 
 ### Bust Slider
 
-TBD
+Adjusts the boobie size of pose bones 'j_mune_l' and 'j_mune_r', and adds a keyframe to frame 0 so that it (hopefully) stays that size when you import a VMD motion file. I don't know why sometimes it works, and sometimes it doesn't... If anyone wants to do some boobie research and let me know what's up, I'll try to fix it.
+
+The scale slider should match the same settings as the FFXIV game ([reference data link](https://docs.google.com/spreadsheets/d/1kIKvVsW3fOnVeTi9iZlBDqJo6GWVn6K6BCUIRldEjhw/edit#gid=296196266)).
+
+Here's the boobie math:
+scale_x = 0.92 + (bust_scale_number * 0.16)
+scale_y = 0.816 + (bust_scale_number * 0.368)
+scale_z = 0.8 + (bust_scale_number * 0.4)
+
 
 ## Export MMD Preparation
 

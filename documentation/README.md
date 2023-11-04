@@ -644,6 +644,7 @@ In order for this to properly, you need:
 2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
 
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
 
 Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
@@ -654,15 +655,22 @@ To see the actual error message, attempt to use the color setter plugin manually
 
 ### Active Material
 
-TBD
+Shortcut to selecting the active material for a mesh. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
 
 ### Apply Glossy Shader
 
-TBD
+Applies a 'Glossy BSDF' shader to a material.
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
+
+
+
 
 ### Glossy Roughness Slider
 
-TBD
+Adjusts the Gossy shader's roughness
 
 ## Miscellaneous Tools
 

@@ -747,7 +747,7 @@ It will add the Blender Bone Group names to MMD Tools' Display Panels section
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c364d81-eaa3-4008-9828-e1ce3a94142c)
 
 
-### Sort Bone Order / Deform Tools
+### Sort Bone Order / Deform Tiers
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. 
 
@@ -760,7 +760,7 @@ THIS IS VERY IMPORTANT FOR PMX EXPORT TO FOLLOW THESE STEPS IN ORDER (taken from
 
 ![image](https://user-images.githubusercontent.com/19479648/225152213-4dffae74-5e2e-4de6-b992-a9baec4066af.png)
 
-5) Back in FFXIV MMD Tools Plugin, click on all of these buttons
+5) Back in FFXIV MMD Tools Plugin, click on 'Sort Bone Order / Deform Tiers'
 
 
 ### Lock Position & Rotation

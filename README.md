@@ -3,8 +3,8 @@
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-- Export models out of FFXIV TexTools (leveraging data from Anamnesis)
-- Update the standard textures to the detailed ones (leveraging the Colorsetter Addon)
+- Export models out of FFXIV TexTools (leveraging data from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
+- Update the standard textures to the detailed ones (leveraging the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
 - Convert the model MMD Format
 - Add MMD-style physics in Blender
 - Animate it it in Blender (Including MMD _Facial_ Animation!)
@@ -265,7 +265,7 @@ Your character's **face** will now be animated.
 
 #### Q: How do I get better physics working on the skirt? The default one sucks.
 
-A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
+A: I agree! Physics is hard to get right and implement (and time-consuming). Good news is that this plugin does a lot of the hard work for you (but it can be still time consuming). The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing.
 
 In the [conversion guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow) you'll need to insert some steps _after step 7_. 
 
@@ -454,7 +454,7 @@ A: There are a few ways to do it, and depending on the method some are easier th
 
 For breast physics, I would recommend using [UuuNyaa's Plugin](https://www.youtube.com/watch?v=f9LA6_XnFIg) as it is very easy to use. But only if you are staying in Blender as this will not work if you want to export to PMX format.
 
-I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing.
+I will go over an example of how to manually add physics using the MMD method using Bones,Rigid Bodies and Joints, as this method will work if you want to export to PMX format. The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing.
 
 In general these are the high-level steps required:
 1) Create the Bones you would like to apply physics to
@@ -642,7 +642,7 @@ All fixed :)
 ![image](https://user-images.githubusercontent.com/19479648/227067679-e5f976fb-c78b-4faa-98a5-717759900b46.png)
 
 
-A: The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/research/physics) so that it doesn't seem so overly confusing. 
+A: The first thing I'd recommend is reading the [theory behind how MMD's rigid bodies & joints work in Blender](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/physics) so that it doesn't seem so overly confusing. 
 
 Done reading? Ok. So you have 'collision-based' rigid bodies, and 'physics-based' rigid bodies. All of the skirt/tail rigid bodies are 'physics-based'. The issue is that they have nothing to collide _into_. Right now, the tail rigids pass right through our imaginary floor. 
 

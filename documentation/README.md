@@ -317,7 +317,10 @@ Added a third finger bone (the last bone tip of a finger) to FFXIV models, since
 
 #### 15 - Add Extra Breast Tip Bones
 
-Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match some other similar looking MMD Models, though it is not needed in Blender. Only useful if you're planning to export to PMX format and continue rigging using PMX Editor.
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4289c853-e186-4a68-9695-5dd7d336f230)
+
+
+Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match some other similar looking MMD Models, though it is not needed in Blender. Only useful if you're planning to [export to PMX format](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that) and continue rigging using PMX Editor.
 
 #### 16 - Merge Double-Jointed Knee (FFXIV PMX Export Only)
 

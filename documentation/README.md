@@ -904,18 +904,20 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 
  Adds add all the bones, and vertex morphs and bone morphs to the display groups sections that you would find in Miku Miku Dance program upon .pmx export.
 
- ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c54d5852-7664-4c11-9f40-ebb99a96c870)
+
+-  **Auto Generate**:
+
+    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c54d5852-7664-4c11-9f40-ebb99a96c870)
+   
+    - Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) then sends this data to the populate display panels in MMD Tools. 
+
+- **Copy from Blender Bone Groups**:
+
+    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c364d81-eaa3-4008-9828-e1ce3a94142c)
+
+    - It will add the Blender Bone Group names to MMD Tools' Display Panels section 
 
 
-If '**Auto Generate**' is selected:
-
-Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) then sends this data to the populate display panels in MMD Tools. 
-
-If 'Copy from Blender Bone Groups' is selected:
-
-It will add the Blender Bone Group names to MMD Tools' Display Panels section 
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c364d81-eaa3-4008-9828-e1ce3a94142c)
 
 ------
 

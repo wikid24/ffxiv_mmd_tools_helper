@@ -311,9 +311,10 @@ Adds some IK to hands/arms, similar to Leg/IK. Unlike Leg/Arm IK, this one is ra
 
 #### 14 - Add Extra Finger Bones (select finger mesh first)
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7977812b-5c03-40fa-a3bb-6d30b22adfcd)
 
 
-Added a third finger bone (the last bone tip of a finger) to FFXIV models, since they only have 2 finger bones. Script will attempt to automatically weight paint the bones, but it is hit or miss. I'd avoid doing this unless you like weight painting manually. Ensure that the hand mesh is selected first _before_ running this command.
+Adds a third finger bone (the last bone tip of a finger) to FFXIV models, since they only have 2 finger bones. Script will attempt to automatically weight paint the bones, but it is hit or miss. I'd avoid doing this unless you like weight painting manually. Ensure that the hand mesh is selected first _before_ running this command.
 
 #### 15 - Add Extra Breast Tip Bones
 

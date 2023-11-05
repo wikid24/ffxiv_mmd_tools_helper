@@ -88,12 +88,12 @@ Reads the .chara file and outputs to the results to Blender's System Console.
 1) DIAGNOSIS: If an armature is selected, it compares the selected armature against the .chara file to see if it has all the correct equipment attached from TexTools. Useful if you made any mistakes exporting gear out of TexTools (such as the wrong equipment)
 
 2) Outputs the following data used for TexTools .fbx export:
-    - Skin Color (hex)
-    - Hair Color (hex)
-    - Hair Highlights Color (hex) If hair highlights is disabled, will output the hair color
-    - Iris Color (hex)
-    - Lip/Fur Color: (hex)
-    - Tattoo/Limbal Color: (hex)
+    - Skin Color (hex value)
+    - Hair Color (hex value)
+    - Hair Highlights Color (hex value) If hair highlights is disabled, will output the hair color
+    - Iris Color (hex value)
+    - Lip/Fur Color: (hex value)
+    - Tattoo/Limbal Color: (hex value)
     - Race, Tribe, Gender
     - Face Model: modelID (can be copy & pasted directly to TexTools search bar)
     - Hair Model: modelID (can be copy & pasted directly to TexTools search bar)
@@ -111,10 +111,20 @@ Reads the .chara file and outputs to the results to Blender's System Console.
     
     
 #### Anamnesis .chara File Apply To Model:
+
+In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-read) does, also:
  
-In addition to above, also:
+1) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0. Values are mapped in the [Chara File Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/chara_file_dictionary.csv)
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
+
  
-1) Adds .chara file custom properties to the armature object:
+2) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+
+   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
+
+ 
+3) Adds .chara file custom properties to the armature object:
     
 
     - Facial Deformation ID (based on the FFXIV tribe & gender's face part selectors in-game)
@@ -158,16 +168,6 @@ In addition to above, also:
         - FacialFeatures (Facial Checkbox flags)
      
     ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/81be8212-ce57-4a19-ad65-c2119be822a1)
-
- 
-3) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0. Values are mapped in the [Chara File Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/chara_file_dictionary.csv)
-
-   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
-
- 
-5) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
-
-   ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
 
 
 

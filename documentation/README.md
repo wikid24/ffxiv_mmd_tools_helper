@@ -621,13 +621,22 @@ Create joints in bulk where there are **multiple** **rigid body bone chains** se
 - **first number**: 0
 - **second number** 1
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/94434e2b-caed-4ee0-b59c-b761f57fd680)
+
+
 The search criteria (starts w/, contains, ends w/) will specify the **scope** of rigid bodies that need horizontal joints, will need to use the common name pattern to do so upon pressing 'find'.
 
 Upon pressing 'Find', the search results will:
 1) Show ALL rigid bodies that contain that common name pattern-- this becomes the scope of rigid bodies that will create  horizontal joints for
 2) Show (at minimum) **two** numbers that will indicate if eveything that shares that same number is a 'horizontal' rigid body chain. The two numbers provided will be based on a rigid body within the search scope at random
 
-Upon selecting one of the two (or more) numbers, a box will be displayed with a **<--previous ** and **next -->** button on it
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/205a3700-0b02-4962-9b91-cf016d0dec53)
+
+
+Upon selecting one of the two (or more) numbers, a box will be displayed with a **<--previous ** and **next -->** button on it:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/69c3b9e0-a32e-4bad-9bc0-424408c70999)
+
 
 These two arrows will be used to iterate through **all** the  rigid bodies in the search scope that share that same number's position in the rigid body name. This is for **testing** if the correct number position is selected (either the first number or second number in this example.
 
@@ -636,7 +645,6 @@ These two arrows will be used to iterate through **all** the  rigid bodies in th
 Upon pressing 'OK' the horizontal joints will be created.
 
 Sample video:
-
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bf936ddc-c184-42f4-8665-4cf670857cbd
 

@@ -545,7 +545,7 @@ Shortcuts to the MMD Tools show/hide joint, and show/hide joint name respectivel
 
 #### Active Joint / Rigid 1 / Rigid 2
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/69dd9c14-c279-4a79-95ac-9922db8cdc6b)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/77775dca-32ac-426c-8268-7b592cb6c61d)
 
 When a joint is selected, will show the joint name, as well as its two associated rigid bodies. Clicking on the rigid body name will select it.
 

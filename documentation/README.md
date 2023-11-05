@@ -306,14 +306,28 @@ And also adds the _special_ MMD Control bones (used to move the meshes in certai
 Shortcut to the [button with the same name](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#auto-fix-mmd-japanese--english-bone-names) in 'Export MMD Preparation' panel
 
 #### 13 -  Add Hand/Arm IK
+
 Adds some IK to hands/arms, similar to Leg/IK. Unlike Leg/Arm IK, this one is rarely if ever used in a VMD motion file, and is recommended that you don't use it unless it is actually called for. 
+
 #### 14 - Add Extra Finger Bones (select finger mesh first)
+
+
+
 Added a third finger bone (the last bone tip of a finger) to FFXIV models, since they only have 2 finger bones. Script will attempt to automatically weight paint the bones, but it is hit or miss. I'd avoid doing this unless you like weight painting manually. Ensure that the hand mesh is selected first _before_ running this command.
+
 #### 15 - Add Extra Breast Tip Bones
+
 Will add an extra bone tip to the breasts bones (j_mune_l, j_mune_r) to match some other similar looking MMD Models, though it is not needed in Blender. Only useful if you're planning to export to PMX format and continue rigging using PMX Editor.
+
 #### 16 - Merge Double-Jointed Knee (FFXIV PMX Export Only)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5a10f28c-39c6-443c-8ab8-bc2bb21f2af0)
+
+
 Since most standard MMD Models don't have these 'double-jointed' knees, this will merge the FFXIV- 'j_asi_c_l' and 'j_asi_b_l'(or Knee_L if you've renamed the bone) bones into one, and attempt merging the weight painting into the newly merged bone.  Only useful if you're planning to [export to PMX format](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that) and continue rigging using PMX Editor, otherwise if you're planning on staying in Blender, stick with the double-jointed knee to avoid extra headache.
+
 #### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
+
 Attempt to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
 
 ### Find & Replace

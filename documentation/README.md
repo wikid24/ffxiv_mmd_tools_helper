@@ -338,6 +338,9 @@ In the case of issues with the [arms not moving properly or going through the bo
 
 ### Find & Replace
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3f2b77ad-7c98-4b20-b205-e89344daa5cd)
+
+
 #### Find 
 Will search for any bone of the selected armature (in edit mode or pose mode) containing the search text provided
 
@@ -345,7 +348,7 @@ Will search for any bone of the selected armature (in edit mode or pose mode) co
 Combined with the find textbox, will rename any found bones to the new name provided
 
 #### Selected only checkbox
-Will limit the 'replace' to only _selected_ bone
+Will limit the 'replace' to only _selected_ bones
 
 ### Bone Groups
 

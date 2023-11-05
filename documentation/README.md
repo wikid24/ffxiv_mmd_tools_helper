@@ -66,7 +66,7 @@ Useful if you need to quickly compare and diagnose your own .fbx file vs one I c
 Shortcut to the MMD Tools addon's Convert Model feature:
 
 - Convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model.
-- Moves your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'
+- Moves your FFXIV Character's armature n_root from it's original object (your character's .fbx file name) to a new root object called 'New MMD Model'
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3352b02f-6d40-4b65-92a7-3b2284a3e275)
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/cc1040c1-bc5c-474b-8f34-2545917757dc)

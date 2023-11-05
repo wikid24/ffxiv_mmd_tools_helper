@@ -230,7 +230,7 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 
 ### MMD Conversion
 
-Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from 'FFXIV' to 'MMD English' format for most of these to work._
+Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from ['FFXIV' to 'MMD English' format](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mass-rename-bones) for most of these to work._
 
 #### Run Steps 1 to 12 - Shortcut to running steps 1 to 12 in order
 #### 1  -  Remove unused bones (no vertex groups)

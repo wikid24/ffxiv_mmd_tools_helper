@@ -517,10 +517,13 @@ Same as above but applies the values to ALL selected rigid body bone chains. Sin
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b0c1d3f6-93ff-4597-8de6-1735b02b7c8a)
 
+------
 
 #### From Selected Bones
 Shortcut to the MMD Tools' Rigid Body Create button:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9ed7ece8-3eb2-4ae8-b7cc-ece5b16bedca)
+
+------
 
 #### From FFXIV Template
 Creates a Rigid Body skeletion based on the FFXIV general bone body structure, with all these presets created.
@@ -573,15 +576,15 @@ To apply changes, input a value to one of the properties, select the checkbox ne
 
 #### From Selected Rigid Bodies
 
-Will create joints in bulk when there are 2 or more selected rigid bodies selected. **BUG: Currently only creates multiple joints when they are connected in a rigid body bone chain (meaning, it is a vertical joint). ** This is a MMD Tools bug.
+Will create joints in bulk when there are 2 or more selected rigid bodies selected. **BUG: Currently only creates multiple joints when they are connected in a rigid body bone chain (meaning, it is a vertical joint). ** This is a **MMD Tools bug**.
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/70c0013d-5efe-4613-b0ba-c4cdca2405fe)
 
+------
 
 #### Create Vertical Joints
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a7236bfa-bb3a-4f97-a275-2df7e36da535)
-
 
 Create joints in bulk where there are **multiple** **rigid body bone chains** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain) selected, with only joints being created between rigid bodies that have a bone parent & child relationship, with  the option to create a joint for each bone chain's highest parent to a common rigid body that is shared between tham  (such as selecting all the hair rigid bodies and pinning the highest rigid body in each bone chain to the "head" rigid body)
 
@@ -590,6 +593,8 @@ Please be aware that this means that ONLY joints will be created between a rigid
 Sample video:
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/649d0ff4-9024-4e59-8fc1-6d05f855fe16
+
+------
 
 #### Create Horizontal Joints
 
@@ -623,9 +628,11 @@ Sample video:
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bf936ddc-c184-42f4-8665-4cf670857cbd
 
 
-# Bone Morphs (Facial Expressions)
+## Bone Morphs (Facial Expressions)
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
+
+------
 
 ### Add Bone Morphs
 

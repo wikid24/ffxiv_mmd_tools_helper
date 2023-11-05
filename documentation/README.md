@@ -115,6 +115,10 @@ Reads the .chara file and outputs to the results to Blender's System Console:
     - Wrists Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     - Ring Left Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     - Ring Right Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
+
+Sample Video: 
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9
     
 ------
     

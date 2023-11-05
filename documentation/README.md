@@ -212,9 +212,9 @@ Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, 
 
 Shortcuts to the standard visibility options found on **Armature** -> **Viewport Display** panel:
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9c208ee4-380a-492c-89c2-d57908347e30)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3874acc0-c1c1-4813-80ff-e9afa8e057e2)
 
-- Hide/Show bones (Shortcut to **MMD Tools'** hide/show bones button, this is DIFFERENT than the standard hide/show bones button)
+- Hide/Show bones
 - Hide/Show bone names
 - Show bones in front of all other objects
 - Display bones as:
@@ -223,9 +223,10 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
     - Envelope
     - B-Bone
     - Wire
-- Hide/Show armature (shortcut to the **MMD Tools** hide/show armature button, assuming the model has been converted to MMD Model format):
+- Hide/Show armature (shortcut to the **MMD Tools** hide/show armature button, only displayed if model has been [converted to MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) format):
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/71e10b43-b181-46b9-bc40-5cdbb10ad650)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/36507716-0f5b-4bad-b976-b4af4d34a73e)
+
 
 ### MMD Conversion
 

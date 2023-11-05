@@ -521,7 +521,8 @@ Same as above but applies the values to ALL selected rigid body bone chains. Sin
 
 #### From Selected Bones
 Shortcut to the MMD Tools' Rigid Body Create button:
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9ed7ece8-3eb2-4ae8-b7cc-ece5b16bedca)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0d63493c-dc82-4b62-9ce6-9cf03d1a75ba)
 
 ------
 

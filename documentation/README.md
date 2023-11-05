@@ -332,7 +332,9 @@ Since most standard MMD Models don't have these 'double-jointed' knees, this wil
 
 #### EXPERIMENTAL - Adjust Arm Position for FFXIV Models
 
-Attempt to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5f07fd05-b342-419f-81fd-4aa3ace99dad)
+
+In the case of issues with the [arms not moving properly or going through the body/face using VMD animation files](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this),  this attempts to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
 
 ### Find & Replace
 
@@ -555,8 +557,6 @@ Sample video:
 
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bf936ddc-c184-42f4-8665-4cf670857cbd
-
-
 
 
 

@@ -792,9 +792,9 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 Location of the FFXIV textures that you would like to apply the colorset addon's textures. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
 
 For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, it would be: 
-- C:\Users\%userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+- C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
   or
-- C:\Users\%userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+- C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
 
 ------
 

@@ -49,7 +49,7 @@
  
 #### Load Sample
  
- - Import an example .fbx model that is included with the plugin, and applies the same transformations that **Import FFXIV .fbx File** does. Useful if you need to quickloy compare and diagnose your own .fbx file vs one I created for testing:
+ - Import an example .fbx model that is included with the plugin, and applies the same transformations that [**Import FFXIV .fbx File**](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file) does:
     - AuRa Female
     - Elezen Female
     - Hrothgar Male
@@ -59,6 +59,8 @@
     - Miqote Female
     - Roegadyn Female
     - Viera Female
+  
+Useful if you need to quickly compare and diagnose your own .fbx file vs one I created for my testing, or you just need a test out each race really quickly.
 
 #### Initialize MMD Struture
 Shortcut to the MMD Tools addon's Convert Model feature. Will convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model. Will move your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'

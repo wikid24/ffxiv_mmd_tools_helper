@@ -661,11 +661,11 @@ Typically these pose bones are grouped together to make a Bone Morph. For exampl
 
 The facial expressions that are commonly used by MMD animation files are referenced on this [MMD Facial Expression Reference Chart](https://www.deviantart.com/xoriu/art/MMD-Facial-Expressions-Chart-341504917). We cannot reproduce everything on the reference chart since this plugin doesn't add any 'new' data into the FFXIV model (such as adding the 'heart' eyes or the 'star' eyes, as those special shapes doesn't exist on the standard model.
 
+[Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall list of Bone Morph 'Groups' s that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation.
+
 ------
 
 ### Generate Bone Morphs
-
-- [Bone Morph Master List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morph_list.csv) - Defines the overall 'list' of Bone Morphs that are useable by each FFXIV race, as well as the japanese / english names that are used by VMD motion files for animation:
 
 The list below contains each FFXIV Race's own list of preset pose bone offsets (from rest position) to either their location or rotation on the XYZ axis (in XYZ Euler mode):
 - [Au Ra](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bone_morphs_aura.csv)

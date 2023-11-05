@@ -10,14 +10,14 @@
 
 ### Import FFXIV .fbx File
 
-- Imports a FFXIV Model into Blender and presses 'Apply all transformations' so that Blender will treat this orientation as the 'rest' position. 
+- Imports a FFXIV Model into Blender and 
     - primary_bone_axis='X'
     - secondary_bone_axis='Y'
     - use_manual_orientation=True
     - axis_forward='Y'
     - axis_up='Z'
  
-- Rotates the armature 90 degrees from the origin point. It's _Important_ to **apply transforamtions** before importing VMD animation files, as it starts using this data for keyframes.
+- Rotates the armature 90 degrees from the origin point, and presses 'Apply all transformations' so that Blender will treat this orientation as the 'rest' position.  It's _Important_ to **apply transforamtions** before importing VMD animation files, as it starts using this data for keyframes.
 
 - Moves all 'Group' objects to an empty object called 'FFXIV Empty Groups'
 

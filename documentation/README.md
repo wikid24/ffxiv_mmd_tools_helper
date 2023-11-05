@@ -63,9 +63,13 @@
 Useful if you need to quickly compare and diagnose your own .fbx file vs one I created for my testing, or you just need a test out each race really quickly.
 
 #### Initialize MMD Struture
-Shortcut to the MMD Tools addon's Convert Model feature. Will convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model. Will move your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'
+Shortcut to the MMD Tools addon's Convert Model feature:
+
+- Convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model.
+- Moves your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3352b02f-6d40-4b65-92a7-3b2284a3e275)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a203aa16-df1b-4711-9106-d60716a24767)
 
 
 

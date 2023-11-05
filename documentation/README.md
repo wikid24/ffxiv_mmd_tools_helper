@@ -5,7 +5,7 @@
 
 ## Import FFXIV Model
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/80e3a3ba-cd96-4897-a73e-b82bfe8b11eb)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/79655313-f5e6-4415-97b8-de19a6b7650d)
 
 
 ### Import FFXIV .fbx File
@@ -65,7 +65,8 @@ Useful if you need to quickly compare and diagnose your own .fbx file vs one I c
 #### Initialize MMD Struture
 Shortcut to the MMD Tools addon's Convert Model feature. Will convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model. Will move your FFXIV Character from it's original root object (your character's .fbx file name) to a new root object called 'New MMD Model'
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8171954b-d271-4a19-8806-cd68412eae7d)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3352b02f-6d40-4b65-92a7-3b2284a3e275)
+
 
 
 #### TexTools 'Saved' Folder

@@ -83,7 +83,10 @@ Saved' Folder where TexTools exports all textures and models by default. Used fo
         
 ### Anamnesis .chara File Read:
 
-Reads the .chara file and outputs to the results to Blender's System Console.
+Reads the .chara file and outputs to the results to Blender's System Console:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/da942342-ed34-4b13-b7b2-3ed0a5e50212)
+
 
 1) DIAGNOSIS: If an armature is selected, it compares the selected armature against the .chara file to see if it has all the correct equipment attached from TexTools. Useful if you made any mistakes exporting gear out of TexTools (such as the wrong equipment)
 

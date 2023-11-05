@@ -241,7 +241,8 @@ Shortcut to running steps 1 to 12 in order
 
 #### 1  -  Remove unused bones (no vertex groups)
 
-Removes any bones without any meshes attached. Useful since the stanard FFXIV bone struture the is imported includes bones even when there are no meshes attached to it. Removing them makes the armature cleaner / easier to see in Blender
+Shortcut to [flag 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#flag-unused-bones-as-unused) and [delete 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#delete-unused-bones). 
+Removes any bones without any meshes attached. Useful since the standard FFXIV bone struture that is imported includes bones including ones with no meshes attached. Removing them makes the armature cleaner / easier to see in Blender
 
 #### 2  -  Correct MMD Root and Center bones
 

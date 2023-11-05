@@ -549,7 +549,17 @@ Shortcuts to the MMD Tools show/hide joint, and show/hide joint name respectivel
 
 When a joint is selected, will show the joint name, as well as its two associated rigid bodies. Clicking on the rigid body name will select it.
 
+------
+
 ### Joint Select Controls
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4cfa0691-e87a-42a3-963c-f6230bdc457d)
+
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/aa972f30-9887-477c-8d86-4a8ab097f5a3
+
+
 
 #### Get Joints from Rigid Bodies
 

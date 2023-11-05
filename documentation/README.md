@@ -705,14 +705,14 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b12906f1-55d1-
 
 The paramaters are as follows:
 
-- Bone Chains: Specifies the number of bone chains that will encircle the circumference of your model. For example specifying '4' will have a bone chain starting on your model's left side, back, right side, and front.
-- Bone Chain Children: Specifies how many bones will be added for each bone chain from the top of the skirt to the bottom of the skirt.
-- Mesh Segments: Specifies how 'round' the circumference of your skirt mesh will be. Specifying a higher number will add more verticies to the circumference your skirt. Lower numbers will make your skirt object look like it was made in Quake
-- Mesh Subdivisions: Specifies how many face subdivisions should be on the cone-shaped mesh. The higher the number, more faces will be on your mesh, and the more accurate/detailed the weight painting will be.
-- Top Height: Specifies the XYZ's coordinate height of the **top** of the skirt from 0. Ideally this should be placed where you expect the new skirt's weight painting to be transferred onto your model
-- Top Radius: Specifies how large/small the **top** of your skirt is
-- Bottom Height: Specifies the XYZ's coordinate height of the **bottom** of the skirt from 0.
-- Bottom Radius: Specifies how large/small the **bottom** of your skirt is
+- **Bone Chains** -  Specifies the number of bone chains that will encircle the circumference of your model. For example specifying '4' will have a bone chain starting on your model's left side, back, right side, and front.
+- **Bone Chain Children** - Specifies how many bones will be added for each bone chain from the top of the skirt to the bottom of the skirt.
+- **Mesh Segments** - Specifies how 'round' the circumference of your skirt mesh will be. Specifying a higher number will add more verticies to the circumference your skirt. Lower numbers will make your skirt object look like it was made in Quake
+- **Mesh Subdivisions** - Specifies how many face subdivisions should be on the cone-shaped mesh. The higher the number, more faces will be on your mesh, and the more accurate/detailed the weight painting will be.
+- **Top Height** - Specifies the XYZ's coordinate height of the **top** of the skirt from 0. Ideally this should be placed where you expect the new skirt's weight painting to be transferred onto your model
+- **Top Radius** - Specifies how large/small the **top** of your skirt is
+- **Bottom Height** - Specifies the XYZ's coordinate height of the **bottom** of the skirt from 0.
+- **Bottom Radius** - Specifies how large/small the **bottom** of your skirt is
 
 Upon pressing 'OK', it will create the skirt_obj and **remember** the parameters upon the next time you press the 'OK' button. **IT IS PERFECTLY FINE TO PRESS 'OK' EVEN IF YOU STILL WANT TO MAKE CHANGES** because every single time you press the OK button, it will **replace** the current skirt_obj with a **new** skirt object
 

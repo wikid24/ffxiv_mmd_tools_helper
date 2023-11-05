@@ -537,6 +537,12 @@ Last thing to do is attach the hair stem rigid bodies to the head rigid body. Co
 You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.
 
 
+ **Full end-to-end rigging & animation example video (using SAMPLE Au Ra Female)**:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-466c-a344-8a20e09cc86d
+
+
+
  --------------
  
 #### Q: I want to add new facial expressions or change the existing facial expressions. How?

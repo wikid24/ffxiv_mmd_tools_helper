@@ -72,8 +72,6 @@ Shortcut to the MMD Tools addon's Convert Model feature:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/cc1040c1-bc5c-474b-8f34-2545917757dc)
 
 
-
-
 ### TexTools 'Saved' Folder
   
 Saved' Folder where TexTools exports all textures and models by default. Used for pulling in extra custom properties details upon .FBX Import:
@@ -175,6 +173,9 @@ In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tool
 
 
 ### Color Swatches
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b420b0d7-93fd-4e19-855c-1559b14612a9)
+
 
 Various colors displayed for the colors from the .chara file. Color Swatches are based on the [FFXIV Color Hex Reference Guide](https://docs.google.com/spreadsheets/d/18Z1ph1Xa-rFvC8FtB7X6IgSbjwPAom5XuDuCtVeNRvo). 
 

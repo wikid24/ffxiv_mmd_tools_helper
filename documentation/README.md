@@ -49,7 +49,7 @@
  
 #### Load Sample
  
- - Import an example .fbx model that is included with the plugin:
+ - Import an example .fbx model that is included with the plugin, and applies the same transformations that **Import FFXIV .fbx File** does. Useful if you need to quickloy compare and diagnose your own .fbx file vs one I created for testing:
     - AuRa Female
     - Elezen Female
     - Hrothgar Male

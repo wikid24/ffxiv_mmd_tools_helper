@@ -47,7 +47,7 @@
 
 
  
-#### Load Sample
+### Load Sample
  
  - Import an example .fbx model that is included with the plugin, and applies the same transformations that [**Import FFXIV .fbx File**](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file) does:
     - AuRa Female
@@ -62,7 +62,7 @@
   
 Useful if you need to quickly compare and diagnose your own .fbx file vs one I created for my testing, or you just need a test out each race really quickly.
 
-#### Initialize MMD Struture
+### Initialize MMD Struture
 Shortcut to the MMD Tools addon's Convert Model feature:
 
 - Convert the model to an MMD Model's format adding all the properties and data needed to convert and use as a MMD Model.
@@ -74,14 +74,14 @@ Shortcut to the MMD Tools addon's Convert Model feature:
 
 
 
-#### TexTools 'Saved' Folder
+### TexTools 'Saved' Folder
   
 Saved' Folder where TexTools exports all textures and models by default. Used for pulling in extra custom properties details upon .FBX Import:
 - Mesh data:  
     - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
     - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
         
-#### Anamnesis .chara File Read:
+### Anamnesis .chara File Read:
 
 Reads the .chara file and outputs to the results to Blender's System Console.
 
@@ -110,7 +110,7 @@ Reads the .chara file and outputs to the results to Blender's System Console.
     - Ring Right Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     
     
-#### Anamnesis .chara File Apply To Model:
+### Anamnesis .chara File Apply To Model:
 
 In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-read) does, also:
  
@@ -171,7 +171,7 @@ In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tool
 
 
 
-#### Color Swatches
+### Color Swatches
 
 Various colors displayed for the colors from the .chara file. Color Swatches are based on the [FFXIV Color Hex Reference Guide](https://docs.google.com/spreadsheets/d/18Z1ph1Xa-rFvC8FtB7X6IgSbjwPAom5XuDuCtVeNRvo). 
 

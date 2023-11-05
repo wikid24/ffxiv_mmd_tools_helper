@@ -277,7 +277,7 @@ Adds the special MMD 'arm_twist_1','arm_twist_2','arm_twist_3', 'wrist_twist_1',
 Adds the special MMD 'should_C','shoulder_P' bones. Needed for some VMD animation files. 
 
 #### 11 -  Add Leg/Foot IK
-Adds the 'stanard' MMD Leg/Foot IK Bones:
+Adds the _standard_ MMD Leg/Foot IK Bones:
 - leg IK_root_L
 - leg IK_root_R
 - leg IK_L
@@ -285,7 +285,7 @@ Adds the 'stanard' MMD Leg/Foot IK Bones:
 - toe IK_L
 - toe IK_R
 
-And also adds the 'special' MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone):
+And also adds the _special_ MMD Control bones (used to move the meshes in certain direction _after_ IK is applied, since once IK is applied, you can no longer directly move the pose bone like you would with a non-IK bone):
 - leg_L_D
 - leg_R_D
 - knee_L_D

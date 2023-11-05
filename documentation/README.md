@@ -46,6 +46,7 @@
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0742b581-f962-4c7c-ad55-a653a2ce407e)
 
 
+------
  
 ### Load Sample
  
@@ -62,6 +63,8 @@
   
 Useful if you need to quickly compare and diagnose your own .fbx file vs one I created for my testing, or you just need a test out each race really quickly.
 
+------
+
 ### Initialize MMD Struture
 Shortcut to the MMD Tools addon's Convert Model feature:
 
@@ -71,6 +74,7 @@ Shortcut to the MMD Tools addon's Convert Model feature:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3352b02f-6d40-4b65-92a7-3b2284a3e275)
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/cc1040c1-bc5c-474b-8f34-2545917757dc)
 
+------
 
 ### TexTools 'Saved' Folder
   
@@ -78,6 +82,8 @@ Saved' Folder where TexTools exports all textures and models by default. Used fo
 - Mesh data:  
     - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
     - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
+
+------
         
 ### Anamnesis .chara File Read:
 
@@ -110,6 +116,7 @@ Reads the .chara file and outputs to the results to Blender's System Console:
     - Ring Left Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     - Ring Right Gear: accessory ID (cannot parse the model variation if the model is shared in TexTools)
     
+------
     
 ### Anamnesis .chara File Apply To Model:
 
@@ -170,7 +177,7 @@ In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tool
      
     ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/81be8212-ce57-4a19-ad65-c2119be822a1)
 
-
+------
 
 ### Color Swatches
 
@@ -192,17 +199,21 @@ Displays for:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2705ac60-cca6-4ace-bd53-6db4a3c239b0)
 
+------
 
 ### Mass Rename Bones
 
 Used to rename bones according to the [Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_dictionary.csv) and [Finger Bone Dictionary table](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_fingers_dictionary.csv) . If bone name in 'From' match found on the selected armature, bone will be renamed to the 'To' target bone name.
 
+------
 
 ### Blender to MMD Jap
 
 Will push the Blender Bone name to the MMD Tool's PMX Japanese Bone name (found in the Bone Properties -> **MMD Bone Tools** panel), assuming the MMD Tools application is installed in Blender.
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/af6885ba-63cd-4e0e-9e31-bf15e0c6455c)
+
+------
  
 ### Swap Jap / Eng
 
@@ -211,6 +222,8 @@ Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, 
 
 ## Bones and IK
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1fcd5396-ca1b-40bd-9056-7a144297acf3)
+
+------
 
 ### Visibility Shortcuts
 
@@ -231,6 +244,7 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/36507716-0f5b-4bad-b976-b4af4d34a73e)
 
+------
 
 ### MMD Conversion Dropdown List
 
@@ -340,6 +354,8 @@ Since most standard MMD Models don't have these 'double-jointed' knees, this wil
 
 In the case of issues with the [arms not moving properly or going through the body/face using VMD animation files](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this),  this attempts to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
 
+------
+
 ### Find & Replace
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3f2b77ad-7c98-4b20-b205-e89344daa5cd)
@@ -354,6 +370,8 @@ Combined with the find textbox, will rename any found bones to the new name prov
 #### Selected only checkbox
 Will limit the 'replace' to only _selected_ bones
 
+------
+
 ### Bone Groups
 
 #### Auto Generate
@@ -365,6 +383,8 @@ Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel
 ## Rigid Bodies
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
+
+------
 
 ### Visibility Shortcuts
 
@@ -387,6 +407,8 @@ Shortcut to the enable/disable physics button on MMD Tools
 
 Show the actively selected Rigid body's name, as well as it's connected bone's name. Clicking on the bone name will select the bone in edit mode
 
+------
+
 ### Rigid Body Search
 
 Searches for rigid body name(s) based on the parameters provided (starts /w, contains, ends/w)
@@ -394,6 +416,8 @@ Searches for rigid body name(s) based on the parameters provided (starts /w, con
 - 'Find' will deselect all selected objects first before showing the results
 - 'Find + Add' is the same as 'Find' but will append the results to the currently selected objects
 - 'Trashcan' will clear the 'starts w/', 'contains', and 'ends w/' textboxes
+
+------
 
 ### Bone Chain Select
 
@@ -405,6 +429,8 @@ Same as 'Up', but looks for the bone's children recusively.
 
 #### All
 It does both 'Up' and 'Down' at the same time
+
+------
 
 ### Skirt Select
 
@@ -425,6 +451,7 @@ When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/m
 
 When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#skirt) is leveraged to create rigid bodies, will select all rigid bodies (based on the rigid body object name 'skirt_x_y', it will select any rigid bodies that match the the name 'skirt_')
 
+------
 
 ### Rigid Body Transform
 
@@ -461,6 +488,8 @@ Can be used when you need to edit multiple rigid bodies' shape at once, such as 
 
 Same as above but applies the values to ALL selected rigid body bone chains. Since each rigid body bone chain has it's own unique start and end value, this doesn't use the 'absolute' values, but rather applies a delta value based on the inputs.
 
+------
+
 ### Rigid Body Create
 
 #### From Selected Bones
@@ -475,7 +504,8 @@ To see the preset values applied to each bone and the values, check out the [Rig
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
 
-TBD
+
+------
 
 ### Visibility Shortcuts
 
@@ -501,7 +531,7 @@ When there are **multiple** joints selected, will scan for any rigid bodies that
 
 When there are **multiple** joints selected, will scan for any rigid bodies that are NOT connected in a **rigid body bone chain** ([see explanation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation/README.md#rigid-body-bone-chain)) (meaning they are horizontally connected) and filter the selection to ONLY these joints.
 
-
+------
 
 ### Joint Transform
 
@@ -511,6 +541,7 @@ To apply changes, input a value to one of the properties, select the checkbox ne
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/402f9c24-7238-469d-af5e-6583fbf78cb9)
 
+------
 
 ### Joint Create
 
@@ -566,11 +597,11 @@ Sample video:
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bf936ddc-c184-42f4-8665-4cf670857cbd
 
 
-
 # Bone Morphs (Facial Expressions)
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/168df871-2fa1-4e3f-9e5b-fdd808369f44)
 
+### Add Bone Morphs
 
 Bone Morphs defines how much each posebone should move in order to make a facial expression.
 
@@ -594,7 +625,9 @@ The list below contains each FFXIV Race's own list of preset pose bone offsets (
 
 It's worth noting that these were manually tuned by myself (it's not a conversion from FFXIV animation files, they are completely something new I created added), so there are no guarantees that they are '100% accurate' to any facial expressions that could be made in-game, there is always room for improvement here
 
-#### Change Rotation Mode
+------
+
+### Change Rotation Mode
 
 Change the rotation mode of the facial pose bones. By default, all pose bones are rotated in quaternion (XYZ+W), which is very difficult to work with. 
 By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adjust the pose bones, in order to make your own bone morphs / facial expressions, or when adjusting the ones that come built into this plugin.
@@ -602,6 +635,8 @@ By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adj
 ## Skirt
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
+
+------
 
 ### Generate a New Skirt Object
 
@@ -627,6 +662,7 @@ The paramaters are as follows:
 
 Upon pressing 'OK', it will create the skirt_obj and **remember** the parameters upon the next time you press the 'OK' button. **IT IS PERFECTLY FINE TO PRESS 'OK' EVEN IF YOU STILL WANT TO MAKE CHANGES** because every single time you press the OK button, it will **replace** the current skirt_obj with a **new** skirt object
 
+------
 
 ### Move Mesh To New Skirt Object
 
@@ -634,7 +670,7 @@ Will move the currently selected active object to the 'skirt_obj' object. To pre
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0959d3c8-2bec-4f95-bb6a-6630780eec51
 
-
+------
 
 ### Weight Paint Transfer to Mesh
 
@@ -648,9 +684,13 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a529aa5c-cc10-
 
 Note: After running this, you may want to test if the weight paint was transferred properly by going into 'Pose' mode and applying some simple rotation & location bone testing. If there are any issues with weight paint transfer, you can always start over from '[Generate a New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#generate-a-new-skirt-object)' 
 
+------
+
 ### Delete FFXIV & Unused Skirt Vertex Groups
 
 Deletes any of the FFXIV vertex groups that start with 'j_sk_', or any vertex groups that start with 'skirt_' where it's corresponding bone can't be found. This is to prevent any weight paint conflicts between the _new_ weight painting that was applied in the previous step and the old FFXIV skirt bones.
+
+------
 
 ### Move Skirt Bones and Meshes to Armature
 
@@ -660,12 +700,15 @@ The parent for all the skirt bones will be either 'lower body' (MMD English bone
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d4c9c1b9-6a56-445c-a08d-e2d9e8614730
 
+------
+
 ### Generate Skirt Rigid Bodies
 
 If you used all the above steps to create the skirt bones and successfully transferred them to your armature, this will create a rigid bodies with **all** with gravity/friction/size/collision group settings preapplied. By default, these settings are configured for a somewhat 'heavy' skirt.
 
-
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4ee99bab-c998-48fd-9e68-ea3b9b7ef1d4
+
+------
 
 ### Generate Skirt Joints
 
@@ -676,6 +719,7 @@ Searches for a rigid body named 'lower body','下半身' or 'j_kosi' first. If i
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a64e1020-649c-4b0e-9ab1-2992f278a753
 
+------
 
 ### Vertex Group List
 
@@ -686,7 +730,8 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
 
-TBD
+
+------
 
 ### Texture Folder
 
@@ -696,6 +741,8 @@ For example on my Windows 10 PC if I would like to apply the "Diados Jacket of F
 - C:\Users\%userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
   or
 - C:\Users\%userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+
+------
 
 ### Apply Colorset
 
@@ -714,13 +761,14 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-
 Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
 To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
 
-
-
+------
 
 ### Active Material
 
 Shortcut to selecting the active material for a mesh. 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
+
+------
 
 ### Apply Glossy Shader
 
@@ -729,14 +777,15 @@ Applies a 'Glossy BSDF' shader to a material.
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
 
-
-### Glossy Roughness Slider
+#### Glossy Roughness Slider
 
 Adjusts the Gossy shader's roughness
 
 ## Miscellaneous Tools
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+
+------
 
 ### Dropdown List
 
@@ -766,6 +815,8 @@ Used for making sure MMD Tools doesn't crash or act weird when physics is turned
 Scans the armature for any joints that exist but it cannot find either of the two rigid bodies that it is supposed to be attached to. This will delete these joints. 
 Used for making sure MMD Tools doesn't crash or act weird when physics is turned on. Sometimes you delete a rigid body, and this happens. I delete rigid bodies a lot, and this has been extremely useful to me.
 
+------
+
 ### Bust Slider
 
 Adjusts the boobie size of pose bones 'j_mune_l' and 'j_mune_r', and adds a keyframe to frame 0 so that it (hopefully) stays that size when you import a VMD motion file. I don't know why sometimes it works, and sometimes it doesn't... If anyone wants to do some boobie research and let me know what's up, I'll try to fix it.
@@ -782,7 +833,7 @@ Here's the boobie math:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
 
-TBD
+------
 
 ### Auto-Fix MMD Japanese / English Bone Names
 
@@ -791,6 +842,8 @@ Fixes the MMD Japanes & English PMX Bone names (while not changing the Blender B
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/af6885ba-63cd-4e0e-9e31-bf15e0c6455c)
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to do the PMX Bone group mapping. If Blender bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the 'mmd_english',	'mmd_japanese' bone name MMD Tool's PMX Japanese/English Bone name fields respectively (found in the Bone Properties -> **MMD Bone Tools** panel). If no match is found, and the PMX field is empty, it puts the Blender bone name verbatim so at least the MMD field is not empty and has a name.
+
+------
 
 ### Add Display Panels
 
@@ -810,11 +863,11 @@ It will add the Blender Bone Group names to MMD Tools' Display Panels section
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c364d81-eaa3-4008-9828-e1ce3a94142c)
 
+------
 
 ### Sort Bone Order / Deform Tiers
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to sort the bone order in MMD Tools. 
-
 
 THIS IS VERY IMPORTANT FOR PMX EXPORT TO FOLLOW THESE STEPS IN ORDER (taken from the [FAQ guide for exporting to PMX Format](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-export-my-model-to-pmx-format-how-do-i-do-that)):
 
@@ -826,14 +879,19 @@ THIS IS VERY IMPORTANT FOR PMX EXPORT TO FOLLOW THESE STEPS IN ORDER (taken from
 
 5) Back in FFXIV MMD Tools Plugin, click on 'Sort Bone Order / Deform Tiers'
 
+------
 
 ### Lock Position & Rotation
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to lock position and rotation of bones ( you can see these flags in PMX Editor). This isn't really 'required' for PMX Export, but it doesn't hurt either
 
+------
+
 ### Set Fixed Axis / Local Axis
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to set bones to either 'fixed axis' or 'local axis'  ( you can see these flags in PMX Editor). This isn't really 'required' for PMX Export, but it doesn't hurt either
+
+------
 
 ### High Special & Physics Bones
 

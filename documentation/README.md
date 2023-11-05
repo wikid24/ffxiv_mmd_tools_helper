@@ -212,9 +212,9 @@ Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, 
 
 Shortcuts to the standard visibility options found on **Armature** -> **Viewport Display** panel:
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/793ed8c3-755c-4c2e-8308-1213454cdf3d)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9c208ee4-380a-492c-89c2-d57908347e30)
 
-- Hide/Show bones
+- Hide/Show bones (Shortcut to **MMD Tools'** hide/show bones button, this is DIFFERENT than the standard hide/show bones button)
 - Hide/Show bone names
 - Show bones in front of all other objects
 - Display bones as:

@@ -403,13 +403,21 @@ Shortcut to the hide/show button on MMD Tools
 #### Enable/Disable Physics
 Shortcut to the enable/disable physics button on MMD Tools
 
+------
+
 ### Active Rigid Body / Bone
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5922bc1c-093c-495a-9432-a0b7bd29ada8)
+
 
 Show the actively selected Rigid body's name, as well as it's connected bone's name. Clicking on the bone name will select the bone in edit mode
 
 ------
 
 ### Rigid Body Search
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a84bb65c-3941-4c56-9348-1011821d1324)
+
 
 Searches for rigid body name(s) based on the parameters provided (starts /w, contains, ends/w)
 
@@ -420,6 +428,9 @@ Searches for rigid body name(s) based on the parameters provided (starts /w, con
 ------
 
 ### Bone Chain Select
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/eafb1a00-a889-49c9-b8ba-d441bd243216)
+
 
 #### Up
 Based on the 'active' rigid body selected's **bone**, will append the bone's parent's rigid bodies recursively. Useful if you want to apply change in bulk to all the rigid bodies attached to the bones
@@ -433,6 +444,9 @@ It does both 'Up' and 'Down' at the same time
 ------
 
 ### Skirt Select
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8c5cec5e-dee8-413f-b52c-fa76cc0a66c0)
+
 
 #### Vertical Skirt Selection
 

@@ -474,6 +474,8 @@ When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/m
 
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
+------
+
 #### Bulk Apply Rigid Bodies
 Used to apply changes to ALL selected rigid bodies. 
 
@@ -482,6 +484,8 @@ Used to apply changes to ALL selected rigid bodies.
 By default it will show the values on the ACTIVE rigid body.
 
 Selecting a checkbox will apply that specific parameter to all selected rigid bodies.
+
+------
 
 #### Rigid Body Bone Chain
 
@@ -499,6 +503,8 @@ For example if there are 3 selected rigid bodies in a bone chain, with the start
 - Rigid body 3: 2.0
 
 Can be used when you need to edit multiple rigid bodies' shape at once, such as a skirt that is uniformly shaped at the top, but gradually gets larger and more angular at the bottom.
+
+------
 
 #### All Rigid Body Bone Chains
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e0800c28-922b-4b8c-a64a-396ed7bde7c5)

@@ -557,7 +557,7 @@ When a joint is selected, will show the joint name, as well as its two associate
 
 
 
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/aa972f30-9887-477c-8d86-4a8ab097f5a3
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bc80d732-eb93-4c43-b451-28fc25afc97a
 
 
 

@@ -228,7 +228,10 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/36507716-0f5b-4bad-b976-b4af4d34a73e)
 
 
-### MMD Conversion
+### MMD Conversion Dropdown List
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5262e25b-e78d-4b2d-be02-31f7f054699c)
+
 
 Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from ['FFXIV' to 'MMD English' format](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mass-rename-bones) for most of these to work._
 

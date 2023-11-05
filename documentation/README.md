@@ -549,6 +549,8 @@ Shortcuts to the MMD Tools show/hide joint, and show/hide joint name respectivel
 
 When a joint is selected, will show the joint name, as well as its two associated rigid bodies. Clicking on the rigid body name will select it.
 
+### Joint Select Controls
+
 #### Get Joints from Rigid Bodies
 
 When there are **multiple** rigid bodies selected, will scan the armature for **all** the associated joints that are connecting them and select the joints.
@@ -563,7 +565,7 @@ When there are **multiple** joints selected, will scan for any rigid bodies that
 
 ------
 
-### Joint Transform
+### Joint Transform Controls
 
 Used to apply bulk changes to multiple selected joints. By default, all of the fields will be populated with the currently **active** joint.
 

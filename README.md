@@ -236,6 +236,11 @@ Your character's **face** will now be animated.
 
 20) Press play to watch your character dance. All done!! :D
 
+
+ **Full end-to-end rigging & animation example video (using SAMPLE Au Ra Female)**:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-466c-a344-8a20e09cc86d
+
 --------------
 # Frequently Asked Questions:
 

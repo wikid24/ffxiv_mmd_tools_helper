@@ -10,7 +10,7 @@
 
 ### Import FFXIV .fbx File
 
-- Imports a FFXIV Model into Blender and 
+- Imports a FFXIV Model's .fbx file into Blender, using these paramaters:
     - primary_bone_axis='X'
     - secondary_bone_axis='Y'
     - use_manual_orientation=True

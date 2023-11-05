@@ -91,12 +91,12 @@ Reads the .chara file and outputs to the results to Blender's System Console:
 1) DIAGNOSIS: If an armature is selected, it compares the selected armature against the .chara file to see if it has all the correct equipment attached from TexTools. Useful if you made any mistakes exporting gear out of TexTools (such as the wrong equipment)
 
 2) Outputs the following data used for TexTools .fbx export:
-    - Skin Color (hex value)
-    - Hair Color (hex value)
-    - Hair Highlights Color (hex value) If hair highlights is disabled, will output the hair color
-    - Iris Color (hex value)
-    - Lip/Fur Color: (hex value)
-    - Tattoo/Limbal Color: (hex value)
+    - Skin Color ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_skin_dictionary.csv))
+    - Hair Color ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hair_dictionary.csv))
+    - Hair Highlights Color ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hairhighlights_dictionary.csv)) If hair highlights is disabled, will output the hair color
+    - Iris Color ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_hairhighlights_dictionary.csv))
+    - Lip/Fur Color: ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_lips_dictionary.csv))
+    - Tattoo/Limbal Color: ([hex value](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/color_tattoo_limbalring_dictionary.csv))
     - Race, Tribe, Gender
     - Face Model: modelID (can be copy & pasted directly to TexTools search bar)
     - Hair Model: modelID (can be copy & pasted directly to TexTools search bar)

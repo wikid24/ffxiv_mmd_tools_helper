@@ -469,6 +469,9 @@ When the [skirt module](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/m
 
 ### Rigid Body Transform
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/443629ec-b487-4d66-b9c5-726e5fe36992)
+
+
 https://user-images.githubusercontent.com/19479648/225210461-c10581d3-ff3d-4fb8-92d8-1bed41de3dac.mp4
 
 #### Bulk Apply Rigid Bodies
@@ -505,6 +508,9 @@ Same as above but applies the values to ALL selected rigid body bone chains. Sin
 ------
 
 ### Rigid Body Create
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b0c1d3f6-93ff-4597-8de6-1735b02b7c8a)
+
 
 #### From Selected Bones
 Shortcut to the MMD Tools' Rigid Body Create button:

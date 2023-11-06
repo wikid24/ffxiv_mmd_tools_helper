@@ -618,7 +618,7 @@ def add_shoulder_control_bones():
 		print("Rename bones to MMD_English and then try again.")
 
 
-def merge_double_jointed_knee(armature):
+def merge_double_jointed_knee(armature, context):
 	print('\n')
 	
 	if model.is_mmd_english() == True:
@@ -658,6 +658,16 @@ def merge_double_jointed_knee(armature):
 			if child_bone_name is not None:
 				miscellaneous_tools.combine_2_vg_1_vg(parent_bone_name, child_bone_name)
 				miscellaneous_tools.combine_2_bones_1_bone(parent_bone_name, child_bone_name)
+
+		#if there is foot/leg IK added already, re-run it
+		if 'leg IK_L' in  armature.data.edit_bones.keys() or 'leg IK_L' in  armature.data.bones.keys():
+			print("hello!")
+			armature = bpy.context.view_layer.objects.active
+			bpy.ops.object.mode_set(mode='OBJECT')
+			add_foot_leg_ik.clear_IK(context)
+			add_foot_leg_ik.main(context)
+			bpy.ops.object.mode_set(mode='OBJECT')
+
 	
 	else:
 		print("Rename bones to MMD_English and then try again.")
@@ -779,7 +789,7 @@ def main(context):
 	if selected_bone_tool == "merge_double_jointed_knee":
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
-		merge_double_jointed_knee(armature)
+		merge_double_jointed_knee(armature,context)
 	if selected_bone_tool == "run_1_to_12":
 		#delete unused bones
 		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)

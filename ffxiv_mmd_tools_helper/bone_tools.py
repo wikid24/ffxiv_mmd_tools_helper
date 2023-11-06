@@ -417,6 +417,22 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 			if metadata_bone[0]==mmd_e_bone_name:
 				#print(mmd_e_bone_name,'found:',metadata_bone[1])
 				return metadata_bone[1]
+			
+#doesn't check the armature, just returns equivalent mmd_english bone name
+def get_mmd_english_equivalent_bone_name(bone_name):
+
+	#Get bones from the metadata dictionary
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+
+	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
+		#run through the MMD English bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_E:
+			for metadata_bone_name in metadata_bone:
+				if bone_name == metadata_bone_name.lstrip(' '):
+					#print(mmd_e_bone_name,'found:',metadata_bone[1])
+					return metadata_bone[0]
+				
 
 def is_bone_bone_type(armature,bone_name,bone_type):
 

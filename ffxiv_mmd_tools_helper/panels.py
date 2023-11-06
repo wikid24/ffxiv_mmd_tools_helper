@@ -157,13 +157,8 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col.label(text="Bone Groups", icon="GROUP_BONE")
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd.add_bone_groups", text = "Auto-Generate")
-		row = layout.row(align=True)
-		col = row.column(align=True)
-		col.label(text="Rigify", icon="GROUP_BONE")
-		col = row.column(align=True)
-		col.operator("ffxiv_mmd.add_rigify_metarig", text = "Add Metarig")
-		col = row.column(align=True)
-		col.operator("ffxiv_mmd.adjust_metarig_bones", text = "Adjust Metarig Bones")
+
+		
 
 
 @register_wrap
@@ -556,6 +551,28 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"bust_slider",slider=True)
 		row.operator("ffxiv_mmd.bust_slider",text='Run')
 		row = layout.row()
+		#Rigify Metarig
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.label(text="Rigify Metarig", icon="OUTLINER_OB_ARMATURE")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.add_rigify_metarig", text = "Add")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.adjust_metarig_bones", text = "Fix Bones")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.apply_metarig", text = "Apply")
+		#Mektools Rig
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.label(text="MekTools Rig", icon="OUTLINER_OB_ARMATURE")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		#col.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
+		col.prop(context.scene, "armature_deform_pin", text="Rig Pin",expand=True)
+		col = row.column(align=True)
+		#col.operator("ffxiv_mmd.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
+		col.operator("ffxiv_mmd.apply_armature_deform", text = "Apply to Meshes")
 
 
 

@@ -172,7 +172,7 @@ def move_target_bone_to_source_bone (source_armature,source_bone,target_armature
 	target_bone.roll = source_bone.roll
 
 
-def main(context):
+def adjust_metarig_bones(context):
 	armature = bpy.context.view_layer.objects.active
 
 	mmd_armature = None
@@ -200,31 +200,51 @@ def main(context):
 		
 		bpy.ops.object.mode_set(mode='OBJECT')
 		bpy.context.view_layer.objects.active = metarig_armature
-		#generates the rig
-		bpy.ops.pose.rigify_generate()
-
-		#select all meshes from mmd armature and sets the parent to the rig
 		
+
+
+def apply_metarig (mmd_armature, metarig_armature):
+		
+	bpy.ops.object.mode_set(mode='OBJECT')
+	bpy.context.view_layer.objects.active = metarig_armature
+
+	#generates the rig
+	bpy.ops.pose.rigify_generate()
+
+	#select all meshes from mmd armature and sets the parent to the rig
+	
+	bpy.ops.object.select_all(action='DESELECT')
+	#bpy.context.view_layer.objects.active = mmd_armature
+	for obj in mmd_armature.parent.children_recursive:
+		if obj.type == 'MESH':
+			obj.select = True
+
+
+	# Iterate through all objects in the current scene
+	for obj in bpy.context.scene.objects:
+		if obj.type == 'ARMATURE' and obj.name == 'rig':
+			# Armature with the name 'rig' found
+			rigify_armature = obj
+			rigify_armature.select = True
+			bpy.context.view_layer.objects.active = rigify_armature
+			break  # Stop searching once you've found the armature
+
+		
+	bpy.ops.object.parent_set(type='ARMATURE_AUTO')
+
+	#delete the metarig armature
+	if metarig_armature:
+		
+		bpy.ops.object.mode_set(mode='OBJECT')
+		# Ensure the armature is in object mode (not in pose or edit mode)
 		bpy.ops.object.select_all(action='DESELECT')
-		#bpy.context.view_layer.objects.active = mmd_armature
-		for obj in mmd_armature.parent.children_recursive:
-			if obj.type == 'MESH':
-				obj.select = True
+		bpy.context.view_layer.objects.active = metarig_armature
 
+		# Select the armature object
+		metarig_armature.select_set(True)
 
-		# Iterate through all objects in the current scene
-		for obj in bpy.context.scene.objects:
-			if obj.type == 'ARMATURE' and obj.name == 'rig':
-				# Armature with the name 'rig' found
-				rigify_armature = obj
-				rigify_armature.select = True
-				bpy.context.view_layer.objects.active = rigify_armature
-				break  # Stop searching once you've found the armature
-
-		
-		bpy.ops.object.parent_set(type='ARMATURE_AUTO')
-
-
+		# Delete the selected object(s)
+		bpy.ops.object.delete()
 
 
 
@@ -238,10 +258,10 @@ class AddRigify_Metarig(bpy.types.Operator):
 	bl_label = "Add Rigify Metarig"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	#@classmethod
-	#def poll(cls, context):
-	#	obj = context.active_object
-	#	return obj is not None and obj.type == 'ARMATURE'
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
 
 	def execute(self, context):
 		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
@@ -255,18 +275,54 @@ class AddRigify_Metarig(bpy.types.Operator):
 class Adjust_Metarig(bpy.types.Operator):
 	"""Adjusts a Rigify Metarig to the Model"""
 	bl_idname = "ffxiv_mmd.adjust_metarig_bones"
-	bl_label = "Add Rigify Metarig"
+	bl_label = "Adjust Metarig Bones"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	#@classmethod
-	#def poll(cls, context):
-	#	obj = context.active_object
-	#	return obj is not None and obj.type == 'ARMATURE'
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
 
 	def execute(self, context):
 		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		
-		main(context)
+		adjust_metarig_bones(context)
+		
+
+		#lock_position_rotation_bones(armature)
+		return {'FINISHED'}
+	
+@register_wrap
+class Apply_Metarig(bpy.types.Operator):
+	"""Adjusts a Rigify Metarig to the Model"""
+	bl_idname = "ffxiv_mmd.apply_metarig"
+	bl_label = "Apply Rigify Metarig"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
+
+	def execute(self, context):
+		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		obj = context.active_object
+
+		target_armature = None
+		metarig_armature = None
+
+		if obj.type == 'ARMATURE':
+			target_armature = obj
+
+
+		# Iterate through all objects in the current scene
+		for obj in bpy.context.scene.objects:
+			if obj.type == 'ARMATURE' and obj.name == 'metarig':
+				metarig_armature = obj
+				break  # Stop searching once you've found the 'metarig' armature
+
+		if target_armature and metarig_armature:
+			apply_metarig(target_armature,metarig_armature)
 		
 
 		#lock_position_rotation_bones(armature)

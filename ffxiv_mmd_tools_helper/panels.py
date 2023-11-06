@@ -157,13 +157,13 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col.label(text="Bone Groups", icon="GROUP_BONE")
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd.add_bone_groups", text = "Auto-Generate")
-		#row = layout.row(align=True)
-		#col = row.column(align=True)
-		#col.label(text="Rigify", icon="GROUP_BONE")
-		#col = row.column(align=True)
-		#col.operator("ffxiv_mmd.add_rigify_metarig", text = "Add Metarig")
-		#col = row.column(align=True)
-		#col.operator("ffxiv_mmd.adjust_metarig_bones", text = "Adjust Metarig Bones")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.label(text="Rigify", icon="GROUP_BONE")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.add_rigify_metarig", text = "Add Metarig")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.adjust_metarig_bones", text = "Adjust Metarig Bones")
 
 
 @register_wrap

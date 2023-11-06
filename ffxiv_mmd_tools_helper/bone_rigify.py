@@ -147,6 +147,7 @@ def adjust_extra_finger_bone(metarig_armature,mmd_armature,mmd_e_source_bone_nam
 		rigify_source_bone.length = rigify_source_bone.length/2
 		rigify_extra_finger_bone.head = rigify_source_bone.tail
 		rigify_extra_finger_bone.tail = mmd_source_bone.tail
+		rigify_extra_finger_bone.roll = mmd_source_bone.roll
 
 def adjust_palm_bone(metarig_armature,mmd_armature,mmd_e_source_bone_name,metarig_bone_name):
 	mmd_source_bone_name =  bone_tools.get_armature_bone_name_by_mmd_english_bone_name(mmd_armature,mmd_e_source_bone_name)
@@ -160,6 +161,7 @@ def adjust_palm_bone(metarig_armature,mmd_armature,mmd_e_source_bone_name,metari
 	new_tail = metarig_bone.head.copy()
 	metarig_bone.head = new_head
 	metarig_bone.tail = new_tail
+	metarig_bone.roll = mmd_source_bone.roll
 	
 
 
@@ -167,6 +169,7 @@ def move_target_bone_to_source_bone (source_armature,source_bone,target_armature
 	#print(f"source_armature: {source_armature.name},source_bone: {source_bone.name}, target_armature: {target_armature.name}, target_bone: {target_bone.name}")
 	target_bone.head = source_bone.head
 	target_bone.tail = source_bone.tail
+	target_bone.roll = source_bone.roll
 
 
 def main(context):
@@ -194,7 +197,37 @@ def main(context):
 	if mmd_armature and metarig_armature:    
 		adjust_metarig_scale(mmd_armature,metarig_armature)
 		adjust_metarig_bone_positions(mmd_armature,metarig_armature)
+		
 		bpy.ops.object.mode_set(mode='OBJECT')
+		bpy.context.view_layer.objects.active = metarig_armature
+		#generates the rig
+		bpy.ops.pose.rigify_generate()
+
+		#select all meshes from mmd armature and sets the parent to the rig
+		
+		bpy.ops.object.select_all(action='DESELECT')
+		#bpy.context.view_layer.objects.active = mmd_armature
+		for obj in mmd_armature.parent.children_recursive:
+			if obj.type == 'MESH':
+				obj.select = True
+
+
+		# Iterate through all objects in the current scene
+		for obj in bpy.context.scene.objects:
+			if obj.type == 'ARMATURE' and obj.name == 'rig':
+				# Armature with the name 'rig' found
+				rigify_armature = obj
+				rigify_armature.select = True
+				bpy.context.view_layer.objects.active = rigify_armature
+				break  # Stop searching once you've found the armature
+
+		
+		bpy.ops.object.parent_set(type='ARMATURE_AUTO')
+
+
+
+
+
 	
 
 

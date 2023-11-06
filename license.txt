@@ -1,5 +1,6 @@
 Don't worry, be happy, it's free! (GPL license)
     ~Hogarth-MMD
+     - wikid24 :P
 
 # ##### BEGIN GPL LICENSE BLOCK #####
 #

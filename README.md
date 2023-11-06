@@ -5,7 +5,7 @@ This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models.
 
 - Export models out of FFXIV TexTools (leveraging data from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
 - Update the standard textures to the detailed ones (leveraging the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
-- Convert the model MMD Format
+- Convert the model to MMD Format
 - Add MMD-style physics in Blender
 - Animate it it in Blender (Including MMD _Facial_ Animation!)
 - Export to .PMX Format (if you want to use it in the Miku Miku Dance program)
@@ -16,7 +16,7 @@ All can be done in **minutes**.
 - [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
 - [60 second Model Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below.
-- [Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin
+- [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **New/Updated!**: 2023-11-05
 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
@@ -119,8 +119,8 @@ Credits:
    - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data into .FBX format - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
 
 ### Blender Addon Stuff:
-   - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2]([url](https://www.youtube.com/watch?v=AhVzU_BK6zk))
-   - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import)
+   - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
+   - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest
 
 ### MMD Animation Stuff:
    - The original MMD model that the VMD animation files were based on (useful for animation scaling reasons)
@@ -128,7 +128,7 @@ Credits:
    - [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
    - [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
    - PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
-   - [PMXE](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
+   - [PMX Editor](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
 ### MMD Rendering Stuff:
    - A bunch of MMD effects: (will list them later)
    - [MikuMikuEffects](https://learnmmd.com/downloads/) - [Install Tutorial](https://www.youtube.com/watch?v=qPOX1eLg3nY)
@@ -235,6 +235,11 @@ Your character's **face** will now be animated.
 
 
 20) Press play to watch your character dance. All done!! :D
+
+
+ **Full end-to-end rigging & animation example video (using SAMPLE Au Ra Female)**:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-466c-a344-8a20e09cc86d
 
 --------------
 # Frequently Asked Questions:
@@ -535,6 +540,12 @@ Last thing to do is attach the hair stem rigid bodies to the head rigid body. Co
 ![image](https://user-images.githubusercontent.com/19479648/225776867-8598f660-e5ab-4c73-804e-7a876f1aebee.png)
 
 You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.
+
+
+ **Full end-to-end rigging & animation example video (using SAMPLE Au Ra Female)**:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-466c-a344-8a20e09cc86d
+
 
 
  --------------

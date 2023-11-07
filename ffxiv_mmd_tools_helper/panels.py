@@ -507,6 +507,9 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					row.prop(mektools_skin_node.node_tree.nodes['Roughness'].outputs[0],"default_value", text="Roughness")
 					#row = layout.row()
 					#row.prop(mektools_skin_node.node_tree.nodes['Mix.002'].inputs[2],"default_value", text="Skin Color")
+					row = layout.row()
+					row.operator("ffxiv_mmd.remove_mektools_skin_shader", text="Remove MekTools Skin Shader")
+					
 				else:
 					row = layout.row()
 					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Apply MekTools Skin Shader")

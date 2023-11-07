@@ -509,12 +509,38 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 				bpy.context.active_object.active_material = old_material
 				old_material.name = old_material.name.lstrip('backup_')
 				bpy.data.materials.remove(selected_material)
-				raise Exception(f"Failed to apply skin shader, probably because it was already using an MMD skin shader. Ill fix it eventually")
-
-			
-		
+				raise Exception(f"Failed to apply MekTools skin shader, probably because it was already using an MMD skin shader. Ill fix it eventually")
 
 		return {'FINISHED'}
+	
+@register_wrap
+class RemoveMekToolsSkinShader(bpy.types.Operator):
+	"""Remove MekTools Skin Shader"""
+	bl_idname = "ffxiv_mmd.remove_mektools_skin_shader"
+	bl_label = "Remove MekTools Skin Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+
+		
+		selected_material = bpy.context.active_object.active_material
+		if selected_material.name.startswith('mektools_'):
+			selected_material_name = selected_material.name[len('mektools_'):]
+		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
+		selected_objects = bpy.context.active_object
+
+	
+		if selected_material.name.startswith('mektools_') and backup_material and selected_objects:
+			
+			for obj in bpy.data.objects:
+				if obj.type =='MESH':
+					if obj.active_material == selected_material:
+						obj.active_material = backup_material
+			backup_material.name = backup_material.name.lstrip('backup_')
+			bpy.data.materials.remove(selected_material)
+
+		return {'FINISHED'}
+
 
 @register_wrap
 class ApplyBackgroundColorShader(bpy.types.Operator):

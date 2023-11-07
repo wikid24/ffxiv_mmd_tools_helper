@@ -546,3 +546,108 @@ class AutoFixMMDBoneNames(bpy.types.Operator):
 		bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}
 	
+
+# Define the get function for the comparison_bone property
+def _comparescale_getbone(self):
+    # Check if a target armature is selected
+    if self.bone_compare_target_armature:
+        armature = self.bone_compare_target_armature.data
+
+        # Return a list of bone names from the target armature
+        return [(bone.name, bone.name, '') for bone in armature.bones]
+
+    # Return an empty list if no target armature is selected
+    return []
+
+# Custom function to be called upon update of the comparison_bone property
+def _comparescale_update(self, context):
+
+	if self.bone_compare_comparison_bone == '' or self.bone_compare_source_armature is None or self.bone_compare_target_armature is None:
+		self.bone_compare_scale_x = 0
+		self.bone_compare_scale_y = 0
+		self.bone_compare_scale_z = 0
+		#print ("missing something")
+		return 
+	
+	else:
+		target_bone = self.bone_compare_target_armature.pose.bones.get(self.bone_compare_comparison_bone)
+		target_bone_name = target_bone.name
+		print (f"target_bone name:{target_bone_name}")
+		target_bone_name_mmd_e = get_mmd_english_equivalent_bone_name(target_bone_name)
+		print (f"target_bone_mmd_e:{target_bone_name_mmd_e}")
+		source_bone_name = None
+
+		#get the source bone namein MMD English and compare against the target bone name in MMD English
+		source_bone_name = None
+		source_bone_name = get_armature_bone_name_by_mmd_english_bone_name(self.bone_compare_source_armature,target_bone_name_mmd_e)
+		print (f"source_bone_name: {source_bone_name}")
+		if source_bone_name:
+			source_bone = self.bone_compare_source_armature.pose.bones.get(source_bone_name)
+		else:
+			source_bone = None
+		
+		if source_bone:
+			print (f"source_bone: {source_bone.name}")
+
+			scale_x = target_bone.tail.x / source_bone.tail.x
+			scale_y = target_bone.tail.y / source_bone.tail.y
+			scale_z = target_bone.tail.z / source_bone.tail.z
+
+			# Set the scale properties
+			self.bone_compare_scale_x = scale_x
+			self.bone_compare_scale_y = scale_y
+			self.bone_compare_scale_z = scale_z
+		
+		else:
+			self.bone_compare_scale_x = 0
+			self.bone_compare_scale_y = 0
+			self.bone_compare_scale_z = 0
+
+
+	
+
+@register_wrap
+class MMDBoneScaleComparison(bpy.types.Operator):
+	"""Compare a bone's XYZ Scale from an Original MMD Model at 1.0 so you can import a VMD animation for your target MMD at the correct scale"""
+	bl_idname = "ffxiv_mmd.bone_scale_comparison"
+	bl_label = "Compare a bone's XYZ Scale from an Original MMD Model at 1.0 so you can import a VMD animation for your target MMD at the correct scale"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	bpy.types.Scene.bone_compare_source_armature = bpy.props.PointerProperty(
+		type=bpy.types.Object
+		,poll=lambda self, obj: obj.type == 'ARMATURE',
+		)
+	
+	bpy.types.Scene.bone_compare_target_armature = bpy.props.PointerProperty(
+		type=bpy.types.Object
+		,poll=lambda self, obj: obj.type == 'ARMATURE',
+		)
+	
+	# Create the comparison_bone pointer property with the poll function
+	bpy.types.Scene.bone_compare_comparison_bone = bpy.props.StringProperty(
+		name='Target Comparison Bone',
+		description='Target Comparison Bone from Target Armature',
+		#set=_comparescale_update,
+		#get=_comparescale_getbone,
+		update=_comparescale_update,
+	)
+
+
+	# Create the scale X, Y, and Z float properties
+	bpy.types.Scene.bone_compare_scale_x = bpy.props.FloatProperty(name="Scale X", default=1.0, precision=3)#, update=_comparescale_update)
+	bpy.types.Scene.bone_compare_scale_y = bpy.props.FloatProperty(name="Scale Y", default=1.0, precision=3)#, update=_comparescale_update)
+	bpy.types.Scene.bone_compare_scale_z = bpy.props.FloatProperty(name="Scale Z", default=1.0, precision=3)#, update=_comparescale_update)
+
+	"""
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE'
+
+	def execute(self, context):
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		auto_fix_mmd_bone_names(armature)
+		bpy.ops.object.mode_set(mode='OBJECT')
+		return {'FINISHED'}
+	"""

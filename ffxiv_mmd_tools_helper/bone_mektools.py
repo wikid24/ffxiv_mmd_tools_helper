@@ -217,11 +217,11 @@ class ApplyMekToolsRig(bpy.types.Operator):
 	@classmethod
 	def poll(cls, context):
 		
-		for obj in context.active_object:
-			if obj.type == 'ARMATURE':
-				return True
-		
-		return True #obj is not None and obj.type == 'ARMATURE'
+		if context.active_object:
+			if context.active_object.type == 'ARMATURE':
+					return True
+			
+		return False #obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
 		

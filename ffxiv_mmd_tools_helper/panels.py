@@ -619,6 +619,40 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		#col.operator("ffxiv_mmd.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
 		col.operator("ffxiv_mmd.apply_mektools_rig", text = "Add MekTools Rig")
 
+		#Bone Scale Compairisons
+		col.label(text="Bone Scale Comparison", icon="OUTLINER_OB_ARMATURE")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_source_armature", text="Source",expand=True)
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_target_armature", text="Target",expand=True)
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		"""
+		pose_bone = context.active_pose_bone or context.active_object.pose.bones.get(context.active_bone.name, None)
+		if pose_bone is None:
+			return
+		
+        comparison_bone = pose_bone.mmd_bone
+		"""
+		#armature = None
+		#if context.active_object.type == 'ARMATURE':
+			#armature = context.active_object
+		#if not context.scene.bone_compare_target_armature:
+
+
+		col.prop_search(context.scene,"bone_compare_comparison_bone",context.scene.bone_compare_target_armature.id_data.pose,"bones",	text="Bone")
+		#col.prop(context.scene, "bone_compare_comparison_bone", text="Comparison Bone",expand=True)
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_x", text="X",expand=True)
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_y", text="Y",expand=True)
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_z", text="Z",expand=True)
+
+
 
 
 @register_wrap

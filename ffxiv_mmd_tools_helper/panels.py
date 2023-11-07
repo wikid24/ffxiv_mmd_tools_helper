@@ -569,10 +569,10 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		#col.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
-		col.prop(context.scene, "armature_deform_pin", text="Rig Pin",expand=True)
+		#col.prop(context.scene, "armature_deform_pin", text="Rig Pin",expand=True)
 		col = row.column(align=True)
 		#col.operator("ffxiv_mmd.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
-		col.operator("ffxiv_mmd.apply_armature_deform", text = "Apply to Meshes")
+		col.operator("ffxiv_mmd.apply_mektools_rig", text = "Add MekTools Rig")
 
 
 

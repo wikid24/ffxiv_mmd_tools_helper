@@ -1,9 +1,11 @@
 import bpy
+import addon_utils
 from . import register_wrap
 from . import model
 from . import import_csv
 import mmd_tools.core.model as mmd_model
 from mmd_tools.core.bone import FnBone
+
 
 
 def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None,use_connect=None):
@@ -449,71 +451,6 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 					print(bone_name,'is bone type',bone_type)
 					isbone_bonetype = True
 		return isbone_bonetype
-	
-def apply_armature_deform_to_selected_meshes(armature_obj):
-	# Loop through all selected objects
-	for obj in bpy.context.selected_objects:
-		if obj.type == 'MESH':
-			# Check if the object is a mesh
-			# Check if there's already an Armature Deform modifier linked to the target armature
-			armature_mod = None
-			for mod in obj.modifiers:
-				if mod.type == 'ARMATURE' and mod.object == armature_obj:
-					armature_mod = mod
-					break
-			if armature_mod is None:
-				# If there's no Armature Deform modifier, create a new one
-				armature_mod = obj.modifiers.new(name="ArmatureDeform", type='ARMATURE')
-				armature_mod.object = armature_obj
-
-	# Make sure to update the scene after adding modifiers
-	bpy.context.view_layer.update()	
-
-def apply_copy_location_for_mektools_armature_from_meshes(target_armature):
-	# Get the currently selected mesh object
-	selected_objects = bpy.context.selected_objects
-	armature_object = None
-
-	if selected_objects:
-		selected_mesh = None
-		for obj in selected_objects:
-			if obj.type == 'MESH':
-				selected_mesh = obj
-				break
-
-		if selected_mesh:
-			# Find the Armature Deform modifier linked to the mesh
-			for modifier in selected_mesh.modifiers:
-				if modifier.type == 'ARMATURE':
-					if modifier.object != target_armature:
-						armature_object = modifier.object
-						print(f"Armature associated with the selected mesh: {armature_object.name}")
-		else:
-			print("No selected mesh object.")
-	else:
-		print("No objects are selected.")
-
-
-	if armature_object and target_armature:
-		if armature_object != target_armature:
-			# Check if a Copy Location constraint already exists on the target armature
-			copy_loc_constraint = None
-			for constraint in target_armature.constraints:
-				if constraint.type == 'COPY_LOCATION' and constraint.target == armature_object:
-					copy_loc_constraint = constraint
-					print("Copy Location constraint already exists.")
-					break
-			
-			if copy_loc_constraint is None:
-				# Create a new Copy Location constraint for the destination armature
-				copy_loc_constraint = target_armature.constraints.new(type='COPY_LOCATION')
-			
-				# Set the target armature (source) for the Copy Location constraint
-				copy_loc_constraint.target = armature_object
-
-	
-
-
 				
 
 @register_wrap
@@ -609,36 +546,3 @@ class AutoFixMMDBoneNames(bpy.types.Operator):
 		bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}
 	
-
-@register_wrap
-class ApplyArmatureDeform(bpy.types.Operator):
-	"""Selects an Armature for Applying the Armature Deform"""
-	bl_idname = "ffxiv_mmd.apply_armature_deform"
-	bl_label = "Selects an Armature for Applying the Armature Deform"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	bpy.types.Scene.armature_deform_pin = bpy.props.PointerProperty(
-		type=bpy.types.Object
-		,poll=lambda self, obj: obj.type == 'ARMATURE',
-		)
-
-	@classmethod
-	def poll(cls, context):
-		
-		for obj in context.selected_objects:
-			if obj.type != 'MESH':
-				return False
-		
-		return True #obj is not None and obj.type == 'ARMATURE'
-
-	def execute(self, context):
-		
-		# Ensure the target armature exists
-		if context.scene.armature_deform_pin is not None:
-
-			apply_armature_deform_to_selected_meshes(context.scene.armature_deform_pin)
-			apply_copy_location_for_mektools_armature_from_meshes(context.scene.armature_deform_pin)
-		else:
-			print("Target armature not found.")
-
-		return {'FINISHED'}

@@ -393,34 +393,42 @@ class SelectMaterialsFolder(bpy.types.Operator):
 
 
 	def execute(self, context):
-		context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)
-		folder_path = context.scene.shaders_texture_folder
-		print (folder_path)
-		#context.scene.ffxiv_mmd.select_materials_folder.folder_path
-		
-		old_material = None
-		new_material = None
-		
-		if bpy.context.active_object:
 
-			obj = bpy.context.active_object
+		addon_name = 'Colorsetter'
 
-			if obj.type == 'MESH':
+		# Check if the addon is enabled
+		if addon_name not in bpy.context.preferences.addons.keys():
 
-				old_material = apply_colorset_plugin()
+			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
+		else:
+			#print(f"The addon '{addon_name}' is installed and enabled.")
 
-				new_material = apply_textures_to_colorset_material(context,folder_path).id_data
+			context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)
+			folder_path = context.scene.shaders_texture_folder
+			print (folder_path)
+			#context.scene.ffxiv_mmd.select_materials_folder.folder_path
+			
+			old_material = None
+			new_material = None
+			
+			if bpy.context.active_object:
 
-				
-				if undo_if_colorset_plugin_error(bpy.context.active_object,old_material, new_material):
-					#if no errors, apply to all materials 
-					print ("no errors ya'll!")
-					apply_material_to_all_matching_ffxiv_meshes (obj)
+				obj = bpy.context.active_object
 
-				else:
-					print ("ERROR: COULD NOT APPLY THE COLORSETTER PLUGIN (probably a 'Import DDS' error in Colorsetter addon)")
+				if obj.type == 'MESH':
+
+					old_material = apply_colorset_plugin()
+
+					new_material = apply_textures_to_colorset_material(context,folder_path).id_data
 
 					
+					if undo_if_colorset_plugin_error(bpy.context.active_object,old_material, new_material):
+						#if no errors, apply to all materials 
+						print ("no errors ya'll!")
+						apply_material_to_all_matching_ffxiv_meshes (obj)
+
+					else:
+						print ("ERROR: COULD NOT APPLY THE COLORSETTER PLUGIN (probably a 'Import DDS' error in Colorsetter addon)")					
 				
 			"""
 			#print (context.scene.shaders_texture_folder)

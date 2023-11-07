@@ -204,6 +204,8 @@ def adjust_metarig_bones(context):
 
 
 def apply_metarig (mmd_armature, metarig_armature):
+
+	
 		
 	bpy.ops.object.mode_set(mode='OBJECT')
 	bpy.context.view_layer.objects.active = metarig_armature
@@ -264,12 +266,19 @@ class AddRigify_Metarig(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
 
 	def execute(self, context):
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		armature = bpy.context.view_layer.objects.active
-		bpy.ops.object.armature_human_metarig_add()
 
-		#lock_position_rotation_bones(armature)
-		return {'FINISHED'}
+		addon_name = 'rigify'
+		# Check if the addon is enabled
+		if addon_name not in bpy.context.preferences.addons.keys():
+			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
+		else:
+
+			#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+			armature = bpy.context.view_layer.objects.active
+			bpy.ops.object.armature_human_metarig_add()
+
+			#lock_position_rotation_bones(armature)
+			return {'FINISHED'}
 	
 @register_wrap
 class Adjust_Metarig(bpy.types.Operator):
@@ -284,13 +293,19 @@ class Adjust_Metarig(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
 
 	def execute(self, context):
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		
-		adjust_metarig_bones(context)
-		
 
-		#lock_position_rotation_bones(armature)
-		return {'FINISHED'}
+		addon_name = 'rigify'
+		# Check if the addon is enabled
+		if addon_name not in bpy.context.preferences.addons.keys():
+			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
+		else:
+			#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+			
+			adjust_metarig_bones(context)
+			
+
+			#lock_position_rotation_bones(armature)
+			return {'FINISHED'}
 	
 @register_wrap
 class Apply_Metarig(bpy.types.Operator):
@@ -305,25 +320,32 @@ class Apply_Metarig(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and obj.name not in ('metarig','rig')
 
 	def execute(self, context):
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		obj = context.active_object
-
-		target_armature = None
-		metarig_armature = None
-
-		if obj.type == 'ARMATURE':
-			target_armature = obj
-
-
-		# Iterate through all objects in the current scene
-		for obj in bpy.context.scene.objects:
-			if obj.type == 'ARMATURE' and obj.name == 'metarig':
-				metarig_armature = obj
-				break  # Stop searching once you've found the 'metarig' armature
-
-		if target_armature and metarig_armature:
-			apply_metarig(target_armature,metarig_armature)
 		
+		addon_name = 'rigify'
+		# Check if the addon is enabled
+		if addon_name not in bpy.context.preferences.addons.keys():
+			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
+		else:
+			
+			#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+			obj = context.active_object
 
-		#lock_position_rotation_bones(armature)
-		return {'FINISHED'}
+			target_armature = None
+			metarig_armature = None
+
+			if obj.type == 'ARMATURE':
+				target_armature = obj
+
+
+			# Iterate through all objects in the current scene
+			for obj in bpy.context.scene.objects:
+				if obj.type == 'ARMATURE' and obj.name == 'metarig':
+					metarig_armature = obj
+					break  # Stop searching once you've found the 'metarig' armature
+
+			if target_armature and metarig_armature:
+				apply_metarig(target_armature,metarig_armature)
+			
+
+			#lock_position_rotation_bones(armature)
+			return {'FINISHED'}

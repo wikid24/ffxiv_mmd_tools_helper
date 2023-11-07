@@ -16,9 +16,22 @@ def get_test_model_file_path(ffxiv_model):
 
 def import_ffxiv_model(context,file_path):
 
+	if bpy.context.mode != 'OBJECT':
+		bpy.ops.object.mode_set(mode='OBJECT')
+
 	#file_path = (__file__ + "\\ffxiv models\\" + ffxiv_model + "\\" + ffxiv_model + ".fbx").replace("import_ffxiv_model.py" , "")
 	#print(file_path)
 	#deselect all objects
+
+	#sets the active collection to collection[0]
+	# Make sure you have at least one collection in your scene before running this code
+	collections = bpy.context.scene.collection.children
+
+	if collections:
+		bpy.context.window.view_layer.active_layer_collection = bpy.context.window.view_layer.layer_collection.children[collections[0].name]
+	else:
+		print("No collections found in the scene.")
+
 	bpy.ops.object.select_all(action='DESELECT')
 	
 	bpy.ops.import_scene.fbx( \
@@ -125,8 +138,7 @@ def import_ffxiv_model(context,file_path):
 		if x.type=='ARMATURE':
 			root = x.parent
 			add_custom_property(x,'original_root_name',root.name)
-
-		
+	
 
 		mesh_list = {}
 		
@@ -146,6 +158,14 @@ def import_ffxiv_model(context,file_path):
 					#if mesh doesn't exist on the mesh_list add to the mesh_list
 					if original_material_name not in mesh_list:
 						mesh_list[original_material_name] = (model_type,material_type,immediate_folder_name,material_folder,)
+
+					#add the ModelRaceType to the root armature properties
+					if obj.data['ModelType'] == 'Face':
+						# Copy the custom property 'ModelRaceType' to the armature data
+						add_custom_property(x,'ModelRaceType',obj.data['ModelRaceType'])
+
+
+					
 
 		textools_folder = None
 
@@ -381,6 +401,8 @@ def rename_ffxiv_mesh(obj):
 
 
 def main(context):
+
+
 
 	if bpy.context.scene.selected_ffxiv_test_model == "import_nala":
 		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)

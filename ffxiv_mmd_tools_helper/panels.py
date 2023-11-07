@@ -450,6 +450,15 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
+		world_material = bpy.context.scene.world
+		#greenscreen_background_node = None
+		greenscreen_background_node = world_material.node_tree.nodes.get('ffxiv_mmd_background')
+		if greenscreen_background_node:
+			row.prop(greenscreen_background_node.inputs[0],"default_value", text="Background Color")
+			row.operator("ffxiv_mmd.remove_world_background_color", text="X")
+		else:
+			row.operator("ffxiv_mmd.apply_world_background_color", text="Apply Background Color")
+		row = layout.row()
 		row.label(text="Texture Folder:")
 		row = layout.row()
 		row.prop(context.scene,"shaders_texture_folder", text = "")
@@ -458,8 +467,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		if context.active_object:
 			row.prop(context.active_object, "active_material",text="Material")
-		row = layout.row()
-		row.operator("ffxiv_mmd.apply_glossy_shader", text="Apply Glossy Shader")
+		
 		row = layout.row()
 		if context.active_object and context.active_object.type == 'MESH':
 			active_object = bpy.context.active_object
@@ -468,15 +476,49 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 			if active_material and active_material.use_nodes:
 				node_tree = active_material.node_tree
 				glossy_bsdf_node = None
+				mektools_skin_node = None
 
-				# Find the Glossy BSDF node
+				
 				for node in node_tree.nodes:
-					if node.type == 'BSDF_GLOSSY':
+					# Find the Glossy BSDF node
+					if node.type == 'BSDF_GLOSSY' and node.name=='ffxiv_mmd_glossy':
 						glossy_bsdf_node = node
+					#find the MekTools Property Node
+					if node.type == 'GROUP' and node.name == 'Group':
+						mektools_skin_node = node
 
 				if glossy_bsdf_node:
-					row.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossiness")
+					row.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossy Roughness")
+					row.operator("ffxiv_mmd.remove_glossy_shader", text="X")
+				else:
+					row.operator("ffxiv_mmd.apply_glossy_shader", text="Apply Glossy Shader")
 
+
+				if mektools_skin_node:
+					row = layout.row()
+					row.label(text="MekTools Skin Settings")
+					row = layout.row()
+					row.prop(mektools_skin_node.node_tree.nodes['SSS'].outputs[0],"default_value", text="Subsurface Scattering")
+					row = layout.row()
+					row.prop(mektools_skin_node.node_tree.nodes['Specular'].outputs[0],"default_value", text="Specular")
+					row = layout.row()
+					row.prop(mektools_skin_node.node_tree.nodes['Wet'].outputs[0],"default_value", text="Wet")
+					row = layout.row()
+					row.prop(mektools_skin_node.node_tree.nodes['Roughness'].outputs[0],"default_value", text="Roughness")
+					#row = layout.row()
+					#row.prop(mektools_skin_node.node_tree.nodes['Mix.002'].inputs[2],"default_value", text="Skin Color")
+				else:
+					row = layout.row()
+					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Apply MekTools Skin Shader")
+
+		
+			#ffxiv_mmd.apply_world_greenscreen
+
+				
+
+
+		#row = layout.row()
+		#row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Apply MekTools Skin Shader")
 
 		
 		

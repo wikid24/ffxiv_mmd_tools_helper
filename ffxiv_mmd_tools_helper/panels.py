@@ -593,13 +593,11 @@ class FacePaint_MTH(bpy.types.Panel):
 			active_material = active_object.active_material if active_object else None
 
 			if active_material and active_material.use_nodes:
-				node_tree = active_material.node_tree
+
 				ffxiv_decal_node_1_instance = None
 								
-				for node in node_tree.nodes:
-					if node.name=='ffxiv_mmd_decal_1':
-						ffxiv_decal_node_1_instance = node
-						break
+				ffxiv_decal_node_1_instance = active_material.node_tree.nodes.get('ffxiv_mmd_decal_1')
+					
 					
 
 				if ffxiv_decal_node_1_instance:
@@ -612,7 +610,7 @@ class FacePaint_MTH(bpy.types.Panel):
 
 					if image_node:
 						row = layout.row()
-						row.prop_search(image_node, "image", bpy.data, "images", text="Decal Image")
+						row.prop_search(image_node, "image", bpy.data, "images", text="Image")
 						row.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER') 
 					row = layout.row()
 					row.prop(ffxiv_decal_node_1_instance.inputs["Base Color"],"default_value", text="Base Color")
@@ -630,6 +628,8 @@ class FacePaint_MTH(bpy.types.Panel):
 				else:
 					row = layout.row()
 					row.operator("ffxiv_mmd.create_decal_layout",text="Create Decal Layout", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+		else:
+			row.label(text='Select a Mesh')
 
 
 		

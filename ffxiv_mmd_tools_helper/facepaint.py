@@ -188,53 +188,52 @@ def create_decal_node_group(active_material,decal_slot_id):
 
 	
 				
-def remove_decal_node_group(active_material,decal_slot_id):
+def remove_decal_node_group_from_material(active_material,decal_slot_id):
 
 	original_input_node = None
 	original_output_node = None
+	node_group_instance = None
 	
 
 	if active_material.node_tree:
-		uv_node = active_material.node_tree.nodes.get('ffxiv_mmd_decal_uv_'+str(decal_slot_id))
-		image_node = active_material.node_tree.nodes.get('ffxiv_mmd_decal_img_'+str(decal_slot_id))
-		bsdf_node = active_material.node_tree.nodes['ffxiv_mmd_decal_bsdf_'+str(decal_slot_id)]
-		mix_node = active_material.node_tree.nodes['ffxiv_mmd_decal_mix_'+str(decal_slot_id)] 
+		if active_material.node_tree.nodes.get('ffxiv_mmd_decal_'+str(decal_slot_id)):
+			node_group_instance = active_material.node_tree.nodes.get('ffxiv_mmd_decal_'+str(decal_slot_id))
 
-		if mix_node:
-			original_input_node = mix_node.inputs[1].links[0].from_node 
-			original_output_node = mix_node.outputs[0].links[0].from_node
+
+		if node_group_instance:
+			original_input_node = node_group_instance.inputs['Shader'].links[0].from_node 
+			original_output_node = node_group_instance.outputs[0].links[0].to_node
 
 		if 	original_input_node and original_output_node:
 			#connect mix shader input to material_output's output
 			active_material.node_tree.links.new(original_input_node.outputs[0],  original_output_node.inputs[0]) 
 
+			active_material.node_tree.nodes.remove(node_group_instance)
 
-			if uv_node:
-				active_material.node_tree.nodes.remove(uv_node)
+			original_output_node.location = (original_output_node.location[0]-200, original_output_node.location[1])
 
-			if image_node:
-				active_material.node_tree.nodes.remove(image_node)
 
-			if bsdf_node:
-				active_material.node_tree.nodes.remove(bsdf_node)
 
-			if mix_node:
-				active_material.node_tree.nodes.remove(mix_node)
+def insert_image_to_decal_nodegroup(context, filepath, decal_slot_id):
 
-def insert_image_to_decal_nodegroup(decal_slot_id):
+	active_material = None
 
-	node_group = None
-	image_node = None
+	if context.active_object:
+		if context.active_object.active_material:
+			active_material = context.active_object.active_material
 
-	if bpy.data.node_groups.get('ffxiv_mmd_decal_'+str(decal_slot_id)):
-		node_group = bpy.data.node_groups.get('ffxiv_mmd_decal_'+str(decal_slot_id))
-
-	if node_group:
-
-		image_node = node_group.nodes.get('ffxiv_mmd_decal_img_'+str(decal_slot_id))
-		
+	if active_material:
+		node_group = None
+		image_node = None
+		if bpy.data.node_groups.get('ffxiv_mmd_decal_'+str(decal_slot_id)):
+			node_group = bpy.data.node_groups.get('ffxiv_mmd_decal_'+str(decal_slot_id))
+		if node_group:
+			image_node = node_group.nodes.get('ffxiv_mmd_decal_img_'+str(decal_slot_id))
 		if image_node:
-			return
+			# Open the image file
+			image = bpy.data.images.load(filepath)  # Load the image from the selected file path
+			image_node.image = image 
+			image_node.image.colorspace_settings.name = 'Non-Color'
 			
 
 
@@ -282,27 +281,11 @@ class InsertImageDecal(bpy.types.Operator, ImportHelper):
 
 	def execute(self, context):
 
-		active_material = None
+		filepath = self.filepath
 
-		if context.active_object:
-			if context.active_object.active_material:
-				active_material = context.active_object.active_material
+		insert_image_to_decal_nodegroup(context,filepath,1)
 
-		if active_material:
-			node_group = None
-			image_node = None
-			if bpy.data.node_groups.get('ffxiv_mmd_decal_1'):
-				node_group = bpy.data.node_groups.get('ffxiv_mmd_decal_1')
-			if node_group:
-				image_node = node_group.nodes.get('ffxiv_mmd_decal_img_1')
-			if image_node:
-				# Open the image file
-				image = bpy.data.images.load(self.filepath)  # Load the image from the selected file path
-				image_node.image = image 
-				image_node.image.colorspace_settings.name = 'Non-Color'
-
-
-				return {'FINISHED'}
+		return {'FINISHED'}
 
 	
 @register_wrap
@@ -321,7 +304,7 @@ class RemoveDecalNodeGroup(bpy.types.Operator):
 				active_material = context.active_object.active_material
 
 		if active_material:
-			remove_decal_node_group(active_material,1)
+			remove_decal_node_group_from_material(active_material,1)
 
 
 		return {'FINISHED'}

@@ -121,6 +121,7 @@ Credits:
 ### Blender Addon Stuff:
    - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
    - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest
+   - [Gravity Collider Bone Physics Addon](https://github.com/MiniEval/Bone-Physics) - I haven't tried it, but its a free and easy way to add skirt and hair physics (if you're sticking simply in Blender)
 
 ### MMD Animation Stuff:
    - The original MMD model that the VMD animation files were based on (useful for animation scaling reasons)

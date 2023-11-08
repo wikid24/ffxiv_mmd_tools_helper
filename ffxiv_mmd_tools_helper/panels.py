@@ -497,14 +497,18 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				if mektools_skin_node:
 					row = layout.row()
 					row.label(text="MekTools Skin Settings")
-					row = layout.row()
-					row.prop(mektools_skin_node.node_tree.nodes['SSS'].outputs[0],"default_value", text="Subsurface Scattering")
-					row = layout.row()
-					row.prop(mektools_skin_node.node_tree.nodes['Specular'].outputs[0],"default_value", text="Specular")
-					row = layout.row()
-					row.prop(mektools_skin_node.node_tree.nodes['Wet'].outputs[0],"default_value", text="Wet")
-					row = layout.row()
-					row.prop(mektools_skin_node.node_tree.nodes['Roughness'].outputs[0],"default_value", text="Roughness")
+					if 'SSS' in mektools_skin_node.node_tree.nodes:
+						row = layout.row()
+						row.prop(mektools_skin_node.node_tree.nodes['SSS'].outputs[0],"default_value", text="Subsurface Scattering")
+					if 'Specular' in mektools_skin_node.node_tree.nodes:
+						row = layout.row()
+						row.prop(mektools_skin_node.node_tree.nodes['Specular'].outputs[0],"default_value", text="Specular")
+					if 'Wet' in mektools_skin_node.node_tree.nodes:
+						row = layout.row()
+						row.prop(mektools_skin_node.node_tree.nodes['Wet'].outputs[0],"default_value", text="Wet")
+					if 'Roughness' in mektools_skin_node.node_tree.nodes:
+						row = layout.row()
+						row.prop(mektools_skin_node.node_tree.nodes['Roughness'].outputs[0],"default_value", text="Roughness")
 					#row = layout.row()
 					#row.prop(mektools_skin_node.node_tree.nodes['Mix.002'].inputs[2],"default_value", text="Skin Color")
 					row = layout.row()
@@ -571,6 +575,66 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
 		"""
 
+@register_wrap
+class FacePaint_MTH(bpy.types.Panel):
+	bl_idname = "OBJECT_PT_FacePaintMMD_MTH"
+	bl_label = "Decals / Face Paint"
+	bl_space_type = "VIEW_3D"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
+	bl_category = "FFXIV MMD"
+	bl_options = {'DEFAULT_CLOSED'}
+	bl_order = 9
+
+	def draw(self, context):
+		layout = self.layout
+		row = layout.row()
+		if context.active_object and context.active_object.type == 'MESH':
+			active_object = bpy.context.active_object
+			active_material = active_object.active_material if active_object else None
+
+			if active_material and active_material.use_nodes:
+				node_tree = active_material.node_tree
+				ffxiv_decal_node_1_instance = None
+								
+				for node in node_tree.nodes:
+					if node.name=='ffxiv_mmd_decal_1':
+						ffxiv_decal_node_1_instance = node
+						break
+					
+
+				if ffxiv_decal_node_1_instance:
+					ffxiv_decal_node_1 = bpy.data.node_groups.get('ffxiv_mmd_decal_1')
+
+					row = layout.row()
+					row.label(text="Decal 1 Settings")
+
+					image_node = ffxiv_decal_node_1.nodes.get('ffxiv_mmd_decal_img_1')
+
+					if image_node:
+						row = layout.row()
+						row.prop_search(image_node, "image", bpy.data, "images", text="Decal Image")
+						row.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER') 
+					row = layout.row()
+					row.prop(ffxiv_decal_node_1_instance.inputs["Base Color"],"default_value", text="Base Color")
+					row = layout.row()
+					row.prop(ffxiv_decal_node_1_instance.inputs['Subsurface'],"default_value", text="Subsurface")
+					row = layout.row()
+					row.prop(ffxiv_decal_node_1_instance.inputs["Subsurface Color"],"default_value", text="Subsurface Color")
+					row = layout.row()
+					row.prop(ffxiv_decal_node_1_instance.inputs["Roughness"],"default_value", text="Roughness")
+					row = layout.row()
+					row.prop(ffxiv_decal_node_1_instance.inputs["Specular"],"default_value", text="Specular")
+					row = layout.row()
+					row.operator("ffxiv_mmd.remove_decal_layout",text="Remove Decal Layout", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+					
+				else:
+					row = layout.row()
+					row.operator("ffxiv_mmd.create_decal_layout",text="Create Decal Layout", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+
+
+		
+
+		
 
 
 @register_wrap
@@ -582,7 +646,7 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "FFXIV MMD"
 	bl_options = {'DEFAULT_CLOSED'}
-	bl_order = 9
+	bl_order = 10
 
 	def draw(self, context):
 		layout = self.layout
@@ -641,8 +705,8 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 			#armature = context.active_object
 		#if not context.scene.bone_compare_target_armature:
 
-
-		col.prop_search(context.scene,"bone_compare_comparison_bone",context.scene.bone_compare_target_armature.id_data.pose,"bones",	text="Bone")
+		if context.scene.bone_compare_target_armature:
+			col.prop_search(context.scene,"bone_compare_comparison_bone",context.scene.bone_compare_target_armature.id_data.pose,"bones",	text="Bone")
 		#col.prop(context.scene, "bone_compare_comparison_bone", text="Comparison Bone",expand=True)
 		row = layout.row(align=True)
 		col = row.column(align=True)
@@ -655,16 +719,17 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 
 
 
+
+
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):
-	#Mass add bone groups
 	bl_idname = "OBJECT_PT_ExportMMD_MTH"
 	bl_label = "Export MMD Preparation"
 	bl_space_type = "VIEW_3D"
 	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
 	bl_category = "FFXIV MMD"
 	bl_options = {'DEFAULT_CLOSED'}
-	bl_order = 10
+	bl_order = 11
 
 	def draw(self, context):
 		layout = self.layout

@@ -52,6 +52,7 @@ if "bpy" in locals():
 	importlib.reload(bones_renamer)
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(display_panel_groups)
+	importlib.reload(facepaint)
 	importlib.reload(import_ffxiv_model)
 	importlib.reload(import_ffxiv_charafile)
 	importlib.reload(joints)
@@ -89,6 +90,7 @@ else:
 	from . import bones_renamer
 	from . import convert_to_blender_camera
 	from . import display_panel_groups
+	from . import facepaint
 	from . import import_ffxiv_model
 	from . import import_ffxiv_charafile
 	from . import joints

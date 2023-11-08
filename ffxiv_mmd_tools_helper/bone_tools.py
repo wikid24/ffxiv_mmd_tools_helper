@@ -566,8 +566,10 @@ def _comparescale_update(self, context):
 		self.bone_compare_scale_x = 0
 		self.bone_compare_scale_y = 0
 		self.bone_compare_scale_z = 0
+		self.bone_compare_comparison_bone = ''
 		#print ("missing something")
 		return 
+	
 	
 	else:
 		target_bone = self.bone_compare_target_armature.pose.bones.get(self.bone_compare_comparison_bone)
@@ -589,9 +591,9 @@ def _comparescale_update(self, context):
 		if source_bone:
 			print (f"source_bone: {source_bone.name}")
 
-			scale_x = target_bone.tail.x / source_bone.tail.x
-			scale_y = target_bone.tail.y / source_bone.tail.y
-			scale_z = target_bone.tail.z / source_bone.tail.z
+			scale_x = target_bone.head.x / source_bone.head.x
+			scale_y = target_bone.head.y / source_bone.head.y
+			scale_z = target_bone.head.z / source_bone.head.z
 
 			# Set the scale properties
 			self.bone_compare_scale_x = scale_x
@@ -615,12 +617,12 @@ class MMDBoneScaleComparison(bpy.types.Operator):
 
 	bpy.types.Scene.bone_compare_source_armature = bpy.props.PointerProperty(
 		type=bpy.types.Object
-		,poll=lambda self, obj: obj.type == 'ARMATURE',
+		,poll=lambda self, obj: obj.type == 'ARMATURE', update= _comparescale_update,
 		)
 	
 	bpy.types.Scene.bone_compare_target_armature = bpy.props.PointerProperty(
 		type=bpy.types.Object
-		,poll=lambda self, obj: obj.type == 'ARMATURE',
+		,poll=lambda self, obj: obj.type == 'ARMATURE', update = _comparescale_update,
 		)
 	
 	# Create the comparison_bone pointer property with the poll function

@@ -94,7 +94,11 @@ Credits:
   - Auto-fix/Translate MMD Bone Names
   - Bulk Update Rigid Bodies and set starting/ending values in a rigid body chain (with new powerful search features!)
   - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it [faster](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fc155d0b-4367-4324-be24-424f19bf63d4))
-  - A bunch of important useful stuff. Will list them later.
+  - Automating the application of the [MekTools Addon](https://www.xivmodarchive.com/modid/22780): Integrated the FFXIV Rigs as well as the skin shader!
+  - Auto-import of .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis): Will apply the face deformations, as well as read back all the skin/hair/face paint color info to the Blender logs, to be able to select and export the EXACT files & needed to export out of TexTools
+  - Apply FFXIV Face Paint images with all the included color shader settings
+  - Calculate the VMD import scale by comparing a MMD Armature against your target armature with included Bone Scale Compare tool
+  - A bunch of other important useful stuff... Will list them all later!
 
 # To do:
 - Better skin/hair/clothing shaders so that the textures don't look so flat in Blender

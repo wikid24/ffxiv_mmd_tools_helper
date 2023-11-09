@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 856),
+	"version": (0, 858),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -42,7 +42,6 @@ if "bpy" in locals():
 	importlib.reload(add_foot_leg_ik)
 	importlib.reload(add_hand_arm_ik)
 	importlib.reload(armature_diagnostic)
-	importlib.reload(background_color_picker)
 	importlib.reload(bone_conversion)
 	importlib.reload(bone_groups)
 	importlib.reload(bone_morphs)
@@ -80,7 +79,6 @@ else:
 	from . import add_foot_leg_ik
 	from . import add_hand_arm_ik
 	from . import armature_diagnostic
-	from . import background_color_picker
 	from . import bone_conversion
 	from . import bone_groups
 	from . import bone_morphs

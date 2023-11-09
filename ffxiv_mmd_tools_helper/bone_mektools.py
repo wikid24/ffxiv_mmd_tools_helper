@@ -71,9 +71,6 @@ def auto_create_mektools_armature_from_race(target_armature):
 				root_collection = bpy.context.scene.collection.children[0]
 
 			mektools_collection = None
-			#mektools_collection = bpy.data.collections[-1]
-			#mektools_collection.name = 'mektools_'+target_armature.parent.name
-
 			mektools_armature = None
 
 			for obj in bpy.data.objects:
@@ -95,35 +92,11 @@ def auto_create_mektools_armature_from_race(target_armature):
 				if mektools_collection.name not in root_collection.children.keys():
 					root_collection.children.link(mektools_collection)
 				
-
-			#if collections:
-				#mektools_collection = collections[-1]
-				#mektools_collection.name = 'mektools_' + mektools_collection.name
-
-
-				#if 	mektools_collection not in root_collection.children:
-					#root_collection.children.link(mektools_collection)
-				
-				#if mektools_collection. != bpy.context.scene.collection.children[0]:
-					# Link the last collection to the parent collection
-				
-
-			#if mektools_collection !=  bpy.data.collections[0]:
-			#mektools_collection = bpy.data.collections[-1]
 			
 			if mektools_collection:
 
-				##get the mektools rig armature
-				#for obj in mektools_collection.objects:
-					#if obj.type == 'ARMATURE':
-						#mektools_armature = obj
-						#print("mektools_armature= " + mektools_armature.name)
-				
 				bpy.ops.object.mode_set(mode='OBJECT')
 
-				#bpy.context.view_layer.objects.active = target_armature
-				#bpy.ops.armature.select_all(action='DESELECT')
-				#select all meshes on the armature
 				for obj in target_armature.children:
 					if obj.type=='MESH':
 						obj.select = True

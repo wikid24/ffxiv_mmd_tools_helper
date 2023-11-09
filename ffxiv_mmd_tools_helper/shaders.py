@@ -31,6 +31,9 @@ def apply_colorset_file(file_name):
 					bpy.context.object.active_material.cs_rows[i].tile_id = int(read_i(colorset, 1)[0] * 64)
 					bpy.context.object.active_material.cs_rows[i].tile_transform = [x for x in read_i(colorset, 4)]
 					if colorsetdat:
+						#unpacked_hex_value = hex(unpack('>H', colorsetdat.read(2))[0])[2:]
+						#if len(unpacked_hex_value) < 4:
+							
 						bpy.context.object.active_material.cs_rows[i].dye = hex(unpack('>H', colorsetdat.read(2))[0])[2:]
 
 				colorset.close()
@@ -469,6 +472,31 @@ class SelectMaterialsFolder(bpy.types.Operator):
 
 			return {'FINISHED'}
 	
+
+
+
+def _update_mektools_skin_props(self,context):
+
+	mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
+
+	mektools_skin_node.node_tree.nodes['SSS'].outputs[0].default_value = self.mektools_skin_prop_sss
+	mektools_skin_node.node_tree.nodes['Specular'].outputs[0].default_value = self.mektools_skin_prop_specular
+	mektools_skin_node.node_tree.nodes['Wet'].outputs[0].default_value = self.mektools_skin_prop_wet
+	mektools_skin_node.node_tree.nodes['Roughness'].outputs[0].default_value = self.mektools_skin_prop_roughness
+
+	return
+
+def _get_mektools_skin_props(self,context):
+
+	mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
+
+	context.scene.mektools_skin_prop_sss = mektools_skin_node.node_tree.nodes['SSS'].outputs[0].default_value 
+	context.scene.mektools_skin_prop_specular = mektools_skin_node.node_tree.nodes['Specular'].outputs[0].default_value
+	context.scene.mektools_skin_prop_wet = mektools_skin_node.node_tree.nodes['Wet'].outputs[0].default_value
+	context.scene.mektools_skin_prop_roughness = mektools_skin_node.node_tree.nodes['Roughness'].outputs[0].default_value
+
+	return
+
 import mek_tools
 import addon_utils
 
@@ -478,6 +506,13 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd.apply_mektools_skin_shader"
 	bl_label = "Apply MekTools Skin Shader"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	
+
+	bpy.types.Scene.mektools_skin_prop_sss = bpy.props.FloatProperty(name='Subsurface', min= 0,max=0.3,default=0.025, update = _update_mektools_skin_props)
+	bpy.types.Scene.mektools_skin_prop_specular = bpy.props.FloatProperty(name='Specular', min= 0,max=1,default=0.03, update = _update_mektools_skin_props) 
+	bpy.types.Scene.mektools_skin_prop_wet = bpy.props.FloatProperty(name='Wet', min= 0,max=5,default=0, update = _update_mektools_skin_props) 
+	bpy.types.Scene.mektools_skin_prop_roughness = bpy.props.FloatProperty(name='Roughness', min= 0,max=1,default=0.015, update = _update_mektools_skin_props) 
 
 	def execute(self, context):
 

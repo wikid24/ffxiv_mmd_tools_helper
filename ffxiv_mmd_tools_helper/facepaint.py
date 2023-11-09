@@ -75,11 +75,13 @@ def create_decal_node_group(active_material,decal_slot_id):
 		input_node.name = 'ffxiv_mmd_decal_input_'+str(decal_slot_id)
 		node_group.inputs.new("NodeSocketShader", "Shader")
 		node_group.inputs.new("NodeSocketColor", "Base Color")
+		node_group.inputs["Base Color"].default_value = (0, 0, 0, 1.0)  # (R, G, B, A)
 		node_group.inputs.new("NodeSocketFloatFactor", "Subsurface")
 		node_group.inputs['Subsurface'].min_value = 0
 		node_group.inputs['Subsurface'].max_value = 1
 		node_group.inputs['Subsurface'].default_value = 0
 		node_group.inputs.new("NodeSocketColor", "Subsurface Color")
+		node_group.inputs["Subsurface Color"].default_value = (0, 0, 0, 1.0)  # (R, G, B, A)
 		node_group.inputs.new("NodeSocketFloatFactor", "Specular")
 		node_group.inputs['Specular'].min_value = 0
 		node_group.inputs['Specular'].max_value = 1
@@ -230,8 +232,16 @@ def insert_image_to_decal_nodegroup(context, filepath, decal_slot_id):
 		if node_group:
 			image_node = node_group.nodes.get('ffxiv_mmd_decal_img_'+str(decal_slot_id))
 		if image_node:
+			image = None
+			#check if this image exists, if it does, reuse it
+			for img in bpy.data.images:
+				if img.source == 'FILE' and img.filepath == filepath:
+					image = img
+					break
+
 			# Open the image file
-			image = bpy.data.images.load(filepath)  # Load the image from the selected file path
+			if image is None:
+				image = bpy.data.images.load(filepath)  # Load the image from the selected file path
 			image_node.image = image 
 			image_node.image.colorspace_settings.name = 'Non-Color'
 			
@@ -244,6 +254,8 @@ class CreateDecalNodeGroup(bpy.types.Operator):
 	bl_label = "Adds a decal to the selected mesh's active material"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	decal_slot_id = bpy.props.IntProperty(name="decal_slot_id")
+
 	def execute(self, context):
 
 		active_material = None
@@ -253,7 +265,7 @@ class CreateDecalNodeGroup(bpy.types.Operator):
 				active_material = context.active_object.active_material
 
 		if active_material:
-			add_decal_node_group_to_material(active_material,1)
+			add_decal_node_group_to_material(active_material,self.decal_slot_id)
 
 
 		return {'FINISHED'}
@@ -274,6 +286,9 @@ class InsertImageDecal(bpy.types.Operator, ImportHelper):
 		options={'HIDDEN'},
 	)
 
+	decal_slot_id = bpy.props.IntProperty(name="decal_slot_id")
+	
+
 	@classmethod
 	def poll(cls, context):
 		if context.active_object:
@@ -283,7 +298,7 @@ class InsertImageDecal(bpy.types.Operator, ImportHelper):
 
 		filepath = self.filepath
 
-		insert_image_to_decal_nodegroup(context,filepath,1)
+		insert_image_to_decal_nodegroup(context,filepath,self.decal_slot_id)
 
 		return {'FINISHED'}
 
@@ -295,6 +310,8 @@ class RemoveDecalNodeGroup(bpy.types.Operator):
 	bl_label = "Removes a decal to the selected mesh's active material"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	decal_slot_id = bpy.props.IntProperty(name="decal_slot_id")
+
 	def execute(self, context):
 
 		active_material = None
@@ -304,7 +321,7 @@ class RemoveDecalNodeGroup(bpy.types.Operator):
 				active_material = context.active_object.active_material
 
 		if active_material:
-			remove_decal_node_group_from_material(active_material,1)
+			remove_decal_node_group_from_material(active_material,self.decal_slot_id)
 
 
 		return {'FINISHED'}

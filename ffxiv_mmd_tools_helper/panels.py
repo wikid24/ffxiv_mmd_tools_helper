@@ -432,9 +432,7 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.operator("ffxiv_mmd.mmd_camera_to_blender_camera", text = "Convert MMD cameras to Blender cameras", icon="CAMERA_DATA")
 		row = layout.row()
-		row.operator("ffxiv_mmd.background_color_picker", text = "MMD background color picker", icon="COLOR")
-		layout.prop(context.scene, "BackgroundColor")
-		row = layout.row()
+
 """
 @register_wrap
 class ShadingAndToonsPanel_MTH(bpy.types.Panel):
@@ -450,23 +448,19 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 	def draw(self, context):
 		layout = self.layout
 		row = layout.row()
-		world_material = bpy.context.scene.world
-		#greenscreen_background_node = None
-		greenscreen_background_node = world_material.node_tree.nodes.get('ffxiv_mmd_background')
-		if greenscreen_background_node:
-			row.prop(greenscreen_background_node.inputs[0],"default_value", text="Background Color")
-			row.operator("ffxiv_mmd.remove_world_background_color", text="X")
-		else:
-			row.operator("ffxiv_mmd.apply_world_background_color", text="Apply Background Color")
-		row = layout.row()
-		row.label(text="Texture Folder:")
-		row = layout.row()
-		row.prop(context.scene,"shaders_texture_folder", text = "")
-		row = layout.row()
-		row.operator("ffxiv_mmd.select_materials_folder", text="Apply Colorset")
-		row = layout.row()
 		if context.active_object:
 			row.prop(context.active_object, "active_material",text="Material")
+		row = layout.row()
+		# Colorsetter Addon Stuff
+		row = layout.row()
+		row.label(text="Colorset Texture Folder:")
+		row = layout.row()
+		grid = row.grid_flow(columns=2,align=True)
+		grid.prop(context.scene,"shaders_texture_folder", text = "")
+		grid.operator("ffxiv_mmd.select_materials_folder", text="", icon='CHECKMARK')
+		row = layout.row()
+		grid = row.grid_flow(columns=1,align=True)
+		
 		
 		row = layout.row()
 		if context.active_object and context.active_object.type == 'MESH':
@@ -488,44 +482,48 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						mektools_skin_node = node
 
 				if glossy_bsdf_node:
-					row.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossy Roughness")
-					row.operator("ffxiv_mmd.remove_glossy_shader", text="X")
+					grid = row.grid_flow(columns=2,align=True)
+					grid.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossy Roughness")
+					grid.operator("ffxiv_mmd.remove_glossy_shader", text="", icon='X')
 				else:
-					row.operator("ffxiv_mmd.apply_glossy_shader", text="Apply Glossy Shader")
-
+					row.operator("ffxiv_mmd.apply_glossy_shader", text="Add Glossy Shader")
 
 				if mektools_skin_node:
-					row = layout.row()
-					row.label(text="MekTools Skin Settings")
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="MekTools Skin Settings")
+					grid.operator("ffxiv_mmd.remove_mektools_skin_shader", text="", icon='X')
+					grid = box.grid_flow(columns=1,align=True)
+
 					if 'SSS' in mektools_skin_node.node_tree.nodes:
-						row = layout.row()
-						row.prop(mektools_skin_node.node_tree.nodes['SSS'].outputs[0],"default_value", text="Subsurface Scattering")
+						grid.prop(context.scene, "mektools_skin_prop_sss", text="Subsurface Scattering", slider=True)
+
 					if 'Specular' in mektools_skin_node.node_tree.nodes:
-						row = layout.row()
-						row.prop(mektools_skin_node.node_tree.nodes['Specular'].outputs[0],"default_value", text="Specular")
+						grid.prop(context.scene, "mektools_skin_prop_specular", text="Specular", slider=True)
+
 					if 'Wet' in mektools_skin_node.node_tree.nodes:
-						row = layout.row()
-						row.prop(mektools_skin_node.node_tree.nodes['Wet'].outputs[0],"default_value", text="Wet")
+						grid.prop(context.scene, "mektools_skin_prop_wet", text="Wet", slider=True)
+
 					if 'Roughness' in mektools_skin_node.node_tree.nodes:
-						row = layout.row()
-						row.prop(mektools_skin_node.node_tree.nodes['Roughness'].outputs[0],"default_value", text="Roughness")
-					#row = layout.row()
-					#row.prop(mektools_skin_node.node_tree.nodes['Mix.002'].inputs[2],"default_value", text="Skin Color")
-					row = layout.row()
-					row.operator("ffxiv_mmd.remove_mektools_skin_shader", text="Remove MekTools Skin Shader")
+						grid.prop(context.scene, "mektools_skin_prop_roughness", text="Roughness", slider=True)
+
 					
 				else:
 					row = layout.row()
-					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Apply MekTools Skin Shader")
+					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Add MekTools Skin Shaders")
 
-		
-			#ffxiv_mmd.apply_world_greenscreen
+		# Background Color changer Stuff 
+		row = layout.row()
+		world_material = bpy.context.scene.world
+		world_background_node = world_material.node_tree.nodes.get('ffxiv_mmd_background')
+		if world_background_node:
+			grid = row.grid_flow(columns=2,align=True)
+			grid.prop(world_background_node.inputs[0],"default_value", text="Background Color")
+			grid.operator("ffxiv_mmd.remove_world_background_color", text="", icon='X')
+		else:
+			row.operator("ffxiv_mmd.apply_world_background_color", text="Add Background Color")
 
-				
 
-
-		#row = layout.row()
-		#row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Apply MekTools Skin Shader")
 
 		
 		
@@ -594,43 +592,74 @@ class FacePaint_MTH(bpy.types.Panel):
 
 			if active_material and active_material.use_nodes:
 
+				# Call the function for each decal
+				for i in range(1, 5):  # Change 5 to the number of decals you want
+					create_decal_controls(layout, i, active_material)
+
+				"""				
 				ffxiv_decal_node_1_instance = None
-								
-				ffxiv_decal_node_1_instance = active_material.node_tree.nodes.get('ffxiv_mmd_decal_1')
-					
-					
+				ffxiv_decal_node_1_instance = active_material.node_tree.nodes.get('ffxiv_mmd_decal_1')				
 
 				if ffxiv_decal_node_1_instance:
 					ffxiv_decal_node_1 = bpy.data.node_groups.get('ffxiv_mmd_decal_1')
-
-					row = layout.row()
-					row.label(text="Decal 1 Settings")
-
 					image_node = ffxiv_decal_node_1.nodes.get('ffxiv_mmd_decal_img_1')
 
+					box = layout.box()
+					grid = box.grid_flow(columns=2, align=True)
+					grid.label(text="Decal 1")
+					grid.operator("ffxiv_mmd.remove_decal_layout", text="", icon='X')
+
 					if image_node:
-						row = layout.row()
-						row.prop_search(image_node, "image", bpy.data, "images", text="Image")
-						row.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER') 
-					row = layout.row()
-					row.prop(ffxiv_decal_node_1_instance.inputs["Base Color"],"default_value", text="Base Color")
-					row = layout.row()
-					row.prop(ffxiv_decal_node_1_instance.inputs['Subsurface'],"default_value", text="Subsurface")
-					row = layout.row()
-					row.prop(ffxiv_decal_node_1_instance.inputs["Subsurface Color"],"default_value", text="Subsurface Color")
-					row = layout.row()
-					row.prop(ffxiv_decal_node_1_instance.inputs["Roughness"],"default_value", text="Roughness")
-					row = layout.row()
-					row.prop(ffxiv_decal_node_1_instance.inputs["Specular"],"default_value", text="Specular")
-					row = layout.row()
-					row.operator("ffxiv_mmd.remove_decal_layout",text="Remove Decal Layout", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+						grid = box.grid_flow(columns=2, align=True)
+						grid.prop_search(image_node, "image", bpy.data, "images", text="Image")
+						grid.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER')
+
+						grid = box.grid_flow(columns=3, align=True)
+						grid.prop(ffxiv_decal_node_1_instance.inputs["Base Color"], "default_value", text="Base")
+						grid.prop(ffxiv_decal_node_1_instance.inputs['Subsurface'], "default_value", text="Mix", slider=True)
+						grid.prop(ffxiv_decal_node_1_instance.inputs["Subsurface Color"], "default_value", text="Subsurface")
+
+						grid = box.grid_flow(columns=2, align=True)
+						grid.prop(ffxiv_decal_node_1_instance.inputs["Roughness"], "default_value", text="Roughness")
+						grid.prop(ffxiv_decal_node_1_instance.inputs["Specular"], "default_value", text="Specular")
+						
 					
 				else:
 					row = layout.row()
-					row.operator("ffxiv_mmd.create_decal_layout",text="Create Decal Layout", icon="GROUP_BONE") #so that they don't show up as "NULL" in MMD
+					row.operator("ffxiv_mmd.create_decal_layout",text="Add Decal 1") #so that they don't show up as "NULL" in MMD
+				"""
+				
 		else:
 			row.label(text='Select a Mesh')
 
+def create_decal_controls(layout, decal_index, active_material):
+	decal_node_instance = active_material.node_tree.nodes.get(f'ffxiv_mmd_decal_{decal_index}')
+	
+	if decal_node_instance:
+		decal_group = bpy.data.node_groups.get(f'ffxiv_mmd_decal_{decal_index}')
+		image_node = decal_group.nodes.get(f'ffxiv_mmd_decal_img_{decal_index}')
+		
+		box = layout.box()
+		grid = box.grid_flow(columns=2, align=True)
+		grid.label(text=f"Decal {decal_index}")
+		grid.operator("ffxiv_mmd.remove_decal_layout", text="", icon='X').decal_slot_id = decal_index
+		
+		if image_node:
+			grid = box.grid_flow(columns=2, align=True)
+			grid.prop_search(image_node, "image", bpy.data, "images", text="Image")
+			grid.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER').decal_slot_id = decal_index
+			
+			grid = box.grid_flow(columns=3, align=True)
+			grid.prop(decal_node_instance.inputs["Base Color"], "default_value", text="Base")
+			grid.prop(decal_node_instance.inputs['Subsurface'], "default_value", text="Mix", slider=True)
+			grid.prop(decal_node_instance.inputs["Subsurface Color"], "default_value", text="Subsurface")
+			
+			grid = box.grid_flow(columns=2, align=True)
+			grid.prop(decal_node_instance.inputs["Roughness"], "default_value", text="Roughness")
+			grid.prop(decal_node_instance.inputs["Specular"], "default_value", text="Specular")
+	else:
+		row = layout.row()
+		row.operator("ffxiv_mmd.create_decal_layout", text=f"Add Decal {decal_index}").decal_slot_id = decal_index
 
 		
 

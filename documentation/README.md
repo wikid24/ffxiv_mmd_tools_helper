@@ -950,21 +950,30 @@ Here's the boobie math:
 
 ------
 
-### Rigify Metarig
+### Rigify Meta-Rig
 
-Allows you to add a pre-rigged Rigify Metarig to your FFXIV Model. To use, you must have the Rigify Addon installed (it's in the Blender Addon Menu but it's disabled by default. Currently in 'research' phase, so don't expect it to work properly
+Allows you to add a pre-rigged [Rigify Meta-Rig](https://docs.blender.org/manual/en/latest/addons/rigging/rigify/metarigs.html) to your FFXIV Model. To use, you must have the [Rigify Addon installed](https://www.pluralsight.com/blog/tutorials/rigging-minutes-blenders-rigify-addon) (it's in the Blender Addon Menu but it's disabled by default. These features currently in 'research' phase, so don't expect everything to work properly.
 
 #### Add
 
-TBD
+Shortcut to adding a "Human (Meta-Rig)" from the standard menu
 
-#### Fix Bones
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7ef977c4-c23f-421c-a697-3c718a1df56e)
 
-TBD
+#### Fix
+
+Will adjust the Meta-Rig's bone structure to match that of your MMD Model. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to match any MMD English, MMD Japanese, MMD Japanese.LR or FFXIV bone against it's corresponding Rigify Meta-Rig bone name. Only the body has been mapped, the face will take a lot longer to figure out.
 
 #### Apply
 
-TBD
+Shortcut to pressing the 'Generate Rig' button in Rigify Addon.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6841c5e3-25db-4fc5-8546-f2c17629fb43)
+
+
+Note: To make everything work 'properly', I will probably need to enable/disable a bunch of stuff in the 'Advanced' section of Rigify, but again for now it's on the backburner.
+
+
 
 ------ 
 
@@ -976,7 +985,9 @@ If you have the MekTools Addon installed, will automatically add the MekTools ri
 
 Tool automatically detects your character's race, tribe and gender so all you gotta do is press the button and it will automatically add the rig, as well as apply the 'armatuer deform' modifier to the MekTools rig for ALL your meshes. That's one less step for you and a lot of less rigging work
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fba6cce1-cbce-4d94-bf79-10690a0bcd9b)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5cd79810-a665-4fdb-843c-d85b45dd437d)
 
 
 ------ 

@@ -786,7 +786,8 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ## Shaders
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5c49e5bf-c000-4848-9171-c113e1beeb4a)
+
 
 
 ------
@@ -803,6 +804,9 @@ For example on my Windows 10 PC if I would like to apply the "Diados Jacket of F
 ------
 
 ### Apply Colorset
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
+
 
 Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
 
@@ -830,18 +834,70 @@ Shortcut to selecting the active material for a mesh.
 
 ### Apply Glossy Shader
 
-Applies a 'Glossy BSDF' shader to a material.
+Applies a 'Glossy BSDF' shader to a material. Once applied, the 'Roughness' skilder will be displayed, along with an 'X' button. The X button removes the shader from the active material
 
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
+
 
 #### Glossy Roughness Slider
 
 Adjusts the Gossy shader's roughness
 
+------
+
+#### MekTools Skin Settings
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/37f49791-b185-420c-bafe-72ace6973513)
+
+If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, this will automatically apply the shader to the currently selected mesh, and add a few controls so that you don't need to go to the Shader Node Editor to adjust these settings. The X button removes the shader from the active material.
+
+Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'mektools_' prefix to the material as name as well. Pressing the 'X' button deletes the 'mektools_' material and restores the original 'backup_' to the active material for this mesh.
+
+The following controls have been added (there's still more to add, like 'Lip Color' and 'Subsurface Color', but to be honest when I played with these settings, I didn't like the look, so it's not high on my priority list.
+
+Anyway yeah embedded within the MekTools skin shader, the following controls has been exposed into this addon's panel:
+
+- Subsurface Scattering
+- Specular
+- Wet
+- Roughness
+
+#### Background Color
+
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b85271e2-ef7e-4815-9478-8d489c5041d0)
+
+Adds a background color that can be seen in renders. This is perfect for green screening/keying, as it is a uniform color and there is no gradient or shadows,  and it does NOT bleed any light/color onto your scene. Pressing the 'X' button will remove the shaders.
+
+------
+## Decals / Face Paint
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a4191cb1-a5b3-492d-93b2-4d45017b6558)
+
+
+Adds up to 4 (or possibly more in the furture) facial decals to your FFXIV models.
+
+To use:
+1) You must have some Face Decals exported out of TexTools! I believe they are stored in the \Saved\Character\Face Paint\ folder by default, and are .png files. 2) Select the face mesh and push one of the 'Add Decal' buttons
+
+Each Decal is a grouped shader node that is shared amongst ALL models that it is applied to. For example, if you have two FFXIV models, and they both have Decal 1 appled, they will BOTH share the same decal .png file. Although the parameters that are applied (such as Base Color/Subsurface/Mix/etc...) are NOT shared, so it is something to be aware of. If you want to apply two different decals to two difference models, apply Decal 1 to the first model. and Decal 2 to the second model.
+
+The group decal node automatically applies 'UV2' to the materials so you don't need to add it manually. 
+
+Pressing the 'X' button will remove the decal from the active material. 
+
+Parameters:
+- Base Color
+- Mix (Subsurface Amount)
+- Subsurface Color
+- Roughness
+- Specular
+
+
 ## Miscellaneous Tools
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2e9399b8-1897-47dd-af46-279fad7c04e6)
 
 ------
 

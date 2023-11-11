@@ -158,8 +158,6 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd.add_bone_groups", text = "Auto-Generate")
 
-		
-
 
 @register_wrap
 class RigidBodiesPanel_MTH(bpy.types.Panel):
@@ -523,55 +521,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		else:
 			row.operator("ffxiv_mmd.apply_world_background_color", text="Add Background Color")
 
-
-
 		
 		
-		"""
-		row = layout.row()
-		row.operator("ffxiv_mmd.fix_normal_maps", text="Fix Normal Maps")
-		
-		row = layout.row()
-		row.label(text="FFXIV Colorset Editor", icon="MATERIAL")
-		row = layout.row()
-		if(context.object.active_material):
-			if(context.object.active_material.is_colorset):
-				normal = context.object.active_material.node_tree.nodes['Normal']
-				multi = context.object.active_material.node_tree.nodes['Multi']
-				normal_closest = context.object.active_material.node_tree.nodes['Normal.001']
-				
-				row = layout.row()
-				row.operator("import.colorsetdds")
-				row.operator("export.colorsetdds")
-				layout.label(text="Multi Map")
-				row = layout.row()
-				row.template_ID(multi, 'image', open="image.open")
-				layout.label(text="Normal Map")
-				row = layout.row()
-				row.template_ID(normal, 'image', open="image.open")
-				layout.label(text="Normal Map (Closest)")
-				row = layout.row()
-				row.template_ID(normal_closest, 'image', open="image.open")
-
-			else:
-				row = layout.row()
-				row.operator("object.add_cs_material", text="Add")
-		row = layout.row()
-		"""
-
-		"""
-		row.label(text="MMD Render toon textures (broken)", icon="MATERIAL")
-		row = layout.row()
-		row.operator("ffxiv_mmd.mmd_toon_render_node_editor", text = "MMD Create Toon Material Nodes (broken)",icon='MATERIAL')
-		row = layout.row()
-		
-		row.label(text="MMD Toon modifier (broken)", icon='NODE_MATERIAL')
-		layout.prop(context.scene, "ToonModifierBlendType")
-		row = layout.row()
-		layout.prop(context.scene, "ToonModifierColor")
-		row = layout.row()
-		row.operator("ffxiv_mmd.toon_modifier", text = "Modify Toon (broken)",icon='NODE_MATERIAL')
-		"""
 
 @register_wrap
 class FacePaint_MTH(bpy.types.Panel):
@@ -594,41 +545,7 @@ class FacePaint_MTH(bpy.types.Panel):
 
 				# Call the function for each decal
 				for i in range(1, 5):  # Change 5 to the number of decals you want
-					create_decal_controls(layout, i, active_material)
-
-				"""				
-				ffxiv_decal_node_1_instance = None
-				ffxiv_decal_node_1_instance = active_material.node_tree.nodes.get('ffxiv_mmd_decal_1')				
-
-				if ffxiv_decal_node_1_instance:
-					ffxiv_decal_node_1 = bpy.data.node_groups.get('ffxiv_mmd_decal_1')
-					image_node = ffxiv_decal_node_1.nodes.get('ffxiv_mmd_decal_img_1')
-
-					box = layout.box()
-					grid = box.grid_flow(columns=2, align=True)
-					grid.label(text="Decal 1")
-					grid.operator("ffxiv_mmd.remove_decal_layout", text="", icon='X')
-
-					if image_node:
-						grid = box.grid_flow(columns=2, align=True)
-						grid.prop_search(image_node, "image", bpy.data, "images", text="Image")
-						grid.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER')
-
-						grid = box.grid_flow(columns=3, align=True)
-						grid.prop(ffxiv_decal_node_1_instance.inputs["Base Color"], "default_value", text="Base")
-						grid.prop(ffxiv_decal_node_1_instance.inputs['Subsurface'], "default_value", text="Mix", slider=True)
-						grid.prop(ffxiv_decal_node_1_instance.inputs["Subsurface Color"], "default_value", text="Subsurface")
-
-						grid = box.grid_flow(columns=2, align=True)
-						grid.prop(ffxiv_decal_node_1_instance.inputs["Roughness"], "default_value", text="Roughness")
-						grid.prop(ffxiv_decal_node_1_instance.inputs["Specular"], "default_value", text="Specular")
-						
-					
-				else:
-					row = layout.row()
-					row.operator("ffxiv_mmd.create_decal_layout",text="Add Decal 1") #so that they don't show up as "NULL" in MMD
-				"""
-				
+					create_decal_controls(layout, i, active_material)		
 		else:
 			row.label(text='Select a Mesh')
 
@@ -689,11 +606,11 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"bust_slider",slider=True)
 		row.operator("ffxiv_mmd.bust_slider",text='Run')
 		row = layout.row()
+			
 		#Rigify Metarig
 		row = layout.row(align=True)
 		col = row.column(align=True)
-		col.label(text="Rigify Metarig", icon="OUTLINER_OB_ARMATURE")
-		row = layout.row(align=True)
+		col.label(text="Rigify", icon="OUTLINER_OB_ARMATURE")
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd.add_rigify_metarig", text = "Add")
 		col = row.column(align=True)
@@ -704,50 +621,42 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.label(text="MekTools Rig", icon="OUTLINER_OB_ARMATURE")
-		row = layout.row(align=True)
 		col = row.column(align=True)
-		#col.prop(context.scene, "vertical_joint_pin", text="Pin",expand=True)
-		#col.prop(context.scene, "armature_deform_pin", text="Rig Pin",expand=True)
-		col = row.column(align=True)
-		#col.operator("ffxiv_mmd.batch_create_vertical_joints", text = "Bulk Vertical",icon='EMPTY_SINGLE_ARROW')
 		col.operator("ffxiv_mmd.apply_mektools_rig", text = "Add MekTools Rig")
 
-		#Bone Scale Compairisons
-		col.label(text="Bone Scale Comparison", icon="OUTLINER_OB_ARMATURE")
-		row = layout.row(align=True)
-		col = row.column(align=True)
-		col.prop(context.scene, "bone_compare_source_armature", text="Source",expand=True)
-		row = layout.row(align=True)
-		col = row.column(align=True)
-		col.prop(context.scene, "bone_compare_target_armature", text="Target",expand=True)
-		row = layout.row(align=True)
-		col = row.column(align=True)
-		"""
-		pose_bone = context.active_pose_bone or context.active_object.pose.bones.get(context.active_bone.name, None)
-		if pose_bone is None:
-			return
-		
-        comparison_bone = pose_bone.mmd_bone
-		"""
-		#armature = None
-		#if context.active_object.type == 'ARMATURE':
-			#armature = context.active_object
-		#if not context.scene.bone_compare_target_armature:
 
+		# Bone Compare
+		box = layout.box()
+		box.label(text="Bone Compare", icon="CONSTRAINT_BONE")
+
+		row = box.row()
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_source_armature", text="Source")
+		col.prop(context.scene, "bone_compare_target_armature", text="Target")
 		if context.scene.bone_compare_target_armature:
-			col.prop_search(context.scene,"bone_compare_comparison_bone",context.scene.bone_compare_target_armature.id_data.pose,"bones",	text="Bone")
-		#col.prop(context.scene, "bone_compare_comparison_bone", text="Comparison Bone",expand=True)
-		row = layout.row(align=True)
+			col.prop_search(context.scene, "bone_compare_comparison_bone", context.scene.bone_compare_target_armature.id_data.pose, "bones", text="Bone")
+		col = row.column(align=False)
+		col.operator("ffxiv_mmd.bone_scale_comparison", text="", icon="UV_SYNC_SELECT")
+		col.operator("ffxiv_mmd.bone_scale_comparison_select_target_bone",text="", icon="RESTRICT_SELECT_OFF")
+
+		row = box.row(align=True)
 		col = row.column(align=True)
-		col.prop(context.scene, "bone_compare_scale_x", text="X",expand=True)
+		col.label(text="Copy Rotation")
 		col = row.column(align=True)
-		col.prop(context.scene, "bone_compare_scale_y", text="Y",expand=True)
+		col.operator("ffxiv_mmd.rotate_target_pose_bone_to_source_bone", text='Source Bone')
 		col = row.column(align=True)
-		col.prop(context.scene, "bone_compare_scale_z", text="Z",expand=True)
+		col.operator("ffxiv_mmd.rotate_target_armature_bones_to_source_armature", text='All Arm Bones')
 
-
-
-
+		# Bone Scale Comparison
+		row = box.row(align=True)
+		col = row.column(align=True)
+		col.label(text='Scale')
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_x", text="X")
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_y", text="Y")
+		col = row.column(align=True)
+		col.prop(context.scene, "bone_compare_scale_z", text="Z")
 
 
 @register_wrap
@@ -778,10 +687,6 @@ class ExportMMD_MTH(bpy.types.Panel):
 		row.operator("ffxiv_mmd.set_fixed_axis_local_axis_bones",text="Set Fixed Axis/Local Axis", icon="EMPTY_AXIS") 
 		row = layout.row()
 		row.operator("ffxiv_mmd.hide_special_bones", text = "Hide Special & Physics Bones", icon="HIDE_ON") #FFXIV stock face deformation shape keys (anything that starts with 'shp'), Physics Bones (Hair/Skirt/Armor/etc), Leg bones (after physics has been applied since the control bones should be used instead)		
-		row = layout.row()
-		row.label(text="**TODO** Edit Metadata Dictionary File", icon="CURRENT_FILE") 
-		row = layout.row()
-		row.label(text="**TODO** Restore Metadata Dictionary Defaults", icon="FILE_TICK") 
 		
 		"""
 		row = layout.row(align=True)

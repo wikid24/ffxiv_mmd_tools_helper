@@ -405,6 +405,8 @@ def get_armature_bone_name_by_mmd_english_bone_name(armature,mmd_e_bone_name):
 				if bone.strip() == metadata_bone[1] and metadata_bone[0]==mmd_e_bone_name:
 					#print(mmd_e_bone_name,'found:',metadata_bone[1])
 					return metadata_bone[1]
+				
+	return False
 
 #doesn't check the armature, just returns equivalent mmd bone name
 def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
@@ -451,7 +453,41 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 					print(bone_name,'is bone type',bone_type)
 					isbone_bonetype = True
 		return isbone_bonetype
-				
+
+
+
+def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name, target_armature_name, target_posebone_name):
+	# Get the source armature and bone
+	source_arm = bpy.data.objects.get(source_armature_name)
+	source_bone = source_arm.data.bones.get(source_bone_name)
+
+
+	# Get the target armature and posebone
+	target_arm = bpy.data.objects.get(target_armature_name)
+	target_posebone = target_arm.pose.bones.get(target_posebone_name)
+
+
+	if source_arm and source_bone and target_arm and target_posebone:
+			
+		# Check if the copy rotation constraint already exists
+		copy_rotation_constraint = target_posebone.constraints.get('ffxiv_mmd_copy_bone_rotation')
+
+		if not copy_rotation_constraint:
+			# Add Copy Rotation constraint to the target pose bone
+			copy_rotation_constraint = target_posebone.constraints.new(type='COPY_ROTATION')
+			copy_rotation_constraint.name = 'ffxiv_mmd_copy_bone_rotation'
+			copy_rotation_constraint.target = source_arm
+			copy_rotation_constraint.subtarget = source_bone_name
+
+		# Apply the constraint to transfer the rotation
+		bpy.context.view_layer.objects.active = target_arm
+		bpy.ops.object.mode_set(mode='POSE')
+		target_arm.data.bones.active = target_arm.data.bones.get(target_posebone_name)
+		bpy.ops.pose.visual_transform_apply()
+		bpy.ops.constraint.apply(constraint="ffxiv_mmd_copy_bone_rotation", owner='BONE')
+		#bpy.ops.object.mode_set(mode='OBJECT')
+
+
 
 @register_wrap
 class SortMMDBoneOrder(bpy.types.Operator):
@@ -547,17 +583,40 @@ class AutoFixMMDBoneNames(bpy.types.Operator):
 		return {'FINISHED'}
 	
 
-# Define the get function for the comparison_bone property
-def _comparescale_getbone(self):
-    # Check if a target armature is selected
-    if self.bone_compare_target_armature:
-        armature = self.bone_compare_target_armature.data
+def get_equivalent_bone_from_armature(source_armature, source_bone, target_armature):
 
-        # Return a list of bone names from the target armature
-        return [(bone.name, bone.name, '') for bone in armature.bones]
+		if source_bone:
+			source_bone = source_armature.pose.bones.get(source_bone.name)
+			source_bone_name = source_bone.name
+			#print (f"source_bone_name:{source_bone_name}")
+			source_bone_name_mmd_e = get_mmd_english_equivalent_bone_name(source_bone_name)
+			#print (f"source_bone_name_mmd_e:{source_bone_name_mmd_e}")
 
-    # Return an empty list if no target armature is selected
-    return []
+
+			#get the source bone name in MMD English and compare against the target bone name in MMD English
+			target_bone_name = None
+			target_bone_name = get_armature_bone_name_by_mmd_english_bone_name(target_armature,source_bone_name_mmd_e)
+			#print (f"target_bone_name: {target_bone_name}")
+			if target_bone_name:
+				target_bone = target_armature.pose.bones.get(target_bone_name)
+			#if no match, check for the same bone name on both armatures
+			elif target_armature.pose.bones.get(source_bone.name):
+				target_bone = target_armature.pose.bones.get(source_bone.name)
+			else:
+				target_bone = None
+
+			return target_bone
+		else:
+			return False
+
+def rotate_target_pose_bone_to_source_bone(source_armature,target_armature,target_bone):
+
+	source_bone = get_equivalent_bone_from_armature(target_armature,target_bone,source_armature)
+	if source_bone:
+		apply_rotation_from_bone_to_posebone(source_armature.name, source_bone.name, target_armature.name, target_bone.name)
+	return
+
+
 
 # Custom function to be called upon update of the comparison_bone property
 def _comparescale_update(self, context):
@@ -570,23 +629,11 @@ def _comparescale_update(self, context):
 		#print ("missing something")
 		return 
 	
-	
 	else:
 		target_bone = self.bone_compare_target_armature.pose.bones.get(self.bone_compare_comparison_bone)
-		target_bone_name = target_bone.name
-		print (f"target_bone name:{target_bone_name}")
-		target_bone_name_mmd_e = get_mmd_english_equivalent_bone_name(target_bone_name)
-		print (f"target_bone_mmd_e:{target_bone_name_mmd_e}")
-		source_bone_name = None
-
-		#get the source bone namein MMD English and compare against the target bone name in MMD English
-		source_bone_name = None
-		source_bone_name = get_armature_bone_name_by_mmd_english_bone_name(self.bone_compare_source_armature,target_bone_name_mmd_e)
-		print (f"source_bone_name: {source_bone_name}")
-		if source_bone_name:
-			source_bone = self.bone_compare_source_armature.pose.bones.get(source_bone_name)
-		else:
-			source_bone = None
+		
+		if target_bone:
+			source_bone = get_equivalent_bone_from_armature(self.bone_compare_target_armature,target_bone,self.bone_compare_source_armature)
 		
 		if source_bone:
 			print (f"source_bone: {source_bone.name}")
@@ -610,46 +657,138 @@ def _comparescale_update(self, context):
 
 @register_wrap
 class MMDBoneScaleComparison(bpy.types.Operator):
-	"""Compare a bone's XYZ Scale from an Original MMD Model at 1.0 so you can import a VMD animation for your target MMD at the correct scale"""
+	"""Swap source armature and target armature"""
 	bl_idname = "ffxiv_mmd.bone_scale_comparison"
-	bl_label = "Compare a bone's XYZ Scale from an Original MMD Model at 1.0 so you can import a VMD animation for your target MMD at the correct scale"
+	bl_label = "Swap source armature and target armature"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	bpy.types.Scene.bone_compare_source_armature = bpy.props.PointerProperty(
-		type=bpy.types.Object
-		,poll=lambda self, obj: obj.type == 'ARMATURE', update= _comparescale_update,
-		)
-	
-	bpy.types.Scene.bone_compare_target_armature = bpy.props.PointerProperty(
-		type=bpy.types.Object
-		,poll=lambda self, obj: obj.type == 'ARMATURE', update = _comparescale_update,
-		)
-	
-	# Create the comparison_bone pointer property with the poll function
-	bpy.types.Scene.bone_compare_comparison_bone = bpy.props.StringProperty(
-		name='Target Comparison Bone',
-		description='Target Comparison Bone from Target Armature',
-		#set=_comparescale_update,
-		#get=_comparescale_getbone,
-		update=_comparescale_update,
-	)
-
+	bpy.types.Scene.bone_compare_source_armature = bpy.props.PointerProperty(type=bpy.types.Object,poll=lambda self, obj: obj.type == 'ARMATURE', update= _comparescale_update)
+	bpy.types.Scene.bone_compare_target_armature = bpy.props.PointerProperty(type=bpy.types.Object,poll=lambda self, obj: obj.type == 'ARMATURE', update = _comparescale_update)
+	bpy.types.Scene.bone_compare_comparison_bone = bpy.props.StringProperty(name='Target Comparison Bone',description='Target Comparison Bone from Target Armature',update=_comparescale_update)
 
 	# Create the scale X, Y, and Z float properties
 	bpy.types.Scene.bone_compare_scale_x = bpy.props.FloatProperty(name="Scale X", default=1.0, precision=3)#, update=_comparescale_update)
-	bpy.types.Scene.bone_compare_scale_y = bpy.props.FloatProperty(name="Scale Y", default=1.0, precision=3)#, update=_comparescale_update)
+	bpy.types.Scene.bone_compare_scale_y = bpy.props.FloatProperty(name="Scale Y", default=1.0, precision=3)#, update=_comparescale_update)	
 	bpy.types.Scene.bone_compare_scale_z = bpy.props.FloatProperty(name="Scale Z", default=1.0, precision=3)#, update=_comparescale_update)
 
-	"""
 	@classmethod
 	def poll(cls, context):
-		obj = context.active_object
-		return obj is not None and obj.type == 'ARMATURE'
+		if context.scene.bone_compare_source_armature and context.scene.bone_compare_target_armature:
+			return True
+		else:
+			return False
 
 	def execute(self, context):
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		armature = bpy.context.view_layer.objects.active
-		auto_fix_mmd_bone_names(armature)
-		bpy.ops.object.mode_set(mode='OBJECT')
+		#swap source and target armatures
+		source_armature = context.scene.bone_compare_source_armature
+		target_armature = context.scene.bone_compare_target_armature
+		target_bone_name = context.scene.bone_compare_comparison_bone
+		target_bone = target_armature.pose.bones.get(target_bone_name)
+
+		source_bone = get_equivalent_bone_from_armature(target_armature,target_bone,source_armature)
+
+		temp_armature = context.scene.bone_compare_source_armature
+		context.scene.bone_compare_source_armature = context.scene.bone_compare_target_armature
+		context.scene.bone_compare_target_armature = temp_armature
+		if source_bone:
+			context.scene.bone_compare_comparison_bone = source_bone.name
+		else:
+			context.scene.bone_compare_comparison_bone = ''
 		return {'FINISHED'}
-	"""
+
+@register_wrap
+class SelectTargetCompareBone(bpy.types.Operator):
+	"""Selects the active bone as the Target Bone for Bone Compare"""
+	bl_idname = "ffxiv_mmd.bone_scale_comparison_select_target_bone"
+	bl_label = "Selects the active bone as the Target Bone for Bone Compare"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		if (context.active_object and context.active_object.type =='ARMATURE') or (context.active_bone) or (context.active_pose_bone):
+			return True
+		else:
+			return False
+
+	def execute(self, context):
+
+		if context.active_object == context.scene.bone_compare_source_armature:
+
+			if context.active_object != context.scene.bone_compare_target_armature:
+				temp_armature = context.scene.bone_compare_target_armature
+
+				context.scene.bone_compare_target_armature = context.active_object
+				context.scene.bone_compare_source_armature = temp_armature
+
+
+		
+		if context.active_object and context.active_object.type =='ARMATURE':
+			if bpy.context.mode == 'OBJECT':
+				context.scene.bone_compare_target_armature = context.active_object
+				context.scene.bone_compare_comparison_bone = ''
+
+			elif bpy.context.mode == ('POSE') and context.active_pose_bone:
+				context.scene.bone_compare_target_armature = context.active_object
+				context.scene.bone_compare_comparison_bone = context.active_pose_bone.name
+			elif bpy.context.mode == ('EDIT') and context.active_bone:
+				context.scene.bone_compare_target_armature = context.active_object
+				context.scene.bone_compare_comparison_bone = context.active_pose_b.name
+		
+
+		return {'FINISHED'}
+
+
+
+@register_wrap
+class ApplyBoneRotationToTarget(bpy.types.Operator):
+	"""Compare a source bone's XYZ rotation assuming it has a match and apply it to target bone"""
+	bl_idname = "ffxiv_mmd.rotate_target_pose_bone_to_source_bone"
+	bl_label = "Compare a source bone's XYZ rotation assuming it has a match and apply it to target bone"
+	bl_options = {'REGISTER', 'UNDO'}
+	
+	@classmethod
+	def poll(cls, context):
+		return context.scene.bone_compare_comparison_bone is not None
+
+	def execute(self, context):
+		source_armature = context.scene.bone_compare_source_armature
+		target_armature = context.scene.bone_compare_target_armature
+		target_bone_name = context.scene.bone_compare_comparison_bone
+		target_bone = target_armature.pose.bones.get(target_bone_name)
+
+		if target_bone:
+			
+			rotate_target_pose_bone_to_source_bone(source_armature,target_armature,target_bone)
+
+		#bpy.ops.object.mode_set(mode='OBJECT')
+		return {'FINISHED'}
+	
+
+@register_wrap
+class ApplyArmatureRotationToTarget(bpy.types.Operator):
+	"""Compare all source bone's rotation assuming it has a match, and apply it to target armature's bones"""
+	bl_idname = "ffxiv_mmd.rotate_target_armature_bones_to_source_armature"
+	bl_label = "Currently only set to work on arm bones only, because trying this with legs, spine and head might be a bad idea"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		return context.scene.bone_compare_comparison_bone is not None
+
+	def execute(self, context):
+		source_armature = context.scene.bone_compare_source_armature
+		target_armature = context.scene.bone_compare_target_armature
+
+		#upper body only, because messing around with legs and spine might be scary
+		bones_to_check=['arm_L','elbow_L','wrist_L','thumb1_L','thumb2_L','fore1_L','fore2_L','fore3_L','middle1_L','middle2_L','middle3_L','third1_L','third2_L','third3_L','little1_L','little2_L','little3_L',
+				  		'arm_R','elbow_R','wrist_R','thumb1_R','thumb2_R','fore1_R','fore2_R','fore3_R','middle1_R','middle2_R','middle3_R','third1_R','third2_R','third3_R','little1_R','little2_R','little3_R']
+
+		for bone_name in bones_to_check:
+			pose_bone_name = get_armature_bone_name_by_mmd_english_bone_name(target_armature,bone_name)
+			if pose_bone_name:
+				pose_bone = target_armature.pose.bones.get(pose_bone_name)
+				if pose_bone:
+					rotate_target_pose_bone_to_source_bone(source_armature,target_armature,pose_bone)
+
+		return {'FINISHED'}
+	

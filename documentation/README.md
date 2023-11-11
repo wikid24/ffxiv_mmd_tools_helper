@@ -1,3 +1,4 @@
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/41fbc87d-a3ea-4b5f-aca0-c718a6e2f276)
 # 3D Viewport -> Sidebar
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)
@@ -981,7 +982,7 @@ Note: To make everything work 'properly', I will probably need to enable/disable
 
 #### Add MekTools Rig
 
-If you have the MekTools Addon installed, will automatically add the MekTools rig to your selected FFXIV Model.
+If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, will automatically add the MekTools rig to your selected FFXIV Model.
 
 Tool automatically detects your character's race, tribe and gender so all you gotta do is press the button and it will automatically add the rig, as well as apply the 'armatuer deform' modifier to the MekTools rig for ALL your meshes. That's one less step for you and a lot of less rigging work
 
@@ -994,25 +995,28 @@ Tool automatically detects your character's race, tribe and gender so all you go
 
 ### Bone Compare
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/05559671-8d9a-4f27-ae9a-e653a3000e42)
 
 #### Source
 
-TBD
+Selects the source armature from which to find & compare a source bone
 
 #### Target
 
-TBD
+Selects the target armature from which to select a target bone
 
-#### Switch Source & Target
+#### Swap Source & Target Armature
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f5d469-d760-4cde-9ea0-281b6d72d977)
+
+
+Swaps the source armature & target armature. Upon pressing it, if there is a matching source armature bone from whatever is filled out on the bone textbox, it will auto-fill the 'Bone' field with the source armature's bone. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to match any MMD English, MMD Japanese, MMD Japanese.LR, FFXIV, or Rigify Meta-Rig bone.
 
 #### Select the current active bone as the target bone
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6b246eb0-d22b-469f-ac88-c16cea92eb17)
 
-Selects the 'active' bone as your Target Bone
+Sets the currently selected active bone in the viewport as your target bone.
 
 
 #### Copy Rotation - Source Bone

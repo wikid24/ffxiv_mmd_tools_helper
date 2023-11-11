@@ -1,6 +1,7 @@
 # 3D Viewport -> Sidebar
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
+
 
 
 ## Import FFXIV Model

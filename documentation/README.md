@@ -1,4 +1,3 @@
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/41fbc87d-a3ea-4b5f-aca0-c718a6e2f276)
 # 3D Viewport -> Sidebar
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)

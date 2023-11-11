@@ -863,6 +863,10 @@ Anyway yeah embedded within the MekTools skin shader, the following controls has
 - Wet
 - Roughness
 
+
+------
+
+
 #### Background Color
 
 
@@ -893,6 +897,7 @@ Parameters:
 - Subsurface Color
 - Roughness
 - Specular
+
 
 
 ## Miscellaneous Tools
@@ -942,6 +947,74 @@ Here's the boobie math:
 - scale_y = 0.816 + (bust_scale_number * 0.368)
 - scale_z = 0.8 + (bust_scale_number * 0.4)
 
+
+------
+
+### Rigify Metarig
+
+Allows you to add a pre-rigged Rigify Metarig to your FFXIV Model. To use, you must have the Rigify Addon installed (it's in the Blender Addon Menu but it's disabled by default. Currently in 'research' phase, so don't expect it to work properly
+
+#### Add
+
+TBD
+
+#### Fix Bones
+
+TBD
+
+#### Apply
+
+TBD
+
+------ 
+
+### MekTools Rig
+
+#### Add MekTools Rig
+
+If you have the MekTools Addon installed, will automatically add the MekTools rig to your selected FFXIV Model.
+
+Tool automatically detects your character's race, tribe and gender so all you gotta do is press the button and it will automatically add the rig, as well as apply the 'armatuer deform' modifier to the MekTools rig for ALL your meshes. That's one less step for you and a lot of less rigging work
+
+TBD
+
+
+------ 
+
+### Bone Compare
+
+TBD
+
+#### Source
+
+TBD
+
+#### Target
+
+TBD
+
+#### Switch Source & Target
+
+TBD
+
+#### Select the current active bone as the target bone
+
+TBD
+
+Selects the 'active' bone as your Target Bone
+
+
+#### Copy Rotation - Source Bone
+
+TBD
+
+#### Copy Rotation - All Arm Bones
+
+TBD
+
+#### Scale X/Y/Z
+
+TBD
 
 ## Export MMD Preparation
 

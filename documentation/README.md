@@ -1,6 +1,7 @@
 # 3D Viewport -> Sidebar
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b009c050-95a0-45fc-908e-304c13ea8bf4)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
+
 
 
 ## Import FFXIV Model
@@ -786,7 +787,8 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ## Shaders
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b8d83fe0-48e1-45a9-962a-a8da9f082cf9)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5c49e5bf-c000-4848-9171-c113e1beeb4a)
+
 
 
 ------
@@ -803,6 +805,9 @@ For example on my Windows 10 PC if I would like to apply the "Diados Jacket of F
 ------
 
 ### Apply Colorset
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
+
 
 Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
 
@@ -830,18 +835,75 @@ Shortcut to selecting the active material for a mesh.
 
 ### Apply Glossy Shader
 
-Applies a 'Glossy BSDF' shader to a material.
+Applies a 'Glossy BSDF' shader to a material. Once applied, the 'Roughness' skilder will be displayed, along with an 'X' button. The X button removes the shader from the active material
 
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
+
 
 #### Glossy Roughness Slider
 
 Adjusts the Gossy shader's roughness
 
+------
+
+#### MekTools Skin Settings
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/37f49791-b185-420c-bafe-72ace6973513)
+
+If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, this will automatically apply the shader to the currently selected mesh, and add a few controls so that you don't need to go to the Shader Node Editor to adjust these settings. The X button removes the shader from the active material.
+
+Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'mektools_' prefix to the material as name as well. Pressing the 'X' button deletes the 'mektools_' material and restores the original 'backup_' to the active material for this mesh.
+
+The following controls have been added (there's still more to add, like 'Lip Color' and 'Subsurface Color', but to be honest when I played with these settings, I didn't like the look, so it's not high on my priority list.
+
+Anyway yeah embedded within the MekTools skin shader, the following controls has been exposed into this addon's panel:
+
+- Subsurface Scattering
+- Specular
+- Wet
+- Roughness
+
+
+------
+
+
+#### Background Color
+
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b85271e2-ef7e-4815-9478-8d489c5041d0)
+
+Adds a background color that can be seen in renders. This is perfect for green screening/keying, as it is a uniform color and there is no gradient or shadows,  and it does NOT bleed any light/color onto your scene. Pressing the 'X' button will remove the shaders.
+
+------
+## Decals / Face Paint
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a4191cb1-a5b3-492d-93b2-4d45017b6558)
+
+
+Adds up to 4 (or possibly more in the furture) facial decals to your FFXIV models.
+
+To use:
+1) You must have some Face Decals exported out of TexTools! I believe they are stored in the \Saved\Character\Face Paint\ folder by default, and are .png files. 2) Select the face mesh and push one of the 'Add Decal' buttons
+
+Each Decal is a grouped shader node that is shared amongst ALL models that it is applied to. For example, if you have two FFXIV models, and they both have Decal 1 appled, they will BOTH share the same decal .png file. Although the parameters that are applied (such as Base Color/Subsurface/Mix/etc...) are NOT shared, so it is something to be aware of. If you want to apply two different decals to two difference models, apply Decal 1 to the first model. and Decal 2 to the second model.
+
+The group decal node automatically applies 'UV2' to the materials so you don't need to add it manually. 
+
+Pressing the 'X' button will remove the decal from the active material. 
+
+Parameters:
+- Base Color
+- Mix (Subsurface Amount)
+- Subsurface Color
+- Roughness
+- Specular
+
+
+
 ## Miscellaneous Tools
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/9d8b80fa-e774-4a16-b748-1382483f5bed)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2e9399b8-1897-47dd-af46-279fad7c04e6)
 
 ------
 
@@ -886,6 +948,88 @@ Here's the boobie math:
 - scale_y = 0.816 + (bust_scale_number * 0.368)
 - scale_z = 0.8 + (bust_scale_number * 0.4)
 
+
+------
+
+### Rigify Meta-Rig
+
+Allows you to add a pre-rigged [Rigify Meta-Rig](https://docs.blender.org/manual/en/latest/addons/rigging/rigify/metarigs.html) to your FFXIV Model. To use, you must have the [Rigify Addon installed](https://www.pluralsight.com/blog/tutorials/rigging-minutes-blenders-rigify-addon) (it's in the Blender Addon Menu but it's disabled by default. These features currently in 'research' phase, so don't expect everything to work properly.
+
+#### Add
+
+Shortcut to adding a "Human (Meta-Rig)" from the standard menu
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7ef977c4-c23f-421c-a697-3c718a1df56e)
+
+#### Fix
+
+Will adjust the Meta-Rig's bone structure to match that of your MMD Model. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to match any MMD English, MMD Japanese, MMD Japanese.LR or FFXIV bone against it's corresponding Rigify Meta-Rig bone name. Only the body has been mapped, the face will take a lot longer to figure out.
+
+#### Apply
+
+Shortcut to pressing the 'Generate Rig' button in Rigify Addon.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6841c5e3-25db-4fc5-8546-f2c17629fb43)
+
+
+Note: To make everything work 'properly', I will probably need to enable/disable a bunch of stuff in the 'Advanced' section of Rigify, but again for now it's on the backburner.
+
+
+
+------ 
+
+### MekTools Rig
+
+#### Add MekTools Rig
+
+If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, will automatically add the MekTools rig to your selected FFXIV Model.
+
+Tool automatically detects your character's race, tribe and gender so all you gotta do is press the button and it will automatically add the rig, as well as apply the 'armatuer deform' modifier to the MekTools rig for ALL your meshes. That's one less step for you and a lot of less rigging work
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fba6cce1-cbce-4d94-bf79-10690a0bcd9b)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5cd79810-a665-4fdb-843c-d85b45dd437d)
+
+
+------ 
+
+### Bone Compare
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/05559671-8d9a-4f27-ae9a-e653a3000e42)
+
+#### Source
+
+Selects the source armature from which to find & compare a source bone
+
+#### Target
+
+Selects the target armature from which to select a target bone
+
+#### Swap Source & Target Armature
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f5d469-d760-4cde-9ea0-281b6d72d977)
+
+
+Swaps the source armature & target armature. Upon pressing it, if there is a matching source armature bone from whatever is filled out on the bone textbox, it will auto-fill the 'Bone' field with the source armature's bone. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to match any MMD English, MMD Japanese, MMD Japanese.LR, FFXIV, or Rigify Meta-Rig bone.
+
+#### Select the current active bone as the target bone
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6b246eb0-d22b-469f-ac88-c16cea92eb17)
+
+Sets the currently selected active bone in the viewport as your target bone.
+
+
+#### Copy Rotation - Source Bone
+
+TBD
+
+#### Copy Rotation - All Arm Bones
+
+TBD
+
+#### Scale X/Y/Z
+
+TBD
 
 ## Export MMD Preparation
 

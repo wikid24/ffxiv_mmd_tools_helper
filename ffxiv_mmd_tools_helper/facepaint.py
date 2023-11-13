@@ -75,7 +75,7 @@ def create_decal_node_group(active_material,decal_slot_id):
 		input_node.name = 'ffxiv_mmd_decal_input_'+str(decal_slot_id)
 		node_group.inputs.new("NodeSocketShader", "Shader")
 		node_group.inputs.new("NodeSocketColor", "Base Color")
-		node_group.inputs["Base Color"].default_value = (0, 0, 0, 1.0)  # (R, G, B, A)
+		node_group.inputs["Base Color"].default_value = (1.0, 1.0, 1.0, 1.0)  # (R, G, B, A)
 		node_group.inputs.new("NodeSocketFloatFactor", "Subsurface")
 		node_group.inputs['Subsurface'].min_value = 0
 		node_group.inputs['Subsurface'].max_value = 1
@@ -295,11 +295,8 @@ class InsertImageDecal(bpy.types.Operator, ImportHelper):
 			return context.active_object.type == 'MESH'
 
 	def execute(self, context):
-
 		filepath = self.filepath
-
 		insert_image_to_decal_nodegroup(context,filepath,self.decal_slot_id)
-
 		return {'FINISHED'}
 	
 	def invoke(self, context, event):

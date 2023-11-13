@@ -301,6 +301,15 @@ class InsertImageDecal(bpy.types.Operator, ImportHelper):
 		insert_image_to_decal_nodegroup(context,filepath,self.decal_slot_id)
 
 		return {'FINISHED'}
+	
+	def invoke(self, context, event):
+		# Set the default folder for the file browser to the addon's decal folder
+		file_path = (__file__ + r"assets\ffxiv_face_paint").replace("facepaint.py" , "")
+		file_path = bpy.path.abspath(file_path + '\\')
+		self.filepath = file_path
+		context.window_manager.fileselect_add(self)
+		#print(f"filepath: {self.filepath}")
+		return {'RUNNING_MODAL'}
 
 	
 @register_wrap

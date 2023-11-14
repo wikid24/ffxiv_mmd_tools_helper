@@ -164,6 +164,14 @@ def import_ffxiv_model(context,file_path):
 						# Copy the custom property 'ModelRaceType' to the armature data
 						add_custom_property(x,'ModelRaceType',obj.data['ModelRaceType'])
 
+		#loop through all the meshes and hide the reaper eyes
+		if x.type =='ARMATURE':
+			for obj in x.parent.children_recursive:
+				if obj.type == 'MESH':
+					if obj.data['MaterialType'] == 'f' and obj.data['MaterialMeshType'] == 'etc_b':
+						obj.hide = True
+						#print (f"reaper eyes:{obj.data['original_material_name']}")
+
 
 					
 
@@ -330,8 +338,15 @@ def rename_ffxiv_mesh(obj):
 		add_custom_property(obj,'ModelNumberID',int(parsed_parts[2]))
 		add_custom_property(obj,'ModelTypeID',parsed_parts[4])
 		add_custom_property(obj,'MeshPartNumber',parsed_parts[8])
-		add_custom_property(obj,'original_material_name',obj.active_material.name.split('.')[0])
-		add_custom_property(obj,'MaterialType',obj.data['original_material_name'][8])
+		original_material_name = obj.active_material.name.split('.')[0]
+		add_custom_property(obj,'original_material_name',original_material_name)
+		add_custom_property(obj,'MaterialType',original_material_name[8])
+		original_material_mesh_type = ''
+		for i,part in enumerate(original_material_name.split('_')):
+			if i >= 2:
+				original_material_mesh_type += part + '_'
+				#print(part)
+		add_custom_property(obj,'MaterialMeshType',original_material_mesh_type.rstrip('_'))
 		add_custom_property(obj,'ModelName','')
 		add_custom_property(obj,'material_filepath','')
 			
@@ -396,6 +411,8 @@ def rename_ffxiv_mesh(obj):
 			#print(f"Part {i + 1}: {part}")
 		
 		new_mesh_name = parsed_parts[4]+"-"+parsed_parts[1]+parsed_parts[2]+"-"+parsed_parts[8]+"-"+parsed_parts[0]
+		if original_material_mesh_type != '':
+			new_mesh_name += '-' + obj.data['MaterialType']  + '-' + obj.data['MaterialMeshType'] 
 
 		obj.name = new_mesh_name
 

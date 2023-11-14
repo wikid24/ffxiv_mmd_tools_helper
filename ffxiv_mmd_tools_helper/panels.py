@@ -471,6 +471,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				glossy_bsdf_node = None
 				mektools_skin_node = None
 				mektools_eye_node = None
+				colorsetter_eye_node = None
 
 				
 				for node in node_tree.nodes:
@@ -478,13 +479,18 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					if node.type == 'BSDF_GLOSSY' and node.name=='ffxiv_mmd_glossy':
 						glossy_bsdf_node = node
 
+					# Find the Colorsetter Eye Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_eye_node_instance'):
+						colorsetter_eye_node = node
+
+
 					# Find the MekTools Skin Shader group node
 					if node.type =='GROUP' and node.node_tree.name == 'FFXIV Skin Shader':
 						#mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
 						mektools_skin_node = node 
 						
 					# Find the MekTools Eye Shader group node
-					if node.type =='GROUP' and node.node_tree.name == 'FFXIV Eye Shader':
+					if node.type =='GROUP' and node.name.startswith('mektools_eye_node_group_instance'):
 						#mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
 						mektools_eye_node = node 
 						
@@ -495,6 +501,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.operator("ffxiv_mmd.remove_glossy_shader", text="", icon='X')
 				else:
 					row.operator("ffxiv_mmd.apply_glossy_shader", text="Add Glossy Shader")
+
 
 				#MekTools skin panel
 				if mektools_skin_node:
@@ -546,34 +553,52 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					elif eye_index >= 4 and eye_index < 5: #miqote 2
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.004"]
 					elif eye_index >= 5 and eye_index < 6: #au ra
-						mektools_eye_specular_file = mektools_eye_node.node_tree.nodes["Image Texture.006"]
+						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.006"]
 					elif eye_index >= 6 and eye_index < 7: #viera
-						mektools_eye_specular_file = mektools_eye_node.node_tree.nodes["Image Texture.008"]
+						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.008"]
 					elif eye_index >= 7 and eye_index < 8: #hyur midlander
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.019"]
 					elif eye_index >= 8 and eye_index < 9: #hyur highlander
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.020"]
 					elif eye_index >= 9 and eye_index < 10: #elezen
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture"]
-						#mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.020"]
 					elif eye_index >= 10 and eye_index < 11: #roegadyn
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.003"]
-						#mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.020"]
 					elif eye_index >= 11 and eye_index < 12: #hrothgar
 						mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.007"]
-						#mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.020"]
-					#elif eye_index >= 12: #custom
-						#mektools_eye_specular_file = mektools_eye_node.node_tree.nodes["Image Texture.007"]
-						#mektools_eye_diffuse_file = mektools_eye_node.node_tree.nodes["Image Texture.020"]
 					if mektools_eye_specular_file:
 						grid.prop(mektools_eye_specular_file,"image",text="Specular File")
 					if mektools_eye_diffuse_file:
 						grid.prop(mektools_eye_diffuse_file,"image",text="Diffuse File")
 					grid.prop(mektools_eye_node.node_tree.nodes["Image Texture.011"],"image",text="Catchlight File")
 
-				else:
+				elif colorsetter_eye_node is None:
 					row = layout.row()
-					row.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Add MekTools Eye Shaders")
+					row.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Add MekTools Eye Shader")
+		
+				#Colorsetter Eye panel
+				if colorsetter_eye_node:
+					colorsetter_eye_color = colorsetter_eye_node.inputs['Eye Color']
+					colorsetter_eye_multi_node = colorsetter_eye_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_eye_normal_node = colorsetter_eye_node.inputs['Normal Texture'].links[0].from_node
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Eye Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
+					grid = box.grid_flow(columns=1,align=True)
+					grid.label(text="YOOO WATUP")
+					if colorsetter_eye_color:
+						grid.prop(colorsetter_eye_color,"default_value",text='Eye Color')
+					if colorsetter_eye_multi_node:
+						grid.prop(colorsetter_eye_multi_node,"image",text='Multi Texture')
+					if colorsetter_eye_normal_node:
+						grid.prop(colorsetter_eye_normal_node,"image",text='Normal Texture')
+						
+				elif mektools_eye_node is None:
+					row = layout.row()
+					row.operator("ffxiv_mmd.apply_colorsetter_eye_shader", text="Add Colorsetter Eye Shader")
+
 
 		# Background Color changer Stuff 
 		row = layout.row()

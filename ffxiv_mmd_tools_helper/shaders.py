@@ -543,24 +543,24 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 		else:
 
 			mek_tools.check_for_nodes()
-			selected_material = bpy.context.active_object.active_material
-			selected_objects = bpy.context.active_object
+			active_material = bpy.context.active_object.active_material
+			active_object = bpy.context.active_object
 
 			#check if mektools skin node is already added
-			for instance_node in selected_material.node_tree.nodes:
+			for instance_node in active_material.node_tree.nodes:
 				if instance_node.type =='GROUP' and instance_node.node_tree.name in ('FFXIV Skin Shader','FFXIV Eye Shader'):
 					break
 			else:
 				# Duplicate the material
-				old_material = selected_material.copy()
-				old_material.name = "backup_" + selected_material.name  # Rename the duplicated material if needed
+				old_material = active_material.copy()
+				old_material.name = "backup_" + active_material.name  # Rename the duplicated material if needed
 				try:
-					mek_tools.change_material(selected_material)
-					selected_material.name = "mektools_"+ selected_material.name
+					mek_tools.change_material(active_material)
+					active_material.name = "mektools_"+ active_material.name
 				except:
 					bpy.context.active_object.active_material = old_material
 					old_material.name = old_material.name.lstrip('backup_')
-					bpy.data.materials.remove(selected_material)
+					bpy.data.materials.remove(active_material)
 					raise Exception(f"Failed to apply MekTools skin shader, probably because it was already using an MMD skin shader. I'll fix it eventually")
 
 		return {'FINISHED'}
@@ -575,25 +575,25 @@ class RemoveMekToolsSkinShader(bpy.types.Operator):
 	def execute(self, context):
 
 		
-		selected_material = bpy.context.active_object.active_material
+		active_material = bpy.context.active_object.active_material
 		skin_shader_node = None
-		if selected_material.name.startswith('mektools_'):
-			for instance_node in selected_material.node_tree.nodes:
+		if active_material.name.startswith('mektools_'):
+			for instance_node in active_material.node_tree.nodes:
 				if instance_node.type =='GROUP' and instance_node.node_tree.name == ('FFXIV Skin Shader'):
 					skin_shader_node = instance_node
 					break
-			selected_material_name = selected_material.name[len('mektools_'):]
+			selected_material_name = active_material.name[len('mektools_'):]
 		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
 		selected_objects = bpy.context.active_object
 
 	
-		if selected_material.name.startswith('mektools_') and backup_material and selected_objects and skin_shader_node:
+		if active_material.name.startswith('mektools_') and backup_material and selected_objects and skin_shader_node:
 			for obj in bpy.data.objects:
 				if obj.type =='MESH':
-					if obj.active_material == selected_material:
+					if obj.active_material == active_material:
 						obj.active_material = backup_material
 			backup_material.name = backup_material.name.lstrip('backup_')
-			bpy.data.materials.remove(selected_material)
+			bpy.data.materials.remove(active_material)
 		return {'FINISHED'}
 	
 
@@ -652,25 +652,34 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 			raise Exception(f"Addon '{addon_name}' version is {installed_version} please install {addon_required_version} or higher.")
 		else:
 
-			mek_tools.check_for_nodes()
-			selected_material = bpy.context.active_object.active_material
-			selected_objects = bpy.context.active_object
+			#mek_tools.check_for_nodes()
+			active_material = bpy.context.active_object.active_material
+			active_object = bpy.context.active_object
+			eye_shader_node = None
+			eye_shader_node_instance = None
 
-			#check if mektools skin node is already added
-			for instance_node in selected_material.node_tree.nodes:
-				if instance_node.type =='GROUP' and instance_node.node_tree.name in ('FFXIV Skin Shader','FFXIV Eye Shader'):
+			#check if mektools eye node is already added
+			for instance_node in active_material.node_tree.nodes:
+				if instance_node.type =='GROUP' and instance_node.node_tree.name.startswith ('FFXIV Eye Shader'):
+					eye_shader_node = active_material.node_tree
+					eye_shader_node_instance = instance_node
 					break
-			else:
+
+			if eye_shader_node is None and eye_shader_node_instance is None:
 				# Duplicate the material
-				old_material = selected_material.copy()
-				old_material.name = "backup_" + selected_material.name  # Rename the duplicated material if needed
+				old_material = active_material.copy()
+				old_material.name = "backup_" + active_material.name  # Rename the duplicated material if needed
 				try:
-					mek_tools.add_eyes(selected_material)
-					selected_material.name = "mektools_"+ selected_material.name
+					mek_tools.add_eyes(active_material)
+					active_material.name = "mektools_"+ active_material.name
+					for instance_node in active_material.node_tree.nodes:
+						if instance_node.type =='GROUP' and instance_node.node_tree.name.startswith('FFXIV Eye Shader'):
+							eye_shader_node_instance = instance_node
+							eye_shader_node_instance.name = 'mektools_eye_node_group_instance'
 				except:
 					bpy.context.active_object.active_material = old_material
 					old_material.name = old_material.name.lstrip('backup_')
-					bpy.data.materials.remove(selected_material)
+					bpy.data.materials.remove(active_material)
 					raise Exception(f"Failed to apply MekTools eye shader, probably because it was already using an MMD eye shader. I'll fix it eventually")
 				finally:
 					context.scene.eye_shader_ffxiv_model_list = "4"
@@ -686,25 +695,231 @@ class RemoveMekToolsEyeShader(bpy.types.Operator):
 	def execute(self, context):
 
 		
-		selected_material = bpy.context.active_object.active_material
+		active_material = bpy.context.active_object.active_material
 		eye_shader_node = None
-		if selected_material.name.startswith('mektools_'):
-			for instance_node in selected_material.node_tree.nodes:
-				if instance_node.type =='GROUP' and instance_node.node_tree.name == ('FFXIV Eye Shader'):
-					eye_shader_node = instance_node
+		eye_shader_node_instance = None
+		if active_material.name.startswith('mektools_'):
+			for instance_node in active_material.node_tree.nodes:
+				if instance_node.type =='GROUP' and instance_node.name.startswith ('mektools_eye_node_group_instance'):
+					eye_shader_node_instance = instance_node
 					break
-			selected_material_name = selected_material.name[len('mektools_'):]
-		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
+			active_material_name = active_material.name[len('mektools_'):]
+		backup_material = bpy.data.materials.get('backup_' + active_material_name) 
 		selected_objects = bpy.context.active_object
 
 	
-		if selected_material.name.startswith('mektools_') and backup_material and selected_objects and eye_shader_node:
+		if active_material.name.startswith('mektools_') and backup_material and selected_objects and eye_shader_node_instance:
 			for obj in bpy.data.objects:
 				if obj.type =='MESH':
-					if obj.active_material == selected_material:
+					if obj.active_material == active_material:
 						obj.active_material = backup_material
 			backup_material.name = backup_material.name.lstrip('backup_')
-			bpy.data.materials.remove(selected_material)
+			bpy.data.materials.remove(active_material)
+	
+		return {'FINISHED'}
+	
+
+def get_ffxiv_eye_multimap_file(active_object):
+
+	folder_path = (__file__ + r"assets\ffxiv_iris").replace("shaders.py" , "")
+	print (folder_path)
+
+	if active_object:
+		if active_object.type == 'MESH':
+			model_race_id = active_object.data['ModelRaceID']
+			original_material_name = active_object.data['original_material_name']
+			iris_multimap_prefix = 'c'+str(model_race_id).zfill(4)
+			#print(iris_multimap_prefix)
+			#print (f"iris_multimap_prefix: {iris_multimap_prefix}")
+
+			# Get a list of files in the folder
+			files = os.listdir(folder_path)
+
+			# Find the first file with the specified prefix
+			matching_files = [file for file in files if file.startswith(iris_multimap_prefix)]
+
+			if matching_files:
+				first_matching_file = matching_files[0]
+				full_path = os.path.join(folder_path, first_matching_file)
+				#print("Found matching file:", full_path)
+				return full_path
+			else:
+				#print("No matching file found.")
+				return None
+
+
+def get_ffxiv_eye_normalmap_file(active_object):
+
+	folder_path = (__file__ + r"assets\ffxiv_iris").replace("shaders.py" , "")
+	print (folder_path)
+
+	if active_object:
+		if active_object.type == 'MESH':
+			iris_normalmap_prefix = '_iri_n'
+			
+			# Get a list of files in the folder
+			files = os.listdir(folder_path)
+
+			# Find the first file with the specified prefix
+			matching_files = [file for file in files if file.startswith(iris_normalmap_prefix)]
+
+			if matching_files:
+				first_matching_file = matching_files[0]
+				full_path = os.path.join(folder_path, first_matching_file)
+				#print("Found matching file:", full_path)
+				return full_path
+			else:
+				#print("No matching file found: ")
+				return None
+
+			
+def set_colorsetter_eye_textures(active_object):
+
+	colorsetter_material = active_object.active_material
+	colorsetter_eye_node = None
+	colorsetter_eye_multi_node = None
+	colorsetter_eye_normal_node = None
+
+	# Find the Colorsetter Eye Group node
+	for node in colorsetter_material.node_tree.nodes:
+		if node.type == 'GROUP' and node.name.startswith('colorsetter_eye_node_instance'):
+			colorsetter_eye_node = node
+
+	if colorsetter_eye_node:
+		colorsetter_eye_multi_node = colorsetter_eye_node.inputs['Multi Texture'].links[0].from_node
+		colorsetter_eye_normal_node = colorsetter_eye_node.inputs['Normal Texture'].links[0].from_node
+
+	multimap_file_path = get_ffxiv_eye_multimap_file(active_object)
+	normalmap_file_path = get_ffxiv_eye_normalmap_file(active_object)
+
+	#MULTIMAP FILE
+	image = None
+	#check if this image exists, if it does, reuse it
+	for img in bpy.data.images:
+		if img.source == 'FILE' and img.filepath == multimap_file_path:
+			image = img
+			break
+
+	# Open the image file
+	if image is None:
+		image = bpy.data.images.load(multimap_file_path)  # Load the image from the selected file path
+	colorsetter_eye_multi_node.image = image 
+	colorsetter_eye_multi_node.image.colorspace_settings.name = 'Non-Color'
+
+
+	#NORMALMAP FILE
+	image = None
+	#check if this image exists, if it does, reuse it
+	for img in bpy.data.images:
+		if img.source == 'FILE' and img.filepath == normalmap_file_path:
+			image = img
+			break
+
+	# Open the image file
+	if image is None:
+		image = bpy.data.images.load(normalmap_file_path)  # Load the image from the selected file path
+	colorsetter_eye_normal_node.image = image 
+	colorsetter_eye_normal_node.image.colorspace_settings.name = 'Non-Color'
+
+
+
+
+
+@register_wrap
+class ApplyColorsetterEyeShader(bpy.types.Operator):
+	"""Apply Colorsetter Eye Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_eye_shader"
+	bl_label = "Apply Colorsetter Eye Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+
+	def execute(self, context):
+
+		active_material = bpy.context.active_object.active_material
+		active_object = bpy.context.active_object
+
+		#check if material is a colorsetter eyes node material
+		if active_material.name.startswith('colorsetter_eye_'):
+			raise Exception(f"Cannot add colorsetter material as this is already a colorsetter material")
+			
+		else:
+			old_material = active_material
+			old_material.name = "backup_" + active_material.name  # Rename the old material
+			try:
+				# Find the file path for WoL_Shader_V6.blend file
+				file_path = (__file__ + r"assets\colorset_shaders\WoL_Shader_V6.blend").replace("shaders.py" , "")
+								
+				# Append the 'Eyes' material from WoL_Shader_V6.blend file
+				with bpy.data.libraries.load(file_path, link=False) as (data_from, data_to):
+					# Append the material called 'Face'
+					data_to.materials = [mat for mat in data_from.materials if mat == 'Eyes']
+
+				# Check if the material was successfully appended
+				if 'Eyes' in bpy.data.materials:
+					
+
+					colorsetter_material = bpy.data.materials.get("Eyes")
+					colorsetter_material.name = "colorsetter_eye_"+ active_material.name.lstrip("backup_")
+					bpy.context.active_object.active_material = colorsetter_material
+					
+					#name the node group "colorsetter_eye_node_group"
+					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith ('FFXIV Eye Shader'):
+						colorsetter_material.node_tree.nodes['Group'].node_tree.name = 'colorsetter_eye_node_group'
+
+
+					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith('colorsetter_eye_node_group'):
+						colorsetter_material.node_tree.nodes['Group'].name = 'colorsetter_eye_node_instance'
+						#print("Material 'Eyes' appended successfully.")
+						set_colorsetter_eye_textures(active_object)
+						#get_ffxiv_eye_multimap_file(active_object)
+				else:
+					print("Material 'Eyes' not found in the source file.")
+				
+			except:
+				bpy.context.active_object.active_material = old_material
+				old_material.name = old_material.name.lstrip('backup_')
+				bpy.data.materials.remove(active_material)
+				raise Exception(f"Failed to add Colorsetter eye shader")
+			
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterEyeShader(bpy.types.Operator):
+	"""Remove Colorsetter Eye Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_eye_shader"
+	bl_label = "Remove Colorsetter Eye Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+
+		
+		active_material = bpy.context.active_object.active_material
+		eye_shader_node_instance = None
+		eye_shader_node_group = None
+		if active_material.name.startswith('colorsetter_eye_'):
+			for instance_node in active_material.node_tree.nodes:
+				if instance_node.type =='GROUP' and instance_node.name.startswith('colorsetter_eye_node_instance'):
+					eye_shader_node_instance = instance_node
+					eye_shader_node_group = eye_shader_node_instance.node_tree
+					break
+			selected_material_name = active_material.name[len('colorsetter_eye_'):]
+		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
+		active_object = bpy.context.active_object
+
+	
+		#if active material, active object, and eye_shader_node_instance found
+		if active_material.name.startswith('colorsetter_eye_') and backup_material and active_object and eye_shader_node_instance:
+			for obj in bpy.data.objects:
+				if obj.type =='MESH':
+					#set the backup material as the active material, and restore it's original name
+					if obj.active_material == active_material:
+						obj.active_material = backup_material
+			backup_material.name = backup_material.name.lstrip('backup_')
+			#delete the active material
+			bpy.data.materials.remove(active_material)
+			#delete the shader node group
+			if eye_shader_node_group:
+				bpy.data.node_groups.remove(eye_shader_node_group)
 		return {'FINISHED'}
 
 

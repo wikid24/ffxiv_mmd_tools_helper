@@ -622,8 +622,7 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 	#bpy.types.Scene.mektools_eye_prop_color = bpy.props.FloatProperty(name='Subsurface', min= 0,max=0.3,default=0.025, update = _update_mektools_skin_props)
 
 	bpy.types.Scene.eye_shader_ffxiv_model_list = bpy.props.EnumProperty(items = \
-	[('none', 'none', 'none')\
-	, ("1", "Lalafell Type 1","Lalafell Type 1") \
+	[("1", "Lalafell Type 1","Lalafell Type 1") \
 	, ("2", "Lalafell Type 2","Lalafell Type 2") \
 	, ("3", "Miqo'te Type 1","Miqo'te Type 1") \
 	, ("4", "Miqo'te Type 2","Miqo'te Type 2") \
@@ -635,7 +634,7 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 	, ("10", "Roegadyn","Roegadyn") \
 	, ("11", "Hrothgar","Hrothgar") \
 	, ("12", "Custom","Custom") \
-	], name = "Race", default = "4", update = _update_mektools_eye_props)
+	], name = "Eye Type", default = "4", update = _update_mektools_eye_props)
 
 	def execute(self, context):
 

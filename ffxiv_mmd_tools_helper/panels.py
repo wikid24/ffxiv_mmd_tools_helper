@@ -530,10 +530,9 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					#grid.prop(mektools_eye_node.inputs["Eye Index"], "default_value", text="Eye Index")
 					grid.prop(mektools_eye_node.inputs["Brightness"], "default_value", text="Brightness", slider=True)
 					eye_index = mektools_eye_node.inputs["Eye Index"].default_value
-					if eye_index < 11:
-						grid.prop(mektools_eye_node.inputs["Eye Color"], "default_value", text="Eye Color")
-					else:
-						grid.prop(mektools_eye_node.inputs["Custom Eye Image"], "default_value", text="Eye Color")
+					grid.prop(mektools_eye_node.inputs["Eye Color"], "default_value", text="Eye Color")
+					if eye_index >= 11:
+						grid.prop(mektools_eye_node.inputs["Custom Eye Image"], "default_value", text="Custom Eye Color")
 					
 					mektools_eye_specular_file = None
 					mektools_eye_diffuse_file = None

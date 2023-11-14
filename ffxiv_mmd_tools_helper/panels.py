@@ -579,6 +579,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				#Colorsetter Eye panel
 				if colorsetter_eye_node:
 					colorsetter_eye_color = colorsetter_eye_node.inputs['Eye Color']
+					colorsetter_eye_odd_enabled = colorsetter_eye_node.inputs['Odd Eyes Enabled']
+					colorsetter_eye_odd_color = colorsetter_eye_node.inputs['Odd Eye Color']
 					colorsetter_eye_multi_node = colorsetter_eye_node.inputs['Multi Texture'].links[0].from_node
 					colorsetter_eye_normal_node = colorsetter_eye_node.inputs['Normal Texture'].links[0].from_node
 
@@ -586,9 +588,12 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Eye Settings")
 					grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
-					grid = box.grid_flow(columns=1,align=True)
+					grid = box.grid_flow(columns=3,align=True)
 					if colorsetter_eye_color:
 						grid.prop(colorsetter_eye_color,"default_value",text='Eye Color')
+						grid.prop(colorsetter_eye_odd_enabled,"default_value",text='Mix', slider=True)
+						grid.prop(colorsetter_eye_odd_color,"default_value",text='Odd Eye Color')
+					grid = box.grid_flow(columns=1,align=True)
 					if colorsetter_eye_multi_node:
 						grid.prop(colorsetter_eye_multi_node,"image",text='Multi Texture')
 					if colorsetter_eye_normal_node:

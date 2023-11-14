@@ -53,6 +53,7 @@ def parse_chara_file(file_path):
 		'HairTone',
 		'Highlights',
 		'LimbalEyes',
+		'LEyeColor',
 		'REyeColor',
 		'LipsToneFurPattern',
 		'FacePaintColor',
@@ -525,6 +526,7 @@ def get_all_color_data(color_key,RESULTS_DICT):
 	color_hex_data['hair_highlights'] = get_color_from_dictionary("hair_highlights", RESULTS_DICT['Highlights'], color_hairhighlights_dictionary)
 	color_hex_data['tattoo_limbal'] = get_color_from_dictionary("tattoo_limbal", RESULTS_DICT['LimbalEyes'], color_tattoo_limbalring_dictionary)
 	color_hex_data['eyes'] = get_color_from_dictionary("eye", RESULTS_DICT['REyeColor'], color_eye_dictionary)
+	color_hex_data['eye_odd'] = get_color_from_dictionary("eye", RESULTS_DICT['LEyeColor'], color_eye_dictionary)
 	color_hex_data['lips'] = get_color_from_dictionary("lips", RESULTS_DICT['LipsToneFurPattern'], color_lips_dictionary)
 	color_hex_data['facepaint'] = get_color_from_dictionary("face_paint", RESULTS_DICT['FacePaintColor'], color_facepaint_dictionary)
 
@@ -615,6 +617,7 @@ def print_textools_data(RESULTS_DICT,color_hex_data):
 	else:
 		print(f"Hair Highlights Color: {color_hex_data['hair']}")
 	print(f"Iris Color: {color_hex_data['eyes']}")
+	#print(f"Odd Iris Color: {color_hex_data['eye_odd']}")
 	print(f"Lip/Fur Color: {color_hex_data['lips']}")
 	print(f"Tattoo/Limbal Color: {color_hex_data['tattoo_limbal']}")
 	print('----------------')
@@ -693,6 +696,7 @@ def main(context,filepath,apply_charafile_to_selected=None):
 	context.scene.color_hair_highlights = hex_to_rgba(color_hex_data['hair_highlights'])
 	context.scene.color_tattoo_limbal = hex_to_rgba(color_hex_data['tattoo_limbal'])
 	context.scene.color_eyes = hex_to_rgba(color_hex_data['eyes'])
+	context.scene.color_odd_eye = hex_to_rgba(color_hex_data['eye_odd'])
 	context.scene.color_lips = hex_to_rgba(color_hex_data['lips'])
 	context.scene.color_facepaint = hex_to_rgba(color_hex_data['facepaint'])
 
@@ -713,6 +717,7 @@ def main(context,filepath,apply_charafile_to_selected=None):
 		add_custom_property(selected_armature,'color_hex_hair_highlights',color_hex_data['hair_highlights'])
 		add_custom_property(selected_armature,'color_hex_tattoo_limbal',color_hex_data['tattoo_limbal'])
 		add_custom_property(selected_armature,'color_hex_eyes',color_hex_data['eyes'])
+		add_custom_property(selected_armature,'color_hex_odd_eye',color_hex_data['eye_odd'])
 		add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
 		add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
 
@@ -791,6 +796,7 @@ class ImportFFXIVModel(bpy.types.Operator):
 	bpy.types.Scene.color_hair_highlights= bpy.props.FloatVectorProperty(name="Hair Highlights",  subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	bpy.types.Scene.color_tattoo_limbal= bpy.props.FloatVectorProperty(name="Tattoo/Limbal", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	bpy.types.Scene.color_eyes= bpy.props.FloatVectorProperty(name="Eyes", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
+	bpy.types.Scene.color_odd_eye= bpy.props.FloatVectorProperty(name="Odd Eye", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	bpy.types.Scene.color_lips= bpy.props.FloatVectorProperty(name="Lips", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	bpy.types.Scene.color_facepaint= bpy.props.FloatVectorProperty(name="Facepaint", subtype='COLOR', size=4, default=(1.0, 1.0, 1.0, 1.0))
 	

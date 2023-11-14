@@ -53,6 +53,7 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene,"color_hair_highlights", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		row.prop(context.scene,"color_tattoo_limbal", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		row.prop(context.scene,"color_eyes", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
+		row.prop(context.scene,"color_odd_eye", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		row.prop(context.scene,"color_lips", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		row.prop(context.scene,"color_facepaint", text='',icon_only=True,icon='OUTLINER_DATA_MESH')
 		#row = layout.row()

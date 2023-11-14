@@ -587,7 +587,6 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.label(text="Colorsetter Eye Settings")
 					grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
 					grid = box.grid_flow(columns=1,align=True)
-					grid.label(text="YOOO WATUP")
 					if colorsetter_eye_color:
 						grid.prop(colorsetter_eye_color,"default_value",text='Eye Color')
 					if colorsetter_eye_multi_node:

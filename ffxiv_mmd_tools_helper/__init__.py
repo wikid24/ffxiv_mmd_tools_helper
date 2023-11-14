@@ -62,6 +62,8 @@ if "bpy" in locals():
 	importlib.reload(rigid_body)
 	importlib.reload(shape_keys)
 	importlib.reload(skirt)
+	importlib.reload(shaders_colorsetter)
+	importlib.reload(shaders_mektools)
 	importlib.reload(shaders)
 	importlib.reload(toon_textures_to_node_editor_shader)
 	importlib.reload(toon_modifier)
@@ -99,6 +101,8 @@ else:
 	from . import rigid_body
 	from . import shape_keys
 	from . import skirt
+	from . import shaders_colorsetter
+	from . import shaders_mektools
 	from . import shaders
 	from . import toon_textures_to_node_editor_shader
 	from . import toon_modifier

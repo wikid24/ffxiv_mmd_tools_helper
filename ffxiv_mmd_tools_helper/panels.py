@@ -473,6 +473,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				mektools_skin_node = None
 				mektools_eye_node = None
 				colorsetter_eye_node = None
+				eye_catchlight_node = None
+				eye_catchlight_mix_node = None
 
 				
 				for node in node_tree.nodes:
@@ -494,6 +496,13 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					if node.type =='GROUP' and node.name.startswith('mektools_eye_node_group_instance'):
 						#mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
 						mektools_eye_node = node 
+
+					if node.type =='GROUP' and node.node_tree.name.startswith('ffxiv_mmd_eye_catchlight'):
+						eye_catchlight_node = node
+					
+					if node.type == 'MIX_SHADER' and node.name == 'ffxiv_mmd_eye_catchlight_mix_shader':
+						eye_catchlight_mix_node = node
+
 						
 				#Glossy BSDF panel
 				if glossy_bsdf_node:
@@ -502,6 +511,15 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.operator("ffxiv_mmd.remove_glossy_shader", text="", icon='X')
 				else:
 					row.operator("ffxiv_mmd.apply_glossy_shader", text="Add Glossy Shader")
+
+				#Eye Catchlight panel
+				if eye_catchlight_node:
+					grid.label(text="Eye Catchlight Settings")
+					grid = row.grid_flow(columns=1,align=True)
+					grid.prop(eye_catchlight_mix_node.inputs['Fac'], "default_value", text="Eye Shader Mix")
+					grid.operator("ffxiv_mmd.remove_catchlight_shader", text="", icon='X')
+				else:
+					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
 
 
 				#MekTools skin panel
@@ -599,6 +617,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_eye_multi_node,"image",text='Multi Texture')
 					if colorsetter_eye_normal_node:
 						grid.prop(colorsetter_eye_normal_node,"image",text='Normal Texture')
+						grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
 						
 				elif mektools_eye_node is None:
 					row = layout.row()

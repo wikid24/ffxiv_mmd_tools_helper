@@ -506,20 +506,14 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						
 				#Glossy BSDF panel
 				if glossy_bsdf_node:
+					row = layout.row()
 					grid = row.grid_flow(columns=2,align=True)
 					grid.prop(glossy_bsdf_node.inputs[1], "default_value", text="Glossy Roughness")
 					grid.operator("ffxiv_mmd.remove_glossy_shader", text="", icon='X')
 				else:
+					row = layout.row()
 					row.operator("ffxiv_mmd.apply_glossy_shader", text="Add Glossy Shader")
 
-				#Eye Catchlight panel
-				if eye_catchlight_node:
-					grid.label(text="Eye Catchlight Settings")
-					grid = row.grid_flow(columns=1,align=True)
-					grid.prop(eye_catchlight_mix_node.inputs['Fac'], "default_value", text="Eye Shader Mix")
-					grid.operator("ffxiv_mmd.remove_catchlight_shader", text="", icon='X')
-				else:
-					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
 
 
 				#MekTools skin panel
@@ -544,6 +538,18 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				else:
 					row = layout.row()
 					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Add MekTools Skin Shaders")
+
+				
+				#Eye Catchlight panel
+				if eye_catchlight_node:
+					row = layout.row()
+					grid.label(text="Eye Catchlight Settings")
+					grid = row.grid_flow(columns=2,align=True)
+					grid.prop(eye_catchlight_mix_node.inputs['Fac'], "default_value", text="Eye Catchlight Mix")
+					grid.operator("ffxiv_mmd.remove_catchlight_shader", text="", icon='X')
+				else:
+					row = layout.row()
+					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
 
 				#MekTools Eye panel
 				if mektools_eye_node:
@@ -600,6 +606,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					colorsetter_eye_color = colorsetter_eye_node.inputs['Eye Color']
 					colorsetter_eye_odd_enabled = colorsetter_eye_node.inputs['Odd Eyes Enabled']
 					colorsetter_eye_odd_color = colorsetter_eye_node.inputs['Odd Eye Color']
+					colorsetter_eye_specular_decay = colorsetter_eye_node.inputs['Specular Decay']
 					colorsetter_eye_multi_node = colorsetter_eye_node.inputs['Multi Texture'].links[0].from_node
 					colorsetter_eye_normal_node = colorsetter_eye_node.inputs['Normal Texture'].links[0].from_node
 
@@ -612,12 +619,15 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_eye_color,"default_value",text='Eye Color')
 						grid.prop(colorsetter_eye_odd_enabled,"default_value",text='Mix', slider=True)
 						grid.prop(colorsetter_eye_odd_color,"default_value",text='Odd Eye Color')
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_eye_specular_decay,"default_value",text='Specular Decay',slider=True)
 					grid = box.grid_flow(columns=1,align=True)
 					if colorsetter_eye_multi_node:
 						grid.prop(colorsetter_eye_multi_node,"image",text='Multi Texture')
 					if colorsetter_eye_normal_node:
 						grid.prop(colorsetter_eye_normal_node,"image",text='Normal Texture')
 						grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+						
 						
 				elif mektools_eye_node is None:
 					row = layout.row()

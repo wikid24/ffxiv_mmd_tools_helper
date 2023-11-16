@@ -39,8 +39,12 @@ def _get_mektools_skin_props(self,context):
 
 	return
 
-import mek_tools
 import addon_utils
+try:
+	import mek_tools
+except ImportError:
+	raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
+
 
 @register_wrap
 class ApplyMekToolsSkinShader(bpy.types.Operator):
@@ -60,7 +64,12 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 
 		addon_name = 'mek_tools'
 		addon_required_version = '0.35'
-		addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
+		addon_module = None
+		try:
+			addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
+		except:
+			raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
+
 		if addon_module:
 			installed_version = addon_module.bl_info.get('version',(-1,-1,-1))
 			installed_version = float(str(installed_version[0])+'.'+str(installed_version[1])+str(installed_version[2]))
@@ -170,10 +179,15 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 
 		addon_name = 'mek_tools'
 		addon_required_version = '0.35'
-		addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
+		addon_module = None
+		try:
+			addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
+		except:
+			raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
+
 		if addon_module:
 			installed_version = addon_module.bl_info.get('version',(-1,-1,-1))
-			installed_version = float(str(installed_version[0])+'.'+str(installed_version[1])+str(installed_version[2]))
+			installed_version = float(str(installed_version[0])+'.'+str(installed_vresion[1])+str(installed_version[2]))
 
 		# Check if the addon is enabled
 		if addon_name not in bpy.context.preferences.addons.keys():

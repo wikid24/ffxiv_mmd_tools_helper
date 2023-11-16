@@ -456,7 +456,7 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 
 
 
-def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name, target_armature_name, target_posebone_name):
+def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name, target_armature_name, target_posebone_name, apply_and_delete_constraint = True):
 	# Get the source armature and bone
 	source_arm = bpy.data.objects.get(source_armature_name)
 	source_bone = source_arm.data.bones.get(source_bone_name)
@@ -476,16 +476,22 @@ def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name,
 			# Add Copy Rotation constraint to the target pose bone
 			copy_rotation_constraint = target_posebone.constraints.new(type='COPY_ROTATION')
 			copy_rotation_constraint.name = 'ffxiv_mmd_copy_bone_rotation'
-			copy_rotation_constraint.target = source_arm
-			copy_rotation_constraint.subtarget = source_bone_name
 
-		# Apply the constraint to transfer the rotation
-		bpy.context.view_layer.objects.active = target_arm
-		bpy.ops.object.mode_set(mode='POSE')
-		target_arm.data.bones.active = target_arm.data.bones.get(target_posebone_name)
-		bpy.ops.pose.visual_transform_apply()
-		bpy.ops.constraint.apply(constraint="ffxiv_mmd_copy_bone_rotation", owner='BONE')
-		#bpy.ops.object.mode_set(mode='OBJECT')
+		copy_rotation_constraint.target = source_arm
+		copy_rotation_constraint.subtarget = source_bone_name
+		## TESTING ##
+		copy_rotation_constraint.target_space = 'LOCAL_OWNER_ORIENT'
+		copy_rotation_constraint.owner_space = 'LOCAL'
+
+
+		if apply_and_delete_constraint == True:
+			# Apply the constraint to transfer the rotation
+			bpy.context.view_layer.objects.active = target_arm
+			bpy.ops.object.mode_set(mode='POSE')
+			target_arm.data.bones.active = target_arm.data.bones.get(target_posebone_name)
+			bpy.ops.pose.visual_transform_apply()
+			bpy.ops.constraint.apply(constraint="ffxiv_mmd_copy_bone_rotation", owner='BONE')
+			#bpy.ops.object.mode_set(mode='OBJECT')
 
 
 
@@ -745,6 +751,8 @@ class ApplyBoneRotationToTarget(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd.rotate_target_pose_bone_to_source_bone"
 	bl_label = "Compare a source bone's XYZ rotation assuming it has a match and apply it to target bone"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	bone_rotate_search_by_mmd_english_name = bpy.props.BoolProperty(name="Search by MMD English Bone Name", default=True)
 	
 	@classmethod
 	def poll(cls, context):
@@ -757,8 +765,8 @@ class ApplyBoneRotationToTarget(bpy.types.Operator):
 		target_bone = target_armature.pose.bones.get(target_bone_name)
 
 		if target_bone:
-			
-			rotate_target_pose_bone_to_source_bone(source_armature,target_armature,target_bone)
+			if self.bone_rotate_search_by_mmd_english_name==True:
+				rotate_target_pose_bone_to_source_bone(source_armature,target_armature,target_bone)
 
 		#bpy.ops.object.mode_set(mode='OBJECT')
 		return {'FINISHED'}
@@ -770,6 +778,8 @@ class ApplyArmatureRotationToTarget(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd.rotate_target_armature_bones_to_source_armature"
 	bl_label = "Currently only set to work on arm bones only, because trying this with legs, spine and head might be a bad idea"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	armature_rotate_search_by_mmd_english_name = bpy.props.BoolProperty(name="Search by MMD English Bone Name", default=True)
 
 	@classmethod
 	def poll(cls, context):
@@ -783,12 +793,21 @@ class ApplyArmatureRotationToTarget(bpy.types.Operator):
 		bones_to_check=['arm_L','elbow_L','wrist_L','thumb1_L','thumb2_L','fore1_L','fore2_L','fore3_L','middle1_L','middle2_L','middle3_L','third1_L','third2_L','third3_L','little1_L','little2_L','little3_L',
 				  		'arm_R','elbow_R','wrist_R','thumb1_R','thumb2_R','fore1_R','fore2_R','fore3_R','middle1_R','middle2_R','middle3_R','third1_R','third2_R','third3_R','little1_R','little2_R','little3_R']
 
-		for bone_name in bones_to_check:
-			pose_bone_name = get_armature_bone_name_by_mmd_english_bone_name(target_armature,bone_name)
-			if pose_bone_name:
-				pose_bone = target_armature.pose.bones.get(pose_bone_name)
-				if pose_bone:
-					rotate_target_pose_bone_to_source_bone(source_armature,target_armature,pose_bone)
+		if self.armature_rotate_search_by_mmd_english_name == True:
+			for bone_name in bones_to_check:
+				pose_bone_name = get_armature_bone_name_by_mmd_english_bone_name(target_armature,bone_name)
+				if pose_bone_name:
+					pose_bone = target_armature.pose.bones.get(pose_bone_name)
+					if pose_bone:
+						rotate_target_pose_bone_to_source_bone(source_armature,target_armature,pose_bone)
+		else:
+			##TESTING ONLY####
+			for target_pose_bone in target_armature.pose.bones:
+				source_pose_bone = None
+				source_pose_bone = source_armature.pose.bones.get(target_pose_bone.name)
+				if source_pose_bone:
+						apply_rotation_from_bone_to_posebone(source_armature.name,source_pose_bone.name,target_armature.name,target_pose_bone.name, apply_and_delete_constraint=False)
+
 
 		return {'FINISHED'}
 	

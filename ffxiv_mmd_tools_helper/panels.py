@@ -767,9 +767,9 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		col = row.column(align=True)
 		col.label(text="Copy Rotation")
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd.rotate_target_pose_bone_to_source_bone", text='Source Bone')
+		col.operator("ffxiv_mmd.rotate_target_pose_bone_to_source_bone", text='Source Bone').bone_rotate_search_by_mmd_english_name = True
 		col = row.column(align=True)
-		col.operator("ffxiv_mmd.rotate_target_armature_bones_to_source_armature", text='All Arm Bones')
+		col.operator("ffxiv_mmd.rotate_target_armature_bones_to_source_armature", text='All Arm Bones').armature_rotate_search_by_mmd_english_name = True ##TESTING##
 
 		# Bone Scale Comparison
 		row = box.row(align=True)

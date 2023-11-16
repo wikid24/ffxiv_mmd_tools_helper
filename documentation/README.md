@@ -1021,15 +1021,58 @@ Sets the currently selected active bone in the viewport as your target bone.
 
 #### Copy Rotation - Source Bone
 
-TBD
+Applies a 'Copy Rotation' modifier from the source bone (if there indeed is a match) to the selected target bone in the textbox. 
 
 #### Copy Rotation - All Arm Bones
 
-TBD
+Applies a 'Copy Rotation' modifier to the following MMD English-equivalent bones on the target armature:
+
+- arm_L/R
+- elbow_L/R
+- wrist_L/R
+- thumb1_L/R
+- thumb2_L/R
+- fore1_L/R
+- fore2_L/R
+- fore3_L/R
+- middle1_L/R
+- middle2_L/R
+- middle3_L/R
+- third1_L/R
+- third2_L/R
+- third3_L/R
+- little1_L/R
+- little2_L/R
+- little3_L/R
 
 #### Scale X/Y/Z
 
-TBD
+Used to compare the target bone's scale against the source bone (if there indeed is a match). Useful when importing a VMD animation file and applying it to your FFXIV Model that has been converted to MMD. How to use:
+
+1) Using MMD Tools, import a MMD Model that works well with the VMD Animation file with a scale of **1.0**:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7b12dffc-de9d-4b04-b871-f0da5922133b)
+
+Upon import, the MMD Model will look like a giant. This is FINE. All we want from the MMD Model is to know the scale difference from one of it's bones to one of the FFXIV model's bones.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/683aa67f-0cf8-4a8e-a422-b7e46709a734)
+
+2) Using this addon, select the source armature (MMD Model), target armature (FFXIV Model), and target armature's bone ('neck' bone is usually a good one to use):
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f633cc4b-5a38-4601-aa12-33b119f4e322)
+
+
+In the above picture, 'Z' scale is 0.042. Now we have a good scale that can be used for VMD animation. You can test it's a good scale if you take the MMD model and apply 0.042 to the X,Y, and Z scale to the MMD Armature.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/32748873-f222-477d-b096-3bc5490fc73c)
+
+We're done with the MMD Model, we just needed it for the scale number, you can delete it now if you'd like.
+
+3) Using MMD Tools, import a VMD Motion file to your FFXIV Model. **Use 0.042 for scale.**
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/09210619-85f4-418f-bafb-842377b63a0d)
+
+All done. When you import the VMD Motion file, you should find that the animation now better closely aligns with your FFXIV Model file.
 
 ## Export MMD Preparation
 

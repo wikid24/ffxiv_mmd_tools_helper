@@ -3,8 +3,8 @@ import addon_utils
 from . import register_wrap
 try:
 	import mek_tools
-except ImportError:
-	raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
+except :
+	print(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
 
 
 	

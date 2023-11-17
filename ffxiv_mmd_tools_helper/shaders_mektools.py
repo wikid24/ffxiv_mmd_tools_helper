@@ -42,8 +42,8 @@ def _get_mektools_skin_props(self,context):
 import addon_utils
 try:
 	import mek_tools
-except ImportError:
-	raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
+except:
+	print(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
 
 
 @register_wrap

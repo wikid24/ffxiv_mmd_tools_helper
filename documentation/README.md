@@ -3,17 +3,17 @@
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
 
 Sections:
-[Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-model)
-[Language and Translation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#language-and-translation)
-[Bones and IK](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bones-and-ik)
-[Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-bodies)
-[Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints)
-[Bone Morphs (Facial Expressions)](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions)
-[Skirt](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skirt)
-[Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#shaders)
-[Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
-[Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
-[Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
+- [Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-model)
+- [Language and Translation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#language-and-translation)
+- [Bones and IK](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bones-and-ik)
+- [Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-bodies)
+- [Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints)
+- [Bone Morphs (Facial Expressions)](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions)
+- [Skirt](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skirt)
+- [Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#shaders)
+- [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
+- [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
+- [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
 
 ## Import FFXIV Model
 

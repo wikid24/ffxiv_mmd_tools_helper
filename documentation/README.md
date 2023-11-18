@@ -884,7 +884,10 @@ Adds a background color that can be seen in renders. This is perfect for green s
 Adds up to 4 (or possibly more in the furture) facial decals to your FFXIV models.
 
 To use:
-1) You must have some Face Decals exported out of TexTools! I believe they are stored in the \Saved\Character\Face Paint\ folder by default, and are .png files. 2) Select the face mesh and push one of the 'Add Decal' buttons
+1) You must know the decal # for the facepaint you want to apply from TexTools!
+2) Select the face mesh
+3) Push the 'Add Decal' button3
+4) Pick the decal .png file from the addon's built in ones, or select a .png from your harddrive
 
 Each Decal is a grouped shader node that is shared amongst ALL models that it is applied to. For example, if you have two FFXIV models, and they both have Decal 1 appled, they will BOTH share the same decal .png file. Although the parameters that are applied (such as Base Color/Subsurface/Mix/etc...) are NOT shared, so it is something to be aware of. If you want to apply two different decals to two difference models, apply Decal 1 to the first model. and Decal 2 to the second model.
 

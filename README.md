@@ -112,7 +112,7 @@ Credits:
 ------------
 
 # In order to use this tool, you need:
-   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, but it may work on later versions.
+   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, **BLENDER 4.0 DOES NOT WORK YET**.
    - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
    - A FFXIV Model exported into .FBX file format
    - .VMD animation files (MMD animation files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
@@ -121,20 +121,22 @@ Credits:
 ### FFXIV Export Stuff:
    - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV leveraging the .chara file
    - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data into .FBX format - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
+   - [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
 
 ### Blender Addon Stuff:
-   - [Blender Colorsetter Addon - FIX FFXIV Materials/Textures - Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
-   - [MekTools addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest
+   - [FFXIV Colorsetter Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - Blender Addon for better FFXIV Materials/Textures/Shaders - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
+   - [FFXIV MekTools Blender Addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest
+   - [UuuNyaa's MMD Tools Helper Blender Addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) addon for MMD Tools for Blender, a bunch of useful tools for animating MMD Models (including lighting presets, material presets, physics tools etc...)
    - [Gravity Collider Bone Physics Addon](https://github.com/MiniEval/Bone-Physics) - I haven't tried it, but its a free and easy way to add skirt and hair physics (if you're sticking simply in Blender)
 
-### MMD Animation Stuff:
-   - The original MMD model that the VMD animation files were based on (useful for animation scaling reasons)
-   - [UuuNyaa's Helper addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) to MMD Tools for Blender
-   - [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
-   - [Miku Miku Dance](https://learnmmd.com/downloads/) (duh)
+### MMD Animation in Blender Stuff:
+   - The original MMD model (.pmx file) that the VMD animation files were based on (useful for animation scaling reasons)
    - PMX files (MMD model files) - [Deviant Art](https://www.deviantart.com/mmd-downloads-galore/gallery/39472353/models), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed above)
+   
+   
+### MMD (application) Rendering Stuff:
+   - [Miku Miku Dance (application)](https://learnmmd.com/downloads/) (duh)
    - [PMX Editor](https://www.deviantart.com/inochi-pm/art/PmxEditor-vr-0254f-English-Version-v2-0-766313588) - MMD's Model Editor for PMX files
-### MMD Rendering Stuff:
    - A bunch of MMD effects: (will list them later)
    - [MikuMikuEffects](https://learnmmd.com/downloads/) - [Install Tutorial](https://www.youtube.com/watch?v=qPOX1eLg3nY)
    - [Ray MMD](https://github.com/ray-cast/ray-mmd/releases) - [Install Tutorial/Beginner's Guide](https://learnmmd.com/http:/learnmmd.com/using-ray-mmd-ver-1-5-0-beginners-guide/)
@@ -545,13 +547,6 @@ Last thing to do is attach the hair stem rigid bodies to the head rigid body. Co
 ![image](https://user-images.githubusercontent.com/19479648/225776867-8598f660-e5ab-4c73-804e-7a876f1aebee.png)
 
 You're all done! Turn Physics ON and Press Play to see if everything is working as expected. If not, Turn Physics OFF, make your changes and then turn it on again.
-
-
- **Full end-to-end rigging & animation example video (using SAMPLE Au Ra Female)**:
-
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-466c-a344-8a20e09cc86d
-
-
 
  --------------
  

@@ -93,9 +93,11 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 				# Duplicate the material
 				old_material = active_material.copy()
 				old_material.name = "backup_" + active_material.name  # Rename the duplicated material if needed
+				old_material.use_fake_user = True #stores material in blend file even if not used after save
 				try:
 					mek_tools.change_material(active_material)
 					active_material.name = "mektools_"+ active_material.name
+					active_material.use_fake_user = False
 				except:
 					bpy.context.active_object.active_material = old_material
 					old_material.name = old_material.name.lstrip('backup_')
@@ -187,7 +189,7 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 
 		if addon_module:
 			installed_version = addon_module.bl_info.get('version',(-1,-1,-1))
-			installed_version = float(str(installed_version[0])+'.'+str(installed_vresion[1])+str(installed_version[2]))
+			installed_version = float(str(installed_version[0])+'.'+str(installed_version[1])+str(installed_version[2]))
 
 		# Check if the addon is enabled
 		if addon_name not in bpy.context.preferences.addons.keys():
@@ -213,9 +215,11 @@ class ApplyMekToolsEyeShader(bpy.types.Operator):
 				# Duplicate the material
 				old_material = active_material.copy()
 				old_material.name = "backup_" + active_material.name  # Rename the duplicated material if needed
+				old_material.use_fake_user = True #stores material in blend file even if not used after save
 				try:
 					mek_tools.add_eyes(active_material)
 					active_material.name = "mektools_"+ active_material.name
+					active_material.use_fake_user = False
 					for instance_node in active_material.node_tree.nodes:
 						if instance_node.type =='GROUP' and instance_node.node_tree.name.startswith('FFXIV Eye Shader'):
 							eye_shader_node_instance = instance_node

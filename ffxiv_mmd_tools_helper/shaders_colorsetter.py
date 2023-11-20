@@ -116,12 +116,13 @@ def apply_colorset_plugin():
 					# Duplicate the material
 					old_material = obj.active_material.copy()
 					old_material.name = "backup_" + obj.active_material.name  # Rename the duplicated material if needed
-
 					# Add the duplicated material to the material slots of the active object
 					#bpy.context.object.data.materials.append(old_material)
 	
 
 					bpy.ops.object.add_cs_material()
+
+					old_material.use_fake_user = True #stores material in blend file even if not used after save
 
 
 					return old_material
@@ -499,6 +500,7 @@ class ApplyColorsetterEyeShader(bpy.types.Operator):
 		else:
 			old_material = active_material
 			old_material.name = "backup_" + active_material.name  # Rename the old material
+			old_material.use_fake_user=True #stores material in blend file even if not used after save
 			try:
 				# Find the file path for WoL_Shader_V6.blend file
 				file_path = (__file__ + r"assets\colorset_shaders\WoL_Shader_V6.blend").replace("shaders_colorsetter.py" , "")
@@ -514,6 +516,7 @@ class ApplyColorsetterEyeShader(bpy.types.Operator):
 
 					colorsetter_material = bpy.data.materials.get("Eyes")
 					colorsetter_material.name = "colorsetter_eye_"+ active_material.name.lstrip("backup_")
+					colorsetter_material.use_fake_user = False
 					bpy.context.active_object.active_material = colorsetter_material
 					
 					#name the node group "colorsetter_eye_node_group"

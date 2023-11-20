@@ -112,7 +112,7 @@ Credits:
 ------------
 
 # In order to use this tool, you need:
-   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, but it may work on later versions.
+   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, **BLENDER 4.0 DOES NOT WORK YET**.
    - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
    - A FFXIV Model exported into .FBX file format
    - .VMD animation files (MMD animation files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)

@@ -229,6 +229,52 @@ def fix_object_axis():
 	#	bone.roll = 0
 	#bpy.ops.object.mode_set(mode='OBJECT')
 
+from mathutils import Matrix
+
+def reset_selected_bone_positions(context,armature):
+
+	selected_bones = []
+
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	for bone in armature.data.edit_bones:
+		if bone.select == True:
+				selected_bones.append(bone)
+
+	for bone in selected_bones:
+		reset_edit_bone_to_original_position(bone)
+		
+
+	return
+
+def reset_edit_bone_to_original_position(edit_bone):
+
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	#print(bone['original_matrix_local_0'])
+	if edit_bone['original_matrix_local_0'] and \
+		edit_bone['original_matrix_local_1'] and \
+		edit_bone['original_matrix_local_2'] and \
+		edit_bone['original_matrix_local_3'] and \
+		edit_bone['original_tail_local']:
+
+
+		original_matrix_local =  Matrix((edit_bone['original_matrix_local_0'] \
+								, edit_bone['original_matrix_local_1'] \
+								, edit_bone['original_matrix_local_2'] \
+								, edit_bone['original_matrix_local_3']))
+
+		edit_bone.matrix = original_matrix_local
+		edit_bone.tail = edit_bone['original_tail_local']
+
+	return
+
+
+
+
+
+	
+
 
 def main(context):
 	# print(bpy.context.scene.selected_miscellaneous_tools)
@@ -236,40 +282,49 @@ def main(context):
 	selected_miscellaneous_tools = bpy.context.scene.selected_miscellaneous_tools
 
 	if selected_miscellaneous_tools == "combine_2_bones":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		parent_bone_name, child_bone_name = analyze_selected_parent_child_bone_pair()
 		if parent_bone_name is not None:
 			if child_bone_name is not None:
 				combine_2_vg_1_vg(parent_bone_name, child_bone_name)
 				combine_2_bones_1_bone(parent_bone_name, child_bone_name)
 	if selected_miscellaneous_tools == "flag_unused_bones":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		flag_unused_bones()
 		#delete_unused_vertex_groups()
 	if selected_miscellaneous_tools == "delete_unused_bones":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		#flag_unused_bones()
 		delete_unused_bones()
 	if selected_miscellaneous_tools == "mmd_ambient_white":
 		all_materials_mmd_ambient_white()
 	if selected_miscellaneous_tools == "fix_object_axis":
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		fix_object_axis()
 	if selected_miscellaneous_tools == "remove_orphaned_rigid_bodies":
 		armature = None
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		if armature:
 			bpy.ops.object.mode_set(mode='OBJECT')
 			rigid_body.remove_orphaned_rigid_bodies(armature)
 	if selected_miscellaneous_tools == "remove_orphaned_joints":
 		armature = None
-		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		if armature:
 			bpy.ops.object.mode_set(mode='OBJECT')
 			joints.remove_orphaned_joints(armature)
+	if selected_miscellaneous_tools == "reset_selected_edit_bone_pos":
+		armature = None
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		if armature:
+			bpy.ops.object.mode_set(mode='OBJECT')
+			reset_selected_bone_positions(context,armature)
 
+
+			
 
 		
 
@@ -290,6 +345,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("delete_unused_bones", "Delete '_unused_' bones", "Delete all bones which start with '_unused_' in them")\
 	, ("remove_orphaned_rigid_bodies", "Remove Orphaned Rigid Bodies", "Delete all rigid bodies that have no assigned bones")\
 	, ("remove_orphaned_joints", "Remove Orphaned Joints", "Delete all joints that are missing a rigid body")\
+	, ("reset_selected_edit_bone_pos", "Reset Selected Edit Bone Positions", "Resets the selected bones back to original bone position")\
 	#, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
 	], name = "", default = 'none')
 

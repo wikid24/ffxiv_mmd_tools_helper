@@ -680,14 +680,15 @@ def set_bust_size(bust_scale=None,bust_xyz=None):
 		bpy.context.view_layer.objects.active = armature
 
 		bpy.ops.object.mode_set(mode='POSE')
-		bust_L = armature.pose.bones['j_mune_l']
-		bust_R = armature.pose.bones['j_mune_r']
+		bust_L = armature.pose.bones.get('j_mune_l')
+		bust_R = armature.pose.bones.get('j_mune_r')
+		bust_core = armature.pose.bones.get('j_mune_core')
 
 		scale_x = 1
 		scale_y = 1
 		scale_z = 1
 			
-		if bust_L is not None and bust_R is not None:
+		if (bust_L is not None and bust_R is not None) or (bust_core is not None):
 
 			if bust_xyz is not None:
 				scale_x = bust_xyz[0]
@@ -708,14 +709,97 @@ def set_bust_size(bust_scale=None,bust_xyz=None):
 				#y @ 100 = 1.2
 				#z @ 100 = 1.184
 
+			if bust_L and bust_R:
+				bust_L.scale= (scale_z,scale_y,scale_x)
+				bust_R.scale= (scale_z,scale_y,scale_x)
 
-			bust_L.scale= (scale_z,scale_y,scale_x)
-			bust_R.scale= (scale_z,scale_y,scale_x)
+				#insert a keyframe at frame 0 to set the bust size
+				bust_L.keyframe_insert(data_path='scale', frame=0)
+				bust_R.keyframe_insert(data_path='scale', frame=0)
+
+			if bust_core:
+				bust_core.scale = (scale_x,scale_y,scale_z)
+				#insert a keyframe at frame 0 to set the bust size
+				bust_core.keyframe_insert(data_path='scale', frame=0)
 
 			
-			#insert a keyframe at frame 0 to set the bust size
-			bust_L.keyframe_insert(data_path='scale', frame=0)
-			bust_R.keyframe_insert(data_path='scale', frame=0)
+
+def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
+
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	j_mune_l = armature.data.edit_bones.get('j_mune_l')
+	j_mune_r = armature.data.edit_bones.get('j_mune_r')
+
+	boob_core = None
+
+	if armature.data.edit_bones.get('j_mune_core') == None:
+		boob_core = armature.data.edit_bones.new('j_mune_core')
+	else:
+		boob_core = armature.data.edit_bones.get('j_mune_core')
+	
+	if boob_core:
+		boob_core.head = (j_mune_l.head + j_mune_r.head) / 2
+		boob_core.head.y -= (j_mune_l.length/2)
+		boob_core.length = 0
+		boob_core.length = j_mune_l.length
+		#upper_body_2_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'upper body 3')
+		j_sebo_c = armature.data.edit_bones.get('j_sebo_c')
+		boob_core.parent = j_sebo_c
+
+	bone_list = [j_mune_l,j_mune_r]
+
+	for bone in bone_list:
+
+		top_boob = None
+		bot_boob = None
+
+		if armature.data.edit_bones.get(bone.name + '_top') == None:
+			top_boob = armature.data.edit_bones.new(bone.name + '_top')
+		else:
+			armature.data.edit_bones.get(bone.name + '_top')
+
+		if top_boob:
+			top_boob.matrix = bone.matrix
+			top_boob.tail = bone.tail
+			#top_boob.length = j_mune_l.length
+			top_boob.head.z += (top_boob.length /2)
+			top_boob.tail.z += (top_boob.length /2)
+			top_boob.head.y -= (top_boob.length /2)
+			top_boob.parent = boob_core
+		
+		
+		if armature.data.edit_bones.get(bone.name + '_bot') == None:
+			bot_boob = armature.data.edit_bones.new(bone.name + '_bot')
+		else:
+			bot_boob = armature.data.edit_bones.get(bone.name + '_bot')
+
+		if bot_boob:
+			bot_boob.matrix = bone.matrix
+			bot_boob.tail = bone.tail
+			#bot_boob.length = j_mune_r.length
+			bot_boob.head.z -= (bot_boob.length /2)
+			bot_boob.tail.z -= (bot_boob.length /2)
+			bot_boob.head.y -= (bot_boob.length /2)
+			bot_boob.parent = boob_core
+
+		bot_boob_tip = armature.data.edit_bones.new(bot_boob.name + '_tip')
+		bot_boob_tip.parent = bot_boob
+		bot_boob_tip.head = bot_boob.tail
+		bot_boob_tip.length = 0
+		bot_boob_tip.length = bot_boob.length
+
+		bone.name = bone.name+'_mid'
+		bone.head = top_boob.tail
+		bone.tail = bot_boob.tail
+		bone.parent = top_boob
+		
+
+		bone_tip = armature.data.edit_bones.new(bone.name + '_tip')
+		bone_tip.parent = bone
+		bone_tip.head = bone.tail
+		bone_tip.length = 0 
+		bone_tip.length = (bone.length) *0.66
 
 
 
@@ -855,6 +939,13 @@ def main(context):
 		"""
 		bpy.context.object.data.use_mirror_x = False
 		bpy.ops.object.mode_set(mode='OBJECT')
+	if selected_bone_tool == "convert_ffxiv_boobs_to_genshin_boobs":
+		armature = None
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		if armature:
+			bpy.ops.object.mode_set(mode='OBJECT')
+			convert_ffxiv_boobs_to_genshin_boobs(context,armature)
 
 
 @register_wrap
@@ -884,6 +975,7 @@ class BoneTools(bpy.types.Operator):
 	, ("add_breast_tip_bones", "15- Add Extra Breast Tip Bones", "Add Extra Breast Tip Bones")\
 	, ("merge_double_jointed_knee", "16- Merge Double-Jointed Knee (FFXIV PMX Export Only)", "Merge Double-Jointed Knee (FFXIV PMX Export Only)")\
 	, ("adjust_arm_position", "EXPERIMENTAL - Adjust Arm Position for FFXIV Models", "Hard-Coded values to better align arms")\
+	, ("convert_ffxiv_boobs_to_genshin_boobs", "Convert FFXIV Boobs to Genshin Boobs", "Convert FFXIV Boobs to Genshin Boobs")\
 	], name = "", default = 'run_1_to_12')
 
 	@classmethod
@@ -919,7 +1011,8 @@ class FFXIVBustSlider(bpy.types.Operator):
 			if armature is not None:
 				j_mune_l = armature.pose.bones.get('j_mune_l')
 				j_mune_r = armature.pose.bones.get('j_mune_r')
-				if j_mune_l is not None and j_mune_r is not None:
+				j_mune_core = armature.pose.bones.get('j_mune_core')
+				if (j_mune_l is not None and j_mune_r is not None) or (j_mune_core is not None):
 					is_ffxiv_bust =True
 		
 		return is_ffxiv_bust

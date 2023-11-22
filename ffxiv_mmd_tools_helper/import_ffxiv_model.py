@@ -218,12 +218,33 @@ def import_ffxiv_model(context,file_path):
 							
 							add_custom_property(obj,'ModelName',mesh_list[matname][2])
 							add_custom_property(obj,'material_filepath', mesh_list[matname][3])
-		
 
+		#loop through all the bones and add the original bone local data to it as a custom property
+		if x.type =='ARMATURE':
+			for bone in armature.data.bones:
+				add_original_bone_local_data(x,bone.name)
+		
+def add_original_bone_local_data(armature,bone_name):
+	
+	bone = None
+	
+	bone = armature.data.bones.get(bone_name)
+	
+	if bone:
+		bone['original_head_local'] = bone.head_local
+		bone['original_tail_local'] = bone.tail_local
+		bone['original_matrix_local_0'] = bone.matrix_local[0]
+		bone['original_matrix_local_1'] = bone.matrix_local[1]
+		bone['original_matrix_local_2'] = bone.matrix_local[2]
+		bone['original_matrix_local_3'] = bone.matrix_local[3]
+	
+	return
 					
 def add_custom_property(obj,prop_name,prop_value):
 	
 	obj.data[prop_name] = prop_value
+
+
 
 
 

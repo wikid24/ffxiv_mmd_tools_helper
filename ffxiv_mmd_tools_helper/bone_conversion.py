@@ -765,7 +765,7 @@ def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
 			#top_boob.length = j_mune_l.length
 			top_boob.head.z += (top_boob.length /2)
 			top_boob.tail.z += (top_boob.length /2)
-			top_boob.head.y -= (top_boob.length /2)
+			#top_boob.head.y -= (top_boob.length /2)
 			top_boob.parent = boob_core
 		
 		
@@ -780,14 +780,14 @@ def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
 			#bot_boob.length = j_mune_r.length
 			bot_boob.head.z -= (bot_boob.length /2)
 			bot_boob.tail.z -= (bot_boob.length /2)
-			bot_boob.head.y -= (bot_boob.length /2)
+			#bot_boob.head.y -= (bot_boob.length /2)
 			bot_boob.parent = boob_core
 
-		bot_boob_tip = armature.data.edit_bones.new(bot_boob.name + '_tip')
-		bot_boob_tip.parent = bot_boob
-		bot_boob_tip.head = bot_boob.tail
-		bot_boob_tip.length = 0
-		bot_boob_tip.length = bot_boob.length
+		#bot_boob_tip = armature.data.edit_bones.new(bot_boob.name + '_tip')
+		#bot_boob_tip.parent = bot_boob
+		#bot_boob_tip.head = bot_boob.tail
+		#bot_boob_tip.length = 0
+		#bot_boob_tip.length = bot_boob.length
 
 		bone.name = bone.name+'_mid'
 		bone.head = top_boob.tail
@@ -795,11 +795,11 @@ def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
 		bone.parent = top_boob
 		
 
-		bone_tip = armature.data.edit_bones.new(bone.name + '_tip')
-		bone_tip.parent = bone
-		bone_tip.head = bone.tail
-		bone_tip.length = 0 
-		bone_tip.length = (bone.length) *0.66
+		#bone_tip = armature.data.edit_bones.new(bone.name + '_tip')
+		#bone_tip.parent = bone
+		#bone_tip.head = bone.tail
+		#bone_tip.length = 0 
+		#bone_tip.length = (bone.length) *0.66
 
 
 

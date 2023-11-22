@@ -50,9 +50,9 @@ J.h_j_sk_s_c_l-j_sk_f_c_l,j_sk_s_c_l,j_sk_f_c_l,0,,,,,,,-0.0531,0.0531,,,,,,,,,,
 J.h_j_sk_b_c_l-j_sk_s_c_l,j_sk_b_c_l,j_sk_s_c_l,0,,,,,,,-0.0531,0.0531,,,,,,,,,,
 J.j_mune_core-j_mune_l_top,j_mune_core,j_mune_l_top,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
 J.j_mune_core-j_mune_r_top,j_mune_core,j_mune_r_top,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
-J.j_mune_l_top-j_mune_l_mid,j_mune_l_top,j_mune_l_mid,0,,,,,,,-25,,,25,,,,100,,100,100,80
-J.j_mune_r_top-j_mune_r_mid,j_mune_r_top,j_mune_r_mid,0,,,,,,,-25,,,25,,,,100,,100,100,80
 J.j_mune_core-j_mune_l_bot,j_mune_core,j_mune_l_bot,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
 J.j_mune_core-j_mune_r_bot,j_mune_core,j_mune_r_bot,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
+J.j_mune_l_top-j_mune_l_mid,j_mune_l_top,j_mune_l_mid,0,,,,,,,-25,,,25,,,,100,,100,100,80
+J.j_mune_r_top-j_mune_r_mid,j_mune_r_top,j_mune_r_mid,0,,,,,,,-25,,,25,,,,100,,100,100,80
 J.j_mune_l_mid-j_mune_l_bot,j_mune_l_mid,j_mune_l_bot,0,,,,,,,-30,,,30,,,100,100,,20,,
 J.j_mune_r_mid-j_mune_r_bot,j_mune_r_mid,j_mune_r_bot,0,,,,,,,-30,,,30,,,100,100,,20,,

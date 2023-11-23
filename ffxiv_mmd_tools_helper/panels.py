@@ -718,22 +718,22 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_face_lip_color_mix,"default_value",text='Lip Color Mix',slider=True)
 						grid.prop(colorsetter_face_lip_lightdark,"default_value",text='Lip Light/Dark',slider=True)
 						grid.prop(colorsetter_face_lip_brightness,"default_value",text='Lip Brightness/Opacity',slider=True)
-						grid.prop(colorsetter_face_facepaint_mix,"default_value",text='Facepaint Mix',slider=True)
-						grid.prop(colorsetter_face_facepaint_color,"default_value",text='Facepaint Color')
-						grid.prop(colorsetter_face_facepaint_lightdark,"default_value",text='Facepaint Light/Dark')
-						grid.prop(colorsetter_face_facepaint_brightness,"default_value",text='Facepaint Brightness/Opacity')
+						#grid.prop(colorsetter_face_facepaint_mix,"default_value",text='Facepaint Mix',slider=True)
+						#grid.prop(colorsetter_face_facepaint_color,"default_value",text='Facepaint Color')
+						#grid.prop(colorsetter_face_facepaint_lightdark,"default_value",text='Facepaint Light/Dark')
+						#grid.prop(colorsetter_face_facepaint_brightness,"default_value",text='Facepaint Brightness/Opacity')
 												
 						
 						grid = box.grid_flow(columns=2,align=True)
 						grid.prop(colorsetter_face_diffuse_node,"image",text='Diffuse')
 						grid.prop(colorsetter_face_multi_node,"image",text='Multi')
 						grid.prop(colorsetter_face_normal_node,"image",text='Normal')
-						grid.prop(colorsetter_face_facepaint_node,"image",text='Facepaint')
+						#grid.prop(colorsetter_face_facepaint_node,"image",text='Facepaint')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_diffuse_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_multi_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_normal_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_facepaint_node.name
-							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+						#grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_facepaint_node.name
+						
 
 				#Colorsetter Face Accent panel
 				if colorsetter_faceacc_node:

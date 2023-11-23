@@ -464,9 +464,15 @@ def update_image_node_file(image_node,file_path):
 	if image is None:
 		image = bpy.data.images.load(file_path)  # Load the image from the selected file path
 	image_node.image = image 
-	image_node.image.colorspace_settings.name = 'Non-Color'
+
+	if file_path.endswith(("_d.png", "_d.bmp", "_d.dds")):
+		return
+	else:
+		image_node.image.colorspace_settings.name = 'Non-Color'
+		return
 
 
+from . import import_ffxiv_charafile
 
 def add_colorsetter_shader(context,shader_type):
 
@@ -494,6 +500,7 @@ def add_colorsetter_shader(context,shader_type):
 
 		active_material = context.active_object.active_material
 		active_object = context.active_object
+		active_armature = model.findArmature(active_object)
 
 		#check if material is a colorsetter node material
 		if active_material.name.startswith(f"colorsetter_{shader_type}_"):
@@ -528,12 +535,37 @@ def add_colorsetter_shader(context,shader_type):
 					#name the instance of the node group within the material to colorsetter_{shader_type}_node_instance
 					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith(f"colorsetter_{shader_type}_node_group"):
 						colorsetter_material.node_tree.nodes['Group'].name = f"colorsetter_{shader_type}_node_instance"
+						node_group_instance = colorsetter_material.node_tree.nodes.get(f"colorsetter_{shader_type}_node_instance")
 
-						if shader_type == 'eye':
-							set_colorsetter_eye_textures(active_object)
+						#set the default color values to the ones from the .chara file that were stored as custom properties on the armature
+						if active_armature:
+							if shader_type == 'skin':
+								node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_skin'])
+						
+							if shader_type == 'eye':
+								set_colorsetter_eye_textures(active_object)
+								node_group_instance.inputs['Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_eyes'])
+								node_group_instance.inputs['Odd Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_odd_eye'])
 
-						if shader_type == 'hair':
-							print ("hair time wheeeee")
+							if shader_type == 'face':
+								node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_skin'])
+								node_group_instance.inputs['Lip Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_lips'])
+								node_group_instance.inputs['Face Paint Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_facepaint'])
+	
+
+							if shader_type == 'hair':
+								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_hair'])
+								node_group_instance.inputs['Highlights Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_hair_highlights'])
+
+								
+							if shader_type == 'faceacc':
+								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_hair'])
+								node_group_instance.inputs['Tattoo Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_tattoo_limbal'])
+								node_group_instance.inputs['Limbal Ring Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_tattoo_limbal'])
+								
+							if shader_type == 'tail':
+								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_hair'])
+								node_group_instance.inputs['Highlight Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data['color_hex_hair_highlights'])
 	
 				else:
 					print(f"Material '{shader_type_mat_dict[shader_type]}' not found in the source file.")

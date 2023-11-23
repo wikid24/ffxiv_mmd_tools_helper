@@ -562,22 +562,31 @@ def get_color_from_dictionary(color_key, color_index, dictionary):
 	#print(f"color_hex_value={color_hex_value}")
 	return color_hex_value
 
+import re
+
 # Function to convert Hex to RGB + A
 def hex_to_rgba(hex_color):
 	
 	if hex_color is not None:
-
 		hex_color = hex_color.lstrip('#')
-		r_srgb = int(hex_color[:2], base=16) / 255
-		r_linear = convert_srgb_to_linear_rgb(r_srgb)
-		g_srgb = int(hex_color[2:4], base=16) / 255
-		g_linear = convert_srgb_to_linear_rgb(g_srgb)
-		b_srgb = int(hex_color[4:6], base=16) / 255
-		b_linear = convert_srgb_to_linear_rgb(b_srgb)
-		a = 1.0  # Set alpha to 1.0 (fully opaque) or adjust as needed
-		
-		#return (r_srgb, g_srgb, b_srgb, a)
-		return (r_linear, g_linear, b_linear, a)
+
+		if re.match(r'^([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$', hex_color):		
+
+			
+			r_srgb = int(hex_color[:2], base=16) / 255
+			r_linear = convert_srgb_to_linear_rgb(r_srgb)
+			g_srgb = int(hex_color[2:4], base=16) / 255
+			g_linear = convert_srgb_to_linear_rgb(g_srgb)
+			b_srgb = int(hex_color[4:6], base=16) / 255
+			b_linear = convert_srgb_to_linear_rgb(b_srgb)
+			a = 1.0  # Set alpha to 1.0 (fully opaque) or adjust as needed
+			
+			#return (r_srgb, g_srgb, b_srgb, a)
+			return (r_linear, g_linear, b_linear, a)
+		else:
+			# Handle the case when hex_color is not a valid hexadecimal color code
+			print("Error: Invalid hexadecimal color code.")
+			return (0.0, 0.0, 0.0, 1.0)
 	
 	else:
         # Handle the case when the color is None, for example:

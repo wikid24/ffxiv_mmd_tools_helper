@@ -447,54 +447,56 @@ def set_colorsetter_eye_textures(active_object):
 	multimap_file_path = get_ffxiv_eye_multimap_file(active_object)
 	normalmap_file_path = get_ffxiv_eye_normalmap_file(active_object)
 
-	#MULTIMAP FILE
+	update_image_node_file(colorsetter_eye_multi_node,multimap_file_path)
+	update_image_node_file(colorsetter_eye_normal_node,normalmap_file_path)
+	
+
+def update_image_node_file(image_node,file_path):
+
 	image = None
 	#check if this image exists, if it does, reuse it
 	for img in bpy.data.images:
-		if img.source == 'FILE' and img.filepath == multimap_file_path:
+		if img.source == 'FILE' and img.filepath == file_path:
 			image = img
 			break
 
 	# Open the image file
 	if image is None:
-		image = bpy.data.images.load(multimap_file_path)  # Load the image from the selected file path
-	colorsetter_eye_multi_node.image = image 
-	colorsetter_eye_multi_node.image.colorspace_settings.name = 'Non-Color'
-
-
-	#NORMALMAP FILE
-	image = None
-	#check if this image exists, if it does, reuse it
-	for img in bpy.data.images:
-		if img.source == 'FILE' and img.filepath == normalmap_file_path:
-			image = img
-			break
-
-	# Open the image file
-	if image is None:
-		image = bpy.data.images.load(normalmap_file_path)  # Load the image from the selected file path
-	colorsetter_eye_normal_node.image = image 
-	colorsetter_eye_normal_node.image.colorspace_settings.name = 'Non-Color'
+		image = bpy.data.images.load(file_path)  # Load the image from the selected file path
+	image_node.image = image 
+	image_node.image.colorspace_settings.name = 'Non-Color'
 
 
 
+def add_colorsetter_shader(context,shader_type):
 
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin']
 
-@register_wrap
-class ApplyColorsetterEyeShader(bpy.types.Operator):
-	"""Apply Colorsetter Eye Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_eye_shader"
-	bl_label = "Apply Colorsetter Eye Shader"
-	bl_options = {'REGISTER', 'UNDO'}
+	shader_type_mat_dict = {'eye':'Eyes'
+						,'face':'Face'
+					 	,'hair':'Hair'
+						,'faceacc':'Face_Acc'
+						,'tail' : 'Hrothgar/Miqote Tail'
+						,'skin' : 'Skin'
+						}
+		
+	shader_type_node_group_dict = {'eye':'FFXIV Eye Shader'
+									,'face':'FFXIV Face Shader'
+					 				,'hair':'FFXIV Hair Shader'
+									,'faceacc':'FFXIV Face Acc Shader'
+									,'tail':'FFXIV Tail Shader'
+									,'skin':'FFXIV Skin Shader'}
 
+	if shader_type in shader_type_list:
 
-	def execute(self, context):
+		print (shader_type_mat_dict[shader_type])
+		print (shader_type_node_group_dict[shader_type])
 
-		active_material = bpy.context.active_object.active_material
-		active_object = bpy.context.active_object
+		active_material = context.active_object.active_material
+		active_object = context.active_object
 
-		#check if material is a colorsetter eyes node material
-		if active_material.name.startswith('colorsetter_eye_'):
+		#check if material is a colorsetter node material
+		if active_material.name.startswith(f"colorsetter_{shader_type}_"):
 			raise Exception(f"Cannot add colorsetter material as this is already a colorsetter material")
 			
 		else:
@@ -505,67 +507,78 @@ class ApplyColorsetterEyeShader(bpy.types.Operator):
 				# Find the file path for WoL_Shader_V6.blend file
 				file_path = (__file__ + r"assets\colorset_shaders\WoL_Shader_V6.blend").replace("shaders_colorsetter.py" , "")
 								
-				# Append the 'Eyes' material from WoL_Shader_V6.blend file
+				# Append the colorsetter material from WoL_Shader_V6.blend file to the blender project
 				with bpy.data.libraries.load(file_path, link=False) as (data_from, data_to):
-					# Append the material called 'Face'
-					data_to.materials = [mat for mat in data_from.materials if mat == 'Eyes']
+
+					# Append the material
+					data_to.materials = [mat for mat in data_from.materials if mat == shader_type_mat_dict[shader_type]]
 
 				# Check if the material was successfully appended
-				if 'Eyes' in bpy.data.materials:
-					
+				if shader_type_mat_dict[shader_type] in bpy.data.materials:
 
-					colorsetter_material = bpy.data.materials.get("Eyes")
-					colorsetter_material.name = "colorsetter_eye_"+ active_material.name.lstrip("backup_")
+					colorsetter_material = bpy.data.materials.get(shader_type_mat_dict[shader_type])
+					colorsetter_material.name = f"colorsetter_{shader_type}_"+ active_material.name.lstrip("backup_")
 					colorsetter_material.use_fake_user = False
 					bpy.context.active_object.active_material = colorsetter_material
 					
-					#name the node group "colorsetter_eye_node_group"
-					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith ('FFXIV Eye Shader'):
-						colorsetter_material.node_tree.nodes['Group'].node_tree.name = 'colorsetter_eye_node_group'
+					#name the node group "colorsetter_{shader_type}_node_group"
+					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith (shader_type_node_group_dict[shader_type]):
+						colorsetter_material.node_tree.nodes['Group'].node_tree.name = f"colorsetter_{shader_type}_node_group"
 
+					#name the instance of the node group within the material to colorsetter_{shader_type}_node_instance
+					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith(f"colorsetter_{shader_type}_node_group"):
+						colorsetter_material.node_tree.nodes['Group'].name = f"colorsetter_{shader_type}_node_instance"
 
-					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith('colorsetter_eye_node_group'):
-						colorsetter_material.node_tree.nodes['Group'].name = 'colorsetter_eye_node_instance'
-						#print("Material 'Eyes' appended successfully.")
-						set_colorsetter_eye_textures(active_object)
-						#get_ffxiv_eye_multimap_file(active_object)
+						if shader_type == 'eye':
+							set_colorsetter_eye_textures(active_object)
+
+						if shader_type == 'hair':
+							print ("hair time wheeeee")
+	
 				else:
-					print("Material 'Eyes' not found in the source file.")
+					print(f"Material '{shader_type_mat_dict[shader_type]}' not found in the source file.")
 				
 			except:
 				bpy.context.active_object.active_material = old_material
 				old_material.name = old_material.name.lstrip('backup_')
-				bpy.data.materials.remove(active_material)
-				raise Exception(f"Failed to add Colorsetter eye shader")
+
+				if colorsetter_material:
+					bpy.data.materials.remove(colorsetter_material)
+
+				raise Exception(f"Failed to add Colorsetter {shader_type} shader")
 			
-		return {'FINISHED'}
+			finally:
+				#loop through all the meshes that use the old material and set them to use the colorsetter material
+				if colorsetter_material and old_material:
+					for obj in bpy.data.objects:
+						if obj.type == 'MESH':
+							if obj.active_material == old_material:
+								obj.active_material = colorsetter_material
+
 	
-@register_wrap
-class RemoveColorsetterEyeShader(bpy.types.Operator):
-	"""Remove Colorsetter Eye Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_eye_shader"
-	bl_label = "Remove Colorsetter Eye Shader"
-	bl_options = {'REGISTER', 'UNDO'}
+	return
+			
+def remove_colorsetter_shader (context,shader_type):
 
-	def execute(self, context):
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin']
 
-		
-		active_material = bpy.context.active_object.active_material
-		eye_shader_node_instance = None
-		eye_shader_node_group = None
-		if active_material.name.startswith('colorsetter_eye_'):
+	if shader_type in shader_type_list:
+
+		active_material = context.active_object.active_material
+		shader_node_instance = None
+		shader_node_group = None
+		if active_material.name.startswith(f"colorsetter_{shader_type}_"):
 			for instance_node in active_material.node_tree.nodes:
-				if instance_node.type =='GROUP' and instance_node.name.startswith('colorsetter_eye_node_instance'):
-					eye_shader_node_instance = instance_node
-					eye_shader_node_group = eye_shader_node_instance.node_tree
+				if instance_node.type =='GROUP' and instance_node.name.startswith(f"colorsetter_{shader_type}_node_instance"):
+					shader_node_instance = instance_node
+					shader_node_group = shader_node_instance.node_tree
 					break
-			selected_material_name = active_material.name[len('colorsetter_eye_'):]
+			selected_material_name = active_material.name[len(f"colorsetter_{shader_type}_"):]
 		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
 		active_object = bpy.context.active_object
 
-	
 		#if active material, active object, and eye_shader_node_instance found
-		if active_material.name.startswith('colorsetter_eye_') and backup_material and active_object and eye_shader_node_instance:
+		if active_material.name.startswith(f"colorsetter_{shader_type}_") and backup_material and active_object and shader_node_instance:
 			for obj in bpy.data.objects:
 				if obj.type =='MESH':
 					#set the backup material as the active material, and restore it's original name
@@ -575,7 +588,172 @@ class RemoveColorsetterEyeShader(bpy.types.Operator):
 			#delete the active material
 			bpy.data.materials.remove(active_material)
 			#delete the shader node group
-			if eye_shader_node_group:
-				bpy.data.node_groups.remove(eye_shader_node_group)
+			if shader_node_group:
+				bpy.data.node_groups.remove(shader_node_group)
+	return
+
+from bpy_extras.io_utils import ImportHelper
+@register_wrap
+class UpdateColorsetterImageNodeFile(bpy.types.Operator, ImportHelper):
+	"""Open a File Browser to Select Image"""
+	bl_idname = "ffxiv_mmd.update_colorsetter_image_node"
+	bl_label = "Open a File Browser to Select Image"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	image_node_name = bpy.props.StringProperty(name="image_node_name", update=None, get=None, set=None)
+
+	filename_ext = ".png;.bmp;.dds"
+	filter_glob: bpy.props.StringProperty(
+		default="*.png;*.bmp;*.dds",
+		options={'HIDDEN'},
+	)
+	
+	def execute(self, context):
+		active_mat = context.active_object.active_material
+		image_node = active_mat.node_tree.nodes.get(self.image_node_name)
+		
+		filepath = self.filepath
+
+		if image_node:
+			update_image_node_file(image_node,filepath)
 		return {'FINISHED'}
+	
+
+@register_wrap
+class ApplyColorsetterEyeShader(bpy.types.Operator):
+	"""Apply Colorsetter Eye Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_eye_shader"
+	bl_label = "Apply Colorsetter Eye Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"eye")
+		return {'FINISHED'}
+	
+	
+@register_wrap
+class RemoveColorsetterEyeShader(bpy.types.Operator):
+	"""Remove Colorsetter Eye Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_eye_shader"
+	bl_label = "Remove Colorsetter Eye Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'eye')
+		return {'FINISHED'}
+
+@register_wrap
+class ApplyColorsetterHairShader(bpy.types.Operator):
+	"""Apply Colorsetter Hair Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_hair_shader"
+	bl_label = "Apply Colorsetter Hair Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"hair")
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterHairShader(bpy.types.Operator):
+	"""Remove Colorsetter Hair Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_hair_shader"
+	bl_label = "Remove Colorsetter Hair Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'hair')
+		return {'FINISHED'}
+	
+@register_wrap
+class ApplyColorsetterFaceShader(bpy.types.Operator):
+	"""Apply Colorsetter Face Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_face_shader"
+	bl_label = "Apply Colorsetter Face Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"face")
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterFaceShader(bpy.types.Operator):
+	"""Remove Colorsetter Face Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_face_shader"
+	bl_label = "Remove Colorsetter Face Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'face')
+		return {'FINISHED'}
+	
+
+@register_wrap
+class ApplyColorsetterFaceAccShader(bpy.types.Operator):
+	"""Apply Colorsetter Face Accent Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_faceacc_shader"
+	bl_label = "Apply Colorsetter Face Accent Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"faceacc")
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterFaceAccShader(bpy.types.Operator):
+	"""Remove Colorsetter Face Accent Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_faceacc_shader"
+	bl_label = "Remove Colorsetter Face Accent Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'faceacc')
+		return {'FINISHED'}
+	
+@register_wrap
+class ApplyColorsetterTailShader(bpy.types.Operator):
+	"""Apply Colorsetter Tail Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_tail_shader"
+	bl_label = "Apply Colorsetter Tail Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"tail")
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterTailShader(bpy.types.Operator):
+	"""Remove Colorsetter Tail Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_tail_shader"
+	bl_label = "Remove Colorsetter Tail Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'tail')
+		return {'FINISHED'}
+	
+@register_wrap
+class ApplyColorsetterSkinShader(bpy.types.Operator):
+	"""Apply Colorsetter Skin Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_skin_shader"
+	bl_label = "Apply Colorsetter Skin Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		add_colorsetter_shader(context,"skin")
+		return {'FINISHED'}
+	
+@register_wrap
+class RemoveColorsetterSkinShader(bpy.types.Operator):
+	"""Remove Colorsetter Skin Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_skin_shader"
+	bl_label = "Remove Colorsetter Skin Shader"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+		remove_colorsetter_shader(context,'skin')
+		return {'FINISHED'}
+	
+
+
+
 

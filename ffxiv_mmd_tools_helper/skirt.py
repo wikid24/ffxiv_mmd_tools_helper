@@ -226,7 +226,7 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     #create skirt material and assign it to the mesh
     skirt_mat = bpy.data.materials.new(name="new_skirt_mat")
     skirt_mat.use_nodes = True
-    skirt_mat.node_tree.nodes["Principled BSDF"].inputs[21].default_value = 0.1 #set alpha to 10%
+    skirt_mat.node_tree.nodes["Principled BSDF"].inputs["Alpha"].default_value = 0.1 #set alpha to 10%
     skirt_mesh.active_material = skirt_mat
     skirt_mesh.active_material.blend_method = 'BLEND'
     
@@ -240,6 +240,7 @@ def generate_new_skirt(num_bone_parents,num_segments,num_subdivisions,radius_tai
     # Select the mesh and make it the active object
     skirt_mesh.select_set(True)
     bpy.context.view_layer.objects.active = skirt_mesh
+    #skirt_mesh.parent = skirt_arm.parent
 
     
 

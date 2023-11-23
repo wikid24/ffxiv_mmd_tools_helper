@@ -435,7 +435,6 @@ class CameraLightingPanel_MTH(bpy.types.Panel):
 """
 @register_wrap
 class ShadingAndToonsPanel_MTH(bpy.types.Panel):
-	#User can modify the rendering of toon texture color
 	bl_idname = "OBJECT_PT_ShadingAndToonsPanel_MTH"
 	bl_label = "Shaders"
 	bl_space_type = "VIEW_3D"
@@ -452,7 +451,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		# Colorsetter Addon Stuff
 		row = layout.row()
-		row.label(text="Colorset Texture Folder:")
+		row.label(text="Colorsetter Gear Texture Folder:")
 		row = layout.row()
 		grid = row.grid_flow(columns=2,align=True)
 		grid.prop(context.scene,"shaders_texture_folder", text = "")
@@ -473,8 +472,15 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				mektools_skin_node = None
 				mektools_eye_node = None
 				colorsetter_eye_node = None
+				colorsetter_hair_node = None
+				colorsetter_face_node = None
+				colorsetter_faceacc_node = None
+				colorsetter_tail_node = None
+				colorsetter_skin_node = None
 				eye_catchlight_node = None
 				eye_catchlight_mix_node = None
+
+				mat_replace_shader_added = False
 
 				
 				for node in node_tree.nodes:
@@ -485,6 +491,27 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					# Find the Colorsetter Eye Group node
 					if node.type == 'GROUP' and node.name.startswith('colorsetter_eye_node_instance'):
 						colorsetter_eye_node = node
+
+					# Find the Colorsetter Hair Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_hair_node_instance'):
+						colorsetter_hair_node = node
+
+					# Find the Colorsetter Face Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_face_node_instance'):
+						colorsetter_face_node = node
+
+					# Find the Colorsetter Face Accent Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_faceacc_node_instance'):
+						colorsetter_faceacc_node = node
+
+					# Find the Colorsetter Tail Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_tail_node_instance'):
+						colorsetter_tail_node = node
+
+					# Find the Colorsetter Skin Group node
+					if node.type == 'GROUP' and node.name.startswith('colorsetter_skin_node_instance'):
+						colorsetter_skin_node = node
+
 
 
 					# Find the MekTools Skin Shader group node
@@ -497,13 +524,13 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						#mektools_skin_node = context.active_object.active_material.node_tree.nodes['Group']
 						mektools_eye_node = node 
 
+					#find the Eye Catchlight nodes
 					if node.type =='GROUP' and node.node_tree.name.startswith('ffxiv_mmd_eye_catchlight'):
 						eye_catchlight_node = node
-					
 					if node.type == 'MIX_SHADER' and node.name == 'ffxiv_mmd_eye_catchlight_mix_shader':
 						eye_catchlight_mix_node = node
 
-						
+
 				#Glossy BSDF panel
 				if glossy_bsdf_node:
 					row = layout.row()
@@ -514,6 +541,16 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					row = layout.row()
 					row.operator("ffxiv_mmd.apply_glossy_shader", text="Add Glossy Shader")
 
+				#Eye Catchlight panel
+				if eye_catchlight_node:
+					row = layout.row()
+					grid.label(text="Eye Catchlight Settings")
+					grid = row.grid_flow(columns=2,align=True)
+					grid.prop(eye_catchlight_mix_node.inputs['Fac'], "default_value", text="Eye Catchlight Mix")
+					grid.operator("ffxiv_mmd.remove_catchlight_shader", text="", icon='X')
+				else:
+					row = layout.row()
+					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
 
 
 				#MekTools skin panel
@@ -535,21 +572,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 					if 'Roughness' in mektools_skin_node.node_tree.nodes:
 						grid.prop(context.scene, "mektools_skin_prop_roughness", text="Roughness", slider=True)	
-				else:
-					row = layout.row()
-					row.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Add MekTools Skin Shaders")
 
-				
-				#Eye Catchlight panel
-				if eye_catchlight_node:
-					row = layout.row()
-					grid.label(text="Eye Catchlight Settings")
-					grid = row.grid_flow(columns=2,align=True)
-					grid.prop(eye_catchlight_mix_node.inputs['Fac'], "default_value", text="Eye Catchlight Mix")
-					grid.operator("ffxiv_mmd.remove_catchlight_shader", text="", icon='X')
-				else:
-					row = layout.row()
-					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
 
 				#MekTools Eye panel
 				if mektools_eye_node:
@@ -597,10 +620,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(mektools_eye_diffuse_file,"image",text="Diffuse File")
 					grid.prop(mektools_eye_node.node_tree.nodes["Image Texture.011"],"image",text="Catchlight File")
 
-				elif colorsetter_eye_node is None:
-					row = layout.row()
-					row.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Add MekTools Eye Shader")
-		
+
 				#Colorsetter Eye panel
 				if colorsetter_eye_node:
 					colorsetter_eye_color = colorsetter_eye_node.inputs['Eye Color']
@@ -621,17 +641,215 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_eye_odd_color,"default_value",text='Odd Eye Color')
 						grid = box.grid_flow(columns=1,align=True)
 						grid.prop(colorsetter_eye_specular_decay,"default_value",text='Specular Decay',slider=True)
-					grid = box.grid_flow(columns=1,align=True)
-					if colorsetter_eye_multi_node:
-						grid.prop(colorsetter_eye_multi_node,"image",text='Multi Texture')
-					if colorsetter_eye_normal_node:
-						grid.prop(colorsetter_eye_normal_node,"image",text='Normal Texture')
+
+
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_eye_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_eye_normal_node,"image",text='Normal')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_eye_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_eye_normal_node.name
+						grid = box.grid_flow(columns=1,align=True)
 						grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+
+
+				#Colorsetter Hair panel
+				if colorsetter_hair_node:
+					colorsetter_hair_color = colorsetter_hair_node.inputs['Hair Color']
+					colorsetter_hair_highlights_color = colorsetter_hair_node.inputs['Highlights Color']
+					colorsetter_hair_highlights_enabled = colorsetter_hair_node.inputs['Enable Highlights']
+					colorsetter_hair_anisotropy = colorsetter_hair_node.inputs['Disable Hair Anisotropy']
+					colorsetter_hair_multi_node = colorsetter_hair_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_hair_normal_node = colorsetter_hair_node.inputs['Normal Texture'].links[0].from_node
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Hair Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_hair_shader", text="", icon='X')
+					
+					
+					if colorsetter_hair_color:
+						grid = box.grid_flow(columns=3,align=True)
+						grid.prop(colorsetter_hair_color,"default_value",text='Hair Color')
+						grid.prop(colorsetter_hair_highlights_enabled,"default_value",text='Mix', slider=True)
+						grid.prop(colorsetter_hair_highlights_color,"default_value",text='Highlights Color')
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_hair_anisotropy,"default_value",text='Anisotropy',slider=True)
+					
 						
 						
-				elif mektools_eye_node is None:
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_hair_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_hair_normal_node,"image",text='Normal')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_hair_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_hair_normal_node.name
+							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+
+				#Colorsetter Face panel
+				if colorsetter_face_node:
+					colorsetter_face_skin_color = colorsetter_face_node.inputs['Skin Color']
+					colorsetter_face_sss = colorsetter_face_node.inputs['Enable SSS']
+					colorsetter_face_lip_color_mix = colorsetter_face_node.inputs['Lip Color Enabled']
+					colorsetter_face_lip_color = colorsetter_face_node.inputs['Lip Color']
+					colorsetter_face_lip_lightdark = colorsetter_face_node.inputs['Light/Dark Lips']
+					colorsetter_face_lip_brightness = colorsetter_face_node.inputs['Lip Brightness/Opacity']
+					colorsetter_face_facepaint_mix = colorsetter_face_node.inputs['Face Paint Enabled']
+					colorsetter_face_facepaint_color = colorsetter_face_node.inputs['Face Paint Color']
+					colorsetter_face_facepaint_lightdark = colorsetter_face_node.inputs['Face Paint Light/Dark']
+					colorsetter_face_facepaint_brightness = colorsetter_face_node.inputs['Face Paint Brightness/Opacity']
+					
+					colorsetter_face_diffuse_node = colorsetter_face_node.inputs['Diffuse Texture'].links[0].from_node
+					colorsetter_face_facepaint_node = colorsetter_face_node.inputs['Face Paint Texture'].links[0].from_node
+					colorsetter_face_multi_node = colorsetter_face_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_face_normal_node = colorsetter_face_node.inputs['Normal Texture'].links[0].from_node
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Face Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_face_shader", text="", icon='X')
+					
+					
+					if colorsetter_face_skin_color:
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_face_skin_color,"default_value",text='Skin Color')
+						grid.prop(colorsetter_face_sss,"default_value",text='Subsurface Scattering', slider=True)
+						grid.prop(colorsetter_face_lip_color,"default_value",text='Lip Color')
+						grid.prop(colorsetter_face_lip_color_mix,"default_value",text='Lip Color Mix',slider=True)
+						grid.prop(colorsetter_face_lip_lightdark,"default_value",text='Lip Light/Dark',slider=True)
+						grid.prop(colorsetter_face_lip_brightness,"default_value",text='Lip Brightness/Opacity',slider=True)
+						grid.prop(colorsetter_face_facepaint_mix,"default_value",text='Facepaint Mix',slider=True)
+						grid.prop(colorsetter_face_facepaint_color,"default_value",text='Facepaint Color')
+						grid.prop(colorsetter_face_facepaint_lightdark,"default_value",text='Facepaint Light/Dark')
+						grid.prop(colorsetter_face_facepaint_brightness,"default_value",text='Facepaint Brightness/Opacity')
+												
+						
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_face_diffuse_node,"image",text='Diffuse')
+						grid.prop(colorsetter_face_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_face_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_face_facepaint_node,"image",text='Facepaint')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_diffuse_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_normal_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_facepaint_node.name
+							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+				#Colorsetter Face Accent panel
+				if colorsetter_faceacc_node:
+					colorsetter_faceacc_hair_color = colorsetter_faceacc_node.inputs['Hair Color']
+					colorsetter_faceacc_hair_color_brighten = colorsetter_faceacc_node.inputs['Hair Color Brighten']
+					colorsetter_faceacc_tattoo_color = colorsetter_faceacc_node.inputs['Tattoo Color']
+					colorsetter_faceacc_limbal_color = colorsetter_faceacc_node.inputs['Limbal Ring Color']
+					colorsetter_faceacc_limbal_mix = colorsetter_faceacc_node.inputs['Limbal Ring Enabled']
+					colorsetter_faceacc_limbal_intensity = colorsetter_faceacc_node.inputs['Limbal Ring Intensity']
+					colorsetter_faceacc_multi_node = colorsetter_faceacc_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_faceacc_normal_node = colorsetter_faceacc_node.inputs['Normal Texture'].links[0].from_node
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Face Accent Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_faceacc_shader", text="", icon='X')
+					
+					
+					if colorsetter_faceacc_hair_color:
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_faceacc_hair_color,"default_value",text='Hair Color')
+						grid.prop(colorsetter_faceacc_hair_color_brighten,"default_value",text='Mix', slider=True)
+						grid.prop(colorsetter_faceacc_tattoo_color,"default_value",text='Tattoo Color')
+						grid.prop(colorsetter_faceacc_limbal_color,"default_value",text='Limbal Ring Color')
+						grid.prop(colorsetter_faceacc_limbal_mix,"default_value",text='Limbal Mix')
+						grid.prop(colorsetter_faceacc_limbal_intensity,"default_value",text='Limbal Intensity')
+						
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_faceacc_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_faceacc_normal_node,"image",text='Normal')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_faceacc_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_faceacc_normal_node.name
+							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+				#Colorsetter Tail panel
+				if colorsetter_tail_node:
+					colorsetter_tail_hair_color = colorsetter_tail_node.inputs['Hair Color']
+					colorsetter_tail_highlights_mix = colorsetter_tail_node.inputs['Enable Highlights']
+					colorsetter_tail_highlights_color = colorsetter_tail_node.inputs['Highlight Color']
+					colorsetter_tail_multi_node = colorsetter_tail_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_tail_normal_node = colorsetter_tail_node.inputs['Normal Texture'].links[0].from_node
+					
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Tail Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_tail_shader", text="", icon='X')
+					
+					
+					if colorsetter_tail_hair_color:
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_tail_hair_color,"default_value",text='Hair Color')
+						grid.prop(colorsetter_tail_highlights_color,"default_value",text='Highlight Color')
+						grid.prop(colorsetter_tail_highlights_mix,"default_value",text='Highlight Mix')
+						
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_tail_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_tail_normal_node,"image",text='Normal')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_tail_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_tail_normal_node.name
+							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+				#Colorsetter Skin panel
+				if colorsetter_skin_node:
+					colorsetter_skin_color = colorsetter_skin_node.inputs['Skin Color']
+					colorsetter_skin_sss = colorsetter_skin_node.inputs['Enable SSS']
+					colorsetter_skin_diffuse_node = colorsetter_skin_node.inputs['Diffuse Texture'].links[0].from_node
+					colorsetter_skin_multi_node = colorsetter_skin_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_skin_normal_node = colorsetter_skin_node.inputs['Normal Texture'].links[0].from_node
+					
+
+					box = layout.box()
+					grid = box.grid_flow(columns=2,align=True)
+					grid.label(text="Colorsetter Skin Settings")
+					grid.operator("ffxiv_mmd.remove_colorsetter_skin_shader", text="", icon='X')
+					
+					
+					if colorsetter_skin_color:
+						grid = box.grid_flow(columns=1,align=True)
+						grid.prop(colorsetter_skin_color,"default_value",text='Skin Color')
+						grid.prop(colorsetter_skin_sss,"default_value",text='Subsurface Scattering')
+						
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_skin_diffuse_node,"image",text='Diffuse')
+						grid.prop(colorsetter_skin_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_skin_normal_node,"image",text='Normal')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_skin_diffuse_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_skin_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_skin_normal_node.name
+							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
+
+
+				
+				if mektools_skin_node or mektools_eye_node or colorsetter_eye_node or colorsetter_hair_node or colorsetter_face_node or colorsetter_faceacc_node or colorsetter_tail_node or colorsetter_skin_node:
+						mat_replace_shader_added =True
+
+
+				if 	mat_replace_shader_added == False:
+				
 					row = layout.row()
-					row.operator("ffxiv_mmd.apply_colorsetter_eye_shader", text="Add Colorsetter Eye Shader")
+					row.label(text = 'Apply MekTools Shader')
+					row = layout.row()
+					grid = row.grid_flow(columns=2,align=True)
+					grid.operator("ffxiv_mmd.apply_mektools_skin_shader", text="Skin")
+					grid.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Eyes")
+					row = layout.row()
+					row.label(text = 'Apply Colorsetter Shader')
+					row = layout.row()
+					grid = row.grid_flow(columns=2, align=True)
+					grid.operator("ffxiv_mmd.apply_colorsetter_skin_shader", text="Skin")
+					grid.operator("ffxiv_mmd.apply_colorsetter_face_shader", text="Face")
+					grid.operator("ffxiv_mmd.apply_colorsetter_hair_shader", text="Hair")
+					grid.operator("ffxiv_mmd.apply_colorsetter_eye_shader", text="Eyes")
+					grid.operator("ffxiv_mmd.apply_colorsetter_faceacc_shader", text="Face Accent")
+					grid.operator("ffxiv_mmd.apply_colorsetter_tail_shader", text="Hrothgar/Miqote Tail")
+					
 
 
 		# Background Color changer Stuff 

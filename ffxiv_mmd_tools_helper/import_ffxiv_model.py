@@ -181,9 +181,9 @@ def import_ffxiv_model(context,file_path):
 		textools_saved_folder = addon_prefs.textools_saved_folder
 
 		# Check if textools_saved_folder is not None
-		if context.scene.textools_model_folder:
-			if os.path.exists(os.path.abspath(context.scene.textools_model_folder)):
-				textools_folder = os.path.abspath(context.scene.textools_model_folder)
+		if context.scene.textools_saved_folder:
+			if os.path.exists(os.path.abspath(context.scene.textools_saved_folder)):
+				textools_folder = os.path.abspath(context.scene.textools_saved_folder)
 
 		elif textools_saved_folder:
 			if os.path.exists(os.path.abspath(textools_saved_folder)):

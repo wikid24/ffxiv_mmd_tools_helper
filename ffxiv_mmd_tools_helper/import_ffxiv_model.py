@@ -465,7 +465,7 @@ def main(context):
 from bpy_extras.io_utils import ImportHelper
 @register_wrap
 class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
-	"""Operator that opens the file browser dialog"""
+	"""Import a FFXIV .fbx Model File from TexTools"""
 	bl_idname = "ffxiv_mmd.ffxiv_file_browser_operator"
 	bl_label = "Import FFXIV .fbx File"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -488,7 +488,7 @@ class FFXIV_FileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 
 @register_wrap
 class ImportFFXIVModel(bpy.types.Operator):
-	"""Import FFXIV Test Model"""
+	"""Import a sample FFXIV .fbx Model File (created from TexTools)"""
 	bl_idname = "ffxiv_mmd.import_ffxiv_model"
 	bl_label = "Import FFXIV Test Model"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -532,9 +532,9 @@ class SelectTexToolsModelFolder(bpy.types.Operator):
 	
 
 
-	bpy.types.Scene.textools_model_folder = bpy.props.StringProperty(
-		name="TexTools Model Folder"
-		, description="Folder for where TexTools stores FFXIV gear files"
+	bpy.types.Scene.textools_saved_folder = bpy.props.StringProperty(
+		name="TexTools 'Saved' Folder"
+		, description="Folder where FFXIV TexTools stores it's texture files"
 		, default=''
 		, maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
 	
@@ -545,8 +545,8 @@ class SelectTexToolsModelFolder(bpy.types.Operator):
 	def execute(self, context):
 		#self.textools_model_folder = context.preferences.addons['ffxiv_mmd_tools_helper'].preferences.textools_saved_folder.title()
 
-		context.scene.textools_model_folder = bpy.path.abspath(context.scene.textools_model_folder)
-		folder_path = context.scene.textools_model_folder
+		context.scene.textools_saved_folder = bpy.path.abspath(context.scene.textools_saved_folder)
+		folder_path = context.scene.textools_saved_folder
 		print(folder_path)
 		return {'FINISHED'}
 	

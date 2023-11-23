@@ -733,7 +733,7 @@ def main(context,filepath,apply_charafile_to_selected=None):
 from bpy_extras.io_utils import ImportHelper
 @register_wrap
 class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
-	"""Operator that opens the file browser dialog for .chara files from Anamnesis and applies it to currently selected armature"""
+	"""Read .chara files from Anamnesis and apply settings directly to currently selected armature"""
 	bl_idname = "ffxiv_mmd.apply_ffxiv_chara_file_browser_operator"
 	bl_label = "Apply .chara File"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -762,7 +762,7 @@ class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 	
 @register_wrap
 class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
-	"""Operator that opens the file browser dialog for .chara files from Anamnesis"""
+	"""Read .chara files from Anamnesis and output those settings to Blender Console Window"""
 	bl_idname = "ffxiv_mmd.read_ffxiv_chara_file_browser_operator"
 	bl_label = "Read .chara File"
 	bl_options = {'REGISTER', 'UNDO'}

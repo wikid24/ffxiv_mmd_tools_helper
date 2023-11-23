@@ -36,8 +36,8 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		row = layout.row()
 		row.label(text="TexTools 'Saved' Folder:")
 		row = layout.row()
-		row.prop(context.scene,"textools_model_folder", text = "")
-		#row.operator("ffxiv_mmd.select_textools_model_folder", text="Select TexTools 'Saved' Folder")
+		row.prop(context.scene,"textools_saved_folder", text = "")
+		#row.operator("ffxiv_mmd.textools_saved_folder", text="Select TexTools 'Saved' Folder")
 
 		row = layout.row()
 		row.label(text="Anamnesis .chara File:")

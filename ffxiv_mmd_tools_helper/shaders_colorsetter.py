@@ -301,7 +301,7 @@ def apply_material_to_all_matching_ffxiv_meshes (source_object):
 
 @register_wrap
 class SelectMaterialsFolder(bpy.types.Operator):
-	"""User can select the folder for materials"""
+	"""Apply the Colorsetter addon to the selected mesh using DDS/PNG/BMP textures from the selected folder"""
 	bl_idname = "ffxiv_mmd.select_materials_folder"
 	bl_label = "Select Materials Folder"
 	bl_options = {'REGISTER', 'UNDO'}

@@ -76,12 +76,12 @@ def create_decal_node_group(active_material,decal_slot_id):
 		node_group.inputs.new("NodeSocketShader", "Shader")
 		node_group.inputs.new("NodeSocketColor", "Base Color")
 		node_group.inputs["Base Color"].default_value = (1.0, 1.0, 1.0, 1.0)  # (R, G, B, A)
-		node_group.inputs.new("NodeSocketFloatFactor", "Subsurface")
-		node_group.inputs['Subsurface'].min_value = 0
-		node_group.inputs['Subsurface'].max_value = 1
-		node_group.inputs['Subsurface'].default_value = 0
-		node_group.inputs.new("NodeSocketColor", "Subsurface Color")
-		node_group.inputs["Subsurface Color"].default_value = (0, 0, 0, 1.0)  # (R, G, B, A)
+		#node_group.inputs.new("NodeSocketFloatFactor", "Subsurface")
+		#node_group.inputs['Subsurface'].min_value = 0
+		#node_group.inputs['Subsurface'].max_value = 1
+		#node_group.inputs['Subsurface'].default_value = 0
+		#node_group.inputs.new("NodeSocketColor", "Subsurface Color")
+		#node_group.inputs["Subsurface Color"].default_value = (0, 0, 0, 1.0)  # (R, G, B, A)
 		node_group.inputs.new("NodeSocketFloatFactor", "Specular")
 		node_group.inputs['Specular'].min_value = 0
 		node_group.inputs['Specular'].max_value = 1
@@ -90,6 +90,10 @@ def create_decal_node_group(active_material,decal_slot_id):
 		node_group.inputs['Roughness'].min_value = 0
 		node_group.inputs['Roughness'].max_value = 1
 		node_group.inputs['Roughness'].default_value = 0
+		node_group.inputs.new("NodeSocketFloatFactor", "Alpha")
+		node_group.inputs['Alpha'].min_value = 0
+		node_group.inputs['Alpha'].max_value = 1
+		node_group.inputs['Alpha'].default_value = 1
 	else:
 		input_node = node_group.nodes.get('ffxiv_mmd_decal_input_'+str(decal_slot_id))
 
@@ -143,6 +147,21 @@ def create_decal_node_group(active_material,decal_slot_id):
 	# Connect UV Node to Decal Image Node
 	node_group.links.new(uv_node.outputs[0], image_node.inputs[0])
 
+	# Create Decal Alpha Mix Node
+	if 'ffxiv_mmd_decal_alpha_'+str(decal_slot_id) not in node_group.nodes:
+		alpha_node = node_group.nodes.new(type='ShaderNodeMix')
+		alpha_node.name = 'ffxiv_mmd_decal_alpha_'+str(decal_slot_id)
+		alpha_node.location = (node_location_cursor_x, node_location_cursor_y +200)
+		node_location_cursor_x += 300
+		output_node.location = (node_location_cursor_x, node_location_cursor_y)
+		#image_node.image.colorspace_settings.name = 'Non-Color'
+	else: 
+		image_node = node_group.nodes.get('ffxiv_mmd_decal_img_'+str(decal_slot_id))
+
+	# Connect Image Node to Alpha Mix Node
+	node_group.links.new(image_node.outputs[0], alpha_node.inputs[3])
+
+
 	# Create Principled BSDF Node
 	if 'ffxiv_mmd_decal_bsdf_'+str(decal_slot_id) not in node_group.nodes:
 		bsdf_node = node_group.nodes.new(type='ShaderNodeBsdfPrincipled')
@@ -154,11 +173,13 @@ def create_decal_node_group(active_material,decal_slot_id):
 	else: 
 		bsdf_node = node_group.nodes.get('ffxiv_mmd_decal_bsdf_'+str(decal_slot_id))
 	
+	#link all nodes to Group Input node
 	node_group.links.new(input_node.outputs["Base Color"], bsdf_node.inputs["Base Color"])
-	node_group.links.new(input_node.outputs["Subsurface"], bsdf_node.inputs["Subsurface"])
-	node_group.links.new(input_node.outputs["Subsurface Color"], bsdf_node.inputs["Subsurface Color"])
+	#node_group.links.new(input_node.outputs["Subsurface"], bsdf_node.inputs["Subsurface"])
+	#node_group.links.new(input_node.outputs["Subsurface Color"], bsdf_node.inputs["Subsurface Color"])
 	node_group.links.new(input_node.outputs["Specular"], bsdf_node.inputs["Specular"])
 	node_group.links.new(input_node.outputs["Roughness"], bsdf_node.inputs["Roughness"])
+	node_group.links.new(input_node.outputs["Alpha"], alpha_node.inputs["Factor"])
 
 
 	# Create Mix Shader Node
@@ -171,8 +192,8 @@ def create_decal_node_group(active_material,decal_slot_id):
 	else:
 		mix_node = node_group.nodes.get('ffxiv_mmd_decal_mix_'+str(decal_slot_id))
 
-	# Connect Decal Image to Mix Shader Fac
-	node_group.links.new(image_node.outputs[0], mix_node.inputs[0])
+	# Connect Alpha to Mix Shader Fac
+	node_group.links.new(alpha_node.outputs[0], mix_node.inputs[0])
 
 	# Connect Original Input to Mix Shader Shader 1
 	node_group.links.new(input_node.outputs["Shader"], mix_node.inputs[1])

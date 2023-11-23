@@ -690,10 +690,11 @@ def create_decal_controls(layout, decal_index, active_material):
 			grid.prop_search(image_node, "image", bpy.data, "images", text="Image")
 			grid.operator('ffxiv_mmd.insert_image_decal', text='', icon='FILE_FOLDER').decal_slot_id = decal_index
 			
-			grid = box.grid_flow(columns=3, align=True)
-			grid.prop(decal_node_instance.inputs["Base Color"], "default_value", text="Base")
-			grid.prop(decal_node_instance.inputs['Subsurface'], "default_value", text="Mix", slider=True)
-			grid.prop(decal_node_instance.inputs["Subsurface Color"], "default_value", text="Subsurface")
+			grid = box.grid_flow(columns=2, align=True)
+			grid.prop(decal_node_instance.inputs["Base Color"], "default_value", text="Color")
+			grid.prop(decal_node_instance.inputs["Alpha"], "default_value", text="Alpha")
+			#grid.prop(decal_node_instance.inputs['Subsurface'], "default_value", text="Mix", slider=True)
+			#grid.prop(decal_node_instance.inputs["Subsurface Color"], "default_value", text="Subsurface")
 			
 			grid = box.grid_flow(columns=2, align=True)
 			grid.prop(decal_node_instance.inputs["Roughness"], "default_value", text="Roughness")

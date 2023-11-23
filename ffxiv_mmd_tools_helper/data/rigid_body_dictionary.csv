@@ -1,39 +1,39 @@
 ﻿rigid_body_name,bone_name,offset_x,offset_y,offset_z,offset_rot_x,offset_rot_y,offset_rot_z,reset_rot_x,reset_rot_y,reset_rot_z,name_j,name_e,rigid_type,rigid_shape,x,y,z,mass,bounce,friction,collision_group,collision_group_mask,linear_damping,angular_damping
-head,head,,0.05,0.06,,,,,,,$name_j,$name_e,0,CAPSULE,0.075,0.03,,1,0,0.5,0,0,0.5,0.5
-face,head,,,,,,,,,,face,face,0,SPHERE,0.05,,,1,0,0.5,0,0,0.5,0.5
-neck,neck,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.12,,1,0,0.5,0,0,0.5,0.5
-j_sebo_c,j_sebo_c,,,,,,,,,,$name_j,$name_e,0,SPHERE,0.1,,,1,0,0.5,0,0,0.5,0.5
-upper body 2,upper body 2,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.14,,1,0,0.5,0,0,0.5,0.5
-upper body 2b,upper body 2,,-0.02,,,11,,,,,upper body 2b,upper body 2b,0,CAPSULE,0.09,0.15,,1,0,0.5,0,0,0.5,0.5
-upper body,upper body,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.07,0.03,,1,0,0.5,0,0,0.5,0.5
-upper_body b,upper body,,-0.03,,,,,,,,upper_body b,upper_body b,0,CAPSULE,0.08,0.25,,1,0,0.5,0,0,0.5,0.5
+head,head,,0.05,0.06,,,,,,,$name_j,$name_e,0,CAPSULE,0.075,0.03,,1,0,0.5,0,0\2,0.5,0.5
+face,head,,,,,,,,,,face,face,0,SPHERE,0.05,,,1,0,0.5,0,0\2,0.5,0.5
+neck,neck,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.12,,1,0,0.5,0,0\2,0.5,0.5
+j_sebo_c,j_sebo_c,,,,,,,,,,$name_j,$name_e,0,SPHERE,0.1,,,1,0,0.5,0,0\2,0.5,0.5
+upper body 2,upper body 2,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.14,,1,0,0.5,0,0\2,0.5,0.5
+upper body 2b,upper body 2,,-0.02,,,11,,,,,upper body 2b,upper body 2b,0,CAPSULE,0.09,0.15,,1,0,0.5,0,0\2,0.5,0.5
+upper body,upper body,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.07,0.03,,1,0,0.5,0,0\2,0.5,0.5
+upper_body b,upper body,,-0.03,,,,,,,,upper_body b,upper_body b,0,CAPSULE,0.08,0.25,,1,0,0.5,0,0\2,0.5,0.5
 j_mune_l,j_mune_l,0.01,-0.05,0.02,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.1,0,0,0,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.9,0.95
 j_mune_r,j_mune_r,-0.01,-0.05,0.02,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.1,0,0,0,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.9,0.95
 j_mune_core,j_mune_core,,-0.03,-0.03,,90,,,y,y,$name_j,$name_e,0,CAPSULE,0.08,0.07,,1,0,0,0,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0,0
-j_mune_l_top,j_mune_l_top,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-j_mune_l_mid,j_mune_l_mid,,,,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.200000003,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-j_mune_l_bot,j_mune_l_bot,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-j_mune_r_top,j_mune_r_top,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-j_mune_r_mid,j_mune_r_mid,,,,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.200000003,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-j_mune_r_bot,j_mune_r_bot,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,4,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
-shoulder_L,shoulder_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.08,0.08,,1,0,0.5,0,0,0.5,0.5
-shoulder_R,shoulder_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.08,0.08,,1,0,0.5,0,0,0.5,0.5
-arm_L,arm_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.28,,1,0,0.5,0,0,0.5,0.5
-arm_R,arm_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.28,,1,0,0.5,0,0,0.5,0.5
-elbow_L,elbow_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.05,0.25,,1,0,0.5,0,0,0.5,0.5
-elbow_R,elbow_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.05,0.25,,1,0,0.5,0,0,0.5,0.5
-wrist_L,wrist_L,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0,0.5,0.5
-wrist_R,wrist_R,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0,0.5,0.5
-lower body,lower body,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.1,0.08,,1,0,0.5,1,0,0.5,0.5
-lower body b,lower body,,0.018,-0.04,,90,,,y,y,lower body b,lower body b,0,CAPSULE,0.105,0.07,,1,0,0.5,1,0,0.5,0.5
-leg_L,leg_L,,0.01,0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0,0.5,0.5
-leg_R,leg_R,,0.01,-0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0,0.5,0.5
-knee_L,knee_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.077,0.0265,,1,0,0.5,1,0,0.5,0.5
-knee_R,knee_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.077,0.0265,,1,0,0.5,1,0,0.5,0.5
-j_asi_c_l,j_asi_c_l,,0.03,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.4,,1,0,0.5,1,0,0.5,0.5
-j_asi_c_r,j_asi_c_r,,0.03,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.4,,1,0,0.5,1,0,0.5,0.5
-ankle_L,ankle_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.055,0.13,,1,0,0.5,1,0,0.5,0.5
-ankle_R,ankle_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.055,0.13,,1,0,0.5,1,0,0.5,0.5
+j_mune_l_top,j_mune_l_top,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+j_mune_l_mid,j_mune_l_mid,,,,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.200000003,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+j_mune_l_bot,j_mune_l_bot,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+j_mune_r_top,j_mune_r_top,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+j_mune_r_mid,j_mune_r_mid,,,,,,,,,,$name_j,$name_e,1,SPHERE,0.055,,,0.200000003,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+j_mune_r_bot,j_mune_r_bot,,,,,,,,,,$name_j,$name_e,1,CAPSULE,0.01,0.07,,0.100000001,0,0,2,0\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15,0.999899983,1
+shoulder_L,shoulder_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.08,0.08,,1,0,0.5,0,0\2,0.5,0.5
+shoulder_R,shoulder_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.08,0.08,,1,0,0.5,0,0\2,0.5,0.5
+arm_L,arm_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.28,,1,0,0.5,0,0\2,0.5,0.5
+arm_R,arm_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.28,,1,0,0.5,0,0\2,0.5,0.5
+elbow_L,elbow_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.05,0.25,,1,0,0.5,0,0\2,0.5,0.5
+elbow_R,elbow_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.05,0.25,,1,0,0.5,0,0\2,0.5,0.5
+wrist_L,wrist_L,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0\2,0.5,0.5
+wrist_R,wrist_R,,,,,,,,,,$name_j,$name_e,0,BOX,0.04,0.01,0.04,1,0,0.5,0,0\2,0.5,0.5
+lower body,lower body,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.1,0.08,,1,0,0.5,1,0\2,0.5,0.5
+lower body b,lower body,,0.018,-0.04,,90,,,y,y,lower body b,lower body b,0,CAPSULE,0.105,0.07,,1,0,0.5,1,0\2,0.5,0.5
+leg_L,leg_L,,0.01,0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0\2,0.5,0.5
+leg_R,leg_R,,0.01,-0.01,,,,,,,$name_j,$name_e,0,CAPSULE,0.09,0.28,,1,0,0.5,1,0\2,0.5,0.5
+knee_L,knee_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.077,0.0265,,1,0,0.5,1,0\2,0.5,0.5
+knee_R,knee_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.077,0.0265,,1,0,0.5,1,0\2,0.5,0.5
+j_asi_c_l,j_asi_c_l,,0.03,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.4,,1,0,0.5,1,0\2,0.5,0.5
+j_asi_c_r,j_asi_c_r,,0.03,,,,,,,,$name_j,$name_e,0,CAPSULE,0.06,0.4,,1,0,0.5,1,0\2,0.5,0.5
+ankle_L,ankle_L,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.055,0.13,,1,0,0.5,1,0\2,0.5,0.5
+ankle_R,ankle_R,,,,,,,,,,$name_j,$name_e,0,CAPSULE,0.055,0.13,,1,0,0.5,1,0\2,0.5,0.5
 j_kami_a,j_kami_a,,,,,,,,,,$name_j,$name_e,1,BOX,0.003,0.09,0.04,10,0,0.6,5,5\8\6\7\8\10,1,1
 j_kami_b,j_kami_b,,,,,,,,,,$name_j,$name_e,1,BOX,0.005,0.05,0.05,5,0,0.6,5,5\8\6\7\8\10,0.75,0.75
 j_ex_h0106_ke_f_a,j_ex_h0106_ke_f_a,,,,,,,,,,$name_j,$name_e,1,BOX,0.003,0.024,0.022,10,0,0.6,6,5\8\6\7\8\10,1,1

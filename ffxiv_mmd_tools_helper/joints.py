@@ -70,7 +70,7 @@ def remove_orphaned_joints(armature):
 				bpy.data.objects.remove(obj, do_unlink=True)
 
 
-def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation=None
+def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,move_to_rigid_bone_tail = None,use_bone_rotation=None
 				,limit_linear_lower=None,limit_linear_upper=None
 				,limit_angular_lower=None,limit_angular_upper=None
 				, spring_linear=None,spring_angular=None):
@@ -132,6 +132,16 @@ def create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation
 		#joint.rotation_euler[0] = 0 #sets x rotation to 0
 		bpy.context.view_layer.objects.active = joint
 		print ('created joint: ',joint.name)
+
+		#moves the joint to the selected bone's tail position
+		if move_to_rigid_bone_tail == 1 or move_to_rigid_bone_tail == 2:
+			if move_to_rigid_bone_tail == 1:
+				rigid_body_bone = rigid_body.get_bone_from_rigid_body(object_1)
+			elif move_to_rigid_bone_tail == 2:
+				rigid_body_bone = rigid_body.get_bone_from_rigid_body(object_2)
+			#print(f"we got here yo! joint:{joint.name}, rigid_body bone:{rigid_body_bone}")
+			joint.location = rigid_body_bone.tail_local
+
 		
 		return joint
 	else: 
@@ -144,6 +154,7 @@ def apply_all_joints(armature,joints_data):
 			joint_name = joint['joint_name']
 			rigid_body_1 = joint['rigid_body_1']
 			rigid_body_2 = joint['rigid_body_2']
+			move_to_rigid_bone_tail = joint['move_to_rigid_bone_tail']
 			use_bone_rotation = joint['use_bone_rotation']
 			limit_linear_lower = [joint['linear_min_x'],joint['linear_min_y'],joint['linear_min_z']]
 			limit_linear_upper = [joint['linear_max_x'],joint['linear_max_y'],joint['linear_max_z']]
@@ -152,7 +163,7 @@ def apply_all_joints(armature,joints_data):
 			spring_linear = [joint['linear_spring_x'],joint['linear_spring_y'],joint['linear_spring_z']]
 			spring_angular= [joint['angular_spring_x'],joint['angular_spring_y'],joint['angular_spring_z']]
 
-			create_joint(armature,joint_name,rigid_body_1,rigid_body_2,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
+			create_joint(armature,joint_name,rigid_body_1,rigid_body_2,move_to_rigid_bone_tail,use_bone_rotation,limit_linear_lower,limit_linear_upper,limit_angular_lower,limit_angular_upper, spring_linear,spring_angular)
 
 	return armature
 			

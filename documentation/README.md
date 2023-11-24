@@ -1124,6 +1124,10 @@ Used for making sure MMD Tools doesn't crash or act weird when physics is turned
 Scans the armature for any joints that exist but it cannot find either of the two rigid bodies that it is supposed to be attached to. This will delete these joints. 
 Used for making sure MMD Tools doesn't crash or act weird when physics is turned on. Sometimes you delete a rigid body, and this happens. I delete rigid bodies a lot, and this has been extremely useful to me.
 
+#### Reset Selected Edit Bone Postions
+
+Resets the bone's position to the _original_ edit bone position that was captured upon [.fbx Import](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file) in the _local_ space
+
 ------
 
 ### Bust Slider

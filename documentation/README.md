@@ -378,12 +378,13 @@ In the case of issues with the [arms not moving properly or going through the bo
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c09f9db1-ef4f-417e-925c-9725c8d93519)
 
-Leverages the bone structure for boobs found on Genshin Impact models and applies the same 'style' to FFXIV boobs. 
-    j_mune_l/r renamed to j_mune_l/r_mid
-    mid bone is rotated 90 degrees and pointed downwards towards floor
-    new j_mune_l/r_top (parent bone to j_mune_l/r_mid)
-    new j_mune_l/r_bot
-    new j_mune_core (parent bone to the _top and _bot bones)
+Leverages the bone structure for boobs found on Genshin Impact models and applies the same 'style' to FFXIV boobs:
+
+- j_mune_l/r renamed to j_mune_l/r_mid
+- mid bone is rotated 90 degrees and pointed downwards towards
+- new j_mune_l/r_top (parent bone to j_mune_l/r_mid)
+- new j_mune_l/r_bot
+- new j_mune_core (parent bone to the _top and _bot bones)
 
 When combined with [converting this to an MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) and applying [Rigid Bodies from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#from-ffxiv-template) + [Joints from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints), give the boobs a better looking bounce effect.
 

@@ -101,9 +101,8 @@ Credits:
   - A bunch of other important useful stuff... Will list them all later!
 
 # To do:
-- Better skin/hair/clothing shaders so that the textures don't look so flat in Blender
 -  FFXIV Bone Morphs (facial animation sliders):
-  - Allow for user to upload their OWN csv file (instead of using the template in this addon)
+   - Allow for user to upload their OWN csv file (instead of using the template in this addon)
 - Add 'Transform Rigify armature to match ffxiv armature'
 - Add presets for skirt/hair for bulk-update to Rigid Bodies (skirts heaviest on the bottom, hair heaviest on the top?)
 - Create 'bulk-add joints' with min/max values:

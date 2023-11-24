@@ -3,17 +3,17 @@
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
 
 Sections:
-- [Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-model)
-- [Language and Translation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#language-and-translation)
-- [Bones and IK](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bones-and-ik)
-- [Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-bodies)
-- [Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints)
-- [Bone Morphs (Facial Expressions)](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions)
-- [Skirt](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skirt)
-- [Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#shaders)
-- [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
-- [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
-- [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
+- [Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#import-ffxiv-model)
+- [Language and Translation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#language-and-translation)
+- [Bones and IK](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bones-and-ik)
+- [Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#rigid-bodies)
+- [Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#joints)
+- [Bone Morphs (Facial Expressions)](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bone-morphs-facial-expressions)
+- [Skirt](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#skirt)
+- [Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#shaders)
+- [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#decals--face-paint)
+- [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#miscellaneous-tools)
+- [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#export-mmd-preparation)
 
 ------
 
@@ -22,13 +22,13 @@ Sections:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/79655313-f5e6-4415-97b8-de19a6b7650d)
 
 Sections:
-- [Import FFXIV .fbx File](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file)
-- [Load Sample](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#load-sample)
-- [Initialize MMD Struture](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture)
-- [TexTools 'Saved' Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#textools-saved-folder)
-- [Anamnesis .chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-read)
-- [Anamnesis .chara File Apply To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model)
-- [Color Swatches](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#color-swatches)
+- [Import FFXIV .fbx File](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#import-ffxiv-fbx-file)
+- [Load Sample](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#load-sample)
+- [Initialize MMD Struture](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#initialize-mmd-struture)
+- [TexTools 'Saved' Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#textools-saved-folder)
+- [Anamnesis .chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#anamnesis-chara-file-read)
+- [Anamnesis .chara File Apply To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#anamnesis-chara-file-apply-to-model)
+- [Color Swatches](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#color-swatches)
 
 
 ### Import FFXIV .fbx File
@@ -77,7 +77,7 @@ Sections:
  
 ### Load Sample
  
- - Import an example .fbx model that is included with the plugin, and applies the same transformations that [**Import FFXIV .fbx File**](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file) does:
+ - Import an example .fbx model that is included with the plugin, and applies the same transformations that [**Import FFXIV .fbx File**](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#import-ffxiv-fbx-file) does:
     - AuRa Female
     - Elezen Female
     - Hrothgar Male
@@ -151,14 +151,14 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-
     
 ### Anamnesis .chara File Apply To Model:
 
-In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-read) does, also:
+In addition to what [.chara File Read](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#anamnesis-chara-file-read) does, also:
  
 1) Applies the Facial Deformation Shape Keys (shp_brw_a, etc) to the _all_ the meshes attached to the selected armature with a matching shape key name by setting the values to 1.0. Values are mapped in the [Chara File Dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/chara_file_dictionary.csv)
 
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7c260f02-acba-4571-ba7b-f2e5cd4c7000)
 
  
-2) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
+2) Adds the FFXIV Race's MMD [Facial Expression Bone Morphs ](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bone-morphs-facial-expressions) (eye blink, smile, etc.) to the model (only works if the model has been converted to MMD Format). 
 
    ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7146a3b1-a699-40c1-a9f3-d96dd49b806b)
 
@@ -231,9 +231,9 @@ Displays for:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2705ac60-cca6-4ace-bd53-6db4a3c239b0)
 
 Sections:
-- [Mass Rename Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mass-rename-bones)
-- [Blender to MMD Jap](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#blender-to-mmd-jap)
-- [Swap Jap / Eng](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#swap-jap--eng)
+- [Mass Rename Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#mass-rename-bones)
+- [Blender to MMD Jap](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#blender-to-mmd-jap)
+- [Swap Jap / Eng](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#swap-jap--eng)
 
 ------
 
@@ -260,10 +260,10 @@ Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1fcd5396-ca1b-40bd-9056-7a144297acf3)
 
 Sections:
-- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#visibility-shortcuts)
-- [MMD Conversion Dropdown List](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mmd-conversion-dropdown-list)
-- [Find & Replace](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#find--replace)
-- [Bone Groups](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-groups)
+- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#visibility-shortcuts)
+- [MMD Conversion Dropdown List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#mmd-conversion-dropdown-list)
+- [Find & Replace](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#find--replace)
+- [Bone Groups](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bone-groups)
 
 ------
 
@@ -282,7 +282,7 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
     - Envelope
     - B-Bone
     - Wire
-- Hide/Show armature (shortcut to the **MMD Tools** hide/show armature button, only displayed if model has been [converted to MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) format):
+- Hide/Show armature (shortcut to the **MMD Tools** hide/show armature button, only displayed if model has been [converted to MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#initialize-mmd-struture) format):
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/36507716-0f5b-4bad-b976-b4af4d34a73e)
 
@@ -293,7 +293,7 @@ Shortcuts to the standard visibility options found on **Armature** -> **Viewport
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5262e25b-e78d-4b2d-be02-31f7f054699c)
 
 
-Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from ['FFXIV' to 'MMD English' format](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mass-rename-bones) for most of these to work._
+Various steps to add/remove certain bones to MMD Format. _NOTE: Bones must be renamed from ['FFXIV' to 'MMD English' format](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#mass-rename-bones) for most of these to work._
 
 #### Run Steps 1 to 12
 
@@ -301,7 +301,7 @@ Shortcut to running steps 1 to 12 in order
 
 #### 1  -  Remove unused bones (no vertex groups)
 
-Shortcut to [flag 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#flag-unused-bones-as-unused) and [delete 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#delete-unused-bones). 
+Shortcut to [flag 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#flag-unused-bones-as-unused) and [delete 'unused' bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#delete-unused-bones). 
 Removes any bones without any meshes attached. Useful since the standard FFXIV bone struture that is imported includes bones including ones with no meshes attached. Removing them makes the armature cleaner / easier to see in Blender
 
 #### 2  -  Correct MMD Root and Center bones
@@ -326,7 +326,7 @@ Adds 'view_cnt' bone. Not really needed in Blender, but it's a placeholder bone 
 
 #### 7  -  Correct Shoulder/Arm/Elbow Bone Lengths
 
-Adjusts the standard FFXIV Bone lengths and positions to be closer to a standard MMD model. THIS IS NOT PERFECT, but it definitely helps. I still haven't figured out the exact position in order to get VMD files to animate the arms 100%. If there are issues upon importing a VMD file, refer to this [FAQ question](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this).
+Adjusts the standard FFXIV Bone lengths and positions to be closer to a standard MMD model. THIS IS NOT PERFECT, but it definitely helps. I still haven't figured out the exact position in order to get VMD files to animate the arms 100%. If there are issues upon importing a VMD file, refer to this [FAQ question](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this).
 
 #### 8  -  Add Eyes Control Bone
 
@@ -363,7 +363,7 @@ And also adds the _special_ MMD Control bones (used to move the meshes in certai
 
 #### 12 -  Auto-Fix MMD Japanese/English Bone Names
 
-Shortcut to the [button with the same name](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#auto-fix-mmd-japanese--english-bone-names) in 'Export MMD Preparation' panel
+Shortcut to the [button with the same name](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#auto-fix-mmd-japanese--english-bone-names) in 'Export MMD Preparation' panel
 
 #### 13 -  Add Hand/Arm IK
 
@@ -408,7 +408,7 @@ Leverages the bone structure for boobs found on Genshin Impact models and applie
 - new j_mune_l/r_bot
 - new j_mune_core (parent bone to the _top and _bot bones)
 
-When combined with [converting this to an MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) and applying [Rigid Bodies from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#from-ffxiv-template) + [Joints from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints), give the boobs a better looking bounce effect using MMD physics.
+When combined with [converting this to an MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#initialize-mmd-struture) and applying [Rigid Bodies from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#from-ffxiv-template) + [Joints from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#joints), give the boobs a better looking bounce effect using MMD physics.
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f2aa4972-e705-4df5-858f-28f2be539918
 
@@ -444,13 +444,13 @@ Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
 
 Sections:
-- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#visibility-shortcuts-1)
-- [Active Rigid Body / Bone](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#active-rigid-body--bone)
-- [Rigid Body Search](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-body-search)
-- [Bone Chain Select](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-chain-select)
-- [Skirt Select](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skirt-select)
-- [Rigid Body Transform](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-body-transform)
-- [Rigid Body Create](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigid-body-create)
+- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#visibility-shortcuts-1)
+- [Active Rigid Body / Bone](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#active-rigid-body--bone)
+- [Rigid Body Search](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#rigid-body-search)
+- [Bone Chain Select](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bone-chain-select)
+- [Skirt Select](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#skirt-select)
+- [Rigid Body Transform](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#rigid-body-transform)
+- [Rigid Body Create](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#rigid-body-create)
 
 ------
 
@@ -603,10 +603,10 @@ To see the preset values applied to each bone and the values, check out the [Rig
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
 
 Sections:
-- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#visibility-shortcuts-2)
-- [Joint Select Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joint-select-controls)
-- [Joint Transform Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joint-transform-controls)
-- [Joint Create](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joint-create)
+- [Visibility Shortcuts](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#visibility-shortcuts-2)
+- [Joint Select Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#joint-select-controls)
+- [Joint Transform Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#joint-transform-controls)
+- [Joint Create](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#joint-create)
 
 ------
 
@@ -764,14 +764,14 @@ By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adj
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
 
 Sections:
-- [Generate a New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#generate-a-new-skirt-object)
-- [Move Mesh To New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#move-mesh-to-new-skirt-object)
-- [Weight Paint Transfer to Mesh](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#weight-paint-transfer-to-mesh)
-- [Delete FFXIV & Unused Skirt Vertex Groups](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#delete-ffxiv--unused-skirt-vertex-groups)
-- [Move Skirt Bones and Meshes to Armature](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#move-skirt-bones-and-meshes-to-armature)
-- [Generate Skirt Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#generate-skirt-rigid-bodies)
-- [Generate Skirt Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#generate-skirt-joints)
-- [Vertex Group List](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#vertex-group-list)
+- [Generate a New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#generate-a-new-skirt-object)
+- [Move Mesh To New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#move-mesh-to-new-skirt-object)
+- [Weight Paint Transfer to Mesh](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#weight-paint-transfer-to-mesh)
+- [Delete FFXIV & Unused Skirt Vertex Groups](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#delete-ffxiv--unused-skirt-vertex-groups)
+- [Move Skirt Bones and Meshes to Armature](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#move-skirt-bones-and-meshes-to-armature)
+- [Generate Skirt Rigid Bodies](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#generate-skirt-rigid-bodies)
+- [Generate Skirt Joints](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#generate-skirt-joints)
+- [Vertex Group List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#vertex-group-list)
 
 
 ------
@@ -820,7 +820,7 @@ You can see if weight paint transferred properly by scrolling through the vertex
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a529aa5c-cc10-4b92-8b11-e1859cd59388
 
-Note: After running this, you may want to test if the weight paint was transferred properly by going into 'Pose' mode and applying some simple rotation & location bone testing. If there are any issues with weight paint transfer, you can always start over from '[Generate a New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#generate-a-new-skirt-object)' 
+Note: After running this, you may want to test if the weight paint was transferred properly by going into 'Pose' mode and applying some simple rotation & location bone testing. If there are any issues with weight paint transfer, you can always start over from '[Generate a New Skirt Object](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#generate-a-new-skirt-object)' 
 
 ------
 
@@ -869,15 +869,15 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7eab16f2-d992-4de5-b088-b6afe8cd643d)
 
 Sections:
-- [Active Material](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#active-material)
-- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#colorsetter-gear-texture-folder)
-- [Apply Colorset](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorset)
-- [Glossy Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-glossy-shader)
-- [Eye Catchlight Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-eye-catchlight-shader)
-- [MekTools Skin Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-skin-shader)
-- [MekTools Eye Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-eye-shader)
-- [Colorsetter Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorsetter-shaders)
-- [Background Color](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#background-color)
+- [Active Material](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#active-material)
+- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#colorsetter-gear-texture-folder)
+- [Apply Colorset](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-colorset)
+- [Glossy Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-glossy-shader)
+- [Eye Catchlight Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-eye-catchlight-shader)
+- [MekTools Skin Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-mektools-skin-shader)
+- [MekTools Eye Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-mektools-eye-shader)
+- [Colorsetter Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#apply-colorsetter-shaders)
+- [Background Color](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#background-color)
 
 
 ------
@@ -998,7 +998,7 @@ Automatically adds the Colorsetter Shaders to the currently selected mesh, and a
 
 Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'colorsetter_' prefix to the material as name as well. Pressing the 'X' button deletes the 'colorsetter_' material and restores the original 'backup_' to the active material for this mesh.
 
-If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model) was used beforehand, it will automatically apply the .chara file's colors upon adding a Colorsetter Shader
+If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#anamnesis-chara-file-apply-to-model) was used beforehand, it will automatically apply the .chara file's colors upon adding a Colorsetter Shader
 
 Sample Video:
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-425b-bb94-0122e42475e5
@@ -1088,11 +1088,11 @@ Parameters:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2e9399b8-1897-47dd-af46-279fad7c04e6)
 
 Sections:
-- [Dropdown List](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#dropdown-list)
-- [Bust Slider](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bust-slider)
-- [Rigify Meta-Rig](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rigify-meta-rig)
-- [MekTools Rig](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mektools-rig)
-- [Bone Compare](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#bone-compare)
+- [Dropdown List](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#dropdown-list)
+- [Bust Slider](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bust-slider)
+- [Rigify Meta-Rig](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#rigify-meta-rig)
+- [MekTools Rig](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#mektools-rig)
+- [Bone Compare](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#bone-compare)
 
 ------
 
@@ -1268,12 +1268,12 @@ All done. When you import the VMD Motion file, you should find that the animatio
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
 
 Sections:
-- [Auto-Fix MMD Japanese / English Bone Names](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#auto-fix-mmd-japanese--english-bone-names)
-- [Add Display Panels](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-display-panels)
-- [Sort Bone Order / Deform Tiers](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#sort-bone-order--deform-tiers)
-- [Lock Position & Rotation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#lock-position--rotation)
-- [Set Fixed Axis / Local Axis](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#set-fixed-axis--local-axis)
-- [Hide Special & Physics Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#high-special--physics-bones)
+- [Auto-Fix MMD Japanese / English Bone Names](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#auto-fix-mmd-japanese--english-bone-names)
+- [Add Display Panels](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#add-display-panels)
+- [Sort Bone Order / Deform Tiers](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#sort-bone-order--deform-tiers)
+- [Lock Position & Rotation](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#lock-position--rotation)
+- [Set Fixed Axis / Local Axis](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#set-fixed-axis--local-axis)
+- [Hide Special & Physics Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/documentation#high-special--physics-bones)
 
 ------
 

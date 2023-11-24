@@ -388,7 +388,7 @@ Leverages the bone structure for boobs found on Genshin Impact models and applie
 
 When combined with [converting this to an MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) and applying [Rigid Bodies from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#from-ffxiv-template) + [Joints from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints), give the boobs a better looking bounce effect.
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4406065e-7db3-4bde-b912-1a9f247a9337)
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f2aa4972-e705-4df5-858f-28f2be539918
 
 
 ------

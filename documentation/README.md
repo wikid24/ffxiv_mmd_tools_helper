@@ -43,7 +43,11 @@ Sections:
 
 - Adds custom object/data properties:
     - Armature **object**:
-        - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)    
+        - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)
+    - Edit bone **data**:
+        - the head bone _local_ position 
+        - the tail bone _local_ position
+        - the matrix _local_ position
     - Mesh **data**:
         - ModelID - Parsed from original object name
         - ModelRaceID - Parsed from original object name

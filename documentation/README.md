@@ -893,9 +893,9 @@ This works on its own, OR can be used in combination with the Mektools Eye Shade
 
 ------
 
-#### MekTools Skin Settings
+### Apply MekTools Skin Shader
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/37f49791-b185-420c-bafe-72ace6973513)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4aeb848a-75ee-4f62-b370-e0876a3c1060)
 
 If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, this will automatically apply the shader to the currently selected mesh, and add a few controls so that you don't need to go to the Shader Node Editor to adjust these settings. The X button removes the shader from the active material.
 
@@ -909,6 +909,23 @@ Anyway yeah embedded within the MekTools skin shader, the following controls has
 - Specular
 - Wet
 - Roughness
+
+------
+
+### Apply MekTools Eye Shader
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ec9c8761-d369-4029-b637-a8d90e4f06d1)
+
+
+If you have the [MekTools Addon](https://www.xivmodarchive.com/modid/22780) installed, this will automatically apply the eye shader to the currently selected mesh, and add a few controls so that you don't need to go to the Shader Node Editor to adjust these settings. The X button removes the shader from the active material.
+
+Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'mektools_' prefix to the material as name as well. Pressing the 'X' button deletes the 'mektools_' material and restores the original 'backup_' to the active material for this mesh.
+
+- Eye Type (need to pick depending on the Character's Race/Tribe.
+- Brightness
+- Eye Color
+
+Also allows user to select a different image diffuse file & catchlight image file. They're built into the MekTools addon, but you can change it if you want to.
 
 
 ------

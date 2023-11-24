@@ -930,6 +930,39 @@ Upon applying this shader, a BACKUP of the original material is stored (it is th
 
 Also allows user to select a different image diffuse file & catchlight image file. They're built into the MekTools addon, but you can change it if you want to.
 
+------
+
+### Apply Colorsetter Shaders
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/19f6e4e1-8fe9-4cd0-9698-3c31c1f66477)
+
+Automatically adds the Colorsetter Shaders to the currently selected mesh, and add a few controls so that you don't need to go to the Shader Node Editor to adjust these settings. The X button removes the shader from the active material.
+
+Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'colorsetter_' prefix to the material as name as well. Pressing the 'X' button deletes the 'colorsetter_' material and restores the original 'backup_' to the active material for this mesh.
+
+#### Skin
+
+TBD
+
+#### Eyes
+
+TBD
+
+#### Face
+
+TBD
+
+#### Face Accent
+
+TBD
+
+#### Hair
+
+TBD
+
+#### Hrothgat / Miqote Tail
+
+TBD
 
 ------
 

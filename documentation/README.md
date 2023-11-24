@@ -1292,7 +1292,7 @@ Fixes the MMD Japanes & English PMX Bone names (while not changing the Blender B
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/af6885ba-63cd-4e0e-9e31-bf15e0c6455c)
 
-Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to do the PMX Bone group mapping. If Blender bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the 'mmd_english',	'mmd_japanese' bone name MMD Tool's PMX Japanese/English Bone name fields respectively (found in the Bone Properties -> **MMD Bone Tools** panel). If no match is found, and the PMX field is empty, it puts the Blender bone name verbatim so at least the MMD field is not empty and has a name.
+Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to do the PMX Bone group mapping. If Blender bone name is found matched in the 'mmd_english',	'mmd_japanese',	'mmd_japaneseLR', 'blender_rigify', or 'ffxiv' columns, will add the 'mmd_japanese' and 'mmd_english' bone name MMD Tool's PMX Japanese/English Bone name fields respectively (found in the Bone Properties -> **MMD Bone Tools** panel). If no match is found, and the PMX field is empty, it puts the Blender bone name verbatim so at least the MMD field is not empty and has a name.
 
 ------
 

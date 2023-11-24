@@ -83,7 +83,7 @@ Credits:
 # New Features:
   - Auto-convert the FFXIV bone structure to match MMD Models
   - Auto generate Bone Morphs (Facial Expressions)
-      - working for all races except for Hrothgar (still need to figure out those unique mouth shapes)
+      - working for all races, Hrothgar needs a bit more fine-tuning but it works fine
   - Auto generate Rigid Bodies (Physics blocks)
   - Auto generate Joints
   - Auto generate Bone Groups

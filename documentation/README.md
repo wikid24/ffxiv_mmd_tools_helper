@@ -869,12 +869,27 @@ Shortcut to selecting the active material for a mesh.
 Applies a 'Glossy BSDF' shader to a material. Once applied, the 'Roughness' skilder will be displayed, along with an 'X' button. The X button removes the shader from the active material
 
 
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/43445d23-ef46-4e4d-8af3-da997377bb40
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2e497455-e761-484e-8c6f-dd023b8e012b)
+
 
 
 #### Glossy Roughness Slider
 
 Adjusts the Gossy shader's roughness
+
+
+------
+
+### Apply Eye Catchlight Shader
+
+Adds a 'floating' eye catchlight that:
+
+- uses ffxiv's built-in "catchlight_1.png" texture
+- moves/floats around the eye depending on your camera angle
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/31dc26d8-37c3-4970-9ae8-cf3956c20d2d)
+
+This works on its own, OR can be used in combination with the Mektools Eye Shader / Colorsetter Eye Shader.
 
 ------
 

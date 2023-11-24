@@ -1274,7 +1274,7 @@ All done. When you import the VMD Motion file, you should find that the animatio
 
 ## Export MMD Preparation
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/33efbe03-5e89-4fc0-8a3b-0ef92b1e869d)
 
 Sections:
 - [Auto-Fix MMD Japanese / English Bone Names](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#auto-fix-mmd-japanese--english-bone-names)

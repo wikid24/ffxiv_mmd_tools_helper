@@ -940,27 +940,49 @@ Automatically adds the Colorsetter Shaders to the currently selected mesh, and a
 
 Upon applying this shader, a BACKUP of the original material is stored (it is the ORIGINAL name of the material prefixed with 'backup_'. This addon also adds a 'colorsetter_' prefix to the material as name as well. Pressing the 'X' button deletes the 'colorsetter_' material and restores the original 'backup_' to the active material for this mesh.
 
+If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model) was used beforehand, it will automatically apply the .chara file's colors upon adding a Colorsetter Shader
+
+Sample Video:
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-425b-bb94-0122e42475e5
+
+
 #### Skin
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/01f1354b-d72c-4aac-9d38-f12abb596ac0)
 
 TBD
 
 #### Eyes
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e8382a90-003d-4829-ba9d-e94b2cdb4689)
+
 TBD
 
 #### Face
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0b0dbd6b-4d80-4377-a0cc-da7ba7e1cad1)
+
 
 TBD
 
 #### Face Accent
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/894a2eed-d821-4e2e-bbf5-8acc4e9a5265)
+
+
 TBD
 
 #### Hair
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b86b00d9-56da-41ec-81c9-593888c95fdb)
+
+
 TBD
 
 #### Hrothgat / Miqote Tail
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d38e9353-d129-4b02-ba53-b47e91f21961)
+
 
 TBD
 

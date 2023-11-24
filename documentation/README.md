@@ -55,10 +55,13 @@ Sections:
 - Adds custom object/data properties:
     - Armature **object**:
         - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)
-    - Edit bone **data**:
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4575816f-ea8f-475d-a018-7e3ab83ccd75)
+    - Edit bone **data**: <-- This is captured to that if you change an edit bone's position you can [reset the edit bone](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#reset-selected-edit-bone-postions) at any time
         - the head bone _local_ position 
         - the tail bone _local_ position
         - the matrix _local_ position
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d584508c-b8c4-460d-8cbd-b3af455d6fcd)
+
     - Mesh **data**:
         - ModelID - Parsed from original object name
         - ModelRaceID - Parsed from original object name

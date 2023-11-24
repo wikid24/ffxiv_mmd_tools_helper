@@ -882,12 +882,15 @@ Adjusts the Gossy shader's roughness
 
 ### Apply Eye Catchlight Shader
 
-Adds a 'floating' eye catchlight that:
+Adds a 'floating' eye catchlight to the currently selected mesh that:
 
 - uses ffxiv's built-in "catchlight_1.png" texture
 - moves/floats around the eye depending on your camera angle
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/31dc26d8-37c3-4970-9ae8-cf3956c20d2d)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/870d519e-5157-4397-a7ea-d97e2efa48fa)
+
 
 This works on its own, OR can be used in combination with the Mektools Eye Shader / Colorsetter Eye Shader.
 

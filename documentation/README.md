@@ -54,12 +54,14 @@ Sections:
 
 - Adds custom object/data properties:
     - Armature **object**:
+        - ModelRaceType (used by various functions in this addon for automating settings such as [Auto-Applying the MekTools Rig](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mektools-rig))
         - original_root_name (MMD Tools moves the armature to a new object called 'New MMD Model' upon converting it, so it's useful to know the original name sometimes)
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4575816f-ea8f-475d-a018-7e3ab83ccd75)
+        - ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4575816f-ea8f-475d-a018-7e3ab83ccd75)
+
     - Edit bone **data**: <-- This is captured to that if you change an edit bone's position you can [reset the edit bone](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#reset-selected-edit-bone-postions) at any time
         - the head bone _local_ position 
         - the tail bone _local_ position
-        - the matrix _local_ position
+        - the matrix _local_ position        
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d584508c-b8c4-460d-8cbd-b3af455d6fcd)
 
     - Mesh **data**:
@@ -72,7 +74,7 @@ Sections:
         - original_material_name - Parsed from active material name
         - MaterialType - Parsed from active material name
         - ModelName - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
-        - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)
+        - material_filepath - Parsed from FFXIV TexTools folder (if folder name found in TexTools 'Saved' Folder)  
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0742b581-f962-4c7c-ad55-a653a2ce407e)
 
 

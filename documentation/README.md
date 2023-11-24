@@ -19,6 +19,14 @@ Sections:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/79655313-f5e6-4415-97b8-de19a6b7650d)
 
+- Import FFXIV .fbx File
+- Load Sample
+- Initialize MMD Struture
+- TexTools 'Saved' Folder
+- Anamnesis .chara File Read
+- Anamnesis .chara File Apply To Model
+- Color Swatches
+
 
 ### Import FFXIV .fbx File
 
@@ -219,6 +227,11 @@ Displays for:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2705ac60-cca6-4ace-bd53-6db4a3c239b0)
 
+- Mass Rename Bones
+- Blender to MMD Jap
+- Swap Jap / Eng
+- Bone Groups
+
 ------
 
 ### Mass Rename Bones
@@ -242,6 +255,10 @@ Swaps the MMD (PMX) Japanese and MMD (PMX) English bone names, shape key names, 
 
 ## Bones and IK
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/1fcd5396-ca1b-40bd-9056-7a144297acf3)
+
+- Visibility Shortcuts
+- MMD Conversion Dropdown List
+- Find & Replace
 
 ------
 
@@ -421,6 +438,14 @@ Will add the armature's bones to the Blender's **Armature -> Bone Groups** panel
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c739e6f2-d242-4135-ae82-e810b802a4fc)
 
+- Visibility Shortcuts
+- Active Rigid Body / Bone
+- Rigid Body Search
+- Bone Chain Select
+- Skirt Select
+- Rigid Body Transform
+- Rigid Body Create
+
 ------
 
 ### Visibility Shortcuts
@@ -571,6 +596,10 @@ To see the preset values applied to each bone and the values, check out the [Rig
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2be9f179-7797-4f8e-b235-f6a626a6bd21)
 
+- Visibility Shortcuts
+- Active Joint / Rigid 1 / Rigid 2
+- Joint Select Controls
+- Joint Transform Controls
 
 ------
 
@@ -727,6 +756,16 @@ By changing rotation mode to 'XYZ Euler', it becomes much easier to manually adj
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3d688d98-760b-4585-9c5c-3a64ea6bad4c)
 
+- Generate a New Skirt Object
+- Move Mesh To New Skirt Object
+- Weight Paint Transfer to Mesh
+- Delete FFXIV & Unused Skirt Vertex Groups
+- Move Skirt Bones and Meshes to Armature
+- Generate Skirt Rigid Bodies
+- Generate Skirt Joints
+- Vertex Group List
+
+
 ------
 
 ### Generate a New Skirt Object
@@ -821,6 +860,23 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7eab16f2-d992-4de5-b088-b6afe8cd643d)
 
+- Active Material
+- Colorsetter Gear Texture Folder
+- Apply Colorset
+- Glossy Shader
+- Eye Catchlight Shader
+- MekTools Skin Shader
+- MekTools Eye Shader
+- Colorsetter Shaders
+- Background Color
+
+
+------
+
+### Active Material
+
+Shortcut to selecting the active material for a mesh. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
 
 ------
 
@@ -854,13 +910,6 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-
 
 Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
 To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
-
-------
-
-### Active Material
-
-Shortcut to selecting the active material for a mesh. 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
 
 ------
 
@@ -1028,6 +1077,12 @@ Parameters:
 ## Miscellaneous Tools
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2e9399b8-1897-47dd-af46-279fad7c04e6)
+
+- Dropdown List
+- Bust Slider
+- Rigify Meta-Rig
+- Add MekTools Rig
+- Bone Compare
 
 ------
 
@@ -1201,6 +1256,13 @@ All done. When you import the VMD Motion file, you should find that the animatio
 ## Export MMD Preparation
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/54d3a8a5-861d-4bf7-b411-46ffe8cdde9f)
+
+- Auto-Fix MMD Japanese / English Bone Names
+- Add Display Panels
+- Sort Bone Order / Deform Tiers
+- Lock Position & Rotation
+- Set Fixed Axis / Local Axis
+- High Special & Physics Bones
 
 ------
 

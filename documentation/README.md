@@ -374,6 +374,22 @@ Since most standard MMD Models don't have these 'double-jointed' knees, this wil
 
 In the case of issues with the [arms not moving properly or going through the body/face using VMD animation files](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-play-an-animation-the-arms-dont-line-up-exactly-to-the-animation-or-clipcollide-into-the-headbodyother-hand-at-certain-parts-how-do-i-fix-this),  this attempts to adjust the should/arm/elbow bone postitions further to align with a stanard MMD Model. Sometimes it works and solves all the related arm motion problems, sometimes it doesn't. I can't seem to find a proper solution that will 100% work 100% of the time :S
 
+#### Convert FFXIV Boobs to Genshin Boobs
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/c09f9db1-ef4f-417e-925c-9725c8d93519)
+
+Leverages the bone structure for boobs found on Genshin Impact models and applies the same 'style' to FFXIV boobs. 
+    j_mune_l/r renamed to j_mune_l/r_mid
+    mid bone is rotated 90 degrees and pointed downwards towards floor
+    new j_mune_l/r_top (parent bone to j_mune_l/r_mid)
+    new j_mune_l/r_bot
+    new j_mune_core (parent bone to the _top and _bot bones)
+
+When combined with [converting this to an MMD Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#initialize-mmd-struture) and applying [Rigid Bodies from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#from-ffxiv-template) + [Joints from FFXIV Template](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#joints), give the boobs a better looking bounce effect.
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4406065e-7db3-4bde-b912-1a9f247a9337)
+
+
 ------
 
 ### Find & Replace

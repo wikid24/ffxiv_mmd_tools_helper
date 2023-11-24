@@ -1273,7 +1273,7 @@ Sections:
 - [Sort Bone Order / Deform Tiers](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#sort-bone-order--deform-tiers)
 - [Lock Position & Rotation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#lock-position--rotation)
 - [Set Fixed Axis / Local Axis](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#set-fixed-axis--local-axis)
-- [Hide Special & Physics Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#high-special--physics-bones)
+- [Hide Special & Physics Bones](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#hide-special--physics-bones)
 
 ------
 

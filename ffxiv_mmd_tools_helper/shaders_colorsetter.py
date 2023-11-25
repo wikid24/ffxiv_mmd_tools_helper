@@ -747,8 +747,8 @@ def remove_colorsetter_shader (context,shader_type):
 					bpy.data.node_groups.remove(normal_combine_node)
 					bpy.data.node_groups.remove(tilescale_skew_node)
 
-					print('yo')
-				bpy.data.node_groups.remove(shader_node_group)
+				if shader_node_group.users == 0:
+					bpy.data.node_groups.remove(shader_node_group)
 	return
 
 from bpy_extras.io_utils import ImportHelper

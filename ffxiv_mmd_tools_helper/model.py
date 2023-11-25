@@ -54,8 +54,11 @@ def findArmature(obj):
 
 	arm = None
 
+	if bpy.context.mode == 'OBJECT':
+		if obj.hide == True:
+			obj.hide = False
 	
-	obj.hide = False
+		
 	
 	if obj.type == 'ARMATURE':
 		arm = obj

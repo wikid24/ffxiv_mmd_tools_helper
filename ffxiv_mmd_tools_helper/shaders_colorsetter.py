@@ -41,68 +41,8 @@ def apply_colorset_file(file_name):
 				colorsetdat.close()
 
 
-def apply_texture_file_to_colorset_node(node_label,texture_file):
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			for slot in obj.material_slots:
-					mat = slot.material
-
-					for node in mat.node_tree.nodes:
-						if node.label == node_label:
-							node.image = texture_file
 
 
-
-def fix_normalmap ():
-	for obj in bpy.context.selected_objects:
-		if obj.type =='MESH' and obj.active_material.is_colorset:    
-			for slot in obj.material_slots:
-				mat = slot.material
-				
-				#print (f"The material in slot {slot.name} of object {obj.name} is {mat.name}")
-				
-				normal_texture_node = None
-				
-				
-				#set the 'Normal Texture' node's Colorspace to Non-Colour
-				for node in mat.node_tree.nodes:
-					#print (f"Name: {node.name}, Label: {node.label}")
-					if node.label =='Normal Texture':
-						normal_texture_node = node
-						if node.image:
-							node.image.colorspace_settings.name = 'Non-Color'
-				#set the 'Normal Texture (Closest)' node's to the same image as 'Normal Texture'
-				if normal_texture_node:
-					for node in mat.node_tree.nodes:
-						#print (f"Name: {node.name}, Label: {node.label}")
-						if node.label =='Normal Texture (Closest)':
-							node.image = normal_texture_node.image
-
-def fix_material_output_node():
-	#if "Principled BSDF" node output BSDF is not connected to "Material Output" node Surface input, then connect them
-	if bpy.context.active_object:
-		obj = bpy.context.active_object
-		if obj.type =='MESH' and obj.active_material.is_colorset:
-			
-			mat = obj.active_material
-
-			principled_bsdf = None
-			material_output = None
-			
-			for node in mat.node_tree.nodes:
-				if node.name =='Principled BSDF':
-					principled_bsdf = node
-					#print (principled_bsdf)
-
-				if node.name =='Material Output':
-					material_output = node
-					#print (material_output)
-
-				#mat.node_tree.links.new(material_output.inputs['Surface'], principled_bsdf.outputs['BSDF'])
-				#bpy.context.selected_objects[0].active_material.node_tree.links.new(material_output.inputs['Surface'],principled_bsdf.outputs['BSDF'])
-				if principled_bsdf and material_output:
-					mat.node_tree.links.new(material_output.inputs['Surface'],principled_bsdf.outputs['BSDF'])
-				#if principled_bsdf.output
 
 def apply_colorset_plugin():
 	if bpy.context.active_object:
@@ -118,9 +58,17 @@ def apply_colorset_plugin():
 					old_material.name = "backup_" + obj.active_material.name  # Rename the duplicated material if needed
 					# Add the duplicated material to the material slots of the active object
 					#bpy.context.object.data.materials.append(old_material)
-	
+
 
 					bpy.ops.object.add_cs_material()
+					if obj.active_material.is_colorset:
+						new_material = obj.active_material
+						new_material.name = "colorsetter_gear_" + old_material.name.lstrip("backup_" )
+
+						for node in new_material.node_tree.nodes:
+							if node.type == 'GROUP' and node.node_tree.name.startswith('FFXIV_Colorset Shader'):
+								node.name = 'colorsetter_gear_node_instance'
+								break
 
 					old_material.use_fake_user = True #stores material in blend file even if not used after save
 
@@ -134,96 +82,80 @@ def apply_textures_to_colorset_material(context,folder_path):
 
 			if obj.type =='MESH' and obj.active_material.is_colorset :
 
-				#model_id = obj.data['ModelID']
-				#new_material = obj.active_material
+				colorsetter_gear_node = None
 
-				colorset_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_a.dds') ]
-				multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_d.png') or f.endswith('_d.bmp') or f.endswith('_s.png')]
-				normalmap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_n.bmp') or f.endswith('_n.png')]
-				specular_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_s.bmp') or f.endswith('_s.png')]
-				diffuse_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_d.bmp') or f.endswith('_d.png')]
-				colorset_filename = None
-				multimap_filename = None
-				normalmap_filename = None
-				specular_filename = None
+				for node in obj.active_material.node_tree.nodes:
+					if node.type == 'GROUP' and node.node_tree.name.startswith('FFXIV_Colorset Shader'):
+						colorsetter_gear_node = node
+						break
+
+				if colorsetter_gear_node:
+					multi_node = colorsetter_gear_node.inputs['Multi Texture'].links[0].from_node
+					normal_node = colorsetter_gear_node.inputs['Normal Map'].links[0].from_node
+					normal_nearest_node = colorsetter_gear_node.inputs['Colorset Position Ramp'].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs['Fac'].links[0].from_node
+					diffuse_node = colorsetter_gear_node.inputs['Diffuse Texture'].links[0].from_node
+					specular_node = colorsetter_gear_node.inputs['Specular Texture'].links[0].from_node
+					specular_mask_node = colorsetter_gear_node.inputs['Specular Mask Texture'].links[0].from_node
 
 
-				if colorset_files:
-					colorset_filename = folder_path+colorset_files[0]
-					#print(f"Colorset file found: {colorset_filename}")
-					try:
-						apply_colorset_file(colorset_filename)
-					except:
-						#display_error_message=  "ERROR: could not apply ",colorset_filename
-						print("ERROR: could not apply ",colorset_filename)
-						#bpy.context.window_manager.popup_menu(display_error_message, title="Error Message", icon='ERROR')
-						return obj.active_material
 
-				else:
-					print("No colorset file ending with '_a' found in the folder.")
-										
+					#model_id = obj.data['ModelID']
+					#new_material = obj.active_material
+
+					colorset_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_a.dds') ]
+					multimap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_m.bmp') or f.endswith('_d.png') or f.endswith('_d.bmp') or f.endswith('_s.png')]
+					normalmap_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_n.bmp') or f.endswith('_n.png')]
+					specular_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_s.bmp') or f.endswith('_s.png')]
+					diffuse_files = [f for f in os.listdir(context.scene.shaders_texture_folder) if f.endswith('_d.bmp') or f.endswith('_d.png')]
+
+
+					if colorset_files:
+						filename = folder_path+colorset_files[0]
+						#print(f"Colorset file found: {colorset_filename}")
+						try:
+							apply_colorset_file(filename)
+						except:
+							#display_error_message=  "ERROR: could not apply ",colorset_filename
+							print("ERROR: could not apply ",filename)
+							#bpy.context.window_manager.popup_menu(display_error_message, title="Error Message", icon='ERROR')
+							return obj.active_material
+
+					else:
+						print("No colorset file ending with '_a' found in the folder.")
+											
+							
+					if multimap_files:
+						filename = folder_path+multimap_files[0]
+						update_image_node_file(multi_node,filename)
+						multi_node.image.colorspace_settings.name = 'sRGB'
+					else:
+						print("No multimap file ending with '_m' or '_s' found in the folder.")
 						
-				if multimap_files:
-					multimap_filename = folder_path+multimap_files[0]
-					# Specify the name of the image you want to check
-					if multimap_files[0] not in bpy.data.images:
-						multimap = bpy.data.images.load(multimap_filename)
-						
+							
+					if normalmap_files:
+						filename = folder_path+normalmap_files[0]
+						update_image_node_file(normal_node,filename)
+						update_image_node_file(normal_nearest_node,filename)
+						normal_node.image.colorspace_settings.name = 'Non-Color'
+						normal_nearest_node.image.colorspace_settings.name = 'Non-Color'
 					else:
-						multimap = bpy.data.images[multimap_files[0]]
-						print(f"Multimap file found: {multimap_filename}")
-						print(f"Multimap: {multimap}")
-					#apply_multimap_file(multimap)
-					apply_texture_file_to_colorset_node('MultiTexture',multimap)
-				else:
-					print("No multimap file ending with '_m' or '_s' found in the folder.")
-					
-						
-				if normalmap_files:
-					normalmap_filename = folder_path+normalmap_files[0]
-					if normalmap_files[0] not in bpy.data.images:
-						normalmap = bpy.data.images.load(normalmap_filename)
-					
-					else:
-						normalmap = bpy.data.images[normalmap_files[0]]
-					#print(f"Normalmap file found: {normalmap_filename}")
-					#apply_normalmap_file(normalmap)
-					apply_texture_file_to_colorset_node('Normal Texture',normalmap)
-					fix_normalmap()
-				else:
-					print("No normalmap file ending with '_n' found in the folder.")
+						print("No normalmap file ending with '_n' found in the folder.")
 
-				if specular_files:
-					specular_filename = folder_path+specular_files[0]
-					if specular_files[0] not in bpy.data.images:
-						specular = bpy.data.images.load(specular_filename)
-						#apply_normalmap_file(normalmap)
+					if specular_files:
+						specular_filename = folder_path+specular_files[0]
+						update_image_node_file(specular_node,specular_filename)
 					else:
-						specular = bpy.data.images[specular_files[0]]
-					#print(f"Specular file found: {normalmap_filename}")
-					#apply_specular_file(specular)
-					apply_texture_file_to_colorset_node('Specular Texture',specular)
-				else:
-					print("No specular file ending with '_s' found in the folder.")
+						print("No specular file ending with '_s' found in the folder.")
 
 
-				if diffuse_files:
-					diffuse_filename = folder_path+diffuse_files[0]
-					if diffuse_files[0] not in bpy.data.images:
-						diffuse = bpy.data.images.load(diffuse_filename)
-						#apply_normalmap_file(normalmap)
+					if diffuse_files:
+						diffuse_filename = folder_path+diffuse_files[0]
+						update_image_node_file(diffuse_node,diffuse_filename)
+						diffuse_node.image.colorspace_settings.name = 'sRGB'
 					else:
-						diffuse = bpy.data.images[diffuse_files[0]]
-					#print(f"Diffuse file found: {normalmap_filename}")
-					#apply_diffuse_file(diffuse)
-					apply_texture_file_to_colorset_node('Diffuse Texture',diffuse)
-				else:
-					print("No diffuse file ending with '_d' found in the folder.")						
-										
-
-				fix_material_output_node()
-			
-				return obj.active_material
+						print("No diffuse file ending with '_d' found in the folder.")						
+															
+					return obj.active_material
 
 
 def undo_if_colorset_plugin_error(obj,old_material,new_material):
@@ -231,34 +163,22 @@ def undo_if_colorset_plugin_error(obj,old_material,new_material):
 	if new_material.is_colorset:
 
 
-		diffuse_node = None
-		specular_node = None
-		multitexture_node = None
-		normaltexture_node = None
-		normaltexture_closest_node = None
-		specularmask_node = None
+		colorsetter_gear_node = None
 
-		#for slot in obj.material_slots:
-		#	mat = slot.material
-		for node in new_material.node_tree.nodes:
-			if node.label =='Diffuse Texture':
-				diffuse_node = node
-			if node.label =='Specular Texture':
-				specular_node = node
-			if node.label == 'MultiTexture':
-				multitexture_node = node
-			if node.label == 'Normal Texture':
-				normaltexture_node = node
-			if node.label == 'Normal Texture (Closest)':
-				normaltexture_closest_node = node
-			if node.label == 'Specular Mask Texture (SET TO NON-COLOR)':
+		for node in obj.active_material.node_tree.nodes:
+			if node.type == 'GROUP' and node.node_tree.name.startswith('FFXIV_Colorset Shader'):
+				colorsetter_gear_node = node
+				break
 
-				specularmask_node = node
+		if colorsetter_gear_node:
+			multi_node = colorsetter_gear_node.inputs['Multi Texture'].links[0].from_node
+			normal_node = colorsetter_gear_node.inputs['Normal Map'].links[0].from_node
+			normal_nearest_node = colorsetter_gear_node.inputs['Colorset Position Ramp'].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs['Fac'].links[0].from_node
+			diffuse_node = colorsetter_gear_node.inputs['Diffuse Texture'].links[0].from_node
+			specular_node = colorsetter_gear_node.inputs['Specular Texture'].links[0].from_node
+			colorsetter_gear_specular_mask_node = colorsetter_gear_node.inputs['Specular Mask Texture'].links[0].from_node
 
-		#for i in [diffuse_node.image,specular_node.image,multitexture_node.image,normaltexture_node.image,normaltexture_closest_node.image,specularmask_node.image]:
-			#print (i)
-
-		if (diffuse_node.image or specular_node.image or multitexture_node.image or normaltexture_node.image or normaltexture_closest_node.image or specularmask_node.image):
+		if (diffuse_node.image or specular_node.image or multi_node.image or normal_node.image or normal_nearest_node.image or specular_node.image):
 			return True
 		else:
 			#if error detected, delete the material node and reset the material to it's original material
@@ -275,7 +195,6 @@ def undo_if_colorset_plugin_error(obj,old_material,new_material):
 				old_material.name = old_material.name.lstrip('backup_')
 			return False
 
-		#if not(diffuse_node,specular_node,multitexture_node,normaltexture_node,normaltexture_closest_node, specularmask_node):
 
 def apply_material_to_all_matching_ffxiv_meshes (source_object):
 	
@@ -300,9 +219,9 @@ def apply_material_to_all_matching_ffxiv_meshes (source_object):
 
 
 @register_wrap
-class SelectMaterialsFolder(bpy.types.Operator):
+class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 	"""Apply the Colorsetter addon to the selected mesh using DDS/PNG/BMP textures from the selected folder"""
-	bl_idname = "ffxiv_mmd.select_materials_folder"
+	bl_idname = "ffxiv_mmd.select_colorsetter_gear_materials_folder"
 	bl_label = "Select Materials Folder"
 	bl_options = {'REGISTER', 'UNDO'}
 
@@ -470,9 +389,48 @@ def update_image_node_file(image_node,file_path):
 	else:
 		image_node.image.colorspace_settings.name = 'Non-Color'
 		return
-
-
+	
 from . import import_ffxiv_charafile
+def set_shader_colors_to_defaults(active_armature,active_object,node_group_instance,shader_type):
+	if shader_type == 'skin':
+		node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
+		node_group_instance.inputs['Enable SSS'].default_value = 0.025
+
+	if shader_type == 'eye':
+		set_colorsetter_eye_textures(active_object)
+		node_group_instance.inputs['Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_eyes'))
+		node_group_instance.inputs['Odd Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_odd_eye'))
+		node_group_instance.inputs['Odd Eyes Enabled'].default_value = 1
+
+
+	if shader_type == 'face':
+		node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
+		node_group_instance.inputs['Lip Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_lips'))
+		node_group_instance.inputs['Face Paint Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_facepaint'))
+		node_group_instance.inputs['Enable SSS'].default_value = 0.025
+		node_group_instance.inputs['Lip Color Enabled'].default_value = 1
+		node_group_instance.inputs['Light/Dark Lips'].default_value = 0.5
+		node_group_instance.inputs['Lip Brightness/Opacity'].default_value = 0.5
+
+
+	if shader_type == 'hair':
+		node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
+		node_group_instance.inputs['Highlights Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair_highlights'))
+		node_group_instance.inputs['Enable Highlights'].default_value = 1
+
+		
+	if shader_type == 'faceacc':
+		node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
+		node_group_instance.inputs['Tattoo Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
+		node_group_instance.inputs['Limbal Ring Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
+		
+	if shader_type == 'tail':
+		node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
+		node_group_instance.inputs['Highlight Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair_highlights'))
+
+
+
+
 
 def add_colorsetter_shader(context,shader_type):
 
@@ -539,33 +497,8 @@ def add_colorsetter_shader(context,shader_type):
 
 						#set the default color values to the ones from the .chara file that were stored as custom properties on the armature
 						if active_armature:
-							if shader_type == 'skin':
-								node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
-						
-							if shader_type == 'eye':
-								set_colorsetter_eye_textures(active_object)
-								node_group_instance.inputs['Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_eyes'))
-								node_group_instance.inputs['Odd Eye Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_odd_eye'))
+							set_shader_colors_to_defaults(active_armature,active_object,node_group_instance,shader_type)
 
-							if shader_type == 'face':
-								node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
-								node_group_instance.inputs['Lip Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_lips'))
-								node_group_instance.inputs['Face Paint Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_facepaint'))
-	
-
-							if shader_type == 'hair':
-								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
-								node_group_instance.inputs['Highlights Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair_highlights'))
-
-								
-							if shader_type == 'faceacc':
-								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
-								node_group_instance.inputs['Tattoo Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
-								node_group_instance.inputs['Limbal Ring Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
-								
-							if shader_type == 'tail':
-								node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
-								node_group_instance.inputs['Highlight Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair_highlights'))
 	
 				else:
 					print(f"Material '{shader_type_mat_dict[shader_type]}' not found in the source file.")
@@ -592,7 +525,7 @@ def add_colorsetter_shader(context,shader_type):
 			
 def remove_colorsetter_shader (context,shader_type):
 
-	shader_type_list = ['eye','face','hair','faceacc','tail','skin']
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin','gear']
 
 	if shader_type in shader_type_list:
 
@@ -604,12 +537,21 @@ def remove_colorsetter_shader (context,shader_type):
 				if instance_node.type =='GROUP' and instance_node.name.startswith(f"colorsetter_{shader_type}_node_instance"):
 					shader_node_instance = instance_node
 					shader_node_group = shader_node_instance.node_tree
+
+					if shader_type == 'gear':
+						detail_texture_output_node = shader_node_group.nodes.get('Group').node_tree
+						colorset_ramps_node = detail_texture_output_node.nodes.get('Group.017').node_tree
+						detail_combine_node = detail_texture_output_node.nodes.get('Group.018').node_tree
+						normal_details_combine_node = detail_texture_output_node.nodes.get('Group.022').node_tree
+						normal_combine_node = normal_details_combine_node.nodes.get('Group').node_tree
+						tilescale_skew_node = detail_texture_output_node.nodes.get('Group.021').node_tree
+
 					break
 			selected_material_name = active_material.name[len(f"colorsetter_{shader_type}_"):]
 		backup_material = bpy.data.materials.get('backup_' + selected_material_name) 
 		active_object = bpy.context.active_object
 
-		#if active material, active object, and eye_shader_node_instance found
+		#if active material, active object, and shader_node_instance found
 		if active_material.name.startswith(f"colorsetter_{shader_type}_") and backup_material and active_object and shader_node_instance:
 			for obj in bpy.data.objects:
 				if obj.type =='MESH':
@@ -621,6 +563,16 @@ def remove_colorsetter_shader (context,shader_type):
 			bpy.data.materials.remove(active_material)
 			#delete the shader node group
 			if shader_node_group:
+
+				if shader_type == 'gear':
+					bpy.data.node_groups.remove(detail_texture_output_node)
+					bpy.data.node_groups.remove(colorset_ramps_node)
+					bpy.data.node_groups.remove(detail_combine_node)
+					bpy.data.node_groups.remove(normal_details_combine_node)
+					bpy.data.node_groups.remove(normal_combine_node)
+					bpy.data.node_groups.remove(tilescale_skew_node)
+
+					print('yo')
 				bpy.data.node_groups.remove(shader_node_group)
 	return
 
@@ -650,141 +602,35 @@ class UpdateColorsetterImageNodeFile(bpy.types.Operator, ImportHelper):
 			update_image_node_file(image_node,filepath)
 		return {'FINISHED'}
 	
-
 @register_wrap
-class ApplyColorsetterEyeShader(bpy.types.Operator):
-	"""Apply Colorsetter Eye Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_eye_shader"
-	bl_label = "Apply Colorsetter Eye Shader"
+class ApplyColorsetterShader(bpy.types.Operator):
+	"""Apply Colorsetter Shader"""
+	bl_idname = "ffxiv_mmd.apply_colorsetter_shader"
+	bl_label = "Apply Colorsetter Shader"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	def execute(self, context):
-		add_colorsetter_shader(context,"eye")
-		return {'FINISHED'}
-	
-	
-@register_wrap
-class RemoveColorsetterEyeShader(bpy.types.Operator):
-	"""Remove Colorsetter Eye Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_eye_shader"
-	bl_label = "Remove Colorsetter Eye Shader"
-	bl_options = {'REGISTER', 'UNDO'}
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin']
+	shader_type = bpy.props.StringProperty(name="shader_type", update=None, get=None, set=None)
 
 	def execute(self, context):
-		remove_colorsetter_shader(context,'eye')
-		return {'FINISHED'}
-
-@register_wrap
-class ApplyColorsetterHairShader(bpy.types.Operator):
-	"""Apply Colorsetter Hair Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_hair_shader"
-	bl_label = "Apply Colorsetter Hair Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		add_colorsetter_shader(context,"hair")
+		if self.shader_type in self.shader_type_list:
+			add_colorsetter_shader(context,self.shader_type)
 		return {'FINISHED'}
 	
 @register_wrap
-class RemoveColorsetterHairShader(bpy.types.Operator):
-	"""Remove Colorsetter Hair Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_hair_shader"
-	bl_label = "Remove Colorsetter Hair Shader"
+class RemoveColorsetterShader(bpy.types.Operator):
+	"""Remove Colorsetter Shader"""
+	bl_idname = "ffxiv_mmd.remove_colorsetter_shader"
+	bl_label = "Remove Colorsetter Shader"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	def execute(self, context):
-		remove_colorsetter_shader(context,'hair')
-		return {'FINISHED'}
-	
-@register_wrap
-class ApplyColorsetterFaceShader(bpy.types.Operator):
-	"""Apply Colorsetter Face Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_face_shader"
-	bl_label = "Apply Colorsetter Face Shader"
-	bl_options = {'REGISTER', 'UNDO'}
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin','gear']
+	shader_type = bpy.props.StringProperty(name="shader_type", update=None, get=None, set=None)
 
 	def execute(self, context):
-		add_colorsetter_shader(context,"face")
+		if self.shader_type in self.shader_type_list:
+			remove_colorsetter_shader(context,self.shader_type)
 		return {'FINISHED'}
-	
-@register_wrap
-class RemoveColorsetterFaceShader(bpy.types.Operator):
-	"""Remove Colorsetter Face Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_face_shader"
-	bl_label = "Remove Colorsetter Face Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		remove_colorsetter_shader(context,'face')
-		return {'FINISHED'}
-	
-
-@register_wrap
-class ApplyColorsetterFaceAccShader(bpy.types.Operator):
-	"""Apply Colorsetter Face Accent Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_faceacc_shader"
-	bl_label = "Apply Colorsetter Face Accent Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		add_colorsetter_shader(context,"faceacc")
-		return {'FINISHED'}
-	
-@register_wrap
-class RemoveColorsetterFaceAccShader(bpy.types.Operator):
-	"""Remove Colorsetter Face Accent Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_faceacc_shader"
-	bl_label = "Remove Colorsetter Face Accent Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		remove_colorsetter_shader(context,'faceacc')
-		return {'FINISHED'}
-	
-@register_wrap
-class ApplyColorsetterTailShader(bpy.types.Operator):
-	"""Apply Colorsetter Tail Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_tail_shader"
-	bl_label = "Apply Colorsetter Tail Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		add_colorsetter_shader(context,"tail")
-		return {'FINISHED'}
-	
-@register_wrap
-class RemoveColorsetterTailShader(bpy.types.Operator):
-	"""Remove Colorsetter Tail Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_tail_shader"
-	bl_label = "Remove Colorsetter Tail Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		remove_colorsetter_shader(context,'tail')
-		return {'FINISHED'}
-	
-@register_wrap
-class ApplyColorsetterSkinShader(bpy.types.Operator):
-	"""Apply Colorsetter Skin Shader"""
-	bl_idname = "ffxiv_mmd.apply_colorsetter_skin_shader"
-	bl_label = "Apply Colorsetter Skin Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		add_colorsetter_shader(context,"skin")
-		return {'FINISHED'}
-	
-@register_wrap
-class RemoveColorsetterSkinShader(bpy.types.Operator):
-	"""Remove Colorsetter Skin Shader"""
-	bl_idname = "ffxiv_mmd.remove_colorsetter_skin_shader"
-	bl_label = "Remove Colorsetter Skin Shader"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	def execute(self, context):
-		remove_colorsetter_shader(context,'skin')
-		return {'FINISHED'}
-	
 
 
 

@@ -674,7 +674,7 @@ def merge_double_jointed_knee(armature, context):
 
 def set_bust_size(bust_scale=None,bust_xyz=None):
 	print('\n')
-	armature = model.find_MMD_Armature(bpy.context.active_object)
+	armature = model.findArmature(bpy.context.active_object)
 
 	if armature is not None:
 		bpy.context.view_layer.objects.active = armature
@@ -1007,7 +1007,7 @@ class FFXIVBustSlider(bpy.types.Operator):
 		if context.active_object is not None:
 			obj = context.active_object	
 			
-			armature = model.find_MMD_Armature(obj)
+			armature = model.findArmature(obj)
 			if armature is not None:
 				j_mune_l = armature.pose.bones.get('j_mune_l')
 				j_mune_r = armature.pose.bones.get('j_mune_r')

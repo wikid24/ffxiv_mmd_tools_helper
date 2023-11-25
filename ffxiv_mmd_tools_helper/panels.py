@@ -449,13 +449,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 		if context.active_object:
 			row.prop(context.active_object, "active_material",text="Material")
 		row = layout.row()
-		# Colorsetter Addon Stuff
-		row = layout.row()
-		row.label(text="Colorsetter Gear Texture Folder:")
-		row = layout.row()
-		grid = row.grid_flow(columns=2,align=True)
-		grid.prop(context.scene,"shaders_texture_folder", text = "")
-		grid.operator("ffxiv_mmd.select_materials_folder", text="", icon='CHECKMARK')
+		
 		row = layout.row()
 		grid = row.grid_flow(columns=1,align=True)
 		
@@ -471,6 +465,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				glossy_bsdf_node = None
 				mektools_skin_node = None
 				mektools_eye_node = None
+				colorsetter_gear_node = None
 				colorsetter_eye_node = None
 				colorsetter_hair_node = None
 				colorsetter_face_node = None
@@ -484,6 +479,10 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 				
 				for node in node_tree.nodes:
+					
+					if node.type == 'GROUP' and node.node_tree.name.startswith('FFXIV_Colorset Shader'):
+						colorsetter_gear_node = node
+
 					# Find the Glossy BSDF node
 					if node.type == 'BSDF_GLOSSY' and node.name=='ffxiv_mmd_glossy':
 						glossy_bsdf_node = node
@@ -530,6 +529,37 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					if node.type == 'MIX_SHADER' and node.name == 'ffxiv_mmd_eye_catchlight_mix_shader':
 						eye_catchlight_mix_node = node
 
+				#Colorsetter Gear panel
+				if colorsetter_gear_node:
+					colorsetter_gear_multi_node = colorsetter_gear_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_gear_normal_node = colorsetter_gear_node.inputs['Normal Map'].links[0].from_node
+					colorsetter_gear_normal_nearest_node = colorsetter_gear_node.inputs['Colorset Position Ramp'].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs['Fac'].links[0].from_node
+					colorsetter_gear_diffuse_node = colorsetter_gear_node.inputs['Diffuse Texture'].links[0].from_node
+					colorsetter_gear_specular_node = colorsetter_gear_node.inputs['Specular Texture'].links[0].from_node
+					colorsetter_gear_specular_mask_node = colorsetter_gear_node.inputs['Specular Mask Texture'].links[0].from_node
+
+					if colorsetter_gear_multi_node:
+						box = layout.box()
+						grid = box.grid_flow(columns=2,align=True)
+						grid.label(text="Colorsetter Gear Settings")
+						#grid.operator("ffxiv_mmd.remove_colorsetter_gear_shader", text="", icon='X')
+						grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'gear'
+
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_gear_multi_node,"image",text='Multi')
+						grid.prop(colorsetter_gear_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_gear_normal_nearest_node,"image",text='Normal (Nearest)')
+						grid.prop(colorsetter_gear_diffuse_node,"image",text='Diffuse')
+						grid.prop(colorsetter_gear_specular_node,"image",text='Specular')
+						grid.prop(colorsetter_gear_specular_mask_node,"image",text='Specular Mask')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_nearest_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_diffuse_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_mask_node.name
+
+						
 
 				#Glossy BSDF panel
 				if glossy_bsdf_node:
@@ -633,9 +663,11 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Eye Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
-					grid = box.grid_flow(columns=3,align=True)
+					#grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'eye'
+
 					if colorsetter_eye_color:
+						grid = box.grid_flow(columns=3,align=True)
 						grid.prop(colorsetter_eye_color,"default_value",text='Eye Color')
 						grid.prop(colorsetter_eye_odd_enabled,"default_value",text='Mix', slider=True)
 						grid.prop(colorsetter_eye_odd_color,"default_value",text='Odd Eye Color')
@@ -665,7 +697,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Hair Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_hair_shader", text="", icon='X')
+					#grid.operator("ffxiv_mmd.remove_colorsetter_hair_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'hair'
 					
 					
 					if colorsetter_hair_color:
@@ -707,7 +740,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_face_shader", text="", icon='X')
+					#grid.operator("ffxiv_mmd.remove_colorsetter_face_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='face'
 					
 					
 					if colorsetter_face_skin_color:
@@ -749,7 +783,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Accent Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_faceacc_shader", text="", icon='X')
+					#grid.operator("ffxiv_mmd.remove_colorsetter_faceacc_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'faceacc'
 					
 					
 					if colorsetter_faceacc_hair_color:
@@ -780,7 +815,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Tail Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_tail_shader", text="", icon='X')
+					#grid.operator("ffxiv_mmd.remove_colorsetter_tail_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='tail'
 					
 					
 					if colorsetter_tail_hair_color:
@@ -808,7 +844,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Skin Settings")
-					grid.operator("ffxiv_mmd.remove_colorsetter_skin_shader", text="", icon='X')
+					#grid.operator("ffxiv_mmd.remove_colorsetter_skin_shader", text="", icon='X')
+					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='skin'
 					
 					
 					if colorsetter_skin_color:
@@ -827,7 +864,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 
 				
-				if mektools_skin_node or mektools_eye_node or colorsetter_eye_node or colorsetter_hair_node or colorsetter_face_node or colorsetter_faceacc_node or colorsetter_tail_node or colorsetter_skin_node:
+				if mektools_skin_node or mektools_eye_node or colorsetter_eye_node or colorsetter_hair_node or colorsetter_face_node or colorsetter_faceacc_node or colorsetter_tail_node or colorsetter_skin_node or colorsetter_gear_node:
 						mat_replace_shader_added =True
 
 
@@ -841,14 +878,29 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Eyes")
 					row = layout.row()
 					row.label(text = 'Apply Colorsetter Shader')
+					# Colorsetter Addon Gear Stuff
+					row = layout.row()
+					row.label(text="Colorsetter Gear Texture Folder:")
+					row = layout.row()
+					grid = row.grid_flow(columns=2,align=True)
+					grid.prop(context.scene,"shaders_texture_folder", text = "")
+					grid.operator("ffxiv_mmd.select_colorsetter_gear_materials_folder", text="", icon='CHECKMARK')
 					row = layout.row()
 					grid = row.grid_flow(columns=2, align=True)
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Skin").shader_type = 'skin'
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Face").shader_type = 'face'
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Hair").shader_type = 'hair'
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Eyes").shader_type = 'eye'
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Face Accent").shader_type = 'faceacc'
+					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Hrothgar/Miqote Tail").shader_type = 'tail'
+					"""
 					grid.operator("ffxiv_mmd.apply_colorsetter_skin_shader", text="Skin")
 					grid.operator("ffxiv_mmd.apply_colorsetter_face_shader", text="Face")
 					grid.operator("ffxiv_mmd.apply_colorsetter_hair_shader", text="Hair")
 					grid.operator("ffxiv_mmd.apply_colorsetter_eye_shader", text="Eyes")
 					grid.operator("ffxiv_mmd.apply_colorsetter_faceacc_shader", text="Face Accent")
 					grid.operator("ffxiv_mmd.apply_colorsetter_tail_shader", text="Hrothgar/Miqote Tail")
+					"""
 					
 
 
@@ -945,9 +997,9 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		split = layout.split(factor=0.80,align=True)
 		split.prop(context.scene, "selected_miscellaneous_tools")	
 		split.operator("ffxiv_mmd.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
-		row = layout.row()
-		row.prop(context.scene,"bust_slider",slider=True)
-		row.operator("ffxiv_mmd.bust_slider",text='Run')
+		row = layout.row(align=True)
+		row.prop(context.scene,"bust_slider",text='FFXIV Bust Scale',slider=True)
+		row.operator("ffxiv_mmd.bust_slider",text='',icon='CHECKMARK' )
 		row = layout.row()
 			
 		#Rigify Metarig

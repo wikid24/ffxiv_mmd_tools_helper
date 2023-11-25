@@ -586,12 +586,10 @@ def hex_to_rgba(hex_color):
 		else:
 			# Handle the case when hex_color is not a valid hexadecimal color code
 			print("Error: Invalid hexadecimal color code.")
-			return (0.0, 0.0, 0.0, 1.0)
+			return (1.0, 1.0, 1.0, 1.0)
 	
 	else:
-        # Handle the case when the color is None, for example:
-        # You can set a default color or return (0.0, 0.0, 0.0, 1.0) for black
-		return (0.0, 0.0, 0.0, 1.0)
+		return (1.0, 1.0, 1.0, 1.0)
 
 def convert_srgb_to_linear_rgb(srgb_color_component):
 		if srgb_color_component <=0.04045:

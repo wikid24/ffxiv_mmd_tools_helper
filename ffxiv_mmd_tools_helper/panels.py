@@ -676,8 +676,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 
 						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_eye_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_eye_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_eye_multi_node,"image",text='Multi (iri_s)')
+						grid.prop(colorsetter_eye_normal_node,"image",text='Normal (iri_n)')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_eye_multi_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_eye_normal_node.name
 						grid = box.grid_flow(columns=1,align=True)
@@ -712,8 +712,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						
 						
 						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_hair_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_hair_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_hair_multi_node,"image",text='Multi (hir_s)')
+						grid.prop(colorsetter_hair_normal_node,"image",text='Normal (hir_n)')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_hair_multi_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_hair_normal_node.name
 							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
@@ -759,9 +759,9 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 												
 						
 						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_face_diffuse_node,"image",text='Diffuse')
-						grid.prop(colorsetter_face_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_face_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_face_diffuse_node,"image",text='Diffuse (fac_d)')
+						grid.prop(colorsetter_face_multi_node,"image",text='Multi (fac_s)')
+						grid.prop(colorsetter_face_normal_node,"image",text='Normal (fac_n)')
 						#grid.prop(colorsetter_face_facepaint_node,"image",text='Facepaint')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_diffuse_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_face_multi_node.name
@@ -834,11 +834,11 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 
 				#Colorsetter Skin panel
 				if colorsetter_skin_node:
-					colorsetter_skin_color = colorsetter_skin_node.inputs['Skin Color']
+					colorsetter_skin_color = colorsetter_skin_node.node_tree.nodes['Skin Tone'].inputs[6] #inputs['Skin Color']
 					colorsetter_skin_sss = colorsetter_skin_node.inputs['Enable SSS']
-					colorsetter_skin_diffuse_node = colorsetter_skin_node.inputs['Diffuse Texture'].links[0].from_node
-					colorsetter_skin_multi_node = colorsetter_skin_node.inputs['Multi Texture'].links[0].from_node
-					colorsetter_skin_normal_node = colorsetter_skin_node.inputs['Normal Texture'].links[0].from_node
+					colorsetter_skin_diffuse_node = colorsetter_skin_node.node_tree.nodes['Diffuse Skin Texture'] #inputs['Diffuse Texture'].links[0].from_node
+					colorsetter_skin_multi_node = colorsetter_skin_node.node_tree.nodes['Multi Skin Texture'] #inputs['Multi Texture'].links[0].from_node
+					colorsetter_skin_normal_node = colorsetter_skin_node.node_tree.nodes['Normal Skin Texture'] #inputs['Normal Texture'].links[0].from_node
 					
 
 					box = layout.box()

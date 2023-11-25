@@ -163,6 +163,10 @@ def import_ffxiv_model(context,file_path):
 					if obj.data['ModelType'] == 'Face':
 						# Copy the custom property 'ModelRaceType' to the armature data
 						add_custom_property(x,'ModelRaceType',obj.data['ModelRaceType'])
+						add_custom_property(x,'Race',obj.data['Race'])
+						add_custom_property(x,'Gender',obj.data['Gender'])
+						if obj.data.get('Tribe') is not None:
+							add_custom_property(x,'Tribe',obj.data['Tribe'])
 
 		#loop through all the meshes and hide the reaper eyes
 		if x.type =='ARMATURE':
@@ -243,8 +247,6 @@ def add_original_bone_local_data(armature,bone_name):
 def add_custom_property(obj,prop_name,prop_value):
 	
 	obj.data[prop_name] = prop_value
-
-
 
 
 
@@ -374,35 +376,41 @@ def rename_ffxiv_mesh(obj):
 
 		# Define the replacement dictionary
 		race_dict = {
-			"c0101": "Hyur_Mid_M",
-			"c0104": "Hyur_Mid_M_NPC",
-			"c0201": "Hyur_Mid_F",
-			"c0301": "Hyur_Hig_M",
-			"c0401": "Hyur_Hig_F",
-			"c0501": "Elez_M",
-			"c0601": "Elez_F",
-			"c0701": "Miqo_M",
-			"c0801": "Miqo_F",
-			"c0804": "Miqo_F_NPC",
-			"c0901": "Roeg_M",
-			"c1001": "Roeg_F",
-			"c1101": "Lala_M",
-			"c1201": "Lala_F",
-			"c1301": "Aura_M",
-			"c1401": "Aura_F",
-			"c1501": "Hrot_M",
-			"c1601": "Hrot_F",
-			"c1701": "Vier_M",
-			"c1801": "Vier_F",
+			"c0101": ("Hyur_Mid_M","Hyur","Masculine","Midlander"),
+			"c0104": ("Hyur_Mid_M_NPC","Hyur","Masculine","Midlander"),
+			"c0201": ("Hyur_Mid_F","Hyur","Feminine","Midlander"),
+			"c0301": ("Hyur_Hig_M","Hyur","Masculine","Highlander"),
+			"c0401": ("Hyur_Hig_F","Hyur","Feminine","Highlander"),
+			"c0501": ("Elez_M","Elezen","Masculine",None),
+			"c0601": ("Elez_F","Elezen","Feminine",None),
+			"c0701": ("Miqo_M","Miqote","Masculine",None),
+			"c0801": ("Miqo_F","Miqote","Feminine",None),
+			"c0804": ("Miqo_F_NPC","Miqote","Feminine",None),
+			"c0901": ("Roeg_M","Roegadyn","Masculine",None),
+			"c1001": ("Roeg_F","Roegadyn","Femanine",None),
+			"c1101": ("Lala_M","Lalafel","Masculine",None),
+			"c1201": ("Lala_F","Lalafel","Feminine",None),
+			"c1301": ("Aura_M","AuRa","Masculine",None),
+			"c1401": ("Aura_F","AuRa","Feminine",None),
+			"c1501": ("Hrot_M","Hrothgar","Masculine",None),
+			"c1601": ("Hrot_F","Hrothgar","Feminine",None),
+			"c1701": ("Vier_M","Viera","Masculine",None),
+			"c1801": ("Vier_F","Viera","Feminine",None),
 		}
 
 		
 
 		# Replace part 1 using the dictionary
 		if parsed_parts[0] in race_dict:
-			parsed_parts[0] = race_dict[parsed_parts[0]]
+			add_custom_property(obj,'ModelRaceType', race_dict[parsed_parts[0]][0])
+			add_custom_property(obj,'Race', race_dict[parsed_parts[0]][1])
+			add_custom_property(obj,'Gender', race_dict[parsed_parts[0]][2])
+			if race_dict[parsed_parts[0]][3] is not None:
+				add_custom_property(obj,'Tribe', race_dict[parsed_parts[0]][3])
+			parsed_parts[0] = race_dict[parsed_parts[0]][0]
 
-		add_custom_property(obj,'ModelRaceType',parsed_parts[0])
+		
+
 			
 		part_dict = {    
 			"wrs":"Wrists",

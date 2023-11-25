@@ -277,7 +277,135 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 	
 
 
+def get_ffxiv_skin_file(active_object,texture_type):
 
+	skin_dictionary = [
+	['Hyur','Midlander','Masculine','hyur_midl_m','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Hyur','Midlander','Feminine','hyur_midl_f','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Hyur','Highlander','Masculine','hyur_high_m','c0301b0001_d','c0301b0001_n','skin_m']
+	,['Hyur','Highlander','Feminine','hyur_high_f','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Elezen','Duskwight','Masculine','elez_dusk_m','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Elezen','Wildwood','Masculine','elez_wild_m','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Elezen','Duskwight','Feminine','elez_dusk_f','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Elezen','Wildwood','Feminine','elez_wild_f','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Miqote','KeeperOfTheMoon','Masculine','miqo_keep_m','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Miqote','SeekerOfTheSun','Masculine','miqo_seek_m','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Miqote','KeeperOfTheMoon','Feminine','miqo_keep_f','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Miqote','SeekerOfTheSun','Feminine','miqo_seek_f','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Roegadyn','Hellsguard','Masculine','roeg_hell_m','c0901b0001_d','c0901b0001_n','skin_m']
+	,['Roegadyn','SeaWolf','Masculine','roeg_seaw_m','c0901b0001_d','c0901b0001_n','skin_m']
+	,['Roegadyn','Hellsguard','Feminine','roeg_hell_f','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Roegadyn','SeaWolf','Feminine','roeg_seaw_f','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Lalafel','Dunesfolk','Masculine','lala_dune_m','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Plainsfolk','Masculine','lala_plai_m','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Dunesfolk','Feminine','lala_dune_f','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Plainsfolk','Feminine','lala_plai_f','c1101b0001_d','c1101b0001_n','skin_m']
+	,['AuRa','Raen','Masculine','aura_raen_m','c1301b0001_d','c1301b0001_n','c1301b0001_s']
+	,['AuRa','Xaela','Masculine','aura_xael_m','c1301b0101_d','c1301b0001_n','c1301b0001_s']
+	,['AuRa','Raen','Feminine','aura_raen_f','c1401b0001_d','c1401b0001_n','c1401b0001_s']
+	,['AuRa','Xaela','Feminine','aura_xael_f','c1401b0101_d','c1401b0001_n','c1401b0001_s']
+	,['Hrothgar','Helions','Masculine','hrot_heli_m','c1501b0001_d','c1501b0001_n','v01_c1501b0001_s']
+	,['Hrothgar','TheLost','Masculine','hrot_lost_m','c1501b0001_d','c1501b0001_n','v01_c1501b0001_s']
+	,['Hrothgar','Helions','Feminine','hrot_heli_f','c1601b0001_d','c1601b0001_n','v01_c1501b0001_s']
+	,['Hrothgar','TheLost','Feminine','hrot_lost_f','c1601b0001_d','c1601b0001_n','v01_c1501b0001_s']
+	,['Viera','Rava','Masculine','vier_rava_m','c1701b0001_d','c1701b0001_n','skin_m']
+	,['Viera','Veena','Masculine','vier_veen_m','c1701b0001_d','c1701b0001_n','skin_m']
+	,['Viera','Rava','Feminine','vier_rava_f','c1801b0001_d','c1801b0001_n','skin_m']
+	,['Viera','Veena','Feminine','vier_veen_f','c1801b0001_d','c1801b0001_n','skin_m']
+	]
+
+	folder_path = (__file__ + r"assets\ffxiv_skin").replace("shaders_colorsetter.py" , "")
+	print (folder_path)
+
+	if active_object:
+		if active_object.type == 'MESH':
+			armature = model.findArmature(active_object) 
+
+			if armature:
+				race = armature.data.get('Race')
+				tribe = armature.data.get('Tribe')
+				gender = armature.data.get('Gender')
+
+				texture_file = None
+
+				#if there is no tribe (but there is a race and gender), default to the first tribe that matches
+				if tribe == None and race and gender:
+					for skin_type in skin_dictionary:
+						if race == skin_type[0] and gender == skin_type[2]:
+							tribe = skin_type[1]
+							break
+
+				
+
+				if race and tribe and gender:
+					for skin_type in skin_dictionary:
+						if race == skin_type[0] and tribe == skin_type[1] and gender == skin_type[2]:
+							if texture_type == 'diffuse':
+								texture_file = skin_type[4]
+							if texture_type == 'normal':
+								texture_file = skin_type[5]
+							if texture_type == 'multi':
+								texture_file = skin_type[6]
+
+
+
+					# Get a list of files in the folder
+					files = os.listdir(folder_path)
+
+					# Find the first file with the specified prefix
+					matching_files = [file for file in files if file.startswith(texture_file)]
+
+					if matching_files:
+						first_matching_file = matching_files[0]
+						full_path = os.path.join(folder_path, first_matching_file)
+						#print("Found matching file:", full_path)
+						return full_path
+					
+
+def find_existing_shader_type_in_armature(active_armature, shader_type):
+	node_group_instance = None
+	
+	for obj in active_armature.children_recursive:
+		#find all materials with nodes that have a skin node group instance
+		if obj.type == 'MESH' and obj.active_material:
+			for node in obj.active_material.node_tree.nodes:
+				if node.type == 'GROUP' and node.name.startswith(f'colorsetter_{shader_type}_node_instance'):
+					node_group_instance = node
+					return node_group_instance
+				
+				
+		
+
+
+
+
+def set_colorsetter_skin_textures(active_object):
+
+	colorsetter_material = active_object.active_material
+	diffuse_node = None
+	multi_node = None
+	normal_node = None
+
+	# Find the Colorsetter Skin Group node
+	for node in colorsetter_material.node_tree.nodes:
+		if node.type == 'GROUP' and node.name.startswith('colorsetter_skin_node_instance'):
+			colorsetter_node = node
+
+	if colorsetter_node:
+		diffuse_node = colorsetter_node.node_tree.nodes['Diffuse Skin Texture'] #inputs['Diffuse Texture'].links[0].from_node
+		multi_node = colorsetter_node.node_tree.nodes['Multi Skin Texture'] #inputs['Multi Texture'].links[0].from_node
+		normal_node = colorsetter_node.node_tree.nodes['Normal Skin Texture'] #inputs['Normal Texture'].links[0].from_node
+
+	diffuse_file_path = get_ffxiv_skin_file(active_object,"diffuse")
+	multi_file_path = get_ffxiv_skin_file(active_object,"multi")
+	normal_file_path = get_ffxiv_skin_file(active_object,"normal")
+	
+
+	update_image_node_file(diffuse_node,diffuse_file_path)
+	update_image_node_file(multi_node,multi_file_path)
+	update_image_node_file(normal_node,normal_file_path)
+
+	return
 	
 
 def get_ffxiv_eye_multimap_file(active_object):
@@ -391,10 +519,11 @@ def update_image_node_file(image_node,file_path):
 		return
 	
 from . import import_ffxiv_charafile
-def set_shader_colors_to_defaults(active_armature,active_object,node_group_instance,shader_type):
+def set_shader_defaults(active_armature,active_object,node_group_instance,shader_type):
 	if shader_type == 'skin':
-		node_group_instance.inputs['Skin Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
+		#node_group_instance.node_tree.nodes['Skin Tone'].inputs[6].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
 		node_group_instance.inputs['Enable SSS'].default_value = 0.025
+		set_colorsetter_skin_textures(active_object)
 
 	if shader_type == 'eye':
 		set_colorsetter_eye_textures(active_object)
@@ -430,6 +559,42 @@ def set_shader_colors_to_defaults(active_armature,active_object,node_group_insta
 
 
 
+def replace_with_colorsetter_material(active_object,existing_shader_node,shader_type):
+
+	existing_shader_node.node_tree
+
+	if active_object.active_material:
+		old_material = active_object.active_material
+
+		colorsetter_material = bpy.data.materials.new(name=f"colorsetter_{shader_type}_"+ old_material.name.lstrip("backup_"))
+		colorsetter_material.use_fake_user = False
+
+		active_object.active_material = colorsetter_material
+		colorsetter_material.use_nodes = True
+
+		#delete the principled bsdf
+		principled_bsdf = colorsetter_material.node_tree.nodes.get('Principled BSDF')
+		colorsetter_material.node_tree.nodes.remove(principled_bsdf)
+
+		material_output_node = colorsetter_material.node_tree.nodes.get('Material Output')
+
+		#add new node group instance
+		new_node_group_instance = colorsetter_material.node_tree.nodes.new(type='ShaderNodeGroup')
+		new_node_group_instance.node_tree = existing_shader_node.node_tree
+		new_node_group_instance.name = existing_shader_node.name
+		
+
+		##add a material output node
+		material_output_node.location = (new_node_group_instance.location[0]+200,new_node_group_instance.location[1])
+
+		
+		#connect new node group instance to material output
+		colorsetter_material.node_tree.links.new(new_node_group_instance.outputs[0], material_output_node.inputs[0])
+
+		return colorsetter_material
+		
+
+	return
 
 
 def add_colorsetter_shader(context,shader_type):
@@ -468,40 +633,50 @@ def add_colorsetter_shader(context,shader_type):
 			old_material = active_material
 			old_material.name = "backup_" + active_material.name  # Rename the old material
 			old_material.use_fake_user=True #stores material in blend file even if not used after save
+			colorsetter_material = None
 			try:
-				# Find the file path for WoL_Shader_V6.blend file
-				file_path = (__file__ + r"assets\colorset_shaders\WoL_Shader_V6.blend").replace("shaders_colorsetter.py" , "")
-								
-				# Append the colorsetter material from WoL_Shader_V6.blend file to the blender project
-				with bpy.data.libraries.load(file_path, link=False) as (data_from, data_to):
+				existing_shader_node = None
 
-					# Append the material
-					data_to.materials = [mat for mat in data_from.materials if mat == shader_type_mat_dict[shader_type]]
+				if shader_type=='skin':
+					existing_shader_node = find_existing_shader_type_in_armature(active_armature,shader_type)
 
-				# Check if the material was successfully appended
-				if shader_type_mat_dict[shader_type] in bpy.data.materials:
+				if existing_shader_node:
+					colorsetter_material = replace_with_colorsetter_material(active_object,existing_shader_node,shader_type)
+				else: 
 
-					colorsetter_material = bpy.data.materials.get(shader_type_mat_dict[shader_type])
-					colorsetter_material.name = f"colorsetter_{shader_type}_"+ active_material.name.lstrip("backup_")
-					colorsetter_material.use_fake_user = False
-					bpy.context.active_object.active_material = colorsetter_material
-					
-					#name the node group "colorsetter_{shader_type}_node_group"
-					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith (shader_type_node_group_dict[shader_type]):
-						colorsetter_material.node_tree.nodes['Group'].node_tree.name = f"colorsetter_{shader_type}_node_group"
+					# Find the file path for WoL_Shader_V6.blend file
+					file_path = (__file__ + r"assets\colorset_shaders\WoL_Shader_V6.blend").replace("shaders_colorsetter.py" , "")
+									
+					# Append the colorsetter material from WoL_Shader_V6.blend file to the blender project
+					with bpy.data.libraries.load(file_path, link=False) as (data_from, data_to):
 
-					#name the instance of the node group within the material to colorsetter_{shader_type}_node_instance
-					if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith(f"colorsetter_{shader_type}_node_group"):
-						colorsetter_material.node_tree.nodes['Group'].name = f"colorsetter_{shader_type}_node_instance"
-						node_group_instance = colorsetter_material.node_tree.nodes.get(f"colorsetter_{shader_type}_node_instance")
+						# Append the material
+						data_to.materials = [mat for mat in data_from.materials if mat == shader_type_mat_dict[shader_type]]
 
-						#set the default color values to the ones from the .chara file that were stored as custom properties on the armature
-						if active_armature:
-							set_shader_colors_to_defaults(active_armature,active_object,node_group_instance,shader_type)
+					# Check if the material was successfully appended
+					if shader_type_mat_dict[shader_type] in bpy.data.materials:
+
+						colorsetter_material = bpy.data.materials.get(shader_type_mat_dict[shader_type])
+						colorsetter_material.name = f"colorsetter_{shader_type}_"+ active_material.name.lstrip("backup_")
+						colorsetter_material.use_fake_user = False
+						bpy.context.active_object.active_material = colorsetter_material
+						
+						#name the node group "colorsetter_{shader_type}_node_group"
+						if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith (shader_type_node_group_dict[shader_type]):
+							colorsetter_material.node_tree.nodes['Group'].node_tree.name = f"colorsetter_{shader_type}_node_group"
+
+						#name the instance of the node group within the material to colorsetter_{shader_type}_node_instance
+						if colorsetter_material.node_tree.nodes['Group'].node_tree.name.startswith(f"colorsetter_{shader_type}_node_group"):
+							colorsetter_material.node_tree.nodes['Group'].name = f"colorsetter_{shader_type}_node_instance"
+							node_group_instance = colorsetter_material.node_tree.nodes.get(f"colorsetter_{shader_type}_node_instance")
+
+							#set the default values to the ones from the .chara file that were stored as custom properties on the armature
+							if active_armature:
+								set_shader_defaults(active_armature,active_object,node_group_instance,shader_type)
 
 	
-				else:
-					print(f"Material '{shader_type_mat_dict[shader_type]}' not found in the source file.")
+					else:
+						print(f"Material '{shader_type_mat_dict[shader_type]}' not found in the source file.")
 				
 			except:
 				bpy.context.active_object.active_material = old_material
@@ -593,13 +768,26 @@ class UpdateColorsetterImageNodeFile(bpy.types.Operator, ImportHelper):
 	)
 	
 	def execute(self, context):
-		active_mat = context.active_object.active_material
-		image_node = active_mat.node_tree.nodes.get(self.image_node_name)
-		
 		filepath = self.filepath
+		active_mat = context.active_object.active_material
+
+		image_node = active_mat.node_tree.nodes.get(self.image_node_name)	
 
 		if image_node:
 			update_image_node_file(image_node,filepath)
+		else:
+
+			for node in active_mat.node_tree.nodes:
+				if node.type == 'GROUP' and node.name.startswith('colorsetter_skin_node_instance'):
+					colorsetter_skin_node = node
+					break
+
+			if colorsetter_skin_node:
+				image_node = colorsetter_skin_node.node_tree.nodes.get(self.image_node_name)
+
+			if image_node:
+				update_image_node_file(image_node,filepath)
+		
 		return {'FINISHED'}
 	
 @register_wrap

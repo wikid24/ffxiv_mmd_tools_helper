@@ -521,7 +521,7 @@ def update_image_node_file(image_node,file_path):
 from . import import_ffxiv_charafile
 def set_shader_defaults(active_armature,active_object,node_group_instance,shader_type):
 	if shader_type == 'skin':
-		#node_group_instance.node_tree.nodes['Skin Tone'].inputs[6].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
+		node_group_instance.node_tree.nodes['Skin Tone'].inputs[6].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
 		node_group_instance.inputs['Enable SSS'].default_value = 0.025
 		set_colorsetter_skin_textures(active_object)
 

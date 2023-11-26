@@ -740,6 +740,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Settings")
+					grid.label(text="For materiels that end with '_fac_a'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_face_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='face'
 					
@@ -783,6 +784,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Accent Settings")
+					grid.label(text="For materiels that end with '_etc_a'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_faceacc_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'faceacc'
 					

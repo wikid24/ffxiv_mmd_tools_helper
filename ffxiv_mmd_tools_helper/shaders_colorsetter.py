@@ -285,7 +285,14 @@ class ReplaceColorsetterTextures(bpy.types.Operator):
 		return {'FINISHED'}
 	
 
-def search_texture(image_node, replacement_folderpath,shader_type):
+def search_texture(mesh_obj,image_node, replacement_folderpath,shader_type):
+	original_material_name = mesh_obj.data.get('original_material_name')
+	material_prefix = original_material_name.lstrip('mt_')
+	# Strip everything up to and including the last underscore
+	parts = material_prefix.rsplit('_', 1)
+	stripped_prefix = parts[0] if len(parts) > 1 else material_prefix
+	#print (f'material_prefix:{material_prefix},stripped_prefix:{stripped_prefix}')
+
 	if image_node.image and image_node.image.filepath:
 		return
 	else:
@@ -293,11 +300,11 @@ def search_texture(image_node, replacement_folderpath,shader_type):
 
 		if shader_type == 'skin':
 			if image_node.label == 'Diffuse Skin Texture': 
-				re_search_string = 'b[0-9][0-9][0-9][0-9]_d'
+				re_search_string = stripped_prefix+'_d'
 			if image_node.label == 'Multi Skin Texture': 
-				re_search_string = 'b[0-9][0-9][0-9][0-9]_s'
+				re_search_string = stripped_prefix+'_s'
 			if image_node.label == 'Normal Skin Texture': 
-				re_search_string = 'b[0-9][0-9][0-9][0-9]_n'
+				re_search_string = stripped_prefix+'_n'
 
 		if shader_type == 'eye':
 			if image_node.label == 'Multi Texture': 
@@ -307,29 +314,29 @@ def search_texture(image_node, replacement_folderpath,shader_type):
 			
 		if shader_type == 'face':
 			if image_node.label == 'Diffuse Face Texture':
-				re_search_string = 'fac_d'
+				re_search_string = stripped_prefix+'_d'
 			if image_node.label == 'Multi Face Texture':
-				re_search_string = 'fac_s'
+				re_search_string = stripped_prefix+'_s'
 			if image_node.label == 'Normal Face Texture':
-				re_search_string = 'fac_n'
+				re_search_string = stripped_prefix+'_n'
 
 		if shader_type == 'faceacc':
 			if image_node.label == 'Multi Texture':
-				re_search_string = 'f[0-9][0-9][0-9][0-9]_etc_s'
+				re_search_string = stripped_prefix+'_s'
 			if image_node.label == 'Normal Texture':
-				re_search_string = 'f[0-9][0-9][0-9][0-9]_etc_n'
+				re_search_string = stripped_prefix+'_n'
 
 		if shader_type == 'hair':
 			if image_node.label == 'Hair Multi Texture':
-				re_search_string = 'hir_s'
+				re_search_string = stripped_prefix+'_s'
 			if image_node.label == 'Hair Normal Map':
-				re_search_string = 'hir_n'
+				re_search_string = stripped_prefix+'_n'
 
 		if shader_type == 'tail':
 			if image_node.label == 'Multi Texture':
-				re_search_string = 't[0-9][0-9][0-9][0-9]_etc_s'
+				re_search_string = stripped_prefix+'_etc_s'
 			if image_node.label == 'Normal Texture':
-				re_search_string = 't[0-9][0-9][0-9][0-9]_etc_n'
+				re_search_string = stripped_prefix+'_etc_n'
 
 		if re_search_string:
 			#print(suffix)
@@ -351,10 +358,15 @@ class SearchColorsetterTextures(bpy.types.Operator):
 	def execute(self, context):
 		active_object = context.active_object
 		active_material = active_object.active_material
+		node_tree = active_material.node_tree
 
-		for node in active_material.node_tree.nodes:
+		if self.shader_type == 'skin':
+			node_tree = active_material.node_tree.nodes.get('colorsetter_skin_node_instance').node_tree
+			
+
+		for node in node_tree.nodes:
 			if node.type == 'TEX_IMAGE': 
-				search_texture(node,context.scene.shaders_replacement_texture_folder,self.shader_type)
+				search_texture(active_object,node,context.scene.shaders_replacement_texture_folder,self.shader_type)
 		
 		return {'FINISHED'}
 

@@ -1,5 +1,6 @@
 import bpy
 
+#this function is mostly useless without MMD Tools
 def findRoot(obj):
 	if obj is not None:
 		if obj.mmd_type == 'ROOT':
@@ -8,7 +9,17 @@ def findRoot(obj):
 			return findRoot(obj.parent)
 	else:
 		return None
+	
 
+def find_MMD_Armature(obj):
+	root = findRoot(obj)
+	if root is None:
+		return None
+		#print('No MMD model is selected')
+	else:
+		return armature(root)
+
+#i dont use this, dont know wtf it does
 def armature(root):
 	armatures = []
 	for c in root.children:
@@ -22,6 +33,7 @@ def armature(root):
 	if len(armatures) > 1:
 		print("Error. More than 1 armature found", armatures)
 
+#i dont use this, dont know wtf it does
 def __allObjects(obj):
 	r = []
 	for i in obj.children:
@@ -29,11 +41,13 @@ def __allObjects(obj):
 		r += __allObjects(i)
 	return r
 
+#i dont use this, dont know wtf it does
 def allObjects(obj, root):
 	if obj is None:
 		obj = root
 	return [obj] + __allObjects(obj)
 
+#I think it gets all meshes from the root directory
 def meshes(root):
 	arm = armature(root)
 	if arm is None:
@@ -42,21 +56,14 @@ def meshes(root):
 		return filter(lambda x: x.type == 'MESH' and x.mmd_type == 'NONE', allObjects(arm, root))
 
 
-def find_MMD_Armature(obj):
-	root = findRoot(obj)
-	if root is None:
-		return None
-		#print('No MMD model is selected')
-	else:
-		return armature(root)
 
 def findArmature(obj):
 
 	arm = None
 
-	#if bpy.context.mode == 'OBJECT':
-		#if obj.hide == True:
-			#obj.hide = False	
+	if bpy.context.mode == 'OBJECT':
+		if obj.hide == True:
+			obj.hide = False	
 	
 	if obj.type == 'ARMATURE':
 		arm = obj
@@ -65,16 +72,16 @@ def findArmature(obj):
 		if obj.parent.type == 'ARMATURE':
 			#obj.mmd_root.show_armature = True	
 			arm = obj.parent
-			#if arm.hide == True:
-				#arm.hide = False
+			if arm.hide == True:
+				arm.hide = False
 			return arm
 		else:
 			for child in obj.parent.children:
 				if child.type == 'ARMATURE':					
 					#child.mmd_root.show_armature = True	
 					arm = child
-					#if arm.hide == True:
-						#arm.hide = False
+					if arm.hide == True:
+						arm.hide = False
 					return arm
 	if obj.parent.parent is not None:
 		if obj.parent.parent.type == 'ARMATURE':
@@ -87,8 +94,8 @@ def findArmature(obj):
 			for child in obj.parent.parent.children:
 				if child.type == 'ARMATURE':
 					arm = child
-					#if arm.hide == True:
-						#arm.hide = False
+					if arm.hide == True:
+						arm.hide = False
 					#child.mmd_root.show_armature = True	
 					return arm
 	if hasattr(obj, "mmd_type"):

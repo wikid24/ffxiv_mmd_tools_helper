@@ -126,32 +126,32 @@ def apply_textures_to_colorset_material(context,folder_path):
 							
 					if multimap_files:
 						filename = folder_path+multimap_files[0]
-						update_image_node_file(multi_node,filename)
-						multi_node.image.colorspace_settings.name = 'sRGB'
+						update_image_node_file(multi_node,filename,non_color=False)
+						#multi_node.image.colorspace_settings.name = 'sRGB'
 					else:
 						print("No multimap file ending with '_m' or '_s' found in the folder.")
 						
 							
 					if normalmap_files:
 						filename = folder_path+normalmap_files[0]
-						update_image_node_file(normal_node,filename)
-						update_image_node_file(normal_nearest_node,filename)
-						normal_node.image.colorspace_settings.name = 'Non-Color'
-						normal_nearest_node.image.colorspace_settings.name = 'Non-Color'
+						update_image_node_file(normal_node,filename,non_color=True)
+						update_image_node_file(normal_nearest_node,filename,non_color=True)
+						#normal_node.image.colorspace_settings.name = 'Non-Color'
+						#normal_nearest_node.image.colorspace_settings.name = 'Non-Color'
 					else:
 						print("No normalmap file ending with '_n' found in the folder.")
 
 					if specular_files:
 						specular_filename = folder_path+specular_files[0]
-						update_image_node_file(specular_node,specular_filename)
+						update_image_node_file(specular_node,specular_filename,non_color=False)
 					else:
 						print("No specular file ending with '_s' found in the folder.")
 
 
 					if diffuse_files:
 						diffuse_filename = folder_path+diffuse_files[0]
-						update_image_node_file(diffuse_node,diffuse_filename)
-						diffuse_node.image.colorspace_settings.name = 'sRGB'
+						update_image_node_file(diffuse_node,diffuse_filename,non_color=False)
+						#diffuse_node.image.colorspace_settings.name = 'sRGB'
 					else:
 						print("No diffuse file ending with '_d' found in the folder.")						
 															
@@ -232,11 +232,13 @@ def find_replacement_texture(image_node, replacement_folderpath,re_search_string
 	replacement_files = set()
 	for root, dirs, files in os.walk(replacement_folderpath):
 
+		#if re_search_string provided, search by that
 		if re_search_string is not None:
 			pattern = re.compile(f".*{re_search_string}.*", re.IGNORECASE)
 			for file in files:
 				if pattern.match(file) and any(file.lower().endswith(ext) for ext in valid_extensions):
 					replacement_files.add(os.path.join(root, file))
+		#...otherwise, search for exact filename
 		else:
 			for file in fnmatch.filter(files, f"{filename_no_extension}*"):
 				if any(file.lower().endswith(ext) for ext in valid_extensions):
@@ -291,8 +293,9 @@ def search_texture(mesh_obj,image_node, replacement_folderpath,shader_type):
 	# Strip everything up to and including the last underscore
 	parts = material_prefix.rsplit('_', 1)
 	stripped_prefix = parts[0] if len(parts) > 1 else material_prefix
-	#print (f'material_prefix:{material_prefix},stripped_prefix:{stripped_prefix}')
+	print (f'material_prefix:{material_prefix},stripped_prefix:{stripped_prefix}')
 
+	#if there is already an image attached to the node, don't search for a replacement
 	if image_node.image and image_node.image.filepath:
 		return
 	else:
@@ -333,13 +336,24 @@ def search_texture(mesh_obj,image_node, replacement_folderpath,shader_type):
 				re_search_string = stripped_prefix+'_n'
 
 		if shader_type == 'tail':
+			"""
+			#override for aura tail since it uses different shaders
+			if mesh_obj.data.get('Race') == 'AuRa' and mesh_obj.data.get('ModelType') == 'Tail':
+				if image_node.label == 'Diffuse Texture': 
+					re_search_string = stripped_prefix+'_etc_d'
+				if image_node.label == 'Multi Texture': 
+					re_search_string = stripped_prefix+'_etc_s'
+				if image_node.label == 'Normal Texture': 
+					re_search_string = stripped_prefix+'_etc_n'
+			"""
+
 			if image_node.label == 'Multi Texture':
 				re_search_string = stripped_prefix+'_etc_s'
 			if image_node.label == 'Normal Texture':
 				re_search_string = stripped_prefix+'_etc_n'
 
 		if re_search_string:
-			#print(suffix)
+			print(re_search_string)
 			find_replacement_texture(image_node,replacement_folderpath,re_search_string=re_search_string)
 
 
@@ -426,43 +440,52 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 		
 
 
-
+#to be removed, should really use the texture files that user provides instead (except for skin_m)
 def get_ffxiv_skin_file(active_object,texture_type):
 
 	skin_dictionary = [
-	['Hyur','Midlander','Masculine','hyur_midl_m','c0101b0001_d','c0101b0001_n','skin_m']
-	,['Hyur','Midlander','Feminine','hyur_midl_f','c0201b0001_d','c0201b0001_n','skin_m']
-	,['Hyur','Highlander','Masculine','hyur_high_m','c0301b0001_d','c0301b0001_n','skin_m']
-	,['Hyur','Highlander','Feminine','hyur_high_f','c0401b0001_d','c0401b0001_n','skin_m']
-	,['Elezen','Duskwight','Masculine','elez_dusk_m','c0101b0001_d','c0101b0001_n','skin_m']
-	,['Elezen','Wildwood','Masculine','elez_wild_m','c0101b0001_d','c0101b0001_n','skin_m']
-	,['Elezen','Duskwight','Feminine','elez_dusk_f','c0201b0001_d','c0201b0001_n','skin_m']
-	,['Elezen','Wildwood','Feminine','elez_wild_f','c0201b0001_d','c0201b0001_n','skin_m']
-	,['Miqote','KeeperOfTheMoon','Masculine','miqo_keep_m','c0101b0001_d','c0101b0001_n','skin_m']
-	,['Miqote','SeekerOfTheSun','Masculine','miqo_seek_m','c0101b0001_d','c0101b0001_n','skin_m']
-	,['Miqote','KeeperOfTheMoon','Feminine','miqo_keep_f','c0201b0001_d','c0201b0001_n','skin_m']
-	,['Miqote','SeekerOfTheSun','Feminine','miqo_seek_f','c0201b0001_d','c0201b0001_n','skin_m']
-	,['Roegadyn','Hellsguard','Masculine','roeg_hell_m','c0901b0001_d','c0901b0001_n','skin_m']
-	,['Roegadyn','SeaWolf','Masculine','roeg_seaw_m','c0901b0001_d','c0901b0001_n','skin_m']
-	,['Roegadyn','Hellsguard','Feminine','roeg_hell_f','c0401b0001_d','c0401b0001_n','skin_m']
-	,['Roegadyn','SeaWolf','Feminine','roeg_seaw_f','c0401b0001_d','c0401b0001_n','skin_m']
-	,['Lalafel','Dunesfolk','Masculine','lala_dune_m','c1101b0001_d','c1101b0001_n','skin_m']
-	,['Lalafel','Plainsfolk','Masculine','lala_plai_m','c1101b0001_d','c1101b0001_n','skin_m']
-	,['Lalafel','Dunesfolk','Feminine','lala_dune_f','c1101b0001_d','c1101b0001_n','skin_m']
-	,['Lalafel','Plainsfolk','Feminine','lala_plai_f','c1101b0001_d','c1101b0001_n','skin_m']
-	,['AuRa','Raen','Masculine','aura_raen_m','c1301b0001_d','c1301b0001_n','c1301b0001_s']
-	,['AuRa','Xaela','Masculine','aura_xael_m','c1301b0101_d','c1301b0001_n','c1301b0001_s']
-	,['AuRa','Raen','Feminine','aura_raen_f','c1401b0001_d','c1401b0001_n','c1401b0001_s']
-	,['AuRa','Xaela','Feminine','aura_xael_f','c1401b0101_d','c1401b0001_n','c1401b0001_s']
-	,['Hrothgar','Helions','Masculine','hrot_heli_m','c1501b0001_d','c1501b0001_n','v01_c1501b0001_s']
-	,['Hrothgar','TheLost','Masculine','hrot_lost_m','c1501b0001_d','c1501b0001_n','v01_c1501b0001_s']
-	,['Hrothgar','Helions','Feminine','hrot_heli_f','c1601b0001_d','c1601b0001_n','v01_c1501b0001_s']
-	,['Hrothgar','TheLost','Feminine','hrot_lost_f','c1601b0001_d','c1601b0001_n','v01_c1501b0001_s']
-	,['Viera','Rava','Masculine','vier_rava_m','c1701b0001_d','c1701b0001_n','skin_m']
-	,['Viera','Veena','Masculine','vier_veen_m','c1701b0001_d','c1701b0001_n','skin_m']
-	,['Viera','Rava','Feminine','vier_rava_f','c1801b0001_d','c1801b0001_n','skin_m']
-	,['Viera','Veena','Feminine','vier_veen_f','c1801b0001_d','c1801b0001_n','skin_m']
+	['Hyur','Midlander','Masculine','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Hyur','Midlander','Feminine','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Hyur','Highlander','Masculine','c0301b0001_d','c0301b0001_n','skin_m']
+	,['Hyur','Highlander','Feminine','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Elezen','Duskwight','Masculine','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Elezen','Wildwood','Masculine','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Elezen','Duskwight','Feminine','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Elezen','Wildwood','Feminine','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Miqote','KeeperOfTheMoon','Masculine','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Miqote','SeekerOfTheSun','Masculine','c0101b0001_d','c0101b0001_n','skin_m']
+	,['Miqote','KeeperOfTheMoon','Feminine','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Miqote','SeekerOfTheSun','Feminine','c0201b0001_d','c0201b0001_n','skin_m']
+	,['Roegadyn','Hellsguard','Masculine','c0901b0001_d','c0901b0001_n','skin_m']
+	,['Roegadyn','SeaWolf','Masculine''c0901b0001_d','c0901b0001_n','skin_m']
+	,['Roegadyn','Hellsguard','Feminine','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Roegadyn','SeaWolf','Feminine','c0401b0001_d','c0401b0001_n','skin_m']
+	,['Lalafel','Dunesfolk','Masculine','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Plainsfolk','Masculine','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Dunesfolk','Feminine','c1101b0001_d','c1101b0001_n','skin_m']
+	,['Lalafel','Plainsfolk','Feminine','c1101b0001_d','c1101b0001_n','skin_m']
+	,['AuRa','Raen','Masculine','c1301b0001_d','c1301b0001_n','c1301b0001_s']
+	,['AuRa','Xaela','Masculine','c1301b0101_d','c1301b0001_n','c1301b0001_s']
+	,['AuRa','Raen','Feminine','c1401b0001_d','c1401b0001_n','c1401b0001_s']
+	,['AuRa','Xaela','Feminine','c1401b0101_d','c1401b0001_n','c1401b0001_s']
+	,['Hrothgar','Helions','Masculine','c1501b0001_d','c1501b0001_n','DONOTUSE_s'] 	#'v01_c1501b0001_s']
+	,['Hrothgar','TheLost','Masculine','c1501b0001_d','c1501b0001_n','DONOTUSE_s']	#'v01_c1501b0001_s']
+	,['Hrothgar','Helions','Feminine','c1601b0001_d','c1601b0001_n','DONOTUSE_s']	#'v01_c1501b0001_s']
+	,['Hrothgar','TheLost','Feminine','c1601b0001_d','c1601b0001_n','DONOTUSE_s']	#'v01_c1501b0001_s']
+	,['Viera','Rava','Masculine','c1701b0001_d','c1701b0001_n','skin_m']
+	,['Viera','Veena','Masculine','c1701b0001_d','c1701b0001_n','skin_m']
+	,['Viera','Rava','Feminine','c1801b0001_d','c1801b0001_n','skin_m']
+	,['Viera','Veena','Feminine','c1801b0001_d','c1801b0001_n','skin_m']
 	]
+
+	hroth_furpattern_dictionary = {
+		1:'v01_c1501b0001_s'
+		,2:'v02_c1501b0001_s'
+		,3:'v03_c1501b0001_s'
+		,4:'v04_c1501b0001_s'
+		,5:'v05_c1501b0001_s'
+	}
+	
 
 	folder_path = (__file__ + r"assets\ffxiv_skin").replace("shaders_colorsetter.py" , "")
 	print (folder_path)
@@ -475,6 +498,7 @@ def get_ffxiv_skin_file(active_object,texture_type):
 				race = armature.data.get('Race')
 				tribe = armature.data.get('Tribe')
 				gender = armature.data.get('Gender')
+				hroth_furpattern = armature.data.get('LipToneFurPattern')
 
 				texture_file = None
 
@@ -491,11 +515,17 @@ def get_ffxiv_skin_file(active_object,texture_type):
 					for skin_type in skin_dictionary:
 						if race == skin_type[0] and tribe == skin_type[1] and gender == skin_type[2]:
 							if texture_type == 'diffuse':
-								texture_file = skin_type[4]
+								texture_file = skin_type[3]
 							if texture_type == 'normal':
-								texture_file = skin_type[5]
+								texture_file = skin_type[4]
 							if texture_type == 'multi':
-								texture_file = skin_type[6]
+								if race == 'Hrothgar':
+									if hroth_furpattern and (hroth_furpattern in hroth_furpattern_dictionary.keys()):
+										texture_file = hroth_furpattern_dictionary[hroth_furpattern]
+									else:
+										texture_file = hroth_furpattern_dictionary[1]
+								else:
+									texture_file = skin_type[5]
 
 
 
@@ -528,7 +558,7 @@ def find_existing_shader_type_in_armature(active_armature, shader_type):
 
 
 
-
+#to be removed, should really use the texture files that user provides instead 
 def set_colorsetter_skin_textures(active_object):
 
 	colorsetter_material = active_object.active_material
@@ -648,31 +678,92 @@ def set_colorsetter_eye_textures(active_object):
 	update_image_node_file(colorsetter_eye_normal_node,normalmap_file_path)
 	
 
-def update_image_node_file(image_node,file_path):
+def update_image_node_file(image_node,file_path,non_color=False):
 
-	image = None
-	#check if this image exists, if it does, reuse it
-	for img in bpy.data.images:
-		if img.source == 'FILE' and img.filepath == file_path:
-			image = img
-			break
-
-	# Open the image file
-	if image is None:
-		image = bpy.data.images.load(file_path)  # Load the image from the selected file path
-	image_node.image = image 
-
-	if file_path.endswith(("_d.png", "_d.bmp", "_d.dds")):
+	#check if valid filepath
+	if (file_path == None) or (not os.path.isfile(file_path)):
 		return
 	else:
-		image_node.image.colorspace_settings.name = 'Non-Color'
-		return
+		image = None
+		#check if this image exists, if it does, reuse it
+		for img in bpy.data.images:
+			if img.source == 'FILE' and img.filepath == file_path:
+				image = img
+				break
+
+
+
+		# Open the image file
+		if image is None:
+			image = bpy.data.images.load(file_path)  # Load the image from the selected file path
+		image_node.image = image 
+
+		if non_color:
+			image_node.image.colorspace_settings.name = 'Non-Color'
+			return
+
+		if file_path.endswith(("_d.png", "_d.bmp", "_d.dds")):
+			return
+		else:
+			image_node.image.colorspace_settings.name = 'Non-Color'
+			return
+		
+def reset_all_shader_defaults(active_armature):
+	
+
+	for obj in active_armature.children_recursive:
+		active_object = None
+		#active_material = None
+		node_group_instance = None
+		shader_type = None
+
+	
+		if obj.type == 'MESH':
+			active_object = obj
+			if obj.active_material:
+				active_material = obj.active_material
+
+				if active_material.node_tree:
+					for node in active_material.node_tree.nodes:
+						if node.type=='GROUP' and node.name == ('colorsetter_skin_node_instance'):
+							node_group_instance = node
+							shader_type = 'skin'
+							break
+						if node.type=='GROUP' and node.name == ('colorsetter_eye_node_instance'):
+							node_group_instance = node
+							shader_type = 'eye'
+							break
+						if node.type=='GROUP' and node.name == ('colorsetter_face_node_instance'):
+							node_group_instance = node
+							shader_type = 'face'
+							break
+						if node.type=='GROUP' and node.name == ('colorsetter_faceacc_node_instance'):
+							node_group_instance = node
+							shader_type = 'faceacc'
+							break
+						if node.type=='GROUP' and node.name == ('colorsetter_hair_node_instance'):
+							node_group_instance = node
+							shader_type = 'hair'
+							break
+						if node.type=='GROUP' and node.name == ('colorsetter_tail_node_instance'):
+							node_group_instance = node
+							shader_type = 'tail'
+							break
+
+					
+
+		if active_object and node_group_instance and shader_type:
+			set_shader_defaults(active_armature,active_object,node_group_instance,shader_type)
+
+
 	
 from . import import_ffxiv_charafile
 def set_shader_defaults(active_armature,active_object,node_group_instance,shader_type):
 	if shader_type == 'skin':
 		node_group_instance.node_tree.nodes['Skin Tone'].inputs[6].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_skin'))
+		node_group_instance.node_tree.nodes['Fur Highlights Color'].inputs[0].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_lips'))
 		node_group_instance.inputs['Enable SSS'].default_value = 0.025
+		#to be removed, only need to use the skin multi file for non-aura races
 		set_colorsetter_skin_textures(active_object)
 
 	if shader_type == 'eye':
@@ -773,12 +864,18 @@ def add_colorsetter_shader(context,shader_type):
 
 	if shader_type in shader_type_list:
 
-		print (shader_type_mat_dict[shader_type])
-		print (shader_type_node_group_dict[shader_type])
+		#print (shader_type_mat_dict[shader_type])
+		#print (shader_type_node_group_dict[shader_type])
 
 		active_material = context.active_object.active_material
 		active_object = context.active_object
 		active_armature = model.findArmature(active_object)
+		#override_shader_type = shader_type
+
+		#if shader type == 'tail' and the race is AuRa, instead of appending the Tail Shader, append the skin shader
+		#if shader_type == 'tail' and active_object.data.get('Race') == 'AuRa':
+		#	override_shader_type = 'face'
+			
 
 		#check if material is a colorsetter node material
 		if active_material.name.startswith(f"colorsetter_{shader_type}_"):
@@ -804,7 +901,6 @@ def add_colorsetter_shader(context,shader_type):
 									
 					# Append the colorsetter material from WoL_Shader_V6.blend file to the blender project
 					with bpy.data.libraries.load(file_path, link=False) as (data_from, data_to):
-
 						# Append the material
 						data_to.materials = [mat for mat in data_from.materials if mat == shader_type_mat_dict[shader_type]]
 

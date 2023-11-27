@@ -2,6 +2,8 @@ import bpy
 from . import register_wrap
 from . import import_csv
 from . import bone_conversion
+from . import shaders_colorsetter
+from . import model
 import mmd_tools.core.model as mmd_model
 import json
 import math
@@ -600,7 +602,7 @@ def convert_srgb_to_linear_rgb(srgb_color_component):
 		return linear_color_component
 
 def add_custom_properties_to_armature (selected_armature,RESULTS_DICT):
-	selected_armature = bpy.context.active_object
+	#selected_armature = bpy.context.active_object
 
 	if selected_armature and selected_armature.type == 'ARMATURE':
 		for key in RESULTS_DICT:
@@ -689,10 +691,11 @@ def main(context,filepath,apply_charafile_to_selected=None):
 	print (f".chara file: {filepath}")
 
 	obj = bpy.context.active_object
-	selected_armature = None
+	#root = model.findRoot(obj)
+	selected_armature = model.findArmature(obj)
 
-	if obj and obj.type == 'ARMATURE':
-		selected_armature = obj
+	#if obj and obj.type == 'ARMATURE':
+		#selected_armature = obj
 
 	RESULTS_DICT=parse_chara_file(filepath)
 
@@ -728,8 +731,13 @@ def main(context,filepath,apply_charafile_to_selected=None):
 		add_custom_property(selected_armature,'color_hex_lips',color_hex_data['lips'])
 		add_custom_property(selected_armature,'color_hex_facepaint',color_hex_data['facepaint'])
 
-		
 		bone_conversion.set_bust_size(bust_xyz=[float(x) for x in RESULTS_DICT['BustScale'].split(',')])
+		
+		shaders_colorsetter.reset_all_shader_defaults(selected_armature)
+
+		bpy.ops.object.mode_set(mode='OBJECT')
+
+
 
 		
 	
@@ -755,8 +763,13 @@ class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 
 	@classmethod
 	def poll(cls, context):
-		if context.active_object:
-			return context.active_object.type == 'ARMATURE'
+		#root = model.findRoot(context.active_object)
+		armature = model.findArmature(context.active_object)
+
+		if armature:
+			return True
+		#if context.active_object:
+			#return context.active_object.type == 'ARMATURE'
 
 
 	def execute(self, context):

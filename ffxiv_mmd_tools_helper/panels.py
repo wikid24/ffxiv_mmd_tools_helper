@@ -868,8 +868,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_tail_highlights_mix,"default_value",text='Highlight Mix', slider=True)
 						
 						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_tail_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_tail_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_tail_multi_node,"image",text='Multi _s')
+						grid.prop(colorsetter_tail_normal_node,"image",text='Normal _n')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_tail_multi_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_tail_normal_node.name
 						grid = box.grid_flow(columns=1,align=True)
@@ -882,6 +882,9 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				#Colorsetter Skin panel
 				if colorsetter_skin_node:
 					colorsetter_skin_color = colorsetter_skin_node.node_tree.nodes['Skin Tone'].inputs[6] #inputs['Skin Color']
+					colorsetter_fur_pattern_alpha = colorsetter_skin_node.node_tree.nodes['Fur Highlights Alpha'].inputs[0] #inputs['Skin Color']
+					colorsetter_fur_pattern = colorsetter_skin_node.node_tree.nodes['Fur Highlights Color'].inputs['Color'] #inputs['Skin Color']
+					colorsetter_specular = colorsetter_skin_node.node_tree.nodes['Specular Mix'].inputs[0] #inputs['Skin Color']
 					colorsetter_skin_sss = colorsetter_skin_node.inputs['Enable SSS']
 					colorsetter_skin_diffuse_node = colorsetter_skin_node.node_tree.nodes['Diffuse Skin Texture'] #inputs['Diffuse Texture'].links[0].from_node
 					colorsetter_skin_multi_node = colorsetter_skin_node.node_tree.nodes['Multi Skin Texture'] #inputs['Multi Texture'].links[0].from_node
@@ -897,9 +900,13 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					
 					
 					if colorsetter_skin_color:
+						grid = box.grid_flow(columns=3,align=True)
+						grid.prop(colorsetter_skin_color,"default_value",text='Skin')
+						grid.prop(colorsetter_fur_pattern_alpha,"default_value",text='Mix', slider=True)
+						grid.prop(colorsetter_fur_pattern,"default_value",text='Fur Pattern')
 						grid = box.grid_flow(columns=1,align=True)
-						grid.prop(colorsetter_skin_color,"default_value",text='Skin Color')
 						grid.prop(colorsetter_skin_sss,"default_value",text='Subsurface Scattering', slider=True)
+						grid.prop(colorsetter_specular,"default_value",text='Specular Mix', slider=True)
 						
 						grid = box.grid_flow(columns=2,align=True)
 						grid.prop(colorsetter_skin_diffuse_node,"image",text='Diffuse _d')

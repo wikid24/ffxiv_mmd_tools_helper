@@ -324,9 +324,8 @@ def main(context):
 			reset_selected_bone_positions(context,armature)
 
 
-			
 
-		
+
 
 
 @register_wrap

@@ -215,6 +215,56 @@ def apply_material_to_all_matching_ffxiv_meshes (source_object):
 					obj.active_material = source_object.active_material
 	
 
+import fnmatch
+def find_replacement_texture(image_node, replacement_folderpath):
+	if image_node.image and image_node.image.filepath:
+		filename = os.path.basename(image_node.image.filepath)
+		filename_no_extension, extension = os.path.splitext(filename)
+
+		# List of valid extensions to check for
+		valid_extensions = ['.dds', '.png', '.bmp']
+
+		# Get the list of files in the replacement folder and its subfolders
+		replacement_files = set()
+		for root, dirs, files in os.walk(replacement_folderpath):
+			for file in fnmatch.filter(files, f"{filename_no_extension}*"):
+				if any(file.lower().endswith(ext) for ext in valid_extensions):
+					replacement_files.add(os.path.join(root, file))
+
+		# Check if any replacement file with a valid extension exists
+		if replacement_files:
+			# Choose the first match
+			new_filepath = sorted(replacement_files)[0]
+
+			if new_filepath != image_node.image.filepath:
+
+				update_image_node_file(image_node,new_filepath)
+
+				print(f"Node:{image_node.name} updated with replacement image: {os.path.basename(new_filepath)}")
+		else:
+			print(f"No matching replacement image found for node:{image_node.name}")
+
+	
+	
+@register_wrap
+class ReplaceColorsetterTextures(bpy.types.Operator):
+	"""Apply the Colorsetter addon to the selected mesh using DDS/PNG/BMP textures from the selected folder"""
+	bl_idname = "ffxiv_mmd.replace_colorsetter_textures"
+	bl_label = "Select Materials Folder"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	bpy.types.Scene.shaders_replacement_texture_folder = bpy.props.StringProperty(name="Texture Folder", description="Folder where the gear for _a, _m, and _n files are located", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
+
+	def execute(self, context):
+		active_object = context.active_object
+		active_material = active_object.active_material
+
+		for node in active_material.node_tree.nodes:
+			if node.type == 'TEX_IMAGE': 
+				find_replacement_texture(node,context.scene.shaders_replacement_texture_folder)
+		
+		return {'FINISHED'}
+
 
 
 
@@ -225,7 +275,6 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 	bl_label = "Select Materials Folder"
 	bl_options = {'REGISTER', 'UNDO'}
 
-	#folder_path = "yoooooo"
 	bpy.types.Scene.shaders_texture_folder = bpy.props.StringProperty(name="Texture Folder", description="Folder where the gear for _a, _m, and _n files are located", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
 
 	@classmethod
@@ -242,8 +291,7 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 		addon_name = 'Colorsetter'
 
 		# Check if the addon is enabled
-		if addon_name not in bpy.context.preferences.addons.keys():
-
+		if addon_name not in context.preferences.addons.keys():
 			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
 		else:
 			#print(f"The addon '{addon_name}' is installed and enabled.")
@@ -251,30 +299,27 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 			context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)
 			folder_path = context.scene.shaders_texture_folder
 			print (folder_path)
-			#context.scene.ffxiv_mmd.select_materials_folder.folder_path
 			
 			old_material = None
 			new_material = None
 			
-			if bpy.context.active_object:
+			if context.active_object:
 
-				obj = bpy.context.active_object
+				obj = context.active_object
 
 				if obj.type == 'MESH':
 					old_material = apply_colorset_plugin()
 					new_material = apply_textures_to_colorset_material(context,folder_path).id_data
 
-					if undo_if_colorset_plugin_error(bpy.context.active_object,old_material, new_material):
+					if undo_if_colorset_plugin_error(context.active_object,old_material, new_material):
 						#if no errors, apply to all materials 
-						print ("no errors ya'll!")
 						apply_material_to_all_matching_ffxiv_meshes (obj)
 					else:
 						print ("ERROR: COULD NOT APPLY THE COLORSETTER PLUGIN (probably a 'Import DDS' error in Colorsetter addon)")					
 				
-			# return {"CANCELLED"}
-
 			return {'FINISHED'}
-	
+		
+
 
 
 def get_ffxiv_skin_file(active_object,texture_type):

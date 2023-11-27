@@ -1,0 +1,10 @@
+#1) download all files from https://github.com/emarron/ffxiv-tex-converter
+#2) delete folders '.idea','notes'
+#3) delete files '.gitignore','README.md','LICENSE'
+#4) copy folders/files from C:\Users\%userprofile%\AppData\Local\Programs\Python\Python311\Lib\site-packages to 'ffxiv-tex-converter' folder
+#  .\kaitaistruct.py
+#  .\colorama (folder)
+#  .\tqdm (folder)
+#5) rename 'run.py' to '__main__.py'
+#6) run this in powershell in ext folder: python -m zipapp ffxiv-tex-converter
+# will create a ffxiv-tex-converter.pyz file that can be used

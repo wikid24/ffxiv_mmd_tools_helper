@@ -56,9 +56,7 @@ def findArmature(obj):
 
 	if bpy.context.mode == 'OBJECT':
 		if obj.hide == True:
-			obj.hide = False
-	
-		
+			obj.hide = False	
 	
 	if obj.type == 'ARMATURE':
 		arm = obj
@@ -67,14 +65,16 @@ def findArmature(obj):
 		if obj.parent.type == 'ARMATURE':
 			#obj.mmd_root.show_armature = True	
 			arm = obj.parent
-			arm.hide = False
+			if arm.hide == True:
+				arm.hide = False
 			return arm
 		else:
 			for child in obj.parent.children:
 				if child.type == 'ARMATURE':					
 					#child.mmd_root.show_armature = True	
 					arm = child
-					arm.hide = False
+					if arm.hide == True:
+						arm.hide = False
 					return arm
 	if obj.parent.parent is not None:
 		if obj.parent.parent.type == 'ARMATURE':
@@ -87,7 +87,8 @@ def findArmature(obj):
 			for child in obj.parent.parent.children:
 				if child.type == 'ARMATURE':
 					arm = child
-					arm.hide = False
+					if arm.hide == True:
+						arm.hide = False
 					#child.mmd_root.show_armature = True	
 					return arm
 	if hasattr(obj, "mmd_type"):

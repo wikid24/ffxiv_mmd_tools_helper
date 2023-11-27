@@ -448,26 +448,7 @@ def rename_ffxiv_mesh(obj):
 
 def main(context):
 
-
-
-	if bpy.context.scene.selected_ffxiv_test_model == "import_nala":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
-		import_ffxiv_model(context,filepath)
-
-	elif bpy.context.scene.selected_ffxiv_test_model == "import_nala_deluxe":
-		#bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
-		filepath='C:\\Users\\wikid\\OneDrive\\Documents\\TexTools\\Saved\\FullModel\\Nala V3\\Nala V3.fbx'
-		import_ffxiv_model(context,filepath)
-		miscellaneous_tools.fix_object_axis()
-		bones_renamer.main(context)
-		miscellaneous_tools.correct_root_center()
-		miscellaneous_tools.correct_groove()
-		miscellaneous_tools.correct_waist()
-		miscellaneous_tools.correct_waist_cancel()
-		add_foot_leg_ik.main(context)
-	else:
-		import_ffxiv_model(context,get_test_model_file_path(bpy.context.scene.selected_ffxiv_test_model))
+	import_ffxiv_model(context,get_test_model_file_path(bpy.context.scene.selected_ffxiv_test_model))
 
 
 from bpy_extras.io_utils import ImportHelper
@@ -531,30 +512,41 @@ class ImportFFXIVModel(bpy.types.Operator):
 
 
 @register_wrap
-class SelectTexToolsModelFolder(bpy.types.Operator):
+class SelectTexToolsSavedFolder(bpy.types.Operator,ImportHelper):
 	"""User can select the folder for materials"""
-	bl_idname = "ffxiv_mmd.select_textools_model_folder"
-	bl_label = "Select TexTools Model Folder"
+	bl_idname = "ffxiv_mmd.select_textools_saved_folder"
+	bl_label = "Accept"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	# Filter folders only
+	filename_ext = ""
+	filter_folder = True
+	filter_file = False
+	filter_glob: bpy.props.StringProperty(default="", options={'HIDDEN'})
 	
-
-
 	bpy.types.Scene.textools_saved_folder = bpy.props.StringProperty(
 		name="TexTools 'Saved' Folder"
 		, description="Folder where FFXIV TexTools stores it's texture files"
 		, default=''
-		, maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
+		, maxlen=0, update=None, get=None, set=None)
 	
-	#@classmethod
-	#def poll(cls, context):
-	#	return context.active_object is not None and context.active_object.type == 'MESH'
+	def invoke(self, context, event):
 
+		self.filepath = context.scene.textools_saved_folder
+
+		context.window_manager.fileselect_add(self)
+		return {'RUNNING_MODAL'}
+
+	
 	def execute(self, context):
-		#self.textools_model_folder = context.preferences.addons['ffxiv_mmd_tools_helper'].preferences.textools_saved_folder.title()
+		context.scene.textools_saved_folder = bpy.path.abspath(self.filepath)
 
-		context.scene.textools_saved_folder = bpy.path.abspath(context.scene.textools_saved_folder)
-		folder_path = context.scene.textools_saved_folder
-		print(folder_path)
+		#addon_prefs_textools_folder = context.preferences.addons['ffxiv_mmd_tools_helper'].preferences.textools_saved_folder
+		#print(addon_prefs_textools_folder)
+
+		# Use the default folder from the addon preferences
+		#default_folder = addon_prefs_textools_folder
+		
+
 		return {'FINISHED'}
 	

@@ -1,6 +1,7 @@
 import bpy
 from . import register_wrap
 from . import model
+from . import addon_preferences
 
 
 @register_wrap
@@ -14,7 +15,11 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 	bl_options = {'DEFAULT_CLOSED'}
 	bl_order = 1
 
+
+
 	def draw(self, context):
+
+
 		layout = self.layout
 		# Add a help button
 		row = layout.row()
@@ -35,8 +40,9 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 
 		row = layout.row()
 		row.label(text="TexTools 'Saved' Folder:")
-		row = layout.row()
+		row = layout.row(align=True)
 		row.prop(context.scene,"textools_saved_folder", text = "")
+		row.operator("ffxiv_mmd.select_textools_saved_folder", text='', icon='FILE_FOLDER')
 		#row.operator("ffxiv_mmd.textools_saved_folder", text="Select TexTools 'Saved' Folder")
 
 		row = layout.row()
@@ -529,36 +535,6 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					if node.type == 'MIX_SHADER' and node.name == 'ffxiv_mmd_eye_catchlight_mix_shader':
 						eye_catchlight_mix_node = node
 
-				#Colorsetter Gear panel
-				if colorsetter_gear_node:
-					colorsetter_gear_multi_node = colorsetter_gear_node.inputs['Multi Texture'].links[0].from_node
-					colorsetter_gear_normal_node = colorsetter_gear_node.inputs['Normal Map'].links[0].from_node
-					colorsetter_gear_normal_nearest_node = colorsetter_gear_node.inputs['Colorset Position Ramp'].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs['Fac'].links[0].from_node
-					colorsetter_gear_diffuse_node = colorsetter_gear_node.inputs['Diffuse Texture'].links[0].from_node
-					colorsetter_gear_specular_node = colorsetter_gear_node.inputs['Specular Texture'].links[0].from_node
-					colorsetter_gear_specular_mask_node = colorsetter_gear_node.inputs['Specular Mask Texture'].links[0].from_node
-
-					if colorsetter_gear_multi_node:
-						box = layout.box()
-						grid = box.grid_flow(columns=2,align=True)
-						grid.label(text="Colorsetter Gear Settings")
-						#grid.operator("ffxiv_mmd.remove_colorsetter_gear_shader", text="", icon='X')
-						grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'gear'
-
-						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_gear_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_gear_normal_node,"image",text='Normal')
-						grid.prop(colorsetter_gear_normal_nearest_node,"image",text='Normal (Nearest)')
-						grid.prop(colorsetter_gear_diffuse_node,"image",text='Diffuse')
-						grid.prop(colorsetter_gear_specular_node,"image",text='Specular')
-						grid.prop(colorsetter_gear_specular_mask_node,"image",text='Specular Mask')
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_multi_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_nearest_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_diffuse_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_node.name
-						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_mask_node.name
-
 						
 
 				#Glossy BSDF panel
@@ -581,6 +557,43 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				else:
 					row = layout.row()
 					row.operator("ffxiv_mmd.apply_catchlight_shader", text="Add Eye Catchlight Shader")
+
+				
+				#Colorsetter Gear panel
+				if colorsetter_gear_node:
+					colorsetter_gear_multi_node = colorsetter_gear_node.inputs['Multi Texture'].links[0].from_node
+					colorsetter_gear_normal_node = colorsetter_gear_node.inputs['Normal Map'].links[0].from_node
+					colorsetter_gear_normal_nearest_node = colorsetter_gear_node.inputs['Colorset Position Ramp'].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs[0].links[0].from_node.inputs['Fac'].links[0].from_node
+					colorsetter_gear_diffuse_node = colorsetter_gear_node.inputs['Diffuse Texture'].links[0].from_node
+					colorsetter_gear_specular_node = colorsetter_gear_node.inputs['Specular Texture'].links[0].from_node
+					colorsetter_gear_specular_mask_node = colorsetter_gear_node.inputs['Specular Mask Texture'].links[0].from_node
+
+					if colorsetter_gear_multi_node:
+						box = layout.box()
+						grid = box.grid_flow(columns=2,align=True)
+						grid.label(text="Colorsetter Gear Settings")
+						grid.label(text="For MaterialType 'e' or 'a'")
+						#grid.operator("ffxiv_mmd.remove_colorsetter_gear_shader", text="", icon='X')
+						grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'gear'
+
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(colorsetter_gear_multi_node,"image",text='Multi (_m,_d,_s)')
+						grid.prop(colorsetter_gear_normal_node,"image",text='Normal (_n)')
+						grid.prop(colorsetter_gear_normal_nearest_node,"image",text='Normal (Nearest)(_n)')
+						grid.prop(colorsetter_gear_diffuse_node,"image",text='Diffuse (_d)')
+						grid.prop(colorsetter_gear_specular_node,"image",text='Specular (_s)')
+						grid.prop(colorsetter_gear_specular_mask_node,"image",text='Specular Mask')
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_multi_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_normal_nearest_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_diffuse_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_node.name
+						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_gear_specular_mask_node.name
+						grid = box.grid_flow(columns=1,align=True)
+						grid.label(text="Replace Textures Folder")
+						grid = box.grid_flow(columns=2,align=True)
+						grid.prop(context.scene,"shaders_replacement_texture_folder",text='')
+						grid.operator("ffxiv_mmd.replace_colorsetter_textures",text='',icon='CHECKMARK')
 
 
 				#MekTools skin panel
@@ -663,6 +676,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Eye Settings")
+					grid.label(text="For materials that end with '_iri_a'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_eye_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'eye'
 
@@ -697,6 +711,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Hair Settings")
+					grid.label(text="For MaterialType 'h'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_hair_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'hair'
 					
@@ -740,7 +755,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Settings")
-					grid.label(text="For materiels that end with '_fac_a'")
+					grid.label(text="For materials that end with '_fac_a'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_face_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='face'
 					
@@ -784,7 +799,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Face Accent Settings")
-					grid.label(text="For materiels that end with '_etc_a'")
+					grid.label(text="For materials that end with '_etc_a'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_faceacc_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type = 'faceacc'
 					
@@ -799,8 +814,8 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid.prop(colorsetter_faceacc_limbal_intensity,"default_value",text='Limbal Intensity')
 						
 						grid = box.grid_flow(columns=2,align=True)
-						grid.prop(colorsetter_faceacc_multi_node,"image",text='Multi')
-						grid.prop(colorsetter_faceacc_normal_node,"image",text='Normal')
+						grid.prop(colorsetter_faceacc_multi_node,"image",text='Multi (_s)')
+						grid.prop(colorsetter_faceacc_normal_node,"image",text='Normal (_n)')
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_faceacc_multi_node.name
 						grid.operator("ffxiv_mmd.update_colorsetter_image_node",text='',icon='FILEBROWSER').image_node_name = colorsetter_faceacc_normal_node.name
 							#grid.prop(colorsetter_eye_node.node_tree.nodes['Normal Map'].inputs['Strength'],"default_value",text='Normal Strength',slider=True)
@@ -846,6 +861,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					box = layout.box()
 					grid = box.grid_flow(columns=2,align=True)
 					grid.label(text="Colorsetter Skin Settings")
+					grid.label(text="For MaterialType 'b'")
 					#grid.operator("ffxiv_mmd.remove_colorsetter_skin_shader", text="", icon='X')
 					grid.operator("ffxiv_mmd.remove_colorsetter_shader", text="", icon='X').shader_type='skin'
 					
@@ -853,7 +869,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					if colorsetter_skin_color:
 						grid = box.grid_flow(columns=1,align=True)
 						grid.prop(colorsetter_skin_color,"default_value",text='Skin Color')
-						grid.prop(colorsetter_skin_sss,"default_value",text='Subsurface Scattering')
+						grid.prop(colorsetter_skin_sss,"default_value",text='Subsurface Scattering', slider=True)
 						
 						grid = box.grid_flow(columns=2,align=True)
 						grid.prop(colorsetter_skin_diffuse_node,"image",text='Diffuse')
@@ -880,13 +896,6 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.operator("ffxiv_mmd.apply_mektools_eye_shader", text="Eyes")
 					row = layout.row()
 					row.label(text = 'Apply Colorsetter Shader')
-					# Colorsetter Addon Gear Stuff
-					row = layout.row()
-					row.label(text="Colorsetter Gear Texture Folder:")
-					row = layout.row()
-					grid = row.grid_flow(columns=2,align=True)
-					grid.prop(context.scene,"shaders_texture_folder", text = "")
-					grid.operator("ffxiv_mmd.select_colorsetter_gear_materials_folder", text="", icon='CHECKMARK')
 					row = layout.row()
 					grid = row.grid_flow(columns=2, align=True)
 					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Skin").shader_type = 'skin'
@@ -895,14 +904,13 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Eyes").shader_type = 'eye'
 					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Face Accent").shader_type = 'faceacc'
 					grid.operator("ffxiv_mmd.apply_colorsetter_shader", text="Hrothgar/Miqote Tail").shader_type = 'tail'
-					"""
-					grid.operator("ffxiv_mmd.apply_colorsetter_skin_shader", text="Skin")
-					grid.operator("ffxiv_mmd.apply_colorsetter_face_shader", text="Face")
-					grid.operator("ffxiv_mmd.apply_colorsetter_hair_shader", text="Hair")
-					grid.operator("ffxiv_mmd.apply_colorsetter_eye_shader", text="Eyes")
-					grid.operator("ffxiv_mmd.apply_colorsetter_faceacc_shader", text="Face Accent")
-					grid.operator("ffxiv_mmd.apply_colorsetter_tail_shader", text="Hrothgar/Miqote Tail")
-					"""
+					# Colorsetter Addon Gear Stuff
+					row = layout.row()
+					row.label(text="Apply Colorsetter Gear Texture Folder:")
+					row = layout.row()
+					grid = row.grid_flow(columns=2,align=True)
+					grid.prop(context.scene,"shaders_texture_folder", text = "")
+					grid.operator("ffxiv_mmd.select_colorsetter_gear_materials_folder", text="", icon='CHECKMARK')
 					
 
 
@@ -1056,6 +1064,9 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		col.prop(context.scene, "bone_compare_scale_z", text="Z")
 
 
+
+
+
 @register_wrap
 class ExportMMD_MTH(bpy.types.Panel):
 	bl_idname = "OBJECT_PT_ExportMMD_MTH"
@@ -1093,4 +1104,37 @@ class ExportMMD_MTH(bpy.types.Panel):
 		col.prop(context.scene, "selected_armature_to_diagnose")
 		row = layout.row()
 		"""
+
+@register_wrap
+class TexToDDS_MTH(bpy.types.Panel):
+	bl_idname = "OBJECT_PT_TexToDDS_MTH"
+	bl_label = "Tex to DDS Converter"
+	bl_space_type = "VIEW_3D"
+	bl_region_type = "TOOLS" if bpy.app.version < (2,80,0) else "UI"
+	bl_category = "FFXIV MMD"
+	bl_options = {'DEFAULT_CLOSED'}
+	bl_order = 12
+
+	def draw(self, context):
+		layout = self.layout
+		row = layout.row()
+		row.label(text='Input Folder')
+		row = layout.row()
+		grid = row.grid_flow(columns=2, align=True)
+		grid.prop(context.scene,"convert_input_file_folder",text='')
+		grid.operator("ffxiv_mmd.select_convert_input_folder", icon='FILE_FOLDER', text='')
+		row = layout.row()
+		row.label(text='Output Folder')
+		row = layout.row()
+		grid = row.grid_flow(columns=2, align=True)
+		grid.prop(context.scene,"convert_output_file_folder",text='')
+		grid.operator("ffxiv_mmd.convert_open_output_folder", icon='FILE_FOLDER', text='')
+		row = layout.row()
+		grid = row.grid_flow(columns=1, align=True)
+		row.operator("ffxiv_mmd.convert_tex_to_dds", text='Convert .tex to .dds')
+		row.operator("ffxiv_mmd.convert_dds_to_tex", text='Convert .dds to .tex')
+		row = layout.row()
+		row.label(text='WARNING: This converts ALL subfolders as well')
+		row = layout.row()
+		row.label(text='THIS MAY TAKE A WHILE IF LOTS OF FILES/SUBFOLDERS')
 

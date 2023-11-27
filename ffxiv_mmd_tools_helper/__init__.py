@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 869),
+	"version": (0, 870),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -30,6 +30,7 @@ def register_wrap(cls):
 	if hasattr(cls, 'bl_rna'):
 		__bl_classes.append(cls)
 	return cls
+
 
 if "bpy" in locals():
 	if bpy.app.version < (2, 71, 0):
@@ -65,8 +66,7 @@ if "bpy" in locals():
 	importlib.reload(shaders_colorsetter)
 	importlib.reload(shaders_mektools)
 	importlib.reload(shaders)
-	importlib.reload(toon_textures_to_node_editor_shader)
-	importlib.reload(toon_modifier)
+	importlib.reload(tex_converter)
 	importlib.reload(panels)
 	
 else:
@@ -104,8 +104,7 @@ else:
 	from . import shaders_colorsetter
 	from . import shaders_mektools
 	from . import shaders
-	from . import toon_textures_to_node_editor_shader
-	from . import toon_modifier
+	from . import tex_converter
 	from . import panels
 
 if bpy.app.version < (2, 80, 0):
@@ -114,11 +113,13 @@ if bpy.app.version < (2, 80, 0):
 logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 
 
+#register all classes found in python files
 def register():
 	for cls in __bl_classes:
 		bpy.utils.register_class(cls)
-	print(__name__, 'registed %d classes'%len(__bl_classes))
+	print(__name__, 'registered %d classes'%len(__bl_classes))
 
+#unregister all classes found in python files
 def unregister():
 	for cls in reversed(__bl_classes):
 		bpy.utils.unregister_class(cls)

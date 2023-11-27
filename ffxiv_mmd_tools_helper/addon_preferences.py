@@ -4,6 +4,7 @@ from . import register_wrap
 from bpy.types import AddonPreferences
 from bpy.props import StringProperty
 
+
 @register_wrap
 class FFXIV_MMDAddonPreferences(bpy.types.AddonPreferences):
     bl_idname = __package__
@@ -13,22 +14,10 @@ class FFXIV_MMDAddonPreferences(bpy.types.AddonPreferences):
         name="TexTools 'Saved' Folder",
         description=("Directory path to TexTools 'Saved' Folder. This is normally where TexTools saves all model & texture files upon export"),
         subtype='DIR_PATH',
-    )   
+    )
 
-    def draw(self, context):
-        layout = self.layout
-        layout.prop(self, "textools_saved_folder")
-
-        """
-        if not self.textools_saved_folder:
-            # If the property is not set, set a default value here
-            user_profile = os.environ.get('USERPROFILE')
-            if user_profile:
-                documents_folder = os.path.join(user_profile, 'Documents', 'TexTools', 'Saved')
-                self.textools_saved_folder = documents_folder
-        """
-
-   # def update_textools_saved_folder(self, context):
+    
+    def update_textools_saved_folder(self):
         if not self.textools_saved_folder:
             # If the property is not set, set a default value here
             user_profile = os.environ.get('USERPROFILE')
@@ -43,3 +32,18 @@ class FFXIV_MMDAddonPreferences(bpy.types.AddonPreferences):
                     else:
                         # Fallback to a different location if the folder doesn't exist
                         self.textools_saved_folder = ""  # Set your desired fallback path here
+    
+
+    def draw(self, context):
+        #print(bpy.context.preferences.addons.get('ffxiv_mmd_tools_helper').preferences.textools_saved_folder)
+        if self.textools_saved_folder=='':
+            self.update_textools_saved_folder()
+        
+        layout = self.layout
+        layout.prop(self, "textools_saved_folder")
+
+
+
+
+
+    

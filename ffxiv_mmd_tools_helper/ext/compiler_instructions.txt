@@ -1,4 +1,4 @@
-#1) download all files from https://github.com/emarron/ffxiv-tex-converter
+#1) download all files from https://github.com/emarron/ffxiv-tex-converter to '\ext\ffxiv-tex-converter' folder
 #2) delete folders '.idea','notes'
 #3) delete files '.gitignore','README.md','LICENSE'
 #4) copy folders/files from C:\Users\%userprofile%\AppData\Local\Programs\Python\Python311\Lib\site-packages to 'ffxiv-tex-converter' folder

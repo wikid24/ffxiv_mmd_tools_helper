@@ -82,6 +82,11 @@ class ConvertTEXtoDDS(bpy.types.Operator):
 	bl_label = "Convert .tex to .dds"
 	bl_options = {'REGISTER', 'UNDO'}
 
+	@classmethod
+	def poll(cls, context):
+		folder_path = bpy.path.abspath(context.scene.convert_input_file_folder)
+		return os.path.exists(folder_path)
+
 	def execute(self,context):
 		input_folder_path = context.scene.convert_input_file_folder
 
@@ -104,6 +109,11 @@ class ConvertDDStoTEX(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd.convert_dds_to_tex"
 	bl_label = "Convert .dds to .tex"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	@classmethod
+	def poll(cls, context):
+		folder_path = bpy.path.abspath(context.scene.convert_input_file_folder)
+		return os.path.exists(folder_path)
 
 	def execute(self,context):
 		input_folder_path = context.scene.convert_input_file_folder

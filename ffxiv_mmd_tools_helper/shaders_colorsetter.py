@@ -216,44 +216,63 @@ def apply_material_to_all_matching_ffxiv_meshes (source_object):
 	
 
 import fnmatch
-def find_replacement_texture(image_node, replacement_folderpath):
+import re
+def find_replacement_texture(image_node, replacement_folderpath,re_search_string=None):
+
+	filename_no_extension = None
+		
 	if image_node.image and image_node.image.filepath:
 		filename = os.path.basename(image_node.image.filepath)
 		filename_no_extension, extension = os.path.splitext(filename)
 
-		# List of valid extensions to check for
-		valid_extensions = ['.dds', '.png', '.bmp']
+	# List of valid extensions to check for
+	valid_extensions = ['.dds', '.png', '.bmp']
 
-		# Get the list of files in the replacement folder and its subfolders
-		replacement_files = set()
-		for root, dirs, files in os.walk(replacement_folderpath):
+	# Get the list of files in the replacement folder and its subfolders
+	replacement_files = set()
+	for root, dirs, files in os.walk(replacement_folderpath):
+
+		if re_search_string is not None:
+			pattern = re.compile(f".*{re_search_string}.*", re.IGNORECASE)
+			for file in files:
+				if pattern.match(file) and any(file.lower().endswith(ext) for ext in valid_extensions):
+					replacement_files.add(os.path.join(root, file))
+		else:
 			for file in fnmatch.filter(files, f"{filename_no_extension}*"):
 				if any(file.lower().endswith(ext) for ext in valid_extensions):
-					replacement_files.add(os.path.join(root, file))
+					replacement_files.add(os.path.join(root, file))	
 
-		# Check if any replacement file with a valid extension exists
-		if replacement_files:
-			# Choose the first match
-			new_filepath = sorted(replacement_files)[0]
-
+	# Check if any replacement file with a valid extension exists
+	if replacement_files:
+		# Choose the first match
+		new_filepath = sorted(replacement_files)[0]
+		if image_node.image and image_node.image.filepath:
 			if new_filepath != image_node.image.filepath:
 
 				update_image_node_file(image_node,new_filepath)
-
-				print(f"Node:{image_node.name} updated with replacement image: {os.path.basename(new_filepath)}")
 		else:
-			print(f"No matching replacement image found for node:{image_node.name}")
+			update_image_node_file(image_node,new_filepath)
+				
+				
+		print(f"Node:{image_node.name} updated with replacement image: {os.path.basename(new_filepath)}")
+		
+	else:
+		print(f"No matching replacement image found for node:{image_node.name}")
 
-	
+
+
 	
 @register_wrap
 class ReplaceColorsetterTextures(bpy.types.Operator):
-	"""Apply the Colorsetter addon to the selected mesh using DDS/PNG/BMP textures from the selected folder"""
+	"""Replace textures using .dds/.png/.bmp files with the exact same filename from the selected folder"""
 	bl_idname = "ffxiv_mmd.replace_colorsetter_textures"
-	bl_label = "Select Materials Folder"
+	bl_label = "Replace Materials Textures"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.shaders_replacement_texture_folder = bpy.props.StringProperty(name="Texture Folder", description="Folder where the gear for _a, _m, and _n files are located", default="", maxlen=0, options={'ANIMATABLE'}, subtype='DIR_PATH', update=None, get=None, set=None)
+	
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin','gear']
+	shader_type = bpy.props.StringProperty(name="shader_type", update=None, get=None, set=None)
 
 	def execute(self, context):
 		active_object = context.active_object
@@ -262,6 +281,80 @@ class ReplaceColorsetterTextures(bpy.types.Operator):
 		for node in active_material.node_tree.nodes:
 			if node.type == 'TEX_IMAGE': 
 				find_replacement_texture(node,context.scene.shaders_replacement_texture_folder)
+		
+		return {'FINISHED'}
+	
+
+def search_texture(image_node, replacement_folderpath,shader_type):
+	if image_node.image and image_node.image.filepath:
+		return
+	else:
+		re_search_string = None
+
+		if shader_type == 'skin':
+			if image_node.label == 'Diffuse Skin Texture': 
+				re_search_string = 'b[0-9][0-9][0-9][0-9]_d'
+			if image_node.label == 'Multi Skin Texture': 
+				re_search_string = 'b[0-9][0-9][0-9][0-9]_s'
+			if image_node.label == 'Normal Skin Texture': 
+				re_search_string = 'b[0-9][0-9][0-9][0-9]_n'
+
+		if shader_type == 'eye':
+			if image_node.label == 'Multi Texture': 
+				re_search_string = 'iri_s'
+			if image_node.label == 'Normal Texture': 
+				re_search_string = 'iri_n'
+			
+		if shader_type == 'face':
+			if image_node.label == 'Diffuse Face Texture':
+				re_search_string = 'fac_d'
+			if image_node.label == 'Multi Face Texture':
+				re_search_string = 'fac_s'
+			if image_node.label == 'Normal Face Texture':
+				re_search_string = 'fac_n'
+
+		if shader_type == 'faceacc':
+			if image_node.label == 'Multi Texture':
+				re_search_string = 'f[0-9][0-9][0-9][0-9]_etc_s'
+			if image_node.label == 'Normal Texture':
+				re_search_string = 'f[0-9][0-9][0-9][0-9]_etc_n'
+
+		if shader_type == 'hair':
+			if image_node.label == 'Hair Multi Texture':
+				re_search_string = 'hir_s'
+			if image_node.label == 'Hair Normal Map':
+				re_search_string = 'hir_n'
+
+		if shader_type == 'tail':
+			if image_node.label == 'Multi Texture':
+				re_search_string = 't[0-9][0-9][0-9][0-9]_etc_s'
+			if image_node.label == 'Normal Texture':
+				re_search_string = 't[0-9][0-9][0-9][0-9]_etc_n'
+
+		if re_search_string:
+			#print(suffix)
+			find_replacement_texture(image_node,replacement_folderpath,re_search_string=re_search_string)
+
+
+	
+@register_wrap
+class SearchColorsetterTextures(bpy.types.Operator):
+	"""Search for missing textures with .bmp/.dds/.png files from the selected folder"""
+	bl_idname = "ffxiv_mmd.search_colorsetter_textures"
+	bl_label = "Search For Textures Folder"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	shader_type_list = ['eye','face','hair','faceacc','tail','skin','gear']
+
+	shader_type = bpy.props.StringProperty(name="shader_type", update=None, get=None, set=None)
+
+	def execute(self, context):
+		active_object = context.active_object
+		active_material = active_object.active_material
+
+		for node in active_material.node_tree.nodes:
+			if node.type == 'TEX_IMAGE': 
+				search_texture(node,context.scene.shaders_replacement_texture_folder,self.shader_type)
 		
 		return {'FINISHED'}
 
@@ -597,10 +690,15 @@ def set_shader_defaults(active_armature,active_object,node_group_instance,shader
 		node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
 		node_group_instance.inputs['Tattoo Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
 		node_group_instance.inputs['Limbal Ring Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_tattoo_limbal'))
+		node_group_instance.inputs['Hair Color Brighten'].default_value = 0.2
+		node_group_instance.inputs['Limbal Ring Enabled'].default_value = 0.05
+		node_group_instance.inputs['Limbal Ring Intensity'].default_value = 0
+
 		
 	if shader_type == 'tail':
 		node_group_instance.inputs['Hair Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair'))
 		node_group_instance.inputs['Highlight Color'].default_value = import_ffxiv_charafile.hex_to_rgba(active_armature.data.get('color_hex_hair_highlights'))
+		node_group_instance.inputs['Enable Highlights'].default_value = 1
 
 
 

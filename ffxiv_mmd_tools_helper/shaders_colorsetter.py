@@ -277,6 +277,7 @@ class ReplaceColorsetterTextures(bpy.types.Operator):
 	shader_type = bpy.props.StringProperty(name="shader_type", update=None, get=None, set=None)
 
 	def execute(self, context):
+		context.scene.shaders_replacement_texture_folder = bpy.path.abspath(context.scene.shaders_replacement_texture_folder)
 		active_object = context.active_object
 		active_material = active_object.active_material
 
@@ -416,7 +417,7 @@ class SelectColorsetterGearMaterialsFolder(bpy.types.Operator):
 			#print(f"The addon '{addon_name}' is installed and enabled.")
 
 			context.scene.shaders_texture_folder = bpy.path.abspath(context.scene.shaders_texture_folder)
-			folder_path = context.scene.shaders_texture_folder
+			folder_path = bpy.path.abspath(context.scene.shaders_texture_folder)
 			print (folder_path)
 			
 			old_material = None

@@ -752,6 +752,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 				if colorsetter_face_node:
 					colorsetter_face_skin_color = colorsetter_face_node.inputs['Skin Color']
 					colorsetter_face_sss = colorsetter_face_node.inputs['Enable SSS']
+					colorsetter_face_specular_mix = colorsetter_face_node.node_tree.nodes['Specular Mix'].inputs[0]
 					colorsetter_face_lip_color_mix = colorsetter_face_node.inputs['Lip Color Enabled']
 					colorsetter_face_lip_color = colorsetter_face_node.inputs['Lip Color']
 					colorsetter_face_lip_lightdark = colorsetter_face_node.inputs['Light/Dark Lips']
@@ -778,6 +779,7 @@ class ShadingAndToonsPanel_MTH(bpy.types.Panel):
 						grid = box.grid_flow(columns=1,align=True)
 						grid.prop(colorsetter_face_skin_color,"default_value",text='Skin Color')
 						grid.prop(colorsetter_face_sss,"default_value",text='Subsurface Scattering', slider=True)
+						grid.prop(colorsetter_face_specular_mix,"default_value",text='Specular Mix', slider=True)
 						grid.prop(colorsetter_face_lip_color,"default_value",text='Lip Color')
 						grid.prop(colorsetter_face_lip_color_mix,"default_value",text='Lip Color Mix',slider=True)
 						grid.prop(colorsetter_face_lip_lightdark,"default_value",text='Lip Light/Dark',slider=True)

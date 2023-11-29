@@ -179,35 +179,6 @@ def import_ffxiv_model(context,file_path):
 
 					
 
-		textools_folder = None
-
-		addon_prefs = bpy.context.preferences.addons[__package__].preferences
-		textools_saved_folder = addon_prefs.textools_saved_folder
-
-		# Check if textools_saved_folder is not None
-		if context.scene.textools_saved_folder:
-			if os.path.exists(os.path.abspath(context.scene.textools_saved_folder)):
-				textools_folder = os.path.abspath(context.scene.textools_saved_folder)
-
-		elif textools_saved_folder:
-			if os.path.exists(os.path.abspath(textools_saved_folder)):
-				textools_folder = os.path.abspath(textools_saved_folder)
-			
-		print(f"textools folder: {textools_folder}")
-		
-		#loop through the mesh_list and search for the target files
-		for i in mesh_list:
-			material_folder = find_TexTools_material_texture_folder(textools_folder,mesh_list[i][0],mesh_list[i][1],i)
-			#print(f"{i}: {mesh_list[i][0]}, {mesh_list[i][1]}:{material_folder}")
-			
-			#if material folder is found, update mesh_list with the details
-			if material_folder:
-				immediate_folder_name = material_folder.split(os.path.sep)[-1]
-				mesh_list[i] = (mesh_list[i][0],mesh_list[i][1],immediate_folder_name,material_folder)
-			else:
-				mesh_list[i] = (mesh_list[i][0],mesh_list[i][1],'','')
-			
-			#print(f"{i}: {mesh_list[i][0]}, {mesh_list[i][1]},{mesh_list[i][2]}")
 		
 		#loop through the armature and if there's any meshes that match the mesh_list, update custom properties and name
 		if x.type =='ARMATURE':
@@ -248,83 +219,6 @@ def add_custom_property(obj,prop_name,prop_value):
 	
 	obj.data[prop_name] = prop_value
 
-
-
-def find_TexTools_material_texture_folder(root_folder_path,ModelType,MaterialType,original_material_name):
-
-	#root_folder_path = r'C:\Users\wikid\OneDrive\Documents\TexTools\Saved'
-	#ModelType = 'Body'
-	#original_material_name = 'mt_c0501e9152_top_a'
-	#target_filename = 'mt_c0501e9152_top_a.dat'
-	target_filename = original_material_name+'.dat'
-	target_folder_path = None
-	ModelType_subfolder = None
-
-	textools_subfolder_gear_dict = {    
-			"Wrists":"Wrists",
-			"Earrings":"Earring",
-			"Neck":"Neck",
-			"RingL":"Rings",
-			"RingR":"Rings",
-			"Legs":"Legs",
-			"Head":"Head",
-			"Feet":"Feet",
-			"Hands":"Hands",
-			"Body":"Body",
-		}
-	
-	prop_textools_subfolder_char_dict ={
-			"Body":"Character\Body",
-			"Face":"Character\Face",
-			"Hair":"Character\Hair",
-			"Tail":"Character\Tail",
-			"Ears":"Character\Ear",
-			"EquipmentDecal":"Character\Equipment Decals",
-			"FacePaint":"Character\Face Paint",
-		}
-	
-	#if MaterialType in ['b','f','h','t','z']
-		#then point to the Chracter folder
-	
-	#if MaterialType in ['e','a']
-		#then point to the equipment folder
-	
-	
-	if root_folder_path and os.path.exists(root_folder_path):
-		if ModelType in textools_subfolder_gear_dict and MaterialType in ['e','a']:
-			ModelType_subfolder = textools_subfolder_gear_dict[ModelType]
-
-		elif ModelType in prop_textools_subfolder_char_dict and MaterialType in ['b','f','h','t','z']:
-			ModelType_subfolder = prop_textools_subfolder_char_dict[ModelType]
-
-		else:
-			ModelType_subfolder = ""  # Set it to an empty string if not found
-
-		def find_target_file(folder_path, target_filename):
-			for root, dirs, files in os.walk(folder_path):
-				if target_filename in files:
-					return os.path.abspath(root)
-			return None
-
-
-		# Ensure ModelType_subfolder is a string before using it in os.path.join
-		if not isinstance(ModelType_subfolder, str):
-			ModelType_subfolder = str(ModelType_subfolder)
-
-		#print(f"({root_folder_path}, {ModelType_subfolder})")
-		subfolder_path = os.path.join(root_folder_path, ModelType_subfolder)
-
-		#print(subfolder_path)
-		if os.path.exists(subfolder_path):
-			target_folder_path = find_target_file(subfolder_path, target_filename)
-		
-
-		#if target_folder_path:
-		#	print("Target Folder:", target_folder_path)
-		#else:
-		#	print(f"Filename {target_filename} not found in folder {subfolder_path}.")
-
-	return target_folder_path
 
 
 
@@ -510,43 +404,3 @@ class ImportFFXIVModel(bpy.types.Operator):
 		return {'FINISHED'}
 	
 
-
-@register_wrap
-class SelectTexToolsSavedFolder(bpy.types.Operator,ImportHelper):
-	"""User can select the folder for materials"""
-	bl_idname = "ffxiv_mmd.select_textools_saved_folder"
-	bl_label = "Accept"
-	bl_options = {'REGISTER', 'UNDO'}
-
-	# Filter folders only
-	filename_ext = ""
-	filter_folder = True
-	filter_file = False
-	filter_glob: bpy.props.StringProperty(default="", options={'HIDDEN'})
-	
-	bpy.types.Scene.textools_saved_folder = bpy.props.StringProperty(
-		name="TexTools 'Saved' Folder"
-		, description="Folder where FFXIV TexTools stores it's texture files"
-		, default=''
-		, maxlen=0, update=None, get=None, set=None)
-	
-	def invoke(self, context, event):
-
-		self.filepath = context.scene.textools_saved_folder
-
-		context.window_manager.fileselect_add(self)
-		return {'RUNNING_MODAL'}
-
-	
-	def execute(self, context):
-		context.scene.textools_saved_folder = bpy.path.abspath(self.filepath)
-
-		#addon_prefs_textools_folder = context.preferences.addons['ffxiv_mmd_tools_helper'].preferences.textools_saved_folder
-		#print(addon_prefs_textools_folder)
-
-		# Use the default folder from the addon preferences
-		#default_folder = addon_prefs_textools_folder
-		
-
-		return {'FINISHED'}
-	

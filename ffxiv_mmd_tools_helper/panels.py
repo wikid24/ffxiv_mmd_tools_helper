@@ -38,12 +38,6 @@ class ImportModelPanel_MTH(bpy.types.Panel):
 		#row.operator_context = 'INVOKE_DEFAULT'
 		row.operator('mmd_tools.convert_to_mmd_model', text='Initialize MMD Struture', icon='ARMATURE_DATA')
 
-		row = layout.row()
-		row.label(text="TexTools 'Saved' Folder:")
-		row = layout.row(align=True)
-		row.prop(context.scene,"textools_saved_folder", text = "")
-		row.operator("ffxiv_mmd.select_textools_saved_folder", text='', icon='FILE_FOLDER')
-		#row.operator("ffxiv_mmd.textools_saved_folder", text="Select TexTools 'Saved' Folder")
 
 		row = layout.row()
 		row.label(text="Anamnesis .chara File:")

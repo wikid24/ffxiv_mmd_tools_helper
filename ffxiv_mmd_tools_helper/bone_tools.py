@@ -170,7 +170,7 @@ def get_csv_metadata_by_bone_type(metadata_column, bone_types):
 def hide_special_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("hidden", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -215,7 +215,7 @@ def move_vg_to_pos(mesh, vg_name, target_pos):
 def set_mmd_bone_order(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_bone_order", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -257,7 +257,7 @@ def set_mmd_bone_order(armature):
 			move_vg_to_pos(bone_order_mesh_object, bone[0],i)
 
 	#Get deformation tier from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_deform_tier", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -278,7 +278,7 @@ def set_mmd_bone_order(armature):
 def lock_position_rotation_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv'],'mmd_kaito'
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_rotate", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -297,7 +297,7 @@ def lock_position_rotation_bones(armature):
 
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_move", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -317,7 +317,7 @@ def lock_position_rotation_bones(armature):
 def set_fixed_axis_local_axis_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("fixed_axis", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -338,7 +338,7 @@ def set_fixed_axis_local_axis_bones(armature):
 
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("local_axis", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -359,7 +359,7 @@ def set_fixed_axis_local_axis_bones(armature):
 def auto_fix_mmd_bone_names(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_J = get_csv_metadata_by_bone_type("mmd_japanese", target_columns)
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
 
@@ -393,7 +393,7 @@ def auto_fix_mmd_bone_names(armature):
 def get_armature_bone_name_by_mmd_english_bone_name(armature,mmd_e_bone_name):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
@@ -423,11 +423,16 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 				return metadata_bone[1]
 			
 #doesn't check the armature, just returns equivalent mmd_english bone name
-def get_mmd_english_equivalent_bone_name(bone_name):
+def get_mmd_english_equivalent_bone_name(bone_name,bone_type = None):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv']
-	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+
+	if bone_type and bone_type in target_columns:
+		bone_type = [bone_type]
+		FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", bone_type)
+	else:
+		FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
 		#run through the MMD English bone dictionary
@@ -454,21 +459,160 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 					isbone_bonetype = True
 		return isbone_bonetype
 
+def clear_rotation(pose_bone):
+
+    # Check if the provided pose bone is valid
+    if pose_bone is None:
+        return
+
+    # Store the original rotation mode
+    original_rotation_mode = pose_bone.rotation_mode
+
+    # Check if the rotation mode is not quaternion, then set it to quaternion
+    if original_rotation_mode != 'QUATERNION':
+        pose_bone.rotation_mode = 'QUATERNION'
+
+    # Clear the rotation by setting it to the identity rotation
+    pose_bone.rotation_quaternion.identity()
+
+    # Restore the original rotation mode
+    pose_bone.rotation_mode = original_rotation_mode
+
+def clear_location(pose_bone):
+
+	# Check if the provided pose bone is valid
+	if pose_bone is None:
+		return
+
+	# Clear the location by setting it to (0, 0, 0)
+	pose_bone.location = (0, 0, 0)
+
+
+def clear_scale(pose_bone):
+	# Check if the provided pose bone is valid
+	if pose_bone is None:
+		return
+
+	# Clear the scale by setting it to (1, 1, 1)
+	pose_bone.scale = (1, 1, 1)
+
+
+
+def clear_armature_bone_roll(armature):
+	# Store the current mode
+	current_mode = armature.mode
+
+	# Check if the provided object is an armature
+	if armature.type == 'ARMATURE':
+		# Switch to Edit mode
+		bpy.context.view_layer.objects.active = armature
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		# Run the bpy.ops.armature.roll_clear() operator
+		bpy.ops.armature.roll_clear()
+
+		# Switch back to the original mode
+		bpy.ops.object.mode_set(mode=current_mode)
+	else:
+		print("The provided object is not an armature.")
+
+
+
+def copy_roll(source_armature, source_bone_name, target_armature, target_bone_name):
+	# Store the current mode for both armatures
+	original_active_object = bpy.context.active_object
+	original_selected_objects = bpy.context.selected_objects
+	original_active_pose_bone = None
+	original_selected_pose_bones = None
+	source_bone_parent_name = None
+	original_mode = bpy.context.object.mode
+	if bpy.context.object.mode == 'POSE':
+		if bpy.context.active_pose_bone:
+			original_active_pose_bone = bpy.context.active_pose_bone
+		if bpy.context.selected_pose_bones:
+			original_selected_pose_bones = bpy.context.selected_pose_bones
+
+
+
+	# Check if the provided objects are armatures
+	if source_armature.type == 'ARMATURE' and target_armature.type == 'ARMATURE':
+		bpy.ops.object.mode_set(mode='OBJECT')
+		bpy.ops.object.select_all(action='DESELECT')
+
+		# Switch to edit mode for the source armature
+		bpy.context.view_layer.objects.active = source_armature
+		source_armature.select_set(True)
+		target_armature.select_set(True)
+
+		bpy.ops.object.mode_set(mode='EDIT')
+
+		# Get the source bone
+		source_bone = source_armature.data.edit_bones.get(source_bone_name)
+		source_bone_parent = source_armature.data.edit_bones.get(source_bone_name).parent
+		source_bone_parent_name = source_bone_parent.name
+		
+		if source_bone:
+			# Get the roll of the source bone
+			source_roll = source_bone.roll
+			source_parent_roll = source_bone_parent.roll
+
+			target_bone = target_armature.data.edit_bones.get(target_bone_name)
+			target_bone_parent = target_bone.parent
+			if target_bone:
+				# Set the roll for the target bone
+				target_bone.roll = source_roll
+				#special code for leg_L/R, arm L/R to set the bone roll of it's parent first
+				special_bones_mmd_e = ('arm_L','arm_R','leg_L','leg_R')
+				for mmd_e_bone_name in special_bones_mmd_e:
+					target_bone_name_mmd_e = get_mmd_english_equivalent_bone_name(target_bone_name)
+				if target_bone_name_mmd_e == mmd_e_bone_name:
+					target_bone_parent.roll = source_parent_roll
+				#print(f"Roll copied from {source_bone_name} in {source_armature.name} to {target_bone_name} in {target_armature.name}")
+			else:
+				print(f"Target bone {target_bone_name} not found in {target_armature.name}")
+		else:
+			print(f"Source bone {source_bone_name} not found in {source_armature.name}")
+
+		# Return to the original mode for both armatures
+		bpy.ops.object.mode_set(mode='OBJECT')
+		bpy.context.view_layer.objects.active = original_active_object
+		if original_selected_objects:
+			for obj in original_selected_objects:
+				obj.select_set(True)
+		bpy.ops.object.mode_set(mode=original_mode)
+		if original_mode == 'POSE' and original_active_pose_bone:
+			if original_selected_pose_bones:
+				for pose_bone in original_selected_pose_bones:
+					pose_bone.bone.select = True	
+
+	else:
+		print("Provided objects are not armatures.")
+
+
+
 
 
 def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name, target_armature_name, target_posebone_name, apply_and_delete_constraint = True):
+
+	#print(f"source_arm_name: {source_armature_name},source_bone_name: {source_bone_name},target_armature_name: {target_armature_name},target_posebone_name: {target_posebone_name},apply_and_delete_constraint: {apply_and_delete_constraint}")
+
 	# Get the source armature and bone
 	source_arm = bpy.data.objects.get(source_armature_name)
 	source_bone = source_arm.data.bones.get(source_bone_name)
 
+	#print(f"source_arm: {source_arm},source_bone: {source_bone}")
 
 	# Get the target armature and posebone
 	target_arm = bpy.data.objects.get(target_armature_name)
 	target_posebone = target_arm.pose.bones.get(target_posebone_name)
 
+	#print(f"target_arm: {target_arm},target_posebone: {target_posebone}")
+
 
 	if source_arm and source_bone and target_arm and target_posebone:
 			
+		
+
 		# Check if the copy rotation constraint already exists
 		copy_rotation_constraint = target_posebone.constraints.get('ffxiv_mmd_copy_bone_rotation')
 
@@ -480,8 +624,14 @@ def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name,
 		copy_rotation_constraint.target = source_arm
 		copy_rotation_constraint.subtarget = source_bone_name
 		## TESTING ##
-		copy_rotation_constraint.target_space = 'LOCAL_OWNER_ORIENT'
-		copy_rotation_constraint.owner_space = 'LOCAL'
+		#copy_rotation_constraint.target_space = 'LOCAL_OWNER_ORIENT'
+		#copy_rotation_constraint.owner_space = 'LOCAL'
+		#clear_armature_bone_roll(source_arm)
+		#clear_armature_bone_roll(target_arm)
+
+						
+		copy_roll(source_arm,source_bone_name,target_arm,target_posebone_name)
+
 
 
 		if apply_and_delete_constraint == True:
@@ -618,6 +768,7 @@ def get_equivalent_bone_from_armature(source_armature, source_bone, target_armat
 def rotate_target_pose_bone_to_source_bone(source_armature,target_armature,target_bone):
 
 	source_bone = get_equivalent_bone_from_armature(target_armature,target_bone,source_armature)
+	#print(f'source_bone: {source_bone}')
 	if source_bone:
 		apply_rotation_from_bone_to_posebone(source_armature.name, source_bone.name, target_armature.name, target_bone.name)
 	return
@@ -627,7 +778,7 @@ def rotate_target_pose_bone_to_source_bone(source_armature,target_armature,targe
 # Custom function to be called upon update of the comparison_bone property
 def _comparescale_update(self, context):
 
-	if self.bone_compare_comparison_bone == '' or self.bone_compare_source_armature is None or self.bone_compare_target_armature is None:
+	if self.bone_compare_comparison_bone == '' or self.bone_compare_target_armature is None:
 		self.bone_compare_scale_x = 0
 		self.bone_compare_scale_y = 0
 		self.bone_compare_scale_z = 0

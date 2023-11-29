@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 871),
+	"version": (0, 872),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -49,6 +49,7 @@ if "bpy" in locals():
 	importlib.reload(bone_tools)
 	importlib.reload(bone_rigify)
 	importlib.reload(bone_mektools)
+	importlib.reload(bone_retargeting_addon)
 	importlib.reload(bones_renamer)
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(display_panel_groups)
@@ -68,6 +69,7 @@ if "bpy" in locals():
 	importlib.reload(shaders)
 	importlib.reload(tex_converter)
 	importlib.reload(panels)
+	importlib.reload(panels_retargeting_addon)
 	
 else:
 	import bpy
@@ -88,6 +90,7 @@ else:
 	from . import bone_rigify
 	from . import bone_mektools
 	from . import bones_renamer
+	from . import bone_retargeting_addon
 	from . import convert_to_blender_camera
 	from . import display_panel_groups
 	from . import facepaint
@@ -106,6 +109,7 @@ else:
 	from . import shaders
 	from . import tex_converter
 	from . import panels
+	from . import panels_retargeting_addon
 
 if bpy.app.version < (2, 80, 0):
 	bl_info['blender'] = (2, 70, 0)

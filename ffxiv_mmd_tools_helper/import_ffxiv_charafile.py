@@ -739,10 +739,6 @@ def main(context,filepath,apply_charafile_to_selected=None):
 
 
 
-		
-	
-
-
 
 
 from bpy_extras.io_utils import ImportHelper
@@ -763,13 +759,9 @@ class FFXIV_CharaFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
 
 	@classmethod
 	def poll(cls, context):
-		#root = model.findRoot(context.active_object)
-		armature = model.findArmature(context.active_object)
-
-		if armature:
-			return True
-		#if context.active_object:
-			#return context.active_object.type == 'ARMATURE'
+		
+		if context.active_object:
+			return context.active_object.type == 'ARMATURE'
 
 
 	def execute(self, context):

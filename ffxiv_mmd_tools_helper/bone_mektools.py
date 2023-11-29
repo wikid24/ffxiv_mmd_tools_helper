@@ -7,6 +7,31 @@ except :
 	print(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
 
 
+def is_addon_installed():	
+	addon_name = 'mek_tools'
+	addon_required_version = (0,3,5)
+	addon_module = None
+
+	try:
+		addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
+	except:
+		return False
+		#raise Exception(f"The addon {addon_name} is not installed or is not enabled. Please install and enable it.")
+
+	if addon_module:
+		installed_version = addon_module.bl_info.get('version',(-1,-1,-1))
+
+	# Check if the addon is enabled
+	if addon_name not in bpy.context.preferences.addons.keys():
+		return False
+		#raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
+	elif  installed_version < addon_required_version:
+		return False
+		#raise Exception(f"Addon '{addon_name}' version is {installed_version} please install {addon_required_version} or higher.")
+	else:
+		return True
+		#print(f"The addon '{addon_name}' is installed and enabled.")
+
 	
 def auto_create_mektools_armature_from_race(target_armature):
 
@@ -174,9 +199,6 @@ def apply_copy_location_for_mektools_armature_from_meshes(target_armature):
 
 	
 
-
-	
-
 @register_wrap
 class ApplyMekToolsRig(bpy.types.Operator):
 	"""Adds a MekTools rig based on the current FFXIV Race"""
@@ -200,25 +222,7 @@ class ApplyMekToolsRig(bpy.types.Operator):
 
 	def execute(self, context):
 		
-		addon_name = 'mek_tools'
-		addon_required_version = '0.35'
-		addon_module = None
-		try:
-			addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
-		except:
-			raise Exception(f"The addon 'mek_tools' is not installed or is not enabled. Please install and enable it.")
-
-		if addon_module:
-			installed_version = addon_module.bl_info.get('version',(-1,-1,-1))
-			installed_version = float(str(installed_version[0])+'.'+str(installed_version[1])+str(installed_version[2]))
-
-		# Check if the addon is enabled
-		if addon_name not in bpy.context.preferences.addons.keys():
-			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
-		elif  installed_version < float(addon_required_version):
-			raise Exception(f"Addon '{addon_name}' version is {installed_version} please install {addon_required_version} or higher.")
-		else:
-			#print(f"The addon '{addon_name}' is installed and enabled.")
+		if is_addon_installed():
 
 			active_armature = None
 

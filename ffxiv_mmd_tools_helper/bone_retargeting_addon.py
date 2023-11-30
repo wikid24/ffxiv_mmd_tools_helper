@@ -97,13 +97,13 @@ def add_bone_mapping(target_armature, source_bone,target_bone):
 		#get mapping list
 		read_only_mapping_data = rtc.get('mappings') #THIS RETURNS A VIEWABLE LIST but you can't edit it YOU NEED ART_MAPPING_CONTROLS FOR THIS
 
-		if len(read_only_mapping_data) == 0:
-			#bpy.ops.mappings.list_action(action="ADD")
-			#needed because mappings won't exist until at least one thing is added
-			art_mapping_controls.mappings.add()
-			art_mapping_controls.active_mapping = 0
+		if read_only_mapping_data is None or len(read_only_mapping_data) == 0:
+				#bpy.ops.mappings.list_action(action="ADD")
+				#needed because mappings won't exist until at least one thing is added
+				art_mapping_controls.mappings.add()
+				art_mapping_controls.active_mapping = 0
 		
-		#THIS IS NOT ADDED IN ERROR, THIS IS BECAUSE THIS FUNCTION IS CURSED
+		#THIS CODE IS HERE BECAUSE THIS FUNCTION IS CURSED
 		read_only_mapping_data = rtc.get('mappings')
 
 		if read_only_mapping_data:

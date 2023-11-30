@@ -345,6 +345,7 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 	bpy.types.Scene.art_reset_rot_if_no_match = bpy.props.BoolProperty(name="art_reset_rot_if_no_match", default=False)
 
 	def execute(self, context):
+		
 		active_object = context.active_object
 		rtc = active_object.get('retargeting_context')
 		source_arm = rtc.get('source')
@@ -367,8 +368,19 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 		elif is_source_and_target_mapped(active_object):
 			
 			bone_list_mmd_english = get_rotate_bone_group_list(self.bone_group)
-		
+			
 			if bone_list_mmd_english:
+
+				# Find and store the handle_edit_change function
+				stored_handler = None
+				for handler in bpy.app.handlers.depsgraph_update_post:
+					if '<function handle_edit_change' in str(handler):
+						stored_handler = handler.copy
+						break
+
+				# Remove the stored function from the handler list
+				if stored_handler:
+					bpy.app.handlers.depsgraph_update_post.remove(stored_handler)
 
 				for bone in bone_list_mmd_english:
 					source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,bone)
@@ -380,13 +392,13 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 						target_bone = target_arm.pose.bones.get(target_bone_name)
 					if source_bone_name:
 						source_bone = source_arm.pose.bones.get(source_bone_name)
-
+			
 					if source_bone and target_bone:
 						bone_tools.rotate_target_pose_bone_to_source_bone(source_arm,target_arm,target_bone)
-
+			
 					elif target_bone and source_bone == None:
 
-						if context.scene.reset_rot_if_no_match == True:
+						if context.scene.art_reset_rot_if_no_match == True:
 							bone_tools.clear_rotation(target_bone)
 
 						#special coding for knee_2_L and knee_2_R, if it's not found, then reset rotation
@@ -396,4 +408,8 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 							if target_bone_name_mmd_e == mmd_e_bone_name:
 								bone_tools.clear_rotation(target_bone)
 
+				# Restore the stored function by appending it back
+				if stored_handler:
+					bpy.app.handlers.depsgraph_update_post.append(stored_handler)
+			
 		return {'FINISHED'}

@@ -1370,8 +1370,8 @@ TBD
 TBD
 
 Sections:
-- Add Bone Mapping
-- Rest Position Adjustments
+- [Add Bone Mapping](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-bone-mapping)
+- [Rest Position Adjustments](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rest-position-adjustments)
 
 ------
 

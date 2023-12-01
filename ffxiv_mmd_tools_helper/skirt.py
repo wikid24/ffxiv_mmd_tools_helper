@@ -905,16 +905,17 @@ class GenerateSkirtJoints(bpy.types.Operator):
         #find the lower body bone
         lower_body_bone_names = ['lower body','下半身','j_kosi']
         lower_body_bone = None
-        for bone in armature.data.edit_bones:
+        lower_body_rigid = None
+        rigid_body_list = None
+        for bone in armature.data.bones:
             if bone.name in lower_body_bone_names:
                 lower_body_bone = bone
             #print(lower_body_bone)
 
-       
-
-            lower_body_rigid = rigid_body.find_rigid_bodies(startswith=lower_body_bone.name,append_to_selected=False)[0]
-            rigid_body_list = rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
-            #rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
+            if lower_body_bone:
+                lower_body_rigid = rigid_body.find_rigid_bodies(startswith=lower_body_bone.name,append_to_selected=False)[0]
+                rigid_body_list = rigid_body.find_rigid_bodies(startswith='skirt_',append_to_selected=False)
+                #rigid_body_bone_chains = rigid_body.get_all_rigid_body_chains_from_selected()
 
         if lower_body_bone is None or lower_body_rigid is None:
             print("Error: No rigid body or bone named 'lower body','下半身' or 'j_kosi' found to pin the skirt's joints to. Create this rigid body to continue")

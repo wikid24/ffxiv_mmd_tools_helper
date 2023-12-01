@@ -1,5 +1,7 @@
 
-
+# **Main Sections:**
+- [3D Viewport -> FFXIV MMD Sidebar](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#3d-viewport---ffxiv-mmd-sidebar)
+- [3D Viewport -> Retargeting Sidebar](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#3d-viewport---retargeting-sidebar)
 
 
 # 3D Viewport -> FFXIV MMD Sidebar

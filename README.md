@@ -725,3 +725,14 @@ All fixed!
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6b3fa76b-338f-443c-a3f3-16b7cbaa81c8)
 
+
+--------------
+
+#### Q: The Rigid Body Collision Group Masks are not working! What am I doing wrong?
+
+A: Upon pressing the 'Physics' button in MMD Tools, there is a small window on the bottom left hand side of your screen that will show up that says "**Build Rig**"
+
+There will be a Field in it that says "Non-Collision Distance Scale". Set this value to 10. It fixed some boob physics issues for me. Don't ask me how it works, I have no idea. :)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6ffe33e4-fda5-46f0-83c0-4214ae6550bd)
+

@@ -178,7 +178,7 @@ def remove_bone_mapping(source_bone_name,target_bone_name):
 
 def get_mapping_bone_group_list(bone_group):
 
-	bone_group_dictionary = ['all_verbatim','body','breast','eye','eyelid','eyebrow','nose','mouth','ear','skirt']
+	bone_group_dictionary = ['all_verbatim','body','breast','eye','eyelid','eyebrow','nose','mouth','ear','skirt','tail']
 
 	if bone_group in bone_group_dictionary:
 		#get ALL bones names from ALL target_columns where animation_retargeting_group is not blank
@@ -230,7 +230,7 @@ class ART_AddBoneMapping(bpy.types.Operator):
 	bl_options = {'REGISTER', 'UNDO'}
 
 	#reference data only
-	bone_group_list = ['all_verbatim','body','breast','eye','eyelid','eyebrow','nose','mouth','ear','skirt','clear_mapping']
+	bone_group_list = ['all_verbatim','clear_mapping','body','breast','eye','eyelid','eyebrow','nose','mouth','ear','skirt','tail']
 
 	bone_group = bpy.props.StringProperty(name="bone_group", update=None, get=None, set=None)
 
@@ -412,4 +412,162 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 				if stored_handler:
 					bpy.app.handlers.depsgraph_update_post.append(stored_handler)
 			
+		return {'FINISHED'}
+	
+
+def find_and_set_mapping_source_bone_by_index(context):
+
+	active_object = context.active_object
+	#active_pose_bone = context.active_pose_bone
+	rtc = active_object.get('retargeting_context')
+	source_arm = rtc.get('source')
+	#target_arm = rtc.get('target')
+
+	#mapping_data = active_object.get('retargeting_context').get('mappings')
+	index = int(active_object.retargeting_context.active_mapping)
+
+	target_bone_name = active_object.retargeting_context.mappings[index]['target']
+	mmd_e_bone_name = bone_tools.get_mmd_english_equivalent_bone_name(target_bone_name)
+	source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mmd_e_bone_name)
+
+	active_object.retargeting_context.mappings[index]['source'] = source_bone_name
+
+
+def set_mapping_pose_bone_by_index(context,armature_type):
+
+	active_object = context.active_object
+	active_pose_bone = context.active_pose_bone
+	active_armature = None
+
+	# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+	rtc = active_object.get('retargeting_context')
+
+	source_arm = rtc.get('source')
+	target_arm = rtc.get('target')
+
+	mapping_data = active_object.get('retargeting_context').get('mappings')
+	index = int(active_object.retargeting_context.active_mapping)
+	
+	armature = None
+	bone_name = None
+	pose_bone = None
+
+	if active_pose_bone.id_data.type =='ARMATURE':
+		active_armature = active_pose_bone.id_data
+
+	if armature_type == 'source':
+		armature = source_arm
+	elif armature_type == 'target':
+		armature = target_arm
+
+	if index >= 0 and index<=(len(mapping_data)-1):
+		if active_armature and armature:
+			if active_armature == armature:
+				active_object.retargeting_context.mappings[index][armature_type] = active_pose_bone.name
+		#pose_bone = armature.pose.bones.get(bone_name)
+
+@register_wrap
+class ART_SetBoneInMapping(bpy.types.Operator):
+	
+	bl_idname = "ffxiv_mmd.art_set_bone_in_mapping"
+	bl_label = "Search for bone"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	#bone_name = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+	armature_type = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+
+	def execute(self, context):
+
+		if is_addon_installed():
+			active_object = context.active_object
+			# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+			rtc = active_object.get('retargeting_context')
+
+			if is_source_and_target_mapped(active_object):
+				if self.armature_type == 'source':
+					find_and_set_mapping_source_bone_by_index(context)
+				if self.armature_type == 'target':
+					set_mapping_pose_bone_by_index(context,self.armature_type)			
+					
+					
+		return {'FINISHED'}
+
+
+def select_pose_bones_by_index(context,armature_type):
+
+	active_object = context.active_object
+	# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+	rtc = active_object.get('retargeting_context')
+
+	source_arm = rtc.get('source')
+	target_arm = rtc.get('target')
+
+
+	mapping_data = active_object.get('retargeting_context').get('mappings')
+	index = active_object.retargeting_context.active_mapping
+	armature = None
+	bone_name = None
+	pose_bone = None
+
+	if str(index):
+		bone_name = mapping_data[index].get(armature_type)
+		armature = active_object.get('retargeting_context').get(armature_type)
+
+	if bone_name and armature:
+		pose_bone = armature.pose.bones.get(bone_name)
+
+	if pose_bone:
+		# Check if the pose bone exists in the armature
+		if bone_name in armature.pose.bones:
+			# Deselect all pose bones
+			for p_bone in armature.pose.bones:
+				p_bone.bone.select = False
+
+			# Find and store the handle_edit_change function
+			stored_handler = None
+			for handler in bpy.app.handlers.depsgraph_update_post:
+				if '<function handle_edit_change' in str(handler):
+					stored_handler = handler
+					break
+
+			# Remove the stored function from the handler list
+			if stored_handler:
+				bpy.app.handlers.depsgraph_update_post.remove(stored_handler)
+
+			print('here3')
+			bpy.ops.object.mode_set(mode='OBJECT')
+
+			source_arm.select_set(True)
+			target_arm.select_set(True)
+			bpy.context.view_layer.objects.active = target_arm
+
+			bpy.ops.object.mode_set(mode='POSE')
+			# Select the desired pose bone
+			pose_bone.bone.select = True
+
+			# Restore the stored function by appending it back
+			if stored_handler:
+				bpy.app.handlers.depsgraph_update_post.append(stored_handler)
+
+
+@register_wrap
+class ART_SelectBoneInMapping(bpy.types.Operator):
+	"""Select the bone"""
+	bl_idname = "ffxiv_mmd.art_select_bone_in_mapping"
+	bl_label = ""
+	bl_options = {'REGISTER', 'UNDO'}
+
+	#bone_name = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+	armature_type = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+
+	def execute(self, context):
+
+		if is_addon_installed():
+			active_object = context.active_object
+			# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+			rtc = active_object.get('retargeting_context')
+
+			if is_source_and_target_mapped(active_object):
+				select_pose_bones_by_index(context,self.armature_type)						
+					
 		return {'FINISHED'}

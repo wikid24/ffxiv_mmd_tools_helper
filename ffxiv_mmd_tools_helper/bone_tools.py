@@ -422,6 +422,24 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 				#print(mmd_e_bone_name,'found:',metadata_bone[1])
 				return metadata_bone[1]
 			
+
+def get_metadata_by_bone_name(bone_name,metadata):
+
+	bone_name_mmd_e = get_mmd_english_equivalent_bone_name(bone_name)
+	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = None
+
+	if bone_name_mmd_e:
+		FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type(metadata,["mmd_english"])
+	
+	
+	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
+		#run through the MMD English bone dictionary
+		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY_MMD_E:
+			for metadata_bone_name in metadata_bone:
+				if bone_name_mmd_e == metadata_bone_name.lstrip(' '):
+					#print(mmd_e_bone_name,'found:',metadata_bone[1])
+					return metadata_bone[0]
+
 #doesn't check the armature, just returns equivalent mmd_english bone name
 def get_mmd_english_equivalent_bone_name(bone_name,bone_type = None):
 
@@ -496,6 +514,9 @@ def clear_scale(pose_bone):
 	# Clear the scale by setting it to (1, 1, 1)
 	pose_bone.scale = (1, 1, 1)
 
+def clear_bone_matrix_local(bone):
+	### TBD, placeholder for now ####
+	return
 
 
 def clear_armature_bone_roll(armature):

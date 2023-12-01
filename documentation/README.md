@@ -4,7 +4,8 @@
 
 # 3D Viewport -> FFXIV MMD Sidebar
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bbe57cae-5a78-4567-91e6-e6d2fc66908d)
+
 
 Sections:
 - [Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-model)

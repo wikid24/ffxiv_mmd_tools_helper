@@ -1,4 +1,6 @@
-# 3D Viewport -> Sidebar
+
+
+# 3D Viewport -> FFXIV MMD Sidebar
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
 
@@ -14,6 +16,7 @@ Sections:
 - [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
 - [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
 - [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
+- [Tex/DDS Converter TBD](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
 
 ------
 
@@ -1349,3 +1352,35 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 ### Hide Special & Physics Bones
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to set bones to be hidden from the Miku Miku Dance viewport so they won't clutter your screen.  ( you can see these flags in PMX Editor)
+
+------
+
+## Tex/DDS Converter
+
+TBD
+
+
+------
+
+# 3D Viewport -> Retargeting Sidebar
+
+*Insert Screenshot*
+TBD
+
+Sections:
+- Add Bone Mapping
+- Rest Position Adjustments
+
+------
+
+## Add Bone Mapping
+
+*insert screenshot*
+TBD
+
+------
+
+## Rest Position Adjustments
+
+*insert screenshot*
+TBD

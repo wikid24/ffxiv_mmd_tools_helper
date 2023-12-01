@@ -269,6 +269,7 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-
     - [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
     - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
     - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
+    - [The Rigid Body Collision Group Masks are not working! What am I doing wrong?](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-the-rigid-body-collision-group-masks-are-not-working-what-am-i-doing-wrong)
 
 - Other/Miscellaneous:
 
@@ -734,5 +735,6 @@ A: Upon pressing the 'Physics' button in MMD Tools, there is a small window on t
 
 There will be a Field in it that says "Non-Collision Distance Scale". Set this value to 10. It fixed some boob physics issues for me. Don't ask me how it works, I have no idea. :)
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6ffe33e4-fda5-46f0-83c0-4214ae6550bd)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4a7a0ee3-afd3-4a28-8c86-65a26f676c95)
+
 

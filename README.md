@@ -739,3 +739,23 @@ There will be a Field in it that says "Non-Collision Distance Scale". Set this v
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4a7a0ee3-afd3-4a28-8c86-65a26f676c95)
 
 
+--------------
+
+#### Q: I want to do something rather complex in Blender, but I don't know how!
+
+A: Use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT. 
+
+How to use:
+In ChatGPT, start a prompt with 'In Blender using python, I want to...' and see what it says. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5192afe0-a9d3-43b1-92ec-42bd6eb26c97)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/18da7cc3-6b82-4036-8b9f-0303212b7477)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/810c5681-a168-4d94-95ab-32afd8ad90d6)
+
+
+I won't be answering any code-related questions if you decide to use it, **however** I will leave some crucial infomation if you decide to start writing any code in Blender:
+- Find out what Blender version of ChatGPT was trained on. The information that it gives might be out of date for older versions. (Ask ChatGPT, 'What is the latest version of Blender you were trained on?')
+- [Blender API Documentation](https://docs.blender.org/api/current/index.html) - Documentation for ALL the code in Blender. Bear in mind the Blender version that you are using might not line up with the documentation here. Always check the Blender version listed. FYI Here's the API doc for [3.6](https://docs.blender.org/api/3.6/index.html)
+- Cheat Sheet I made for someone else on editing nodes via code, but it might be useful to someone else out there:
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ed11e640-a653-407a-be08-3786e66deffa)

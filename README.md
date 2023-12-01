@@ -96,6 +96,8 @@ Credits:
   - Automating the application of the [ColorSetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) to materials (to make using it [faster](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fc155d0b-4367-4324-be24-424f19bf63d4))
   - Automating the application of the [MekTools Addon](https://www.xivmodarchive.com/modid/22780): Integrated the FFXIV Rigs as well as the skin shader!
   - Auto-import of .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis): Will apply the face deformations, as well as read back all the skin/hair/face paint color info to the Blender logs, to be able to select and export the EXACT files & needed to export out of TexTools
+  - Auto convert .tex to .dds leveraging the [FFXIV Tex Converter](https://github.com/emarron/ffxiv-tex-converter) library from emarron. Pull files _directly_ from FFXIV and import them to your model immediately!
+  - Automation of the bone mapping leveraging the [Animation Retargeting](https://github.com/Mwni/blender-animation-retargeting) addon! Will automatically map bones as well as apply bone rotation from any source MMD/FFXIV model (including FFXIV converted to MMD with this addon) with one click of a button!
   - Apply FFXIV Face Paint images with all the included color shader settings
   - Calculate the VMD import scale by comparing a MMD Armature against your target armature with included Bone Scale Compare tool
   - A bunch of other important useful stuff... Will list them all later!
@@ -117,15 +119,21 @@ Credits:
    - .VMD animation files (MMD animation files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
 
 # Not really needed but recommended:
-### FFXIV Export Stuff:
-   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV leveraging the .chara file
+### FFXIV Export to Blender Stuff:
+   - [Anamnesis](https://github.com/imchillin/Anamnesis) - Used for finding out the character data in FFXIV leveraging the .chara file. _This_ addon is now integrated with it to make it faster and easier to use!
    - [FFXIV TexTools](https://www.ffxiv-textools.net/) Used for exporting the character data into .FBX format - [Video Tutorial](https://www.youtube.com/watch?v=JbkNt51PRyM) - watch the first 7 minutes
    - [XIV Tools Discord](https://discord.com/invite/KvGJCCnG8t) - Where to find help on FFXIV Rigging
 
+### Blender to FFXIV Import Stuff:
+   - [XAT](https://github.com/AsgardXIV/XAT) FFXIV Animation Toolkit - Standalone tool for manipulating animations and skeletons in Final Fantasy XIV. Needed to play any custom animation .pap files created & exported out of blender
+   
+
 ### Blender Addon Stuff:
-   - [FFXIV Colorsetter Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - Blender Addon for better FFXIV Materials/Textures/Shaders - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
-   - [FFXIV MekTools Blender Addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest
+   - [FFXIV Colorsetter Blender Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa) - Blender Addon for better FFXIV Materials/Textures/Shaders. _This_ addon is now integrated with it to make it faster and easier to use! - [Video Tutorial #1](https://user-images.githubusercontent.com/19479648/215879548-67bd503e-70b4-4255-abe4-bc1bbcb06618.mp4) [Video Tutorial #2](https://www.youtube.com/watch?v=AhVzU_BK6zk)
+   - [FFXIV MekTools Blender Addon](https://www.xivmodarchive.com/modid/22780) for Blender to fix inside-out alpha (if you're not using this tool to import). Also, it has a pretty good skin shader, but I haven't gotten all the controls to work properly to be honest. _This_ addon is now integrated with it to make it faster and easier to use!
    - [UuuNyaa's MMD Tools Helper Blender Addon](https://github.com/UuuNyaa/blender_mmd_uuunyaa_tools) addon for MMD Tools for Blender, a bunch of useful tools for animating MMD Models (including lighting presets, material presets, physics tools etc...)
+   - [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting) for Blender - Needed to copy animations from one model to another model (such as a MMD model to a FFXIV Model) since they have different bone names and bone structures. Used in conjunction with the [XAT](https://github.com/AsgardXIV/XAT) addon to play MMD Animations in FFXIV. _This_ addon is now integrated with it to make it faster and easier to use!
+   - [Auto-Rig Pro](https://blendermarket.com/products/auto-rig-pro) - A paid application that does what [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting) does, but apparently is faster and easier to use. I don't know, I never tried it, but the more experienced FFXIV XAT animators swear by it.
    - [Gravity Collider Bone Physics Addon](https://github.com/MiniEval/Bone-Physics) - I haven't tried it, but its a free and easy way to add skirt and hair physics (if you're sticking simply in Blender)
 
 ### MMD Animation in Blender Stuff:
@@ -261,6 +269,7 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-
     - [Physics is turned on -- Why is my character's skirt/tail going through the floor?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-physics-is-turned-on----why-is-my-characters-skirttail-going-through-the-floor)
     - [There are other parts of my model that I want to apply physics to. How do I do it?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-there-are-other-parts-of-my-model-that-i-want-to-apply-physics-to-how-do-i-do-it)
     - [When I start an animation, the model quickly transports to a location and messes up all the physics causing my character's boobs/skirt/hair/tail to warp in weird ways! How to fix?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-when-i-start-an-animation-the-model-quickly-transports-to-a-location-and-messes-up-all-the-physics-causing-my-characters-boobsskirthairtail-to-warp-in-weird-ways-how-to-fix)
+    - [The Rigid Body Collision Group Masks are not working! What am I doing wrong?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-the-rigid-body-collision-group-masks-are-not-working-what-am-i-doing-wrong)
 
 - Other/Miscellaneous:
 
@@ -716,4 +725,16 @@ A: This is because Blender is using the wrong UV Map. To fix:
 All fixed!
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/6b3fa76b-338f-443c-a3f3-16b7cbaa81c8)
+
+
+--------------
+
+#### Q: The Rigid Body Collision Group Masks are not working! What am I doing wrong?
+
+A: Upon pressing the 'Physics' button in MMD Tools, there is a small window on the bottom left hand side of your screen that will show up that says "**Build Rig**"
+
+There will be a Field in it that says "Non-Collision Distance Scale". Set this value to 10. It fixed some boob physics issues for me. Don't ask me how it works, I have no idea. :)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4a7a0ee3-afd3-4a28-8c86-65a26f676c95)
+
 

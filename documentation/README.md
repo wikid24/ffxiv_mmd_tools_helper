@@ -1,6 +1,13 @@
-# 3D Viewport -> Sidebar
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
+# **Main Sections:**
+- [3D Viewport -> FFXIV MMD Sidebar](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#3d-viewport---ffxiv-mmd-sidebar)
+- [3D Viewport -> Retargeting Sidebar](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#3d-viewport---retargeting-sidebar)
+
+
+# 3D Viewport -> FFXIV MMD Sidebar
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/bbe57cae-5a78-4567-91e6-e6d2fc66908d)
+
 
 Sections:
 - [Import FFXIV Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-model)
@@ -14,6 +21,7 @@ Sections:
 - [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
 - [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
 - [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
+- [Tex/DDS Converter](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/README.md#texdds-converter)
 
 ------
 
@@ -1349,3 +1357,68 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 ### Hide Special & Physics Bones
 
 Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to set bones to be hidden from the Miku Miku Dance viewport so they won't clutter your screen.  ( you can see these flags in PMX Editor)
+
+------
+
+## Tex/DDS Converter
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d700cfc6-6f04-4c96-91e2-4a6db5ef498a)
+
+
+------
+
+# 3D Viewport -> Retargeting Sidebar
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5ac212ed-45ce-4413-b5f4-e81c81445ec1)
+
+TBD
+
+Sections:
+- [Add Bone Mapping](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-bone-mapping)
+- [Rest Position Adjustments](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#rest-position-adjustments)
+
+------
+
+## Add Bone Mapping
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2b138f3a-620b-41d6-a7fa-296145f89402)
+
+Sections:
+- [Mapping Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mapping-controls)
+- [Add Mapping by Bone Type](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-mapping-by-bone-type)
+
+------
+
+### Mapping Controls
+
+TBD
+
+------
+
+### Add Mapping by Bone Type
+
+TBD
+
+
+------
+
+## Rest Position Adjustments
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b302bfea-a0f3-4062-a593-a899ed1a7060)
+
+Sections:
+
+- [Reset Armature Pose](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#reset-armature-pose)
+- [Apply Rotation to Target](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-rotation-to-target)
+
+------
+
+### Reset Armature Pose
+
+TBD
+
+------
+
+### Apply Rotation to Target
+
+TBD

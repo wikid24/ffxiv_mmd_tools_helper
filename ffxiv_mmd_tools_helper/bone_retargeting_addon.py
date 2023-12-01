@@ -375,7 +375,7 @@ class ART_ApplyBoneRotationToTarget(bpy.types.Operator):
 				stored_handler = None
 				for handler in bpy.app.handlers.depsgraph_update_post:
 					if '<function handle_edit_change' in str(handler):
-						stored_handler = handler.copy
+						stored_handler = handler
 						break
 
 				# Remove the stored function from the handler list
@@ -468,7 +468,7 @@ def set_mapping_pose_bone_by_index(context,armature_type):
 
 @register_wrap
 class ART_SetBoneInMapping(bpy.types.Operator):
-	
+
 	bl_idname = "ffxiv_mmd.art_set_bone_in_mapping"
 	bl_label = "Search for bone"
 	bl_options = {'REGISTER', 'UNDO'}
@@ -534,7 +534,6 @@ def select_pose_bones_by_index(context,armature_type):
 			if stored_handler:
 				bpy.app.handlers.depsgraph_update_post.remove(stored_handler)
 
-			print('here3')
 			bpy.ops.object.mode_set(mode='OBJECT')
 
 			source_arm.select_set(True)

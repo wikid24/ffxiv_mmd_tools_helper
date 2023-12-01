@@ -759,3 +759,4 @@ I won't be answering any code-related questions if you decide to use it, **howev
 - [Blender API Documentation](https://docs.blender.org/api/current/index.html) - Documentation for ALL the code in Blender. Bear in mind the Blender version that you are using might not line up with the documentation here. Always check the Blender version listed. FYI Here's the API doc for [3.6](https://docs.blender.org/api/3.6/index.html)
 - Cheat Sheet I made for someone else on editing nodes via code, but it might be useful to someone else out there:
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ed11e640-a653-407a-be08-3786e66deffa)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d42c3f82-f8eb-4a46-9ae5-5950120023f9)

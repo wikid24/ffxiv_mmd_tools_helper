@@ -97,7 +97,7 @@ Credits:
   - Automating the application of the [MekTools Addon](https://www.xivmodarchive.com/modid/22780): Integrated the FFXIV Rigs as well as the skin shader!
   - Auto-import of .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis): Will apply the face deformations, as well as read back all the skin/hair/face paint color info to the Blender logs, to be able to select and export the EXACT files & needed to export out of TexTools
   - Auto convert .tex to .dds leveraging the [FFXIV Tex Converter](https://github.com/emarron/ffxiv-tex-converter) library from emarron. Pull files _directly_ from FFXIV and import them to your model immediately!
-  - Automation of the bone mapping leveraging the [Animation Regargeting](https://github.com/Mwni/blender-animation-retargeting) addon! Will automatically map bones as well as apply bone rotation from any source MMD/FFXIV model (including FFXIV converted to MMD with this addon) with one click of a button!
+  - Automation of the bone mapping leveraging the [Animation Retargeting](https://github.com/Mwni/blender-animation-retargeting) addon! Will automatically map bones as well as apply bone rotation from any source MMD/FFXIV model (including FFXIV converted to MMD with this addon) with one click of a button!
   - Apply FFXIV Face Paint images with all the included color shader settings
   - Calculate the VMD import scale by comparing a MMD Armature against your target armature with included Bone Scale Compare tool
   - A bunch of other important useful stuff... Will list them all later!

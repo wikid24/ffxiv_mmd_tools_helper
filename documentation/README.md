@@ -1360,14 +1360,15 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 
 ## Tex/DDS Converter
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d700cfc6-6f04-4c96-91e2-4a6db5ef498a)
 
 
 ------
 
 # 3D Viewport -> Retargeting Sidebar
 
-*Insert Screenshot*
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5ac212ed-45ce-4413-b5f4-e81c81445ec1)
+
 TBD
 
 Sections:
@@ -1378,12 +1379,15 @@ Sections:
 
 ## Add Bone Mapping
 
-*insert screenshot*
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2b138f3a-620b-41d6-a7fa-296145f89402)
+
 TBD
 
 ------
 
 ## Rest Position Adjustments
 
-*insert screenshot*
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b302bfea-a0f3-4062-a593-a899ed1a7060)
+
+
 TBD

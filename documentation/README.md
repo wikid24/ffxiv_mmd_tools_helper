@@ -1383,7 +1383,22 @@ Sections:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2b138f3a-620b-41d6-a7fa-296145f89402)
 
+Sections:
+- [Mapping Controls]()
+- [Add Mapping by Bone Type]()
+
+------
+
+### Mapping Controls
+
 TBD
+
+------
+
+### Add Mapping by Bone Type
+
+TBD
+
 
 ------
 
@@ -1391,5 +1406,15 @@ TBD
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b302bfea-a0f3-4062-a593-a899ed1a7060)
 
+Sections:
 
-TBD
+- [Reset Armature Pose]()
+- [Apply Rotation to Target]()
+
+------
+
+### Reset Armature Pose
+
+------
+
+### Apply Rotation to Target

@@ -1,5 +1,7 @@
 
 
+
+
 # 3D Viewport -> FFXIV MMD Sidebar
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/51578364-bbaf-4ac3-84ad-679b9f87a4d5)
@@ -16,7 +18,7 @@ Sections:
 - [Decals / Face Paint](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#decals--face-paint)
 - [Miscellaneous Tools](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#miscellaneous-tools)
 - [Export MMD Preparation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
-- [Tex/DDS Converter TBD](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#export-mmd-preparation)
+- [Tex/DDS Converter](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation/README.md#texdds-converter)
 
 ------
 

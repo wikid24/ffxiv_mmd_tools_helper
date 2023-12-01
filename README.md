@@ -21,7 +21,7 @@ All can be done in **minutes**.
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
 
-If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). If you want to port animation _into_ FFXIV, FFXIV models converted to MMD with this addon must be treated as your source 'MMD' model, NOT your destination/target FFXIV model.
+If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). If you want to port animation _into_ FFXIV, FFXIV models converted to MMD with this addon must be treated as your **source MMD model**, NOT your destination/target FFXIV model.
 
 While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender.
 

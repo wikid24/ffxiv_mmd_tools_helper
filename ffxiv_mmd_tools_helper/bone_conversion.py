@@ -13,10 +13,35 @@ from . import add_hand_arm_ik
 def correct_root_center():
 	print('\ncorrect_root_center():')
 	if model.is_mmd_english() == True:
-		bpy.ops.object.mode_set(mode='EDIT')
+		
+		armature = None
+		if bpy.context.active_object.type == 'ARMATURE':
+			armature = model.findArmature(bpy.context.active_object)
+
+		root_bone_name = None
+		center_bone_name = None
+		center_2_bone_name = None
+
+		if armature:
+			root_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'root')
+			center_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'center')
+			center_2_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'center_2')
+			bpy.ops.object.mode_set(mode='EDIT')
+
+		root_bone = None
+		center_bone = None
+		center_2_bone = None
+
+		if root_bone_name:
+			root_bone = armature.data.edit_bones.get(root_bone_name)
+		if center_bone_name:
+			center_bone = armature.data.edit_bones.get(center_bone_name)
+		if center_2_bone_name:
+			center_2_bone = armature.data.edit_bones.get(center_2_bone_name)
 
 		# if there is no "root" bone in the armature, a root bone is added
 		if "root" not in bpy.context.active_object.data.edit_bones.keys():
+			bpy.ops.object.mode_set(mode='EDIT')
 			root_bone = bpy.context.active_object.data.edit_bones.new('root')
 			root_bone.head[:] = (0,0,0)
 			root_bone.tail[:] = (0,0,0.7)
@@ -53,6 +78,23 @@ def correct_root_center():
 				bpy.context.active_object.data.edit_bones["lower body"].parent = bpy.context.active_object.data.edit_bones["center"]
 			if "upper body" in bpy.context.active_object.data.edit_bones.keys():
 				bpy.context.active_object.data.edit_bones["upper body"].parent = bpy.context.active_object.data.edit_bones["center"]
+
+		# if there is no "center_2" bone in the armature, a center_2 bone is added
+		if "center_2" not in bpy.context.active_object.data.bones.keys():
+			bpy.ops.object.mode_set(mode='EDIT')
+			center_2_bone = bpy.context.active_object.data.edit_bones.new("center_2")
+			print("Added center_2 bone.")
+			
+			if center_bone:
+				center_2_bone.matrix = center_bone.matrix
+				center_2_bone.tail = center_bone.tail
+				center_2_bone.parent = center_bone
+
+				#loop through all the child bones of center and make center_2 the parent
+				for child_bone in center_bone.children:
+					child_bone.parent = center_2_bone
+			
+
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 	else:
@@ -65,19 +107,70 @@ def correct_groove():
 	if model.is_mmd_english() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
 
+		armature = None
+		
+		if bpy.context.active_object.type == 'ARMATURE':
+			armature = model.findArmature(bpy.context.active_object)
+
+		center_bone_name = None
+		center_2_bone_name = None
+
+		if armature:
+			center_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'center')
+			center_2_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'center_2')
+
+		center_bone = None
+		center_2_bone = None
+
+		if center_bone_name:
+			center_bone = armature.data.edit_bones.get(center_bone_name)
+		if center_2_bone_name:
+			center_2_bone = armature.data.edit_bones.get(center_2_bone_name)
+
+		groove_parent_bone = None
+		
+		if center_2_bone:
+			groove_parent_bone = center_2_bone
+		elif center_bone:
+			groove_parent_bone = center_bone
+
+		groove_bone = None
+		groove_2_bone = None
+
 		# if there is no "groove" bone in the armature, a groove bone is added
 		if "groove" not in bpy.context.active_object.data.bones.keys():
 			bpy.ops.object.mode_set(mode='EDIT')
-			groove = bpy.context.active_object.data.edit_bones.new("groove")
-			groove.head = bpy.context.active_object.data.edit_bones["center"].head
-			groove.head.z = 0.01 + groove.head.z
-			groove.tail.z = 0.1 + (groove.head.z)
-			groove.parent = bpy.context.active_object.data.edit_bones["center"]
+			groove_bone = bpy.context.active_object.data.edit_bones.new("groove")
+			#groove.head = bpy.context.active_object.data.edit_bones["center"].head
+			groove_bone.head = groove_parent_bone.head
+			groove_bone.head.z = 0.01 + groove_bone.head.z
+			groove_bone.tail.z = 0.1 + (groove_bone.head.z)
+			#groove.parent = bpy.context.active_object.data.edit_bones["center"]
+			groove_bone.parent = groove_parent_bone
 			if "lower body" in bpy.context.active_object.data.edit_bones.keys():
-				bpy.context.active_object.data.edit_bones["lower body"].parent = bpy.context.active_object.data.edit_bones["groove"]
+				bpy.context.active_object.data.edit_bones["lower body"].parent = groove_bone
 			if "upper body" in bpy.context.active_object.data.edit_bones.keys():
-				bpy.context.active_object.data.edit_bones["upper body"].parent = bpy.context.active_object.data.edit_bones["groove"]
+				bpy.context.active_object.data.edit_bones["upper body"].parent = groove_bone
 			print("Added groove bone.")
+
+		if groove_bone:
+			# if there is no "groove_2" bone in the armature, a groove_2 bone is added
+			if "groove_2" not in bpy.context.active_object.data.bones.keys():
+				bpy.ops.object.mode_set(mode='EDIT')
+				groove_2_bone = bpy.context.active_object.data.edit_bones.new("groove_2")
+				print("Added center_2 bone.")
+				
+				if groove_bone:
+					groove_2_bone.matrix = groove_bone.matrix
+					groove_2_bone.tail = groove_bone.tail
+					groove_2_bone.parent = groove_bone
+
+					#loop through all the child bones of center and make center_2 the parent
+					for child_bone in groove_bone.children:
+						child_bone.parent = groove_2_bone
+
+		
+
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 	else:
@@ -88,6 +181,32 @@ def correct_waist():
 	bpy.ops.object.mode_set(mode='OBJECT')
 	if model.is_mmd_english() == True:
 		bpy.ops.object.mode_set(mode='EDIT')
+		armature = None
+
+		if bpy.context.active_object.type == 'ARMATURE':
+			armature = model.findArmature(bpy.context.active_object)
+
+		waist = None
+		groove_name = None
+		groove_2_name = None
+
+		groove = None
+		groove_2 = None
+		waist_parent = None
+
+		if armature:
+			groove_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'groove')
+			groove_2_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'groove_2')
+
+			if groove_name:
+				groove = bpy.context.active_object.data.edit_bones.get(groove_name)
+			if groove_2_name:
+				groove_2 = bpy.context.active_object.data.edit_bones.get(groove_2_name)
+
+			if groove_2:
+				waist_parent = groove_2
+			elif groove:
+				waist_parent = groove
 
 
 		# if there is no "waist" bone in the armature, a waist bone is added
@@ -99,8 +218,6 @@ def correct_waist():
 			waist.length = bpy.context.active_object.data.edit_bones["upper body"].length * 0.5
 
 
-
-
 		# adjust the waist bone
 		bpy.ops.object.mode_set(mode='EDIT')
 		waist = bpy.context.active_object.data.edit_bones["waist"]
@@ -109,7 +226,8 @@ def correct_waist():
 		waist.head.z = waist.tail.z - 0.05
 		waist.head.y = waist.tail.y + 0.03
 		waist.roll = 0
-		waist.parent = bpy.context.active_object.data.edit_bones["groove"]
+		#waist.parent = bpy.context.active_object.data.edit_bones["groove"]
+		waist.parent = waist_parent
 		if "lower body" in bpy.context.active_object.data.edit_bones.keys():
 			bpy.context.active_object.data.edit_bones["lower body"].parent = waist
 		if "upper body" in bpy.context.active_object.data.edit_bones.keys():
@@ -959,11 +1077,11 @@ class BoneTools(bpy.types.Operator):
 	[('none', 'none', 'none')\
 	, ("run_1_to_12", "Run Steps 1 to 12", "Run Steps 1 to 12")\
 	, ("delete_unused_bones", "1  -  Remove unused bones (no vertex groups)", "Remove unused bones (no vertex groups)")\
-	, ("correct_root_center", "2  -  Correct MMD Root and Ce nter bones", "Correct MMD root and center bones")\
-	, ("correct_groove", "3  -  Correct MMD Groove bone", "Correct MMD Groove bone")\
-	, ("correct_waist", "4  -  Correct MMD Waist bone", "Correct MMD Waist bone")\
-	, ("correct_waist_cancel", "5  -  Correct Waist Cancel L/R bones", "Correct waist cancel left and right bones")\
-	, ("correct_view_cnt", "6  -  Correct MMD 'view cnt' bone", "Correct MMD 'view cnt' bone")\
+	, ("correct_root_center", "2  -  Correct MMD Root, Center and Center_2 bones", "Adds MMD root, center and center_2 bones if missing")\
+	, ("correct_groove", "3  -  Correct MMD Groove and Groove_2 bones", "Adds MMD groove and groove_2 bones if missing")\
+	, ("correct_waist", "4  -  Correct MMD Waist bone", "Moves MMD Waist bone")\
+	, ("correct_waist_cancel", "5  -  Correct Waist Cancel L/R bones", "Adds 'waist_cancel_l/r' bones if missing")\
+	, ("correct_view_cnt", "6  -  Correct MMD 'view cnt' bone", "Adds 'view_cnt' bone if missing")\
 	, ("correct_bones_lengths", "7  -  Correct Shoulder/Arm/Elbow Bone Lengths", "Correct Shoulder/Arm/Elbow Bone Lengths")\
 	, ("add_eye_control_bone", "8  -  Add Eyes Control Bone", "Add Eye Control Bone (SELECT 'eyes' bone and run again)")\
 	, ("add_arm_wrist_twist", "9  -  Add Arm Twist Bones", "Add Arm Twist Bones")\

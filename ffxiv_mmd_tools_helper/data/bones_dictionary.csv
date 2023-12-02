@@ -3,6 +3,7 @@ root,root ground,,root,auskel,,,,,全ての親,全ての親,gblctr,root,,b__ROOT
 neck,head neck lower,neck,spine.004,neck,Neck,Neck,Neck,neck,首,首,kl_kubi,neck,neck02,b__Neck__,MOT15_Neck,Bip001 Neck,Neck,bip_neck,ValveBiped.Bip01_Neck,NeckTwist01,j_kubi,kubi_c_n,c_neck.x,mixamorig:Neck
 head,head neck upper,head,spine.005,head,Head,Head,Head,head,頭,頭,cl_kao,head,head,b__Head__,MOT01_Head,Bip001 Head,Head,bip_head,ValveBiped.Bip01_Head,Head,j_kao,face_c_n,c_head.x,mixamorig:Head
 center,root hips,hip,spine,root_rot,Hips,Hips,Hip,,センター,センター,n_hara_cp,pelvis,root,b__ROOT_bind__,MOT00_Hips,Bip001 Pelvis,Pelvis,bip_pelvis,ValveBiped.Bip01_Pelvis,Hip,,,c_root_master.x,
+center_2,,,,,,,,,センター2,センター2,,,,,,,,,,,,,,
 upper body,spine lower,abdomen,Spine.001,spine0,chest,Chest,Chest1,spine,上半身,上半身,j_mune_wj,spine01,spine04,b__Spine0__,MOT16_Waist,Bip001 Spine1,Spine1,bip_spine_1,ValveBiped.Bip01_Spine1,Waist,j_sebo_a,kosi_c_n,c_spine_01.x,mixamorig:Spine
 upper body 2,spine upper,chest,spine.002,spine2,Spine2,Chest3,,chest,上半身2,上半身2,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,j_sebo_b,mune_c_n,c_spine_02.x,mixamorig:Spine1
 lower body,pelvis,,hips,,,,,hips,下半身,下半身,kl_kosi_etc_wj,,,b__Pelvis__,,,,,,Pelvis,j_kosi,ketu_c_n,,mixamorig:Hips
@@ -26,6 +27,7 @@ eye_L,head eyeball left,leftEye,eye.L,l_eye,LeftEye,LeftEye,Left Eye,eye.L,左�
 eye_R,head eyeball right,rightEye,eye.R,r_eye,RightEye,RightEye,Right Eye,eye.R,右目,目.R,kl_eye_r_wj,,eye.L,b__RightEye__,OPT_Face_*_eye.0.r,Bip001 R Eye,R Eye,bip_eye_R,ValveBiped.Bip01_R_Eye,R_Eye,j_f_eye_r,_eye_r_n,c_eye_target.r,
 waist,,,,,,,,,腰,腰,,,,,,,,,,,n_hara,center_c_n,c_root.x,
 groove,,,,,,,,,グルーブ,グルーブ,,,,,,,,,,,,,,
+groove_2,,,,,,,,,グルーブ2,グルーブ2,,,,,,,,,,,,,,
 leg IK_L,,,,,,,,,左足ＩＫ,足ＩＫ.L,,,,,,,,,,,,,,
 toe IK_L,,,,,,,,,左つま先ＩＫ,つま先ＩＫ.L,,,,,,,,,,,,,,
 leg IK_root_L,,,,,,,,,左足IK親,足IK親.L,,,,,,,,,,,,,,

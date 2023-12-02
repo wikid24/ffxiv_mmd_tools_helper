@@ -408,6 +408,7 @@ def get_armature_bone_name_by_mmd_english_bone_name(armature,mmd_e_bone_name):
 				
 	return False
 
+
 #doesn't check the armature, just returns equivalent mmd bone name
 def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 
@@ -421,6 +422,8 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 			if metadata_bone[0]==mmd_e_bone_name:
 				#print(mmd_e_bone_name,'found:',metadata_bone[1])
 				return metadata_bone[1]
+			
+
 			
 
 def get_metadata_by_bone_name(bone_name,metadata):

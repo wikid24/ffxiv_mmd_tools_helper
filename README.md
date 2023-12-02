@@ -3,9 +3,12 @@
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-- Export models out of FFXIV TexTools (leveraging .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
-- Update the standard textures to the detailed ones (leveraging the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
-- Convert the model to MMD Format
+- Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
+- Update the standard textures to the detailed ones (using the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
+- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter))
+- Map bones from MMD models to a FFXIV models (using [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting))
+- Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780))
+- Convert the model to MMD Format (using [MMD Tools Addon](https://github.com/UuuNyaa/blender_mmd_tools))
 - Add MMD-style physics in Blender
 - Animate it it in Blender (Including MMD _Facial_ Animation!)
 - Export to .PMX Format (if you want to use it in the Miku Miku Dance program)
@@ -14,7 +17,7 @@ All can be done in **minutes**.
 
 - [Download Blender Addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases)
 - [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
-- [60 second Model Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
+- [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below.
 - [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **Updated!**: 2023-11-24
 

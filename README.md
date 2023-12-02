@@ -3,7 +3,7 @@
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-- Export models out of FFXIV TexTools (leveraging data from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
+- Export models out of FFXIV TexTools (leveraging .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
 - Update the standard textures to the detailed ones (leveraging the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
 - Convert the model to MMD Format
 - Add MMD-style physics in Blender
@@ -21,7 +21,7 @@ All can be done in **minutes**.
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
 
-If you want to do that, please use XAT Tools and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). I've been thinking about how I can integrate all of these super powerful tools into XAT workflow, but most of the features and benefits of MMD format will be cut out if I do, considering there are a lot restrictions as everything needs to be ported back into the FFXIV game engine. For now it's on the back burner.
+If you want to do that, please use [XAT (FFXIV Animation Toolkit)](https://github.com/AsgardXIV/XAT) and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). FFXIV models converted to MMD with this addon must be treated as your **source MMD model**, NOT your destination/target FFXIV model. Instead of this, **I recommend using the 'Kaito' MMD Model modified with Skirt Physics** as it has been tested and proven to work easier with ffxiv skirt physics. Once you have experience with doing this successfully, you can move on to intermediate-level face/lip animations using Haine's [Working With Custom Lip Animations](https://docs.google.com/document/d/1y0hLaO6WA7C6ayT7udr0puNAa7PY5qDvcRC9RDanTDg/edit) guide.
 
 While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender.
 
@@ -113,7 +113,7 @@ Credits:
 ------------
 
 # In order to use this tool, you need:
-   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, **BLENDER 4.0 DOES NOT WORK YET**.
+   - [Blender](https://www.blender.org/) (2.80+) or higher installed. Only [Blender 3.6 LTS](https://www.blender.org/download/lts/) is _officially_ supported, **BLENDER 4.0 DOES NOT WORK YET**([issue](https://github.com/wikid24/ffxiv_mmd_tools_helper/issues/5)).
    - [MMD Tools addon](https://github.com/UuuNyaa/blender_mmd_tools) for Blender
    - A FFXIV Model exported into .FBX file format
    - .VMD animation files (MMD animation files) - [Deviant Art](https://www.deviantart.com/mmd-dance-comunnity/gallery/36305808/motion-dl), [bowlroll](https://bowlroll.net/),[Reddit](https://www.reddit.com/r/mikumikudance/) or UuuNyaa's Helper addon (listed below)
@@ -157,7 +157,8 @@ Credits:
 - [MMD Skirt Rigging Tutorial: Video Tutorial](https://www.youtube.com/watch?v=cGcBfhYyjC8)
 - [UuuNyaa's Physics Adjuster: Video Tutorial](https://www.youtube.com/watch?v=pRJNJDFSYfk)
 - [MMD Tools wiki](https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual)
-- [XAT Animation Retargeting Guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) - An alternative approach to animating FFXIV characters using MMD motion files
+- [XAT Animation - Body Retargeting Guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit) - An alternative approach to animating FFXIV characters using MMD motion files
+- [XAT Animation - Working With Custom Lip Animations](https://docs.google.com/document/d/1y0hLaO6WA7C6ayT7udr0puNAa7PY5qDvcRC9RDanTDg/edit)
 - [FFXIV TexTools Reference Data](https://docs.google.com/spreadsheets/d/1kIKvVsW3fOnVeTi9iZlBDqJo6GWVn6K6BCUIRldEjhw/edit#gid=296196266)
 
 ------------
@@ -738,3 +739,24 @@ There will be a Field in it that says "Non-Collision Distance Scale". Set this v
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4a7a0ee3-afd3-4a28-8c86-65a26f676c95)
 
 
+--------------
+
+#### Q: I want to do something rather complex in Blender, but I don't know how!
+
+A: Use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT. 
+
+How to use:
+In ChatGPT, start a prompt with 'In Blender using python, I want to...' and see what it says. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5192afe0-a9d3-43b1-92ec-42bd6eb26c97)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/18da7cc3-6b82-4036-8b9f-0303212b7477)
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/810c5681-a168-4d94-95ab-32afd8ad90d6)
+
+
+I won't be answering any code-related questions if you decide to use it, **however** I will leave some crucial infomation if you decide to start writing any code in Blender:
+- Find out what Blender version of ChatGPT was trained on. The information that it gives might be out of date for older versions. (Ask ChatGPT, 'What is the latest version of Blender you were trained on?')
+- [Blender API Documentation](https://docs.blender.org/api/current/index.html) - Documentation for ALL the code in Blender. Bear in mind the Blender version that you are using might not line up with the documentation here. Always check the Blender version listed. FYI Here's the API doc for [3.6](https://docs.blender.org/api/3.6/index.html)
+- Cheat Sheet I made for someone else on editing nodes via code, but it might be useful to someone else out there:
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ed11e640-a653-407a-be08-3786e66deffa)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d42c3f82-f8eb-4a46-9ae5-5950120023f9)

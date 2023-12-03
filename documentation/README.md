@@ -1116,10 +1116,10 @@ To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU
 - Hair Color
 - Hair Highlights Color
 - Highlights Mix: How much of the hair highlights color is applied
-- Multi hir_s texture
-- Normal hir_n texture
+- Multi etc_s texture
+- Normal etc_n texture
 - Search/Replace Texture:
-  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _hir_s, or _hir_n.
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
 ------

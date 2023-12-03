@@ -985,14 +985,40 @@ If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tre
 Sample Video:
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-425b-bb94-0122e42475e5
 
+Sections:
+- [Skin](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skin)
+- [Eyes](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#eyes)
+- [Face](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#face)
+- [Face Accent](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#face-accent)
+- [Hair](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#hair)
+- [Hrothgar/Miqote Tail](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#hrothgar--miqote-tail)
+
+------
 
 #### Skin
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/32b0dc6e-4e5b-4232-9e3c-4e44eefc9210)
 
+The skin textures are [included in this addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/assets/ffxiv_skin), and will be automatically applied to your FFXIV model. 
 
+The skin type is detected depending on your race, tribe and gender. This addon only knows what is the _correct_ race/tribe/gender by pulling these details from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
 
-TBD
+Upon loading this shader, the color are pulled from the armature's custom properties as well-- These are defaulted to _white_ but will be overridden by [applying a .chara file to a model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model)
+
+- Skin Color
+- Mix - _For Hrothgar Only_. Determines how much of the fur pattern is visible. Otherwise should be set to 0.
+- Fur Pattern Color - _For Hrothgar Only_. 
+- Diffuse _d texture: Will automatically apply based on race/tribe/gender. NOTE: TexTools often gets Au Ra skin type wrong dark scales (Xaela I think?), you might need to fix this manually.
+- Multi _s texture:
+    - 'skin_m' for all races _except for Au Ra and Hrothgar_.
+    - For Au Ra there are two different _s files, depending on your _Gender_. 'c1301b0001_s' for Male, 'c1401b0001_s' for Female. 
+    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to fix this manually.
+- Normal _n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material name's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
 
 #### Eyes
 

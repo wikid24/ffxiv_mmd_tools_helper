@@ -1490,7 +1490,7 @@ Blender will look like it's frozen while the textures are being converted, but t
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5ac212ed-45ce-4413-b5f4-e81c81445ec1)
 
-TBD
+Additional controls and tools for the [Animation Retargeting addon](https://github.com/Mwni/blender-animation-retargeting). **2.1.0 or later must be installed to see these controls**
 
 Sections:
 - [Add Bone Mapping](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-bone-mapping)
@@ -1510,13 +1510,31 @@ Sections:
 
 ### Mapping Controls
 
-TBD
+Used for additional control while updating/adding bone mappings from source armature to target armature
+
+![a4e7323c-fdef-4ee5-99be-20f5c1fae979](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8303c083-3e03-4825-93e9-e230e205b034)
+
+Controls:
+- Active bone name: Will display the bone name AND if this bone name exists on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), will display a description of the bone as well _in English_.
+- Set as Target: Set the target bone based on what is the 'active' bone on the viewport
+- Target bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- Find source bone: Click on it to automatically find the source bone (based on what is on the target bone field). Uses the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a bone names on the same row
+- Source bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+
+Video:
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a47f58b8-e930-468f-8e79-aa36f1f77b86
 
 ------
 
 ### Add Mapping by Bone Type
 
-TBD
+Used to **bulk add** bone mappings. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a matching bone between the source armature and target armature.
+
+'All' will look for any matching bone on the metadata dictionary on the same row, but the other groups are based on the 'animation_retargeting_group' column in the metadata dictionary.
+
+Video:
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/40e91e5e-a95f-482e-b370-539330fe0eb7
+
 
 
 ------

@@ -999,16 +999,18 @@ Sections:
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/32b0dc6e-4e5b-4232-9e3c-4e44eefc9210)
 
+To be applied to any/all skin materials. You will know if this is the right material if the original material name contains a 'b' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**b**0001'
+
 The default skin textures are [included in this addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/assets/ffxiv_skin), and will be automatically applied to your FFXIV model. 
 
 The skin type is detected depending on your race, tribe and gender. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
 
-Upon loading this shader, the color are pulled from the armature's custom properties as well-- These are defaulted to _white_ but will be overridden by [applying a .chara file to a model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model)
-
 **Properties:**
 - Skin Color
 - Mix: _For Hrothgar Only_. Determines how much of the fur pattern is visible.
-- Fur Pattern Color: _For Hrothgar Only_. 
+- Fur Pattern Color: _For Hrothgar Only_.
+- Subsurface Scattering
+- Specular Mix
 - Diffuse _d texture: Will automatically apply based on race/tribe/gender. NOTE: TexTools often exports the wrong Au Ra dark scales (Xaela I think?), you might need to replace the diffuse texture manually.
 - Multi _s texture:
     - 'skin_m' for all races _except for Au Ra and Hrothgar_.
@@ -1016,7 +1018,7 @@ Upon loading this shader, the color are pulled from the armature's custom proper
     - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to replace this manually.
 - Normal _n textureL Will automatically apply based on race/tribe/gender.
 - Search/Replace Texture:
-  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material name's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
 ------
@@ -1025,42 +1027,100 @@ Upon loading this shader, the color are pulled from the armature's custom proper
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fd43b362-a2b5-40df-8ef7-8da156bc5f6d)
 
+To be applied to the eyes material. You will know if this is the right material if the original material name ends in '_iri_a'
 
+The default iris textures are [included in this addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/assets/ffxiv_iris), and will be automatically applied to your FFXIV model. 
 
-TBD
+The iris type is detected depending on your race and tribe. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
+
+**Properties:**
+- Eye Color
+- Mix: Determines how much of the odd eye color is applied to the _left eye_.
+- Odd Eye Color
+- Specular Decay
+- Multi iri_s texture
+- Normal iri_n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
 
 #### Face
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d27aa7b2-cd69-43fe-bc5a-4c671e2d1391)
 
+To be applied to the face material. You will know if this is the right material if the original material name ends in '_fac_a'
 
+**Properties:**
+- Skin Color
+- Subsurface Scattering
+- Specular Mix
+- Lip Color
+- Diffuse fac_d texture
+- Multi fac_s texture
+- Normal fac_n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _fac_d, _fac_s, or _fac_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
-
-TBD
+------
 
 #### Face Accent
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/842ddc66-6a6d-4f26-90cc-2da01d86451c)
 
+To be applied to eyebrows/limbal ring (Au Ra)/tattoo materials. You will know if this is the right material if the original material name ends in '_etc_a'
 
+**Properties:**
+- Hair Color: Eyebrow color
+- Mix: ??? I forgot.
+- Tattoo Color
+- Limbal Ring Color
+- Limbal Mix: How much of the limbal ring color is applied??? I forgot.
+- Limbal Intensity: How much of an 'emissive' (glow in the dark) amount is applied
+- Multi etc_s texture
+- Normal etc_n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
-TBD
+------
 
 #### Hair
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/abba6198-c377-48e8-b812-11a7d71cc8cb)
 
+To be applied to hair materials. You will know if this is the right material if the original material name contains a 'h' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**h**0001'
 
+**Properties:**
+- Hair Color
+- Mix: How much of the hair highlights color is applied
+- Hair Highlights Color
+- Anisotrophy: ??? I dunno.
+- Multi hir_s texture
+- Normal hir_n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _hir_s, or _hir_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
-TBD
+------
 
 #### Hrothgar / Miqote Tail
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3222904a-fc19-48df-9712-2fe6b82b8609)
 
+To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU RA TAILS**. You will know if this is the right material if the original material name contains a 't' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**t**0001'
 
-
-TBD
+**Properties:**
+- Hair Color
+- Hair Highlights Color
+- Highlights Mix: How much of the hair highlights color is applied
+- Multi hir_s texture
+- Normal hir_n texture
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _hir_s, or _hir_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
 ------
 

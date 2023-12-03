@@ -1128,7 +1128,7 @@ To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f7b91332-6937-45cf-919a-3c3cf00a82e2)
 
-Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
+Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type* \ *gear name* folder
 
 For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, the folder where the textures are found would be: 
 - C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\

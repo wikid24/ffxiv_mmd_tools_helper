@@ -756,9 +756,9 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e64f8058-1580-
 
 --------------
 
-#### Q: I want to do something rather complex in Blender, but I don't know how!
+#### Q: I want to automate doing something rather complex in Blender, but I don't know how!
 
-A: Use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT. 
+A: Lol not really a question, but use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT. 
 
 How to use:
 In ChatGPT, start a prompt with 'In Blender using python, I want to...' and see what it says. 

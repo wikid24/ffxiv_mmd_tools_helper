@@ -1532,14 +1532,15 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a47f58b8-e930-
 
 ### Add Mapping by Bone Type
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/461d3c67-8d62-452f-bed2-20dc87921481)
+
 Used to **bulk add** bone mappings. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a matching bone between the source armature and target armature.
 
-'All' will look for any matching bone on the metadata dictionary on the same row, but the other groups are based on the 'animation_retargeting_group' column in the metadata dictionary.
+'All' will look for any matching bone on the metadata dictionary on the same row, but the other groups are based on the 'animation_retargeting_group' column for bone names on the same row in the metadata dictionary.
 
 Video:
 
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/40e91e5e-a95f-482e-b370-539330fe0eb7
-
 
 
 ------

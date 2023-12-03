@@ -983,6 +983,7 @@ Upon applying this shader, a BACKUP of the original material is stored (it is th
 If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model) was used beforehand, it will automatically apply the .chara file's colors upon adding a Colorsetter Shader
 
 Sample Video:
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-425b-bb94-0122e42475e5
 
 Sections:
@@ -1006,18 +1007,18 @@ The default skin textures are [included in this addon](https://github.com/wikid2
 The skin type is detected depending on your race, tribe and gender. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
 
 **Properties:**
-- Skin Color
-- Mix: _For Hrothgar Only_. Determines how much of the fur pattern is visible.
-- Fur Pattern Color: _For Hrothgar Only_.
-- Subsurface Scattering
-- Specular Mix
-- Diffuse _d texture: Will automatically apply based on race/tribe/gender. NOTE: TexTools often exports the wrong Au Ra dark scales (Xaela I think?), you might need to replace the diffuse texture manually.
-- Multi _s texture:
+- **Skin Color**
+- **Mix**: _For Hrothgar Only_. Determines how much of the fur pattern is visible.
+- **Fur Pattern Color**: _For Hrothgar Only_.
+- **Subsurface Scattering**
+- **Specular Mix**
+- **Diffuse _d texture**: Will automatically apply based on race/tribe/gender. NOTE: TexTools often exports the wrong Au Ra dark scales (Xaela I think?), you might need to replace the diffuse texture manually.
+- **Multi _s texture**:
     - 'skin_m' for all races _except for Au Ra and Hrothgar_.
     - For Au Ra there are two different _s files, depending on your _Gender_. 'c1301b0001_s' for Male, 'c1401b0001_s' for Female. 
-    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to replace this manually.
-- Normal _n texture: Will automatically apply based on race/tribe/gender.
-- Search/Replace Texture:
+    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however if .chara file is applied beforehand, the correct fur pattern file will be applied.
+- **Normal _n texture**: Will automatically apply based on race/tribe/gender.
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1034,13 +1035,13 @@ The default iris textures are [included in this addon](https://github.com/wikid2
 The iris type is detected depending on your race and tribe. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
 
 **Properties:**
-- Eye Color
-- Mix: Determines how much of the odd eye color is applied to the _left eye_.
-- Odd Eye Color
-- Specular Decay
-- Multi iri_s texture
-- Normal iri_n texture
-- Search/Replace Texture:
+- **Eye Color**
+- **Mix**: Determines how much of the odd eye color is applied to the _left eye_.
+- **Odd Eye Color**
+- **Specular Decay**
+- **Multi iri_s texture**
+- **Normal iri_n texture**
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1053,14 +1054,14 @@ The iris type is detected depending on your race and tribe. These details are fr
 To be applied to the face material. You will know if this is the right material if the original material name ends in '_fac_a'
 
 **Properties:**
-- Skin Color
-- Subsurface Scattering
-- Specular Mix
-- Lip Color
-- Diffuse fac_d texture
-- Multi fac_s texture
-- Normal fac_n texture
-- Search/Replace Texture:
+- **Skin Color**
+- **Subsurface Scattering**
+- **Specular Mix**
+- **Lip Color**
+- **Diffuse fac_d texture**
+- **Multi fac_s texture**
+- **Normal fac_n texture**
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _fac_d, _fac_s, or _fac_n.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1073,15 +1074,15 @@ To be applied to the face material. You will know if this is the right material 
 To be applied to eyebrows/limbal ring (Au Ra)/tattoo materials. You will know if this is the right material if the original material name ends in '_etc_a'
 
 **Properties:**
-- Hair Color: Eyebrow color
-- Mix: ??? I forgot.
-- Tattoo Color
-- Limbal Ring Color
-- Limbal Mix: How much of the limbal ring color is applied??? I forgot.
-- Limbal Intensity: How much of an 'emissive' (glow in the dark) amount is applied
-- Multi etc_s texture
-- Normal etc_n texture
-- Search/Replace Texture:
+- **Hair Color**: Eyebrow color
+- **Mix**: ??? I forgot.
+- **Tattoo Color**
+- **Limbal Ring Color**
+- **Limbal Mix**: How much of the limbal ring color is applied??? I forgot.
+- **Limbal Intensity**: How much of an 'emissive' (glow in the dark) amount is applied
+- **Multi etc_s texture**
+- **Normal etc_n texture**
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1094,13 +1095,13 @@ To be applied to eyebrows/limbal ring (Au Ra)/tattoo materials. You will know if
 To be applied to hair materials. You will know if this is the right material if the original material name contains a 'h' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**h**0001'
 
 **Properties:**
-- Hair Color
-- Mix: How much of the hair highlights color is applied
-- Hair Highlights Color
-- Anisotrophy: ??? I dunno.
-- Multi hir_s texture
-- Normal hir_n texture
-- Search/Replace Texture:
+- **Hair Color**
+- **Mix**: How much of the hair highlights color is applied
+- **Hair Highlights Color**
+- **Anisotrophy**: ??? I dunno.
+- **Multi hir_s texture**
+- **Normal hir_n texture**
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _hir_s, or _hir_n.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1113,12 +1114,12 @@ To be applied to hair materials. You will know if this is the right material if 
 To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU RA TAILS**. You will know if this is the right material if the original material name contains a 't' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**t**0001'
 
 **Properties:**
-- Hair Color
-- Hair Highlights Color
-- Highlights Mix: How much of the hair highlights color is applied
-- Multi etc_s texture
-- Normal etc_n texture
-- Search/Replace Texture:
+- **Hair Color**
+- **Hair Highlights Color**
+- **Highlights Mix**: How much of the hair highlights color is applied
+- **Multi etc_s texture**
+- **Normal etc_n texture**
+- **Search/Replace Texture**:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
@@ -1517,12 +1518,12 @@ Used for additional control while updating/adding bone mappings from source arma
 ![a4e7323c-fdef-4ee5-99be-20f5c1fae979](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8303c083-3e03-4825-93e9-e230e205b034)
 
 Controls:
-- Active bone name: Will display the bone name AND if this bone name exists on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), will display a description of the bone as well _in English_.
-- Set as Target: Set the target bone based on what is the 'active' bone on the viewport
-- Target bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
-- Find source bone: Click on it to automatically find the source bone (based on what is on the target bone field). Uses the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a bone names on the same row
-- Source bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
-- Clear The Mapping List: Wipes the entire mapping list.
+- **Active bone name**: Will display the bone name AND if this bone name exists on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), will display a description of the bone as well _in English_.
+- **Set as Target**: Set the target bone based on what is the 'active' bone on the viewport
+- **Target bone name**: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- **Find source bone**: Click on it to automatically find the source bone (based on what is on the target bone field). Uses the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a bone names on the same row
+- **Source bone name**: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- **Clear The Mapping List**: Wipes the entire mapping list.
 
 Video:
 
@@ -1568,27 +1569,27 @@ Will look for source bones and target bones of the same name on the [metadata di
 
 Controls:
 
-- Upper Arms:
+- **Upper Arms**:
     - looks for equivalent of 'arm_L/R' bones on source armature.
     - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
-- Forearms:
+- **Forearms**:
     - looks for equivalent of 'elbow_L/R' bones on source armature.
-- Wrists:
+- **Wrists**:
     - looks for equivalent of 'wrist_L/R' bones on source armature.
-- Hands:
+- **Hands**:
     - looks for equivalent of 'thumb1_L/R','thumb2_L/R','fore1_L/R','fore2_L/R','fore3_L/R','middle1_L/R','middle2_L/R','middle3_L/R','third1_L/R','third2_L/R','third3_L/R','little1_L/R','little2_L/R','little3_L/R' bones on source armature.
-- Upper Legs:
+- **Upper Legs**:
     - looks for equivalent of 'leg_L/R' bones on source armature.
     - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
-- Lower Legs:
+- **Lower Legs**:
     - looks for equivalent of 'knee_L/R','knee_2_L/R' on the source armature.
     - Special handling for this because most source MMD models _do not_ have a knee_2_L/R, so if that occurs, it will reset target armature's knee_2_L/R back to rest position.
-- Feet:
+- **Feet**:
     - looks for equivalent of 'ankle_L/R' bones on source armature.
-- Toe:
+- **Toe**:
     - looks for equivalent of 'toe_L/R' bones on source armature.
  
-- Reset bone on Target Armature if Source Bone not found: If checked, does exactly what it says upon pressing any of the above buttons.
+- **Reset bone on Target Armature if Source Bone not found**: If checked, does exactly what it says upon pressing any of the above buttons.
 
 Video:
 

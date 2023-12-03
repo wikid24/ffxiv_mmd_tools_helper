@@ -1478,6 +1478,12 @@ Select the input folder and press either 'tex to dds' or 'dds to tex' and it wil
 
 Unfortunately there are no parameters in that library to select an output folder, so instead, this tool will tell you what the output folder is upon pressing the button. Clicking on the output folder icon will open up a windows explorer window.
 
+Blender will look like it's frozen while the textures are being converted, but the console window will keep on updating, so I suggest opening the **Blender Console Window** first to watch the progress/results:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f61cafe5-a432-4fe5-8c99-bb4849ebbe69)
+
+
+
 ------
 
 # 3D Viewport -> Retargeting Sidebar

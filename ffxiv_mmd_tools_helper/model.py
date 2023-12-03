@@ -68,7 +68,7 @@ def findArmature(obj):
 	if obj.type == 'ARMATURE':
 		arm = obj
 		return arm
-	if obj.parent is not None:
+	if obj.parent:
 		if obj.parent.type == 'ARMATURE':
 			#obj.mmd_root.show_armature = True	
 			arm = obj.parent
@@ -83,7 +83,7 @@ def findArmature(obj):
 					if arm.hide == True:
 						arm.hide = False
 					return arm
-	if obj.parent.parent is not None:
+	if obj.parent.parent:
 		if obj.parent.parent.type == 'ARMATURE':
 			#obj.parent.parent.hide = False
 			#child.mmd_root.show_armature = True	

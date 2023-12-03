@@ -44,14 +44,15 @@ def rename_bones(boneMap1, boneMap2, BONE_NAMES_DICTIONARY):
 	bpy.ops.object.mode_set(mode='OBJECT')
 
 	for k in BONE_NAMES_DICTIONARY[1:]:
-		if k[boneMap1_index] in bpy.context.active_object.data.bones.keys():
-			if k[boneMap2_index] != '':
-				bpy.context.active_object.data.bones[k[boneMap1_index]].name = k[boneMap2_index]
-				if boneMap2 == 'mmd_japanese' or boneMap2 == 'mmd_japaneseLR':
-					bpy.ops.object.mode_set(mode='POSE')
-					if hasattr(bpy.context.active_object.pose.bones[k[boneMap2_index]] , "mmd_bone"):
-						bpy.context.active_object.pose.bones[k[boneMap2_index]].mmd_bone.name_e = k[0]
-					bpy.ops.object.mode_set(mode='OBJECT')
+		if k[boneMap1_index] and k[boneMap1_index] != '' :
+			if k[boneMap1_index] in bpy.context.active_object.data.bones.keys():
+				if k[boneMap2_index] and k[boneMap2_index] != '':
+					bpy.context.active_object.data.bones[k[boneMap1_index]].name = k[boneMap2_index]
+					if boneMap2 == 'mmd_japanese' or boneMap2 == 'mmd_japaneseLR':
+						bpy.ops.object.mode_set(mode='POSE')
+						if hasattr(bpy.context.active_object.pose.bones[k[boneMap2_index]] , "mmd_bone"):
+							bpy.context.active_object.pose.bones[k[boneMap2_index]].mmd_bone.name_e = k[0]
+						bpy.ops.object.mode_set(mode='OBJECT')
 
 
 
@@ -62,14 +63,15 @@ def rename_finger_bones(boneMap1, boneMap2, FINGER_BONE_NAMES_DICTIONARY):
 	bpy.ops.object.mode_set(mode='OBJECT')
 
 	for k in FINGER_BONE_NAMES_DICTIONARY[1:]:
-		if k[boneMap1_index] in bpy.context.active_object.data.bones.keys():
-			if k[boneMap2_index] != '':
-				bpy.context.active_object.data.bones[k[boneMap1_index]].name = k[boneMap2_index]
-				if boneMap2 == 'mmd_japanese' or boneMap2 == 'mmd_japaneseLR':
-					bpy.ops.object.mode_set(mode='POSE')
-					if hasattr(bpy.context.active_object.pose.bones[k[boneMap2_index]] , "mmd_bone"):
-						bpy.context.active_object.pose.bones[k[boneMap2_index]].mmd_bone.name_e = k[0]
-					bpy.ops.object.mode_set(mode='OBJECT')
+		if k[boneMap1_index] and k[boneMap1_index] != '':
+			if k[boneMap1_index] in bpy.context.active_object.data.bones.keys():
+				if k[boneMap2_index] and k[boneMap2_index] != '':
+					bpy.context.active_object.data.bones[k[boneMap1_index]].name = k[boneMap2_index]
+					if boneMap2 == 'mmd_japanese' or boneMap2 == 'mmd_japaneseLR':
+						bpy.ops.object.mode_set(mode='POSE')
+						if hasattr(bpy.context.active_object.pose.bones[k[boneMap2_index]] , "mmd_bone"):
+							bpy.context.active_object.pose.bones[k[boneMap2_index]].mmd_bone.name_e = k[0]
+						bpy.ops.object.mode_set(mode='OBJECT')
 
 	bpy.context.scene.Origin_Armature_Type = boneMap2
 	print_missing_bone_names()
@@ -122,6 +124,7 @@ class MassBonesRenamer(bpy.types.Operator):
 	,('yakuza', 'Yakuza', 'Yakuza Series bone names')\
 	,('autorig_pro', 'AutoRig Pro', 'AutoRig Pro bone names')\
 	,('mixamo', 'Adobe Mixamo', 'Adobe Mixamo bone names')\
+	,('fortnite', 'Fortnite', 'Fortnite')\
 	], name = "From", default = 'ffxiv')
 	
 
@@ -150,6 +153,7 @@ class MassBonesRenamer(bpy.types.Operator):
 	,('yakuza', 'Yakuza', 'Yakuza Series bone names')\
 	,('autorig_pro', 'AutoRig Pro', 'AutoRig Pro bone names')\
 	,('mixamo', 'Adobe Mixamo', 'Adobe Mixamo bone names')\
+	,('fortnite', 'Fortnite', 'Fortnite')\
 	], name = "To", default = 'mmd_english')
 
 

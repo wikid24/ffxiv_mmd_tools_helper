@@ -1007,14 +1007,14 @@ Upon loading this shader, the color are pulled from the armature's custom proper
 
 **Properties:**
 - Skin Color
-- Mix - _For Hrothgar Only_. Determines how much of the fur pattern is visible. Otherwise should be set to 0.
-- Fur Pattern Color - _For Hrothgar Only_. 
-- Diffuse _d texture: Will automatically apply based on race/tribe/gender. NOTE: TexTools often gets Au Ra skin type wrong for dark scales (Xaela I think?), you might need to replace the diffuse texture.
+- Mix: _For Hrothgar Only_. Determines how much of the fur pattern is visible.
+- Fur Pattern Color: _For Hrothgar Only_. 
+- Diffuse _d texture: Will automatically apply based on race/tribe/gender. NOTE: TexTools often exports the wrong Au Ra dark scales (Xaela I think?), you might need to replace the diffuse texture manually.
 - Multi _s texture:
     - 'skin_m' for all races _except for Au Ra and Hrothgar_.
     - For Au Ra there are two different _s files, depending on your _Gender_. 'c1301b0001_s' for Male, 'c1401b0001_s' for Female. 
-    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to fix this manually.
-- Normal _n texture
+    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to replace this manually.
+- Normal _n textureL Will automatically apply based on race/tribe/gender.
 - Search/Replace Texture:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material name's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.

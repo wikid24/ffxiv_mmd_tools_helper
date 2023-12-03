@@ -901,16 +901,6 @@ Sections:
 Shortcut to selecting the active material for a mesh. 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
 
-------
-
-### Colorsetter Gear Texture Folder
-
-Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
-
-For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, it would be: 
-- C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
-  or
-- C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
 
 ------
 
@@ -1047,13 +1037,20 @@ TBD
 
 ------
 
-### Apply Colorset Gear Texture Folder
+### Colorsetter Gear Texture Folder
+
+Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
+
+For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, the folder where the textures are found would be: 
+- C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+  or
+- C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
 
-Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
+Upon pressing the button to apply it, it will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be prefixed with 'colorsetter_gear_' from it's original name. 
 
-Unlike using the colorsetter addon on its own (that destroys the old material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
+Unlike using the colorsetter addon on its own (that destroys the original material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
 
 In order for this to properly, you need:
 1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
@@ -1066,6 +1063,14 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-
 Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
 To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
 
+
+------
+
+### Colorsetter Gear Settings
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f196c7a0-8e35-44ba-8a5c-e9ce908a372e)
+
+TBD
 
 ------
 

@@ -884,13 +884,13 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 Sections:
 - [Active Material](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#active-material)
-- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#colorsetter-gear-texture-folder)
 - [Apply Colorset](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorset)
 - [Glossy Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-glossy-shader)
 - [Eye Catchlight Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-eye-catchlight-shader)
 - [MekTools Skin Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-skin-shader)
 - [MekTools Eye Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-eye-shader)
 - [Colorsetter Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorsetter-shaders)
+- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#colorsetter-gear-texture-folder)
 - [Background Color](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#background-color)
 
 
@@ -911,28 +911,6 @@ For example on my Windows 10 PC if I would like to apply the "Diados Jacket of F
 - C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
   or
 - C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
-
-------
-
-### Apply Colorset
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
-
-
-Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
-
-Unlike using the colorsetter addon on its own (that destroys the old material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
-
-In order for this to properly, you need:
-1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
-2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
-
-
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
-
-Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
-To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
 
 ------
 
@@ -1068,6 +1046,29 @@ TBD
 TBD
 
 ------
+
+### Apply Colorset Gear Texture Folder
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
+
+Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
+
+Unlike using the colorsetter addon on its own (that destroys the old material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
+
+In order for this to properly, you need:
+1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
+2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
+
+Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
+To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
+
+
+------
+
 
 
 #### Background Color

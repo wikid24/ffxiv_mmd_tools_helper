@@ -1472,6 +1472,11 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d700cfc6-6f04-4c96-91e2-4a6db5ef498a)
 
+Used to batch convert .tex files to .dds files. Leverages the [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter) library. 
+
+Select the input folder and press either 'tex to dds' or 'dds to tex' and it will output all .dds or .tex files from **all subfolders of the input folder**. 
+
+Unfortunately there are no parameters in that library to select an output folder, so instead, this tool will tell you what the output folder is upon pressing the button. Clicking on the output folder icon will open up a windows explorer window.
 
 ------
 

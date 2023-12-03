@@ -19,7 +19,7 @@ All can be done in **minutes**.
 - [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
 - [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below.
-- [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **Updated!**: 2023-11-24
+- [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **Updated!**: 2023-12-02
 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 

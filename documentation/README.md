@@ -1522,6 +1522,7 @@ Controls:
 - Source bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
 
 Video:
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a47f58b8-e930-468f-8e79-aa36f1f77b86
 
 ------
@@ -1533,6 +1534,7 @@ Used to **bulk add** bone mappings. Leverages the [metadata dictionary](https://
 'All' will look for any matching bone on the metadata dictionary on the same row, but the other groups are based on the 'animation_retargeting_group' column in the metadata dictionary.
 
 Video:
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/40e91e5e-a95f-482e-b370-539330fe0eb7
 
 

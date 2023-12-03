@@ -1016,7 +1016,7 @@ The skin type is detected depending on your race, tribe and gender. These detail
     - 'skin_m' for all races _except for Au Ra and Hrothgar_.
     - For Au Ra there are two different _s files, depending on your _Gender_. 'c1301b0001_s' for Male, 'c1401b0001_s' for Female. 
     - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however you might need to replace this manually.
-- Normal _n textureL Will automatically apply based on race/tribe/gender.
+- Normal _n texture: Will automatically apply based on race/tribe/gender.
 - Search/Replace Texture:
   - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
   - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
@@ -1126,14 +1126,14 @@ To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU
 
 ### Colorsetter Gear Texture Folder
 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f7b91332-6937-45cf-919a-3c3cf00a82e2)
+
 Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
 
 For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, the folder where the textures are found would be: 
 - C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
   or
 - C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
 
 Upon pressing the button to apply it, it will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be prefixed with 'colorsetter_gear_' from it's original name. 
 
@@ -1144,12 +1144,10 @@ In order for this to properly, you need:
 2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
 
-
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
 
 Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
 To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
-
 
 ------
 
@@ -1157,11 +1155,18 @@ To see the actual error message, attempt to use the color setter plugin manually
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f196c7a0-8e35-44ba-8a5c-e9ce908a372e)
 
-TBD
+**Properties:**
+- Multi _m/_d/_s: texture
+- Normal _n texture
+- Normal (Nearest) _n texture
+- Diffuse _d texture
+- Specular _s texture
+- Specular Mask texture: ??? I have no idea what this does.
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by one of the suffixes in the above textures.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
 
 ------
-
-
 
 #### Background Color
 

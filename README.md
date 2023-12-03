@@ -3,9 +3,12 @@
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-- Export models out of FFXIV TexTools (leveraging .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
-- Update the standard textures to the detailed ones (leveraging the [Colorsetter Addon](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
-- Convert the model to MMD Format
+- Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
+- Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
+- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter))
+- Map bones from MMD models to FFXIV models (using [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting))
+- Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780))
+- Convert the model to MMD Format (using [MMD Tools Addon](https://github.com/UuuNyaa/blender_mmd_tools))
 - Add MMD-style physics in Blender
 - Animate it it in Blender (Including MMD _Facial_ Animation!)
 - Export to .PMX Format (if you want to use it in the Miku Miku Dance program)
@@ -14,9 +17,9 @@ All can be done in **minutes**.
 
 - [Download Blender Addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases)
 - [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-install)
-- [60 second Model Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
+- [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper#how-to-rig-a-character-and-get-it-dancing-less-than-60-seconds-my-new-workflow)
 - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper#frequently-asked-questions) below.
-- [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **Updated!**: 2023-11-24
+- [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation) for everything in the plugin, including images & videos. **Updated!**: 2023-12-02
 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
@@ -280,6 +283,7 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-
     - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
     - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
     - [Why does my character's hair have bald patches? HALP!](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-does-my-characters-hair-have-bald-patches-halp)
+    - [I want to do something rather complex in Blender, but I don't know how!](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-automate-doing-something-complex-in-blender-but-i-dont-know-how)
 
 
 --------------
@@ -732,6 +736,13 @@ All fixed!
 
 #### Q: The Rigid Body Collision Group Masks are not working! What am I doing wrong?
 
+![285059516-4302226c-5e1e-4d33-a79d-8ef0428c45c7](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f9761a80-e776-4310-9a26-29df5346c716)
+
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/35b246c6-26b4-4f0c-bccd-cbed78320bdb
+
+
+
 A: Upon pressing the 'Physics' button in MMD Tools, there is a small window on the bottom left hand side of your screen that will show up that says "**Build Rig**"
 
 There will be a Field in it that says "Non-Collision Distance Scale". Set this value to 10. It fixed some boob physics issues for me. Don't ask me how it works, I have no idea. :)
@@ -739,11 +750,16 @@ There will be a Field in it that says "Non-Collision Distance Scale". Set this v
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4a7a0ee3-afd3-4a28-8c86-65a26f676c95)
 
 
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e64f8058-1580-48b5-b713-2b0022233170
+
+
+
 --------------
 
-#### Q: I want to do something rather complex in Blender, but I don't know how!
+#### Q: I want to automate doing something complex in Blender, but I don't know how!
 
-A: Use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT. 
+A: Lol not really a question, but use ChatGPT to write you some Blender code scripts!! Seriously, it has saved my bacon a ton of times, infact, the majority of this addon was built with ChatGPT assisting every step of the way. 
 
 How to use:
 In ChatGPT, start a prompt with 'In Blender using python, I want to...' and see what it says. 

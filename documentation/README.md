@@ -879,17 +879,18 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ## Shaders
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7eab16f2-d992-4de5-b088-b6afe8cd643d)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3dbf771c-c03e-4186-a6bc-7ecd978779f0)
+
 
 Sections:
 - [Active Material](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#active-material)
-- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#colorsetter-gear-texture-folder)
 - [Apply Colorset](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorset)
 - [Glossy Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-glossy-shader)
 - [Eye Catchlight Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-eye-catchlight-shader)
 - [MekTools Skin Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-skin-shader)
 - [MekTools Eye Shader](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-mektools-eye-shader)
 - [Colorsetter Shaders](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#apply-colorsetter-shaders)
+- [Colorsetter Gear Texture Folder](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#colorsetter-gear-texture-folder)
 - [Background Color](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#background-color)
 
 
@@ -900,38 +901,6 @@ Sections:
 Shortcut to selecting the active material for a mesh. 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ea42a076-7b54-4a1d-9825-86335ec952fc)
 
-------
-
-### Colorsetter Gear Texture Folder
-
-Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type*\*gear name* folder
-
-For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, it would be: 
-- C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
-  or
-- C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
-
-------
-
-### Apply Colorset
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7349c9bb-87de-4cd1-8bcf-0694e4131dd4)
-
-
-Will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be called 'Colorsetter Base'. 
-
-Unlike using the colorsetter addon on its own (that destroys the old material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
-
-In order for this to properly, you need:
-1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
-2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
-
-
-https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
-
-Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
-To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
 
 ------
 
@@ -1014,51 +983,191 @@ Upon applying this shader, a BACKUP of the original material is stored (it is th
 If [Apply .chara To Model](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#anamnesis-chara-file-apply-to-model) was used beforehand, it will automatically apply the .chara file's colors upon adding a Colorsetter Shader
 
 Sample Video:
+
 https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-425b-bb94-0122e42475e5
 
-
-#### Skin
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/01f1354b-d72c-4aac-9d38-f12abb596ac0)
-
-TBD
-
-#### Eyes
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e8382a90-003d-4829-ba9d-e94b2cdb4689)
-
-TBD
-
-#### Face
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0b0dbd6b-4d80-4377-a0cc-da7ba7e1cad1)
-
-
-TBD
-
-#### Face Accent
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/894a2eed-d821-4e2e-bbf5-8acc4e9a5265)
-
-
-TBD
-
-#### Hair
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b86b00d9-56da-41ec-81c9-593888c95fdb)
-
-
-TBD
-
-#### Hrothgat / Miqote Tail
-
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d38e9353-d129-4b02-ba53-b47e91f21961)
-
-
-TBD
+Sections:
+- [Skin](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#skin)
+- [Eyes](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#eyes)
+- [Face](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#face)
+- [Face Accent](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#face-accent)
+- [Hair](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#hair)
+- [Hrothgar/Miqote Tail](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#hrothgar--miqote-tail)
 
 ------
 
+#### Skin
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/32b0dc6e-4e5b-4232-9e3c-4e44eefc9210)
+
+To be applied to any/all skin materials. You will know if this is the right material if the original material name contains a 'b' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**b**0001'
+
+The default skin textures are [included in this addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/assets/ffxiv_skin), and will be automatically applied to your FFXIV model. 
+
+The skin type is detected depending on your race, tribe and gender. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
+
+**Properties:**
+- **Skin Color**
+- **Mix**: _For Hrothgar Only_. Determines how much of the fur pattern is visible.
+- **Fur Pattern Color**: _For Hrothgar Only_.
+- **Subsurface Scattering**
+- **Specular Mix**
+- **Diffuse _d texture**: Will automatically apply based on race/tribe/gender. NOTE: TexTools often exports the wrong Au Ra dark scales (Xaela I think?), you might need to replace the diffuse texture manually.
+- **Multi _s texture**:
+    - 'skin_m' for all races _except for Au Ra and Hrothgar_.
+    - For Au Ra there are two different _s files, depending on your _Gender_. 'c1301b0001_s' for Male, 'c1401b0001_s' for Female. 
+    - For Hrothgar there are 5 different _s files, each one depends on the fur pattern. Fur Pattern 'V1' texture is applied by default for Hrothgar, however if .chara file is applied beforehand, the correct fur pattern file will be applied.
+- **Normal _n texture**: Will automatically apply based on race/tribe/gender.
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+#### Eyes
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fd43b362-a2b5-40df-8ef7-8da156bc5f6d)
+
+To be applied to the eyes material. You will know if this is the right material if the original material name ends in '_iri_a'
+
+The default iris textures are [included in this addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/ffxiv_mmd_tools_helper/assets/ffxiv_iris), and will be automatically applied to your FFXIV model. 
+
+The iris type is detected depending on your race and tribe. These details are from the [Face mesh upon .fbx import and storing the details it in the armature's custom properties data](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#import-ffxiv-fbx-file). 
+
+**Properties:**
+- **Eye Color**
+- **Mix**: Determines how much of the odd eye color is applied to the _left eye_.
+- **Odd Eye Color**
+- **Specular Decay**
+- **Multi iri_s texture**
+- **Normal iri_n texture**
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _d, _s, or _n. Not really needed here because this addon auto-applies the default/standard texture files.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+#### Face
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d27aa7b2-cd69-43fe-bc5a-4c671e2d1391)
+
+To be applied to the face material. You will know if this is the right material if the original material name ends in '_fac_a'
+
+**Properties:**
+- **Skin Color**
+- **Subsurface Scattering**
+- **Specular Mix**
+- **Lip Color**
+- **Diffuse fac_d texture**
+- **Multi fac_s texture**
+- **Normal fac_n texture**
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _fac_d, _fac_s, or _fac_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+#### Face Accent
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/842ddc66-6a6d-4f26-90cc-2da01d86451c)
+
+To be applied to eyebrows/limbal ring (Au Ra)/tattoo materials. You will know if this is the right material if the original material name ends in '_etc_a'
+
+**Properties:**
+- **Hair Color**: Eyebrow color
+- **Mix**: ??? I forgot.
+- **Tattoo Color**
+- **Limbal Ring Color**
+- **Limbal Mix**: How much of the limbal ring color is applied??? I forgot.
+- **Limbal Intensity**: How much of an 'emissive' (glow in the dark) amount is applied
+- **Multi etc_s texture**
+- **Normal etc_n texture**
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+#### Hair
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/abba6198-c377-48e8-b812-11a7d71cc8cb)
+
+To be applied to hair materials. You will know if this is the right material if the original material name contains a 'h' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**h**0001'
+
+**Properties:**
+- **Hair Color**
+- **Mix**: How much of the hair highlights color is applied
+- **Hair Highlights Color**
+- **Anisotrophy**: ??? I dunno.
+- **Multi hir_s texture**
+- **Normal hir_n texture**
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _hir_s, or _hir_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+#### Hrothgar / Miqote Tail
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3222904a-fc19-48df-9712-2fe6b82b8609)
+
+To be applied to **Hrothgar / Miqote Tails only**... **THERE IS NO SHADER FOR AU RA TAILS**. You will know if this is the right material if the original material name contains a 't' in between the race/gender ID 'c1101' and the material type ID '0001' such as 'c1101**t**0001'
+
+**Properties:**
+- **Hair Color**
+- **Hair Highlights Color**
+- **Highlights Mix**: How much of the hair highlights color is applied
+- **Multi etc_s texture**
+- **Normal etc_n texture**
+- **Search/Replace Texture**:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by either _etc_s, or _etc_n.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
+
+### Colorsetter Gear Texture Folder
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f7b91332-6937-45cf-919a-3c3cf00a82e2)
+
+Location of the FFXIV Gear's textures that you would like to apply the colorset addon's textures to. This should be set to your TexTools' gear's foldername that you have exported. Typically this would be found in the Documents\TexTools\Saved\*gear type* \ *gear name* folder
+
+For example on my Windows 10 PC if I would like to apply the "Diados Jacket of Fending" textures, the folder where the textures are found would be: 
+- C:\Users\ %userprofile%\OneDrive\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+  or
+- C:\Users\ %userprofile%\Documents\TexTools\Saved\Body\Diadochos Jacket of Fending\
+
+Upon pressing the button to apply it, it will automatically apply the colorset addon's material to ALL meshes that share this material. The material will be prefixed with 'colorsetter_gear_' from it's original name. 
+
+Unlike using the colorsetter addon on its own (that destroys the original material), THIS plugin will store a backup of the old material, it's original name will be prefixed with 'backup_'
+
+In order for this to properly, you need:
+1) The colorset addon installed in Blender([link](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa))
+2) ALL the textures files that are available (diffuse, normal, specular, multimap, colorset, etc...) exported to JPG, BMP AND DDS from TexTools. Make sure Alpha textbox (A) is also checked before export as well. 
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20b3e6f7-3d72-423c-8a95-c108b33d92ad)
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/76c763c8-210c-4f4e-8ae6-d9a71cd5fca0
+
+Please note: there is BUGS with the colorset addon that may prevent some DDS colorset files to be applied. This plugin (FFXIV MMD) will roll back any changes to prevent losing your original material. 
+To see the actual error message, attempt to use the color setter plugin manually and review the Blender Console Window.
+
+------
+
+### Colorsetter Gear Settings
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f196c7a0-8e35-44ba-8a5c-e9ce908a372e)
+
+**Properties:**
+- Multi _m/_d/_s: texture
+- Normal _n texture
+- Normal (Nearest) _n texture
+- Diffuse _d texture
+- Specular _s texture
+- Specular Mask texture: ??? I have no idea what this does.
+- Search/Replace Texture:
+  - If an image has _not been added yet_ , 'Search' will search for any files that match the _original material's name_ followed by one of the suffixes in the above textures.
+  - If there is already an image attached, 'Replace' will search for any files in the specified folder with the _exact same filename as the currently attached image_ and will replace them. Useful for when looking to replace the default textures with _mods/upscaled_ textures.
+
+------
 
 #### Background Color
 
@@ -1364,6 +1473,17 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d700cfc6-6f04-4c96-91e2-4a6db5ef498a)
 
+Used to batch convert .tex files to .dds files. Leverages the [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter) library. 
+
+Select the input folder and press either 'tex to dds' or 'dds to tex' and it will output all .dds or .tex files from **all subfolders of the input folder**. 
+
+Unfortunately there are no parameters in that library to select an output folder, so instead, this tool will tell you what the output folder is upon pressing the button. Clicking on the output folder icon will open up a windows explorer window.
+
+Blender will look like it's frozen while the textures are being converted, but the console window will keep on updating, so I suggest opening the **Blender Console Window** first to watch the progress/results:
+
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/f61cafe5-a432-4fe5-8c99-bb4849ebbe69)
+
+
 
 ------
 
@@ -1371,7 +1491,7 @@ Leverages the [metadata bone group dictionary](https://github.com/wikid24/ffxiv_
 
 ![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/5ac212ed-45ce-4413-b5f4-e81c81445ec1)
 
-TBD
+Additional controls and tools for the [Animation Retargeting addon](https://github.com/Mwni/blender-animation-retargeting). **2.1.0 or later must be installed to see these controls**
 
 Sections:
 - [Add Bone Mapping](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#add-bone-mapping)
@@ -1381,7 +1501,9 @@ Sections:
 
 ## Add Bone Mapping
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2b138f3a-620b-41d6-a7fa-296145f89402)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/89cee7ed-3153-4a40-b537-b1f6c9b27391)
+
+Displayed when entering 'Bone Mapping Mode' in the animation retargeting addon.
 
 Sections:
 - [Mapping Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mapping-controls)
@@ -1391,13 +1513,35 @@ Sections:
 
 ### Mapping Controls
 
-TBD
+Used for additional control while updating/adding bone mappings from source armature to target armature
+
+![a4e7323c-fdef-4ee5-99be-20f5c1fae979](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/8303c083-3e03-4825-93e9-e230e205b034)
+
+Controls:
+- **Active bone name**: Will display the bone name AND if this bone name exists on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), will display a description of the bone as well _in English_.
+- **Set as Target**: Set the target bone based on what is the 'active' bone on the viewport
+- **Target bone name**: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- **Find source bone**: Click on it to automatically find the source bone (based on what is on the target bone field). Uses the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a bone names on the same row
+- **Source bone name**: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- **Clear The Mapping List**: Wipes the entire mapping list.
+
+Video:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/a47f58b8-e930-468f-8e79-aa36f1f77b86
 
 ------
 
 ### Add Mapping by Bone Type
 
-TBD
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/461d3c67-8d62-452f-bed2-20dc87921481)
+
+Used to **bulk add** bone mappings. Leverages the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a matching bone between the source armature and target armature.
+
+'All' will look for any matching bone on the metadata dictionary on the same row, but the other groups are based on the 'animation_retargeting_group' column for bone names on the same row in the metadata dictionary.
+
+Video:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/40e91e5e-a95f-482e-b370-539330fe0eb7
 
 
 ------
@@ -1415,10 +1559,38 @@ Sections:
 
 ### Reset Armature Pose
 
-TBD
+Resets the source or target armature to the original rest pose.
 
 ------
 
 ### Apply Rotation to Target
 
-TBD
+Will look for source bones and target bones of the same name on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), and if found on the same row, will apply a copy rotation modifier to the target armature's bones, as well as set the bone roll to match the source armature's bone roll. Used for automating the the rest pose position in Animation Retargeting Addon.
+
+Controls:
+
+- **Upper Arms**:
+    - looks for equivalent of 'arm_L/R' bones on source armature.
+    - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- **Forearms**:
+    - looks for equivalent of 'elbow_L/R' bones on source armature.
+- **Wrists**:
+    - looks for equivalent of 'wrist_L/R' bones on source armature.
+- **Hands**:
+    - looks for equivalent of 'thumb1_L/R','thumb2_L/R','fore1_L/R','fore2_L/R','fore3_L/R','middle1_L/R','middle2_L/R','middle3_L/R','third1_L/R','third2_L/R','third3_L/R','little1_L/R','little2_L/R','little3_L/R' bones on source armature.
+- **Upper Legs**:
+    - looks for equivalent of 'leg_L/R' bones on source armature.
+    - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- **Lower Legs**:
+    - looks for equivalent of 'knee_L/R','knee_2_L/R' on the source armature.
+    - Special handling for this because most source MMD models _do not_ have a knee_2_L/R, so if that occurs, it will reset target armature's knee_2_L/R back to rest position.
+- **Feet**:
+    - looks for equivalent of 'ankle_L/R' bones on source armature.
+- **Toe**:
+    - looks for equivalent of 'toe_L/R' bones on source armature.
+ 
+- **Reset bone on Target Armature if Source Bone not found**: If checked, does exactly what it says upon pressing any of the above buttons.
+
+Video:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4037f90e-61cf-4a5c-b58a-6f805a679689

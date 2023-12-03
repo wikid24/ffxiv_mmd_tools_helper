@@ -879,7 +879,8 @@ Lists all the vertex groups for the currently selected mesh. Useful when trying 
 
 ## Shaders
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/7eab16f2-d992-4de5-b088-b6afe8cd643d)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3dbf771c-c03e-4186-a6bc-7ecd978779f0)
+
 
 Sections:
 - [Active Material](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#active-material)
@@ -1019,40 +1020,49 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/20f4480a-9aec-
 
 #### Skin
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/01f1354b-d72c-4aac-9d38-f12abb596ac0)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/32b0dc6e-4e5b-4232-9e3c-4e44eefc9210)
+
+
 
 TBD
 
 #### Eyes
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/e8382a90-003d-4829-ba9d-e94b2cdb4689)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/fd43b362-a2b5-40df-8ef7-8da156bc5f6d)
+
+
 
 TBD
 
 #### Face
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0b0dbd6b-4d80-4377-a0cc-da7ba7e1cad1)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d27aa7b2-cd69-43fe-bc5a-4c671e2d1391)
+
+
 
 
 TBD
 
 #### Face Accent
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/894a2eed-d821-4e2e-bbf5-8acc4e9a5265)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/842ddc66-6a6d-4f26-90cc-2da01d86451c)
+
 
 
 TBD
 
 #### Hair
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/b86b00d9-56da-41ec-81c9-593888c95fdb)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/abba6198-c377-48e8-b812-11a7d71cc8cb)
+
 
 
 TBD
 
-#### Hrothgat / Miqote Tail
+#### Hrothgar / Miqote Tail
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/d38e9353-d129-4b02-ba53-b47e91f21961)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/3222904a-fc19-48df-9712-2fe6b82b8609)
+
 
 
 TBD

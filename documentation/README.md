@@ -1568,14 +1568,27 @@ Will look for source bones and target bones of the same name on the [metadata di
 
 Controls:
 
-- Upper Arms: looks for 'arm_L/R' bones on source armature. Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
-- Forearms:  looks for 'elbow_L/R' bones on source armature.
-- Wrists: looks for 'wrist_L/R' bones on source armature.
-- Hands: looks for 'thumb1_L/R','thumb2_L/R','fore1_L/R','fore2_L/R','fore3_L/R','middle1_L/R','middle2_L/R','middle3_L/R','third1_L/R','third2_L/R','third3_L/R','little1_L/R','little2_L/R','little3_L/R' bones on source armature.
-- Upper Legs: looks for 'leg_L/R' bones on source armature. . Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
-- Lower Legs: looks for 'knee_L/R','knee_2_L/R' on the source armature. Special handling for this because most source MMD models _do not_ have a knee_2_L/R, so if that occurs, it will reset target armature's knee_2_L/R back to rest position.
-- Feet: looks for 'ankle_L/R' bones on source armature.
-- Toe: looks for 'toe_L/R' bones on source armature.
+- Upper Arms:
+    - looks for equivalent of 'arm_L/R' bones on source armature.
+    - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- Forearms:
+    - looks for equivalent of 'elbow_L/R' bones on source armature.
+- Wrists:
+    - looks for equivalent of 'wrist_L/R' bones on source armature.
+- Hands:
+    - looks for equivalent of 'thumb1_L/R','thumb2_L/R','fore1_L/R','fore2_L/R','fore3_L/R','middle1_L/R','middle2_L/R','middle3_L/R','third1_L/R','third2_L/R','third3_L/R','little1_L/R','little2_L/R','little3_L/R' bones on source armature.
+- Upper Legs:
+    - looks for equivalent of 'leg_L/R' bones on source armature.
+    - Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- Lower Legs:
+    - looks for equivalent of 'knee_L/R','knee_2_L/R' on the source armature.
+    - Special handling for this because most source MMD models _do not_ have a knee_2_L/R, so if that occurs, it will reset target armature's knee_2_L/R back to rest position.
+- Feet:
+    - looks for equivalent of 'ankle_L/R' bones on source armature.
+- Toe:
+    - looks for equivalent of 'toe_L/R' bones on source armature.
+ 
+- Reset bone on Target Armature if Source Bone not found: If checked, does exactly what it says upon pressing any of the above buttons.
 
 Video:
 

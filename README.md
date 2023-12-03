@@ -283,6 +283,7 @@ https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/28c6c157-e985-
     - [My FFXIV chracter's clothing is overlapping! It doesn't look like that in game.](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-my-ffxiv-chracters-clothing-is-overlapping-it-doesnt-look-like-that-in-game)
     - [I want to add new facial expressions or change the existing facial expressions. How?](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-i-want-to-add-new-facial-expressions-or-change-the-existing-facial-expressions-how)
     - [Why does my character's hair have bald patches? HALP!](https://github.com/wikid24/ffxiv_mmd_tools_helper#q-why-does-my-characters-hair-have-bald-patches-halp)
+    - [I want to do something rather complex in Blender, but I don't know how!](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/README.md#q-i-want-to-automate-doing-something-complex-in-blender-but-i-dont-know-how)
 
 
 --------------

@@ -1500,7 +1500,9 @@ Sections:
 
 ## Add Bone Mapping
 
-![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/2b138f3a-620b-41d6-a7fa-296145f89402)
+![image](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/89cee7ed-3153-4a40-b537-b1f6c9b27391)
+
+Displayed when entering 'Bone Mapping Mode' in the animation retargeting addon.
 
 Sections:
 - [Mapping Controls](https://github.com/wikid24/ffxiv_mmd_tools_helper/tree/master/documentation#mapping-controls)
@@ -1520,6 +1522,7 @@ Controls:
 - Target bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
 - Find source bone: Click on it to automatically find the source bone (based on what is on the target bone field). Uses the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv) to find a bone names on the same row
 - Source bone name: Click on it to set this bone as the active bone in the viewport (useful if all the bones are in Japanese and it's hard to know visually which bone is actually mapped)
+- Clear The Mapping List: Wipes the entire mapping list.
 
 Video:
 

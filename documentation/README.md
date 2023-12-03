@@ -1558,10 +1558,25 @@ Sections:
 
 ### Reset Armature Pose
 
-TBD
+Resets the source or target armature to the original rest pose.
 
 ------
 
 ### Apply Rotation to Target
 
-TBD
+Will look for source bones and target bones of the same name on the [metadata dictionary](https://github.com/wikid24/ffxiv_mmd_tools_helper/blob/master/ffxiv_mmd_tools_helper/data/bones_metadata_ffxiv_dictionary.csv), and if found on the same row, will apply a copy rotation modifier to the target armature's bones, as well as set the bone roll to match the source armature's bone roll. Used for automating the the rest pose position in Animation Retargeting Addon.
+
+Controls:
+
+- Upper Arms: looks for 'arm_L/R' bones on source armature. Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- Forearms:  looks for 'elbow_L/R' bones on source armature.
+- Wrists: looks for 'wrist_L/R' bones on source armature.
+- Hands: looks for 'thumb1_L/R','thumb2_L/R','fore1_L/R','fore2_L/R','fore3_L/R','middle1_L/R','middle2_L/R','middle3_L/R','third1_L/R','third2_L/R','third3_L/R','little1_L/R','little2_L/R','little3_L/R' bones on source armature.
+- Upper Legs: looks for 'leg_L/R' bones on source armature. . Also copies source armature's bone roll from the _parent bone_ to target armature's _parent bone_ to prevent any copy rotation issues.
+- Lower Legs: looks for 'knee_L/R','knee_2_L/R' on the source armature. Special handling for this because most source MMD models _do not_ have a knee_2_L/R, so if that occurs, it will reset target armature's knee_2_L/R back to rest position.
+- Feet: looks for 'ankle_L/R' bones on source armature.
+- Toe: looks for 'toe_L/R' bones on source armature.
+
+Video:
+
+https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/4037f90e-61cf-4a5c-b58a-6f805a679689

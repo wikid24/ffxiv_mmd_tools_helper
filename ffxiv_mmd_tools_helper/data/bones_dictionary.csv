@@ -6,7 +6,7 @@ center,センター,センター,,,,root hips,hip,spine,root_rot,Hips,Hips,Hip,,
 center_2,センター2,センター2,,,,,,,,,,,,,,,,,,,,,,,
 upper body,上半身,上半身,j_sebo_a,kosi_c_n,spine_02,spine lower,abdomen,Spine.001,spine0,chest,Chest,Chest1,spine,j_mune_wj,spine01,spine04,b__Spine0__,MOT16_Waist,Bip001 Spine1,Spine1,bip_spine_1,ValveBiped.Bip01_Spine1,Waist,c_spine_01.x,mixamorig:Spine
 upper body 2,上半身2,上半身2,j_sebo_b,mune_c_n,spine_04,spine upper,chest,spine.002,spine2,Spine2,Chest3,,chest,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,c_spine_02.x,mixamorig:Spine1
-,,,j_sebo_c,,spine_05,,,,,,,,,,,,,,,,,,,,
+upper body 3,上半身3,上半身3,j_sebo_c,,spine_05,,,,,,,,,,,,,,,,,,,,
 lower body,下半身,下半身,j_kosi,ketu_c_n,spine_01,pelvis,,hips,,,,,hips,kl_kosi_etc_wj,,,b__Pelvis__,,,,,,Pelvis,,mixamorig:Hips
 shoulder_L,左肩,肩.L,j_sako_l,kata_l_n,clavicle_l,arm left shoulder 1,lCollar,shoulder.L,l_clavicle,LeftShoulder,LeftCollar,Left Collar,shoulder.L,kl_waki_l_wj,clavicle_L,shoulder01.L,b__L_Clavicle__,MOT_*Shoulder.1.L,Bip001 L Clavicle,L Clavicle,bip_collar_L,ValveBiped.Bip01_L_Clavicle,L_Clavicle,c_shoulder.l,mixamorig:LeftShoulder
 arm_L,左腕,腕.L,j_ude_a_l,ude1_l_n,upperarm_l,arm left shoulder 2,lShldr,upper_arm.L,l_upperarm,LeftUpArm,LeftShoulder,Left Shoulder,uparm.L,j_kata_l_wj_cu,upperarm_L,upperarm02.L,b__L_UpperArm__,MOT_*Arm.1.L,Bip001 L UpperArm,L UpperArm,bip_upperArm_L,ValveBiped.Bip01_L_UpperArm,L_Upperarm,c_arm_fk.l,mixamorig:LeftArm
@@ -67,3 +67,13 @@ shoulder_P_R,右肩P,肩P.R,,,,,,,,,,,,,,,,,,,,,,,
 shoulder_C_L,左肩C,肩C.L,,,,,,,,,,,,,,,,,,,,,,,
 shoulder_C_R,右肩C,肩C.R,,,,,,,,,,,,,,,,,,,,,,,
 view cnt,操作中心,操作中心,,,,,,,,,,,,,,,,,,,,,,,
+dummy_L,左ダミー,ダミー.L,n_buki_l,,,,,,,,,,,,,,,,,,,,,,
+dummy_R,右ダミー, ダミー.R,n_buki_r,,,,,,,,,,,,,,,,,,,,,,
+shoulder+_L,左肩+,肩+.L,,,,,,,,,,,,,,,,,,,,,,,
+shoulder+_R,右肩+,肩+.R,,,,,,,,,,,,,,,,,,,,,,,
+arm+_L,左腕+,腕+.L,,,,,,,,,,,,,,,,,,,,,,,
+arm+_R,右腕+,腕+.R,,,,,,,,,,,,,,,,,,,,,,,
+elbow+_L,左ひじ+,ひじ+.L,,,,,,,,,,,,,,,,,,,,,,,
+elbow+_R,右ひじ+,ひじ+.R,,,,,,,,,,,,,,,,,,,,,,,
+wrist+_L,左手首+,手首+.L,,,,,,,,,,,,,,,,,,,,,,,
+wrist+_R,右手首+,手首+.R,,,,,,,,,,,,,,,,,,,,,,,

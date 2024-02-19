@@ -3,11 +3,11 @@
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
-- Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/ef673466-007f-473f-93c7-9320205ba3c9)
-- Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Video](https://github.com/wikid24/ffxiv_mmd_tools_helper/assets/19479648/0159a68a-b682-49dc-a768-3122d81ae479)
-- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter))
+- Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Export-.fbx-from-Textools-using-Anamnesis)
+- Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders)
+- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders)
 - Map bones from MMD models to FFXIV models (using [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting))
-- Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780))
+- Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Batch-convert-between-.tex-&-.dds)
 - Convert the model to MMD Format (using [MMD Tools Addon](https://github.com/UuuNyaa/blender_mmd_tools))
 - Add MMD-style physics in Blender
 - Animate it it in Blender (Including MMD _Facial_ Animation!)

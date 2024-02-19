@@ -1,5 +1,5 @@
 # FFXIV MMD Tools Helper (Blender Addon)
-## EVERYONE in FFXIV can make their FFXIV characters move to MMD (Miku Miku Dance) animation files with as _little effort_ as possible. 
+## Convert FFXIV Models to MMD Models with as _little effort_ as possible.
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 

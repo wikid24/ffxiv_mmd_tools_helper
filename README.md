@@ -17,7 +17,7 @@ All can be done in **minutes**.
 
 ### - [Download Blender Addon](https://github.com/wikid24/ffxiv_mmd_tools_helper/releases)
 ### - [Install guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Install-Guide)
-### - [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Quickstart-Guide)
+### - [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Import-and-Animate-an-FFXIV-character)
 ### - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/FAQ)
 ### - [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Manual)
 

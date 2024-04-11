@@ -4,7 +4,7 @@
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
 - Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Export-.fbx-from-Textools-using-Anamnesis)
-- Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders)
+- Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Guide(Equipment)](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders-to-Equipment) / [Guide(body parts)](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders-to-Body-Parts)
 - Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders)
 - Map bones from MMD models to FFXIV models (using [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting))
 - Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Batch-convert-between-.tex-&-.dds)

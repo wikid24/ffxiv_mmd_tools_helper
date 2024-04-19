@@ -1,6 +1,8 @@
 # FFXIV MMD Tools Helper (Blender Addon)
 ## Convert FFXIV Models to MMD Models with as _little effort_ as possible.
 
+### Update: 2024-04-19 - Updates are on hold until Dawntrail comes out (I might to have to rewrite the entire plugin)
+
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
 - Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Export-.fbx-from-Textools-using-Anamnesis)
@@ -20,6 +22,7 @@ All can be done in **minutes**.
 ### - [60 second FFXIV to MMD Conversion & Animation tutorial](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Import-and-Animate-an-FFXIV-character)
 ### - [Frequently Asked Questions](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/FAQ)
 ### - [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Manual)
+
 
 
 What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 

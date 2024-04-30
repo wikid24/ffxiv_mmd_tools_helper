@@ -6,6 +6,7 @@ from mmd_tools.core.bone import FnBone
 from . import rigid_body
 from . import bone_tools
 from . import joints
+from . import translate
 
 
 def all_materials_mmd_ambient_white():
@@ -322,6 +323,18 @@ def main(context):
 		if armature:
 			bpy.ops.object.mode_set(mode='OBJECT')
 			reset_selected_bone_positions(context,armature)
+	if selected_miscellaneous_tools == "parse_jp":
+		armature = None
+		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
+		armature = bpy.context.view_layer.objects.active
+		#if armature:
+			#for bone in armature.data.bones:
+				#print(translate.parseJp(bone.name))
+
+		data = bone_tools.get_csv_metadata_by_bone_type("mmd_japanese",['mmd_japanese'])
+
+		for row in data:
+			print (row)
 
 
 
@@ -345,6 +358,7 @@ class MiscellaneousTools(bpy.types.Operator):
 	, ("remove_orphaned_rigid_bodies", "Remove Orphaned Rigid Bodies", "Delete all rigid bodies that have no assigned bones")\
 	, ("remove_orphaned_joints", "Remove Orphaned Joints", "Delete all joints that are missing a rigid body")\
 	, ("reset_selected_edit_bone_pos", "Reset Selected Edit Bone Positions", "Resets the selected bones back to original bone position")\
+	, ("parse_jp", "parse_jp", "parse_jp")\
 	#, ("mmd_ambient_white", "All materials MMD ambient color white", "Change the MMD ambient color of all materials to white")\
 	], name = "", default = 'none')
 

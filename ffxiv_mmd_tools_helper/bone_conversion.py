@@ -691,11 +691,11 @@ def add_shoulder_control_bones():
 		shoulder_R = armature.data.edit_bones["shoulder_R"]
 		arm_L = armature.data.edit_bones["arm_L"]
 		arm_R = armature.data.edit_bones["arm_R"]
-		j_sebo_c = armature.data.edit_bones["j_sebo_c"]
+		upper_body_3 = armature.data.edit_bones["upper body 3"]
 
 		#create new bones
-		shoulder_P_L = bone_tools.add_bone(armature, 'shoulder_P_L',parent_bone=j_sebo_c,length=shoulder_L.length,head=shoulder_L.head ,tail=shoulder_L.head)
-		shoulder_P_R = bone_tools.add_bone(armature, 'shoulder_P_R',parent_bone=j_sebo_c,length=shoulder_R.length,head=shoulder_R.head ,tail=shoulder_R.head)
+		shoulder_P_L = bone_tools.add_bone(armature, 'shoulder_P_L',parent_bone=upper_body_3,length=shoulder_L.length,head=shoulder_L.head ,tail=shoulder_L.head)
+		shoulder_P_R = bone_tools.add_bone(armature, 'shoulder_P_R',parent_bone=upper_body_3,length=shoulder_R.length,head=shoulder_R.head ,tail=shoulder_R.head)
 		shoulder_C_L = bone_tools.add_bone(armature, 'shoulder_C_L',parent_bone=shoulder_L,length=shoulder_L.length,head=shoulder_L.tail ,tail=shoulder_L.tail)
 		shoulder_C_R = bone_tools.add_bone(armature, 'shoulder_C_R',parent_bone=shoulder_R,length=shoulder_R.length,head=shoulder_R.tail ,tail=shoulder_R.tail)
 
@@ -862,7 +862,7 @@ def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
 		boob_core.length = 0
 		boob_core.length = j_mune_l.length
 		#upper_body_2_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'upper body 3')
-		j_sebo_c = armature.data.edit_bones.get('j_sebo_c')
+		j_sebo_c = armature.data.edit_bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'upper body 3'))
 		boob_core.parent = j_sebo_c
 
 	bone_list = [j_mune_l,j_mune_r]

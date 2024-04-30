@@ -358,6 +358,8 @@ class ShapeKeysBoneMorphsPanel_MTH(bpy.types.Panel):
 		row.prop(context.scene, "bone_morph_ffxiv_model_list")
 		row.operator("ffxiv_mmd.add_bone_morphs", text = "Generate",icon='SHAPEKEY_DATA')
 		row.operator("ffxiv_mmd.open_bone_morphs_file", text="",icon='CURRENT_FILE')
+		row = grid.row(align=True)
+		row.operator("ffxiv_mmd.import_custom_bone_morphs_file", text="Import CSV")
 		#shape keys ########################################
 		#row = layout.row()
 		#col = layout.column(align=True)

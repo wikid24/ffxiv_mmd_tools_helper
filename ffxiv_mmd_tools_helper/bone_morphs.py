@@ -213,13 +213,6 @@ def parse_bone_morphs_data_from_csv (csv_data):
 			
 	return bone_morphs_dictionary
 
-def read_bone_morphs_dict_file(ffxiv_race):
-
-	BONE_MORPHS_DICTIONARY = None
-	BONE_MORPHS_DICTIONARY = import_csv.use_csv_bone_morphs_dictionary(ffxiv_race)
-
-	return BONE_MORPHS_DICTIONARY
-
 def read_bone_morphs_list_file():
 
 	BONE_MORPHS_LIST = None
@@ -239,22 +232,19 @@ def change_face_rotation_mode(rotation_mode):
 				bone.rotation_mode = rotation_mode
 
 
-def main(context):
+def main(context,file_path):
+
+	print("the filepath for the selected file is:",file_path)
+
 	armature = bpy.context.active_object #model.find_MMD_Armature(bpy.context.object)
 	bpy.context.view_layer.objects.active = armature
 
 	clear_bone_morph()
 
-	
-		#print(bone_morph)
-
-	if bpy.context.scene.bone_morph_ffxiv_model_list == 'none':
-		pass
-	else:
-		BONE_MORPH_DICTIONARY = read_bone_morphs_dict_file(bpy.context.scene.bone_morph_ffxiv_model_list)	
-		bone_morphs = parse_bone_morphs_data_from_csv(BONE_MORPH_DICTIONARY)
-		for bone_morph in bone_morphs:
-			generate_bone_morph(armature,bone_morph,bone_morphs[bone_morph])
+	BONE_MORPH_DICTIONARY = import_csv.use_csv_bone_morphs_dictionary(file_path)
+	bone_morphs = parse_bone_morphs_data_from_csv(BONE_MORPH_DICTIONARY)
+	for bone_morph in bone_morphs:
+		generate_bone_morph(armature,bone_morph,bone_morphs[bone_morph])
 
 
 
@@ -276,8 +266,6 @@ class AddBoneMorphs(bpy.types.Operator):
 	, ("roegadyn", "Roegadyn","Import Roegadyn Bone Morphs") \
 	, ("viera", "Viera","Import Viera Bone Morphs") \
 	], name = "Race", default = 'hyur')
-
-
 	
 	bpy.types.Scene.alternate_folder_cbx = bpy.props.BoolProperty(name="Use Alternate Folder for CSVs", default=False)
 
@@ -288,8 +276,44 @@ class AddBoneMorphs(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE' and root is not None
 
 	def execute(self, context):
-		main(context)
+
+		if bpy.context.scene.bone_morph_ffxiv_model_list == 'none':
+			pass
+		else:
+			ffxiv_race = bpy.context.scene.bone_morph_ffxiv_model_list
+			file_path = (__file__ + r"data\bone_morphs_" + ffxiv_race +".csv").replace("bone_morphs.py" , "")
+			
+			
+			main(context,file_path)
 		#context.scene.bone_morph_ffxiv_model_list = self.bone_morph_ffxiv_model_list
+		return {'FINISHED'}
+	
+
+from bpy_extras.io_utils import ImportHelper
+@register_wrap
+class ImportCustomBoneMorphsFile(bpy.types.Operator, ImportHelper):
+	"""Import a custom Bone Morphs CSV File"""
+	bl_idname = "ffxiv_mmd.import_custom_bone_morphs_file"
+	bl_label = "Import CSV"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	filename_ext = ".csv"
+	filter_glob: bpy.props.StringProperty(
+		default="*.csv",
+		options={'HIDDEN'},
+	)
+
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
+
+	def execute(self, context):
+		filepath = self.filepath
+		
+		main (context,filepath)
+		
 		return {'FINISHED'}
 
 @register_wrap
@@ -301,7 +325,11 @@ class OpenBoneMorphsFile(bpy.types.Operator):
 	def execute(self, context):
 		import_csv.open_bone_morphs_dictionary(context.scene.bone_morph_ffxiv_model_list)
 		return {'FINISHED'}
+	
 
+
+
+		
 @register_wrap
 class ChangeFaceBoneRotationMode(bpy.types.Operator):
 	"""Changes all Face Bones to the selected Rotation Mode"""

@@ -3,6 +3,7 @@ import addon_utils
 from . import register_wrap
 from . import model
 from . import import_csv
+from . import translate
 import mmd_tools.core.model as mmd_model
 from mmd_tools.core.bone import FnBone
 
@@ -170,7 +171,7 @@ def get_csv_metadata_by_bone_type(metadata_column, bone_types):
 def hide_special_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("hidden", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -215,7 +216,7 @@ def move_vg_to_pos(mesh, vg_name, target_pos):
 def set_mmd_bone_order(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_bone_order", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -257,7 +258,7 @@ def set_mmd_bone_order(armature):
 			move_vg_to_pos(bone_order_mesh_object, bone[0],i)
 
 	#Get deformation tier from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("PMXE_deform_tier", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -278,7 +279,7 @@ def set_mmd_bone_order(armature):
 def lock_position_rotation_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv'],'mmd_kaito'
+	target_columns = ['mmd_english',  'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv'],'mmd_kaito'
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_rotate", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -297,7 +298,7 @@ def lock_position_rotation_bones(armature):
 
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english',  'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("disable_move", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -317,7 +318,7 @@ def lock_position_rotation_bones(armature):
 def set_fixed_axis_local_axis_bones(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english',  'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("fixed_axis", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -338,7 +339,7 @@ def set_fixed_axis_local_axis_bones(armature):
 
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY = get_csv_metadata_by_bone_type("local_axis", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY is not None:
@@ -359,7 +360,7 @@ def set_fixed_axis_local_axis_bones(armature):
 def auto_fix_mmd_bone_names(armature):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_J = get_csv_metadata_by_bone_type("mmd_japanese", target_columns)
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
 
@@ -393,7 +394,7 @@ def auto_fix_mmd_bone_names(armature):
 def get_armature_bone_name_by_mmd_english_bone_name(armature,mmd_e_bone_name):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
 
 	if FFXIV_BONE_METADATA_DICTIONARY_MMD_E is not None:
@@ -429,6 +430,7 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 def get_metadata_by_bone_name(bone_name,metadata):
 
 	bone_name_mmd_e = get_mmd_english_equivalent_bone_name(bone_name)
+	#print (bone_name_mmd_e)
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = None
 
 	if bone_name_mmd_e:
@@ -447,7 +449,7 @@ def get_metadata_by_bone_name(bone_name,metadata):
 def get_mmd_english_equivalent_bone_name(bone_name,bone_type = None):
 
 	#Get bones from the metadata dictionary
-	target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+	target_columns = ['mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 
 	if bone_type and bone_type in target_columns:
 		bone_type = [bone_type]

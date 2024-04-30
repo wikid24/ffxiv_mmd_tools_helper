@@ -2,6 +2,7 @@ import bpy
 import addon_utils
 from . import register_wrap
 from . import bone_tools
+from . import translate
 
 """
 import sys
@@ -75,8 +76,8 @@ def is_source_and_target_mapped(armature):
 
 def compare_str(string1,string2):
 	if string1 and string2:
-		cleaned_string1 = string1.strip().lower()
-		cleaned_string2 = string2.strip().lower()
+		cleaned_string1 = translate.parseJp(string1.strip().lower())
+		cleaned_string2 = translate.parseJp(string2.strip().lower())
 
 		return cleaned_string1 == cleaned_string2
 	else:
@@ -139,7 +140,7 @@ def add_bone_mapping(target_armature, source_bone,target_bone):
 					art_mapping_controls.active_mapping = len(read_only_mapping_data)
 
 			
-			# Garbage cleanup, iterating backward
+			# Garbage cleanup
 			for i,mapping in enumerate(read_only_mapping_data):
 				art_mapping_controls.active_mapping = i
 
@@ -182,7 +183,7 @@ def get_mapping_bone_group_list(bone_group):
 
 	if bone_group in bone_group_dictionary:
 		#get ALL bones names from ALL target_columns where animation_retargeting_group is not blank
-		target_columns = ['mmd_english', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+		target_columns = ['mmd_english','mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 		FFXIV_BONE_METADATA_DICTIONARY = bone_tools.get_csv_metadata_by_bone_type('animation_retargeting_group', target_columns)
 
 	bone_list = []
@@ -220,7 +221,69 @@ def get_mapping_target_bones(bone_group,target_armature):
 		
 	return None
 
+####################### DEREK PICK UP FROM HERE################################################
+# NEED TO FINISH OPERATOR FOR ffxiv_mmd.art_autofix_bone_mapping AND THIS FUNCTION ####################
+def get_bone_from_index(context,index):
+	active_object = context.active_object
+	#active_pose_bone = context.active_pose_bone
+	rtc = active_object.get('retargeting_context')
+	source_arm = rtc.get('source')
+	#target_arm = rtc.get('target')
 
+	#mapping_data = active_object.get('retargeting_context').get('mappings')
+	index = int(active_object.retargeting_context.active_mapping)
+
+	target_bone_name = active_object.retargeting_context.mappings[index]['target']
+	
+	mmd_e_bone_name = bone_tools.get_mmd_english_equivalent_bone_name(target_bone_name)
+	source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mmd_e_bone_name)
+
+	active_object.retargeting_context.mappings[index]['source'] = source_bone_name
+
+@register_wrap
+class ART_AutoFixBoneMapping(bpy.types.Operator):
+	"""Autofix Bone Mapping"""
+	bl_idname = "ffxiv_mmd.art_autofix_bone_mapping"
+	bl_label = "Fixes mappings and removes bones that do not exist"
+	bl_options = {'REGISTER', 'UNDO'}
+
+	def execute(self, context):
+
+		if is_addon_installed():
+			active_object = context.active_object
+			# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+			rtc = active_object.get('retargeting_context')
+
+			source_arm = rtc.get('source')
+			target_arm = rtc.get('target')
+
+			if is_source_and_target_mapped(active_object):
+
+				get_mapping_target_bones()
+
+
+				armatures = [source_arm, target_arm]
+
+				for armature in armatures:
+
+					for bone in armature.pose.bones:
+						print (bone.name)
+
+				#get all bones, if equivalent bone exists on armature
+
+
+				#if equivalent bone exists on armature, map it
+
+				#if equivalent bone exists does not exist on armature, remove it
+
+
+				#garbage cleanup for when both the source mapping and target mapping don't exist
+
+
+							
+					
+		return {'FINISHED'}
+####################### DEREK FINISHED EVERYTHING UP FROM HERE################################################
 
 @register_wrap
 class ART_AddBoneMapping(bpy.types.Operator):
@@ -251,15 +314,17 @@ class ART_AddBoneMapping(bpy.types.Operator):
 
 				elif self.bone_group =='all_verbatim':
 					for target_bone in target_arm.pose.bones:
-						source_bone = None
 
-						source_bone = source_arm.pose.bones.get(target_bone.name)
+						if not(target_bone.name.startswith('_dummy_') or target_bone.name.startswith('_shadow_')):
+							source_bone = None
 
-						if not(source_bone):
-							source_bone = bone_tools.get_equivalent_bone_from_armature(target_arm,target_bone,source_arm)
+							source_bone = source_arm.pose.bones.get(target_bone.name)
 
-						if source_bone and target_bone:
-							add_bone_mapping(target_arm, source_bone,target_bone)
+							if not(source_bone):
+								source_bone = bone_tools.get_equivalent_bone_from_armature(target_arm,target_bone,source_arm)
+
+							if source_bone and target_bone:
+								add_bone_mapping(target_arm, source_bone,target_bone)
 				else:
 
 					target_bone_list = get_mapping_target_bones(self.bone_group,target_arm)					
@@ -491,6 +556,7 @@ class ART_SetBoneInMapping(bpy.types.Operator):
 					
 					
 		return {'FINISHED'}
+		
 
 
 def select_pose_bones_by_index(context,armature_type):
@@ -549,6 +615,7 @@ def select_pose_bones_by_index(context,armature_type):
 				bpy.app.handlers.depsgraph_update_post.append(stored_handler)
 
 
+
 @register_wrap
 class ART_SelectBoneInMapping(bpy.types.Operator):
 	"""Select the bone"""
@@ -570,3 +637,282 @@ class ART_SelectBoneInMapping(bpy.types.Operator):
 				select_pose_bones_by_index(context,self.armature_type)						
 					
 		return {'FINISHED'}
+	
+
+@register_wrap
+class ART_Adjust_Kaito_Bone_Angle(bpy.types.Operator):
+	"""Select the bone"""
+	bl_idname = "ffxiv_mmd.adjust_kaito_bone_angle"
+	bl_label = ""
+	bl_options = {'REGISTER', 'UNDO'}
+
+	#bone_name = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+	#armature_type = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
+
+	def execute(self, context):
+
+		if is_addon_installed():
+			active_object = context.active_object
+			# THERE IS A DIFFERENCE BETWEEN active_object.retargeting_context and active_object.get('retargeting_context')
+			rtc = active_object.get('retargeting_context')
+
+			if is_source_and_target_mapped(active_object):
+
+				# Find and store the handle_edit_change function
+				stored_handler = None
+				for handler in bpy.app.handlers.depsgraph_update_post:
+					if '<function handle_edit_change' in str(handler):
+						stored_handler = handler
+						break
+
+
+				rtc = active_object.get('retargeting_context')
+				source_arm = rtc.get('source')
+				target_arm = rtc.get('target')
+
+
+				bone_list = (
+							('thumb0_L','thumb1_L'),
+							('thumb1_L','thumb2_L'),
+							('fore1_L','fore2_L'),
+							('fore2_L','fore3_L'),
+							('middle1_L','middle2_L'),
+							('middle2_L','middle3_L'),
+							('third1_L','third2_L'),
+							('third2_L','third3_L'),
+							('little1_L','little2_L'),
+							('little2_L','little3_L'),
+							('thumb0_R','thumb1_R'),
+							('thumb1_R','thumb2_R'),
+							('fore1_R','fore2_R'),
+							('fore2_R','fore3_R'),
+							('middle1_R','middle2_R'),
+							('middle2_R','middle3_R'),
+							('third1_R','third2_R'),
+							('third2_R','third3_R'),
+							('little1_R','little2_R'),
+							('little2_R','little3_R'),
+							#('Left_Bust_01_offset','EX_Left_Bust_01'),
+							#('Right_Bust_01_offset','EX_Right_Bust_01'),
+							#('wrist_L','ダミー.L'),
+				)
+
+				for mapping in bone_list:
+					source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[1])
+					target_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[0])
+
+					if source_bone_name and target_bone_name:
+						set_tail_position_from_head(source_arm,source_bone_name,target_bone_name)
+
+				bone_list = (
+							('elbow_L','wrist_L'),
+							#('elbow_L','wrist+.L'),
+							('thumb1_L','thumb2_L'),
+							('fore2_L','fore3_L'),
+							('middle2_L','middle3_L'),
+							('third2_L','third3_L'),
+							('little2_L','little3_L'),
+							('elbow_R','wrist_R'),
+							#('elbow_R','wrist+.R'),
+							('thumb1_R','thumb2_R'),
+							('fore2_R','fore3_R'),
+							('middle2_R','middle3_R'),
+							('third2_R','third3_R'),
+							('little2_R','little3_R'),
+							#('Left_Bust_01_offset','EX_Left_Bust_01'),
+							#('Right_Bust_01_offset','EX_Right_Bust_01')
+						)
+				
+				for mapping in bone_list:
+					source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[0])
+					target_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[1])
+
+					if source_bone_name and target_bone_name:
+						set_bone_angle_from_parent(source_arm,source_bone_name,target_bone_name)
+
+
+				bone_list = (
+					('thumb1_L','thumb2_L'),
+					('fore2_L','fore3_L'),
+					('middle2_L','middle3_L'),
+					('third2_L','third3_L'),
+					('little2_L','little3_L'),
+					('thumb1_R','thumb2_R'),
+					('fore2_R','fore3_R'),
+					('middle2_R','middle3_R'),
+					('third2_R','third3_R'),
+					('little2_R','little3_R'),
+
+					#('Left_Bust_01_offset','EX_Left_Bust_01'),
+					#('Right_Bust_01_offset','EX_Right_Bust_01')
+				)
+
+				for mapping in bone_list:
+
+					source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[0])
+					target_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mapping[1])
+					copy_length(source_arm,source_bone_name,target_bone_name)
+								
+				#bone_list = (
+					#('shoulder_L','shoulder+_L'),
+					#('shoulder_R','shoulder+_R'),
+				#)
+
+				#for mapping in bone_list:
+
+					#copy_bone_angle_to_doublebone(source_arm,mapping[0],mapping[1])
+
+				# Restore the stored function by appending it back
+				if stored_handler:
+					bpy.app.handlers.depsgraph_update_post.append(stored_handler)
+	
+					
+		return {'FINISHED'}
+	
+
+
+
+
+def set_tail_position_from_head(armature, source_bone_name, target_bone_name):
+
+	bpy.ops.object.mode_set(mode='OBJECT')
+
+
+	# Ensure the armature object is selected
+	bpy.context.view_layer.objects.active = armature
+	armature.select_set(True)
+	
+	# Switch to Edit Mode
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	# Get the bones by name
+	source_bone = armature.data.edit_bones.get(source_bone_name)
+	target_bone = armature.data.edit_bones.get(target_bone_name)
+
+	if source_bone is None:
+		print(f"Source bone '{source_bone_name}' not found.")
+		return
+	if target_bone is None:
+		print(f"Target bone '{target_bone_name}' not found.")
+		return
+
+	# Set the target bone's tail to match the source bone's head
+	target_bone.tail = source_bone.head
+
+	# Update the armature
+	bpy.ops.object.mode_set(mode='OBJECT')
+	bpy.context.view_layer.update()
+
+
+
+	
+def set_bone_angle_from_parent(armature, source_bone_name, target_bone_name):
+	
+	bpy.ops.object.mode_set(mode='OBJECT')
+
+	# Ensure the armature object is selected
+	bpy.context.view_layer.objects.active = armature
+	armature.select_set(True)
+	
+	# Switch to Edit Mode
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	# Get the bones by name
+	source_bone = armature.data.edit_bones.get(source_bone_name)
+	target_bone = armature.data.edit_bones.get(target_bone_name)
+
+	if source_bone is None:
+		print(f"Source bone '{source_bone_name}' not found.")
+		return
+	if target_bone is None:
+		print(f"Target bone '{target_bone_name}' not found.")
+		return
+	
+	target_bone_original_length = target_bone.length
+	#source_bone_length = source_bone.length.copy()
+	
+	#set the target bone head + tail to the source bone head_tail
+	target_bone.head = source_bone.head
+	target_bone.tail = source_bone.tail
+	
+	#add the original target bone length to the target bone length
+	target_bone.length += target_bone_original_length
+	
+	#set the target bone head to the source bone tail
+	target_bone.head = source_bone.tail
+	
+	# Update the armature
+	bpy.ops.object.mode_set(mode='OBJECT')
+	bpy.context.view_layer.update()
+	
+	
+
+
+
+def copy_length(armature, source_bone_name, target_bone_name):
+		
+	bpy.ops.object.mode_set(mode='OBJECT')
+
+	# Ensure the armature object is selected
+	bpy.context.view_layer.objects.active = armature
+	armature.select_set(True)
+	
+	# Switch to Edit Mode
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	# Get the bones by name
+	source_bone = armature.data.edit_bones.get(source_bone_name)
+	target_bone = armature.data.edit_bones.get(target_bone_name)
+
+	if source_bone is None:
+		print(f"Source bone '{source_bone_name}' not found.")
+		return
+	if target_bone is None:
+		print(f"Target bone '{target_bone_name}' not found.")
+		return
+	
+	target_bone.length = source_bone.length
+	
+
+
+def copy_bone_angle_to_doublebone(armature, source_bone_name, target_bone_name):
+	
+	bpy.ops.object.mode_set(mode='OBJECT')
+
+	# Ensure the armature object is selected
+	bpy.context.view_layer.objects.active = armature
+	armature.select_set(True)
+	
+	# Switch to Edit Mode
+	bpy.ops.object.mode_set(mode='EDIT')
+
+	# Get the bones by name
+	source_bone = armature.data.edit_bones.get(source_bone_name)
+	target_bone = armature.data.edit_bones.get(target_bone_name)
+
+	if source_bone is None:
+		print(f"Source bone '{source_bone_name}' not found.")
+		return
+	if target_bone is None:
+		print(f"Target bone '{target_bone_name}' not found.")
+		return
+	
+	target_bone_original_length = target_bone.length
+	
+	#set the target bone head + tail to the source bone head_tail
+	target_bone.head = source_bone.head
+	target_bone.tail = source_bone.tail
+	
+	#add the original target bone length to the target bone length
+	target_bone.length = target_bone_original_length
+	
+	#set the target bone head to the source bone tail
+	#target_bone.head = source_bone.tail
+	
+	# Update the armature
+	bpy.ops.object.mode_set(mode='OBJECT')
+	bpy.context.view_layer.update()
+	
+	
+
+	

@@ -1,5 +1,6 @@
 import csv
 import os
+from . import translate
 
 
 def csv_cleanup (csv_data,keep_header,convert_str_to_float,convert_null_to_0, convert_null_to_none):
@@ -11,6 +12,9 @@ def csv_cleanup (csv_data,keep_header,convert_str_to_float,convert_null_to_0, co
 	# remove leading/trailing whitespaces and replace empty string with None
 	csv_data = [[x.strip() if isinstance(x, str) else x for x in row] for row in csv_data]
 	csv_data = [[None if x == '' and i == 0 else x for i,x in enumerate(row)] for row in csv_data]
+	
+	#clean up any JP unicode characters
+	#csv_data = [[translate.parseJp(x) if isinstance(x, str) else x for x in row] for row in csv_data]
 
 	if convert_str_to_float == True:
 		# convert numeric strings to floats 
@@ -108,19 +112,17 @@ def use_csv_bone_morphs_list():
 	return BONE_MORPHS_LIST
 
 
-def use_csv_bone_morphs_dictionary(ffxiv_race):
+def use_csv_bone_morphs_dictionary(file_path):
 
 	#path = r"D:\MMD\ffxiv_mmd_tools_helper\ffxiv_mmd_tools_helper_beta"
 	#file_path= (path + r"\data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
-	file_path = (__file__ + r"data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
+	#file_path = (__file__ + r"data\bone_morphs_" + ffxiv_race +".csv").replace("import_csv.py" , "")
 	#print(file_path)
 	
 	BONE_MORPHS_DICTIONARY = try_read_file(file_path)
 	BONE_MORPHS_DICTIONARY = csv_cleanup(BONE_MORPHS_DICTIONARY,False,True,True,False)
 	
 	return BONE_MORPHS_DICTIONARY
-
-
 
 def use_csv_rigid_body_dictionary():
 

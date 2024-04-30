@@ -67,6 +67,7 @@ if "bpy" in locals():
 	importlib.reload(shaders_colorsetter)
 	importlib.reload(shaders_mektools)
 	importlib.reload(shaders)
+	importlib.reload(translate)
 	importlib.reload(tex_converter)
 	importlib.reload(panels)
 	importlib.reload(panels_retargeting_addon)
@@ -107,6 +108,7 @@ else:
 	from . import shaders_colorsetter
 	from . import shaders_mektools
 	from . import shaders
+	from . import translate
 	from . import tex_converter
 	from . import panels
 	from . import panels_retargeting_addon

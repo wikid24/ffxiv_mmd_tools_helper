@@ -30,35 +30,6 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 				row.label(text = 'Select source & target armature')
 			else:
 
-				"""
-				row = layout.row()
-				row.label(text = 'Generic TDA MMD Model')
-				row = layout.row()
-				grid = row.grid_flow(columns=4,align=True)
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Body").bone_group='body'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyes").bone_group='eye'
-
-				row = layout.row()
-				row.label(text = 'Kaito MMD Model')
-				row = layout.row()
-				grid = row.grid_flow(columns=5,align=True)
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Body").bone_group='body'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyes").bone_group='eye'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Skirt").bone_group='skirt'
-
-				row = layout.row()
-				row.label(text = 'FFXIV (converted) MMD Model')
-				row = layout.row()
-				grid = row.grid_flow(columns=3,align=True)
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="ALL!").bone_group='all_verbatim'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Body").bone_group='body'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Breasts").bone_group='breast'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Mouth").bone_group='mouth'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyes").bone_group='eye'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyelids").bone_group='eyelid'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyebrows").bone_group='eyebrow'
-				grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Skirt").bone_group='skirt'
-				"""
 				art_mapping_controls = bpy.context.active_object.retargeting_context
 				row = layout.row()
 				if art_mapping_controls:
@@ -98,12 +69,16 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 									if source_bone:
 										source_bone_description = bone_tools.get_metadata_by_bone_name(source_bone_name,'description')
 									if target_bone:
+										print(target_bone.name)
 										target_bone_description = bone_tools.get_metadata_by_bone_name(target_bone_name,'description')
 							#else:
 							row = box.row()
 							grid = row.grid_flow(columns=2,align=True)
-							active_bone_text = context.active_pose_bone.name
-							active_bone_description = bone_tools.get_metadata_by_bone_name(context.active_pose_bone.name,'description')
+							active_bone_description = None
+							active_bone_text = ''
+							if context.active_pose_bone:
+								active_bone_text = context.active_pose_bone.name
+								active_bone_description = bone_tools.get_metadata_by_bone_name(active_bone_text,'description')
 							if active_bone_description:
 								active_bone_text += ' : ' + active_bone_description
 							grid.label(text = active_bone_text)	
@@ -129,6 +104,8 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 							#row.prop
 					
 					row = layout.row()
+					grid = row.grid_flow(columns=2,align=True)
+					row.operator("ffxiv_mmd.art_autofix_bone_mapping", text="Autofix the Mapping List").bone_group='clear_mapping'
 					row.operator("ffxiv_mmd.art_add_bone_mapping", text="CLEAR THE MAPPING LIST").bone_group='clear_mapping'
 			
 					row = layout.row()
@@ -204,3 +181,8 @@ class ART_RestPosition_MTH(bpy.types.Panel):
 				grid.operator("ffxiv_mmd.art_apply_bone_rotation_to_target", text="Toes").bone_group='toe'
 				row = layout.row()
 				row.prop(context.scene,"art_reset_rot_if_no_match",text='Reset Rotation On Target Bone if Source Bone Not Found')
+
+				row = layout.row()
+				row.label(text = 'EXPERIMENTAL:')
+				grid = row.grid_flow(columns=1,align=True)
+				grid.operator("ffxiv_mmd.adjust_kaito_bone_angle", text="Fix Kaito Wrists/Hands")

@@ -97,6 +97,12 @@ class ExportPoseBoneFileHelper(bpy.types.Operator, ExportHelper):
 
 	filename_ext = ".csv"
 
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		root = mmd_model.Model.findRoot(obj)
+		return obj is not None and obj.type == 'ARMATURE' and root is not None
+
 	def execute(self, context):
 		filepath = self.filepath
 		if not filepath.lower().endswith(".csv"):

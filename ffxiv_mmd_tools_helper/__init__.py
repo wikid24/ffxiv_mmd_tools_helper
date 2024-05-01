@@ -1,7 +1,7 @@
 bl_info = {
 	"name": "FFXIV MMD Tools Helper",
 	"author": "wikid24",
-	"version": (0, 874),
+	"version": (0, 876),
 	"blender": (2, 80, 0),
 	"location": "View3D > Sidebar > FFXIV MMD Tools Helper",
 	"description": "Fork of MMDToolsHelper for FFXIV Models & updated Blender to be compatible with 2.8+",
@@ -53,6 +53,7 @@ if "bpy" in locals():
 	importlib.reload(bones_renamer)
 	importlib.reload(convert_to_blender_camera)
 	importlib.reload(display_panel_groups)
+	importlib.reload(export_bone_morphs)
 	importlib.reload(facepaint)
 	importlib.reload(import_ffxiv_model)
 	importlib.reload(import_ffxiv_charafile)
@@ -94,6 +95,7 @@ else:
 	from . import bone_retargeting_addon
 	from . import convert_to_blender_camera
 	from . import display_panel_groups
+	from . import export_bone_morphs
 	from . import facepaint
 	from . import import_ffxiv_model
 	from . import import_ffxiv_charafile

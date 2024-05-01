@@ -1,7 +1,7 @@
 # FFXIV MMD Tools Helper (Blender Addon)
 ## Convert FFXIV Models to MMD Models with as _little effort_ as possible.
 
-> Update: 2024-04-19 - Updates are on hold until Dawntrail comes out (I might to have to rewrite the entire plugin)
+> Update: 2024-04-19 - Development is on hold until Dawntrail comes out (I will to rewrite the entire plugin from the ground up to support it)
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 

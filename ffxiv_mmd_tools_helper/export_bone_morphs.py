@@ -92,7 +92,7 @@ def export_bone_morph_data(filepath):
 # Operator to handle file selection using ExportHelper
 class ExportPoseBoneFileHelper(bpy.types.Operator, ExportHelper):
 	bl_idname = "ffxiv_mmd.export_bone_morphs_file"
-	bl_label = "Export Bone Morph(Pose Bone) Data to CSV"
+	bl_label = "Export Bone Morphs to CSV"
 
 	filename_ext = ".csv"
 

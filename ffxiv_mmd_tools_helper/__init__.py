@@ -57,6 +57,7 @@ if "bpy" in locals():
 	importlib.reload(facepaint)
 	importlib.reload(import_ffxiv_model)
 	importlib.reload(import_ffxiv_charafile)
+	importlib.reload(import_vmdfile)
 	importlib.reload(joints)
 	importlib.reload(miscellaneous_tools)
 	importlib.reload(mmd_lamp_setup)
@@ -99,6 +100,7 @@ else:
 	from . import facepaint
 	from . import import_ffxiv_model
 	from . import import_ffxiv_charafile
+	from . import import_vmdfile
 	from . import joints
 	from . import miscellaneous_tools
 	from . import mmd_lamp_setup

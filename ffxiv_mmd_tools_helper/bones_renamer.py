@@ -167,20 +167,45 @@ class MassBonesRenamer(bpy.types.Operator):
 		return {'FINISHED'}
 
 
-def find_and_replace_bone_names(context):
+def find_and_replace_bone_names(context,bone_search_type):
 	
-	bpy.context.view_layer.objects.active = model.findArmature(bpy.context.active_object)
-	if bpy.context.scene.bones_all_or_selected == True:
-		for b in bpy.context.active_object.data.bones:
-			if b.select == True:
-				if '_dummy' not in b.name and '_shadow' not in b.name:
-					b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
-	if bpy.context.scene.bones_all_or_selected == False:
-		for b in bpy.context.active_object.data.bones:
-			if '_dummy' not in b.name and '_shadow' not in b.name:
-				b.name = b.name.replace(bpy.context.scene.find_bone_string, bpy.context.scene.replace_bone_string)
+	armature = model.findArmature(context.active_object)
 
-def find_bone_names(contains=None,startswith=None,endswith=None,append_to_selected=None):
+	context.view_layer.objects.active = armature
+	if context.scene.bones_all_or_selected == True:
+		for b in context.active_object.data.bones:
+			if b.select == True:
+
+				if '_dummy' not in b.name and '_shadow' not in b.name:
+
+					if bone_search_type=='blender_bone_name':
+						b.name = b.name.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+					elif bone_search_type=='pmx_bone_name_j':
+						if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+							new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+							armature.pose.bones[b.name].mmd_bone.name_j = new_pmx_bone_name
+					elif bone_search_type=='pmx_bone_name_e':
+						if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+							new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+							armature.pose.bones[b.name].mmd_bone.name_e = new_pmx_bone_name
+
+	if context.scene.bones_all_or_selected == False:
+		for b in context.active_object.data.bones:
+			if '_dummy' not in b.name and '_shadow' not in b.name:
+				if bone_search_type=='blender_bone_name':
+					b.name = b.name.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+				elif bone_search_type=='pmx_bone_name_j':
+					if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+						new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+						armature.pose.bones[b.name].mmd_bone.name_j = new_pmx_bone_name
+				elif bone_search_type=='pmx_bone_name_e':
+					if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+						new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+						armature.pose.bones[b.name].mmd_bone.name_e = new_pmx_bone_name
+
+def find_bone_names(bone_search_type=None,contains=None,startswith=None,endswith=None,append_to_selected=None):
+
+	
 
 	armature = model.findArmature(bpy.context.active_object)
 	if armature is not None:
@@ -188,6 +213,9 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 		armature.hide = False
 		bpy.context.view_layer.objects.active = armature
 
+
+	if bone_search_type is None:
+		bone_search_type='blender_bone_name'
 	if startswith is None:
 		startswith = ''
 	if endswith is None:
@@ -209,10 +237,29 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 			bpy.ops.armature.select_all(action='DESELECT')
 
 		for b in bpy.data.objects[armature.name].data.edit_bones:
+
+			pmx_j_bone_name = ''
+			pmx_e_bone_name = ''
+
+			if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+				pmx_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
+				pmx_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
+
 			if '_dummy' not in b.name and '_shadow' not in b.name:
-				if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
-					b.hide=False
-					b.select = True
+				
+				if bone_search_type=='blender_bone_name':
+					if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
+						b.hide=False
+						b.select = True
+				elif bone_search_type=='pmx_bone_name_j':
+					if pmx_j_bone_name.startswith(str(startswith)) and pmx_j_bone_name.endswith(str(endswith)) and contains in pmx_j_bone_name:
+						b.hide=False
+						b.select = True
+
+				elif bone_search_type=='pmx_bone_name_e':
+					if pmx_e_bone_name.startswith(str(startswith)) and pmx_e_bone_name.endswith(str(endswith)) and contains in pmx_e_bone_name:
+						b.hide=False
+						b.select = True
 
 		selected_bones = bpy.context.selected_bones
 		return selected_bones
@@ -224,10 +271,28 @@ def find_bone_names(contains=None,startswith=None,endswith=None,append_to_select
 				b.bone.select = False
 		
 		for b in bpy.context.active_object.pose.bones:
+
+			pmx_j_bone_name = ''
+			pmx_e_bone_name = ''
+
+			if hasattr(armature.pose.bones[b.name], "mmd_bone"):
+				pmx_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
+				pmx_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
+
 			if '_dummy' not in b.name and '_shadow' not in b.name:
-				if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
-					b.bone.hide = False
-					b.bone.select = True
+				if bone_search_type=='blender_bone_name':
+					if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
+						b.bone.hide = False
+						b.bone.select = True
+				elif bone_search_type=='pmx_bone_name_j':
+					if pmx_j_bone_name.startswith(str(startswith)) and pmx_j_bone_name.endswith(str(endswith)) and contains in pmx_j_bone_name:
+						b.bone.hide = False
+						b.bone.select = True
+
+				elif bone_search_type=='pmx_bone_name_e':
+					if pmx_e_bone_name.startswith(str(startswith)) and pmx_e_bone_name.endswith(str(endswith)) and contains in pmx_e_bone_name:
+						b.bone.hide = False
+						b.bone.select = True
 		
 		selected_bones = bpy.context.selected_bones
 		return selected_objs
@@ -257,7 +322,7 @@ class FindAndReplaceBoneNames(bpy.types.Operator):
 		return obj is not None and obj.type == 'ARMATURE'
 
 	def execute(self, context):
-		find_and_replace_bone_names(context)
+		find_and_replace_bone_names(context,bone_search_type=bpy.context.scene.find_bone_name_mode)
 		return {'FINISHED'}
 
 @register_wrap
@@ -269,13 +334,20 @@ class FindBoneNames(bpy.types.Operator):
 
 	append_to_selected = bpy.props.BoolProperty(name="Append", default=False)
 
+
+	bpy.types.Scene.find_bone_name_mode = bpy.props.EnumProperty(items = \
+	[("blender_bone_name", "Blender","Blender Bone Name") \
+	, ("pmx_bone_name_j", "PMX Japanese", "PMX Bone Name (Japanese)")\
+	, ("pmx_bone_name_e", "PMX English", "PMX Bone Name (English)")\
+	], name = "", default = 'blender_bone_name')
+
 	@classmethod
 	def poll(cls, context):
 		obj = context.active_object
 		return obj is not None #and obj.type == 'ARMATURE'
 
 	def execute(self, context):
-		find_bone_names(contains=bpy.context.scene.find_bone_string,append_to_selected=self.append_to_selected)
+		find_bone_names(bone_search_type=bpy.context.scene.find_bone_name_mode,contains=bpy.context.scene.find_bone_string,append_to_selected=self.append_to_selected)
 		return {'FINISHED'}
 
 

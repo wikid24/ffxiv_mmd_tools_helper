@@ -138,6 +138,10 @@ class BonesAndIKPanel_MTH(bpy.types.Panel):
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		grid = col.grid_flow(columns=1,align=True)
+		grid.label(text="Search Mode:")
+		grid.prop(context.scene,"find_bone_name_mode",text='')
+		col = row.column(align=True)
+		grid = col.grid_flow(columns=1,align=True)
 		grid.label(text="Find in name:")
 		grid.prop(context.scene,"find_bone_string",text='')
 		grid.operator("ffxiv_mmd.find_bones", text = "Find", icon='VIEWZOOM').append_to_selected=False
@@ -1104,6 +1108,15 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		col.prop(context.scene, "bone_compare_scale_y", text="Y")
 		col = row.column(align=True)
 		col.prop(context.scene, "bone_compare_scale_z", text="Z")
+
+		#VMD File Reader
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.label(text="VMD Inspector", icon="VIEWZOOM")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.read_vmd_file_browser_operator", text = "Read VMD")
+		col.operator("ffxiv_mmd.compare_vmd_file_browser_operator", text = "Compare to MMD Armature")
+
 
 
 

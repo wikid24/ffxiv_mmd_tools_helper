@@ -83,26 +83,28 @@ def findArmature(obj):
 					if arm.hide == True:
 						arm.hide = False
 					return arm
-	if obj.parent.parent:
-		if obj.parent.parent.type == 'ARMATURE':
-			#obj.parent.parent.hide = False
-			#child.mmd_root.show_armature = True	
-			arm = obj.parent.parent
-			#arm.hide = False
-			return arm
-		else:
-			for child in obj.parent.parent.children:
-				if child.type == 'ARMATURE':
-					arm = child
-					if arm.hide == True:
-						arm.hide = False
-					#child.mmd_root.show_armature = True	
-					return arm
-	if hasattr(obj, "mmd_type"):
-		if obj.mmd_type == 'ROOT':
+	try:
+		if obj.parent.parent:
+			if obj.parent.parent.type == 'ARMATURE':
+				#obj.parent.parent.hide = False
+				#child.mmd_root.show_armature = True	
+				arm = obj.parent.parent
+				#arm.hide = False
+				return arm
+			else:
+				for child in obj.parent.parent.children:
+					if child.type == 'ARMATURE':
+						arm = child
+						if arm.hide == True:
+							arm.hide = False
+						#child.mmd_root.show_armature = True	
+						return arm
+	finally:
+		if hasattr(obj, "mmd_type"):
+			if obj.mmd_type == 'ROOT':
+				return armature(obj)
+		if obj.type == 'EMPTY':
 			return armature(obj)
-	if obj.type == 'EMPTY':
-		return armature(obj)
 
 
 def find_MMD_MeshesList(obj):

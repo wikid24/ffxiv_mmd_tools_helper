@@ -1,13 +1,13 @@
 # FFXIV MMD Tools Helper (Blender Addon)
 ## Convert FFXIV Models to MMD Models with as _little effort_ as possible.
 
-### Update: 2024-04-19 - Updates are on hold until Dawntrail comes out (I might to have to rewrite the entire plugin)
+> Update: 2024-04-19 - Development is on hold until Dawntrail comes out (I need to rewrite the entire plugin to support it)
 
 This is a Blender Addon to convert FFXIV Models to Miku Miku Dance (MMD) models. It's geared for _speed_, so you can cut down on the time it takes to:
 
 - Export models out of FFXIV TexTools (using .chara files from [Anamnesis](https://github.com/imchillin/Anamnesis)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Export-.fbx-from-Textools-using-Anamnesis)
 - Update the standard textures to the detailed ones (using the [Colorsetter Addon Shaders](https://drive.google.com/drive/folders/10ashyJJ4HhJqFxDVnGU6s9lyJ0aFHRwa)) - [Guide(Equipment)](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders-to-Equipment) / [Guide(body parts)](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders-to-Body-Parts)
-- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Colorsetter-Shaders)
+- Convert FFXIV's .tex files to .dds files (using [ffxiv-tex-converter](https://github.com/emarron/ffxiv-tex-converter)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Batch-convert-between-.tex-&-.dds)
 - Map bones from MMD models to FFXIV models (using [Animation Retargeting Addon](https://github.com/Mwni/blender-animation-retargeting))
 - Apply Mektools Rig & Mektools Skin/Eye Shaders (using [MekTools Addon](https://www.xivmodarchive.com/modid/22780)) - [Guide](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Apply-Mektools-Shaders-to-Body-Parts)
 - Convert the model to MMD Format (using [MMD Tools Addon](https://github.com/UuuNyaa/blender_mmd_tools))
@@ -24,12 +24,17 @@ All can be done in **minutes**.
 ### - [User Guide / Manual Documentation](https://github.com/wikid24/ffxiv_mmd_tools_helper/wiki/Manual)
 
 
+#### DISCLAIMER
+This is designed a **full model conversion** to the MMD structure to be used in **Blender or MMD only** (which is not compatible _within_ FFXIV).  
 
-What this tool will NOT do is allow you to import these motions back into the FFXIV game, as this is a **full model conversion** to the MMD model structure (which is not compatible _within_ the FFXIV game). 
+Anything this plugin creates must be treated your **source MMD model**, NOT your destination/target in-game FFXIV model.
 
-If you want to do that, please use [XAT (FFXIV Animation Toolkit)](https://github.com/AsgardXIV/XAT) and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit). FFXIV models converted to MMD with this addon must be treated as your **source MMD model**, NOT your destination/target FFXIV model. Instead of this, **I recommend using ['Kaito' MMD Model modified with Skirt Physics](https://github.com/wikid24/ffxiv_mmd_tools_helper/raw/master/sample_files/KAITOwPhy-RexZ.zip)** as it has been tested and proven to work easier with ffxiv skirt physics. Once you have experience with doing this successfully, you can move on to intermediate-level face/lip animations using Haine's [Working With Custom Lip Animations](https://docs.google.com/document/d/1y0hLaO6WA7C6ayT7udr0puNAa7PY5qDvcRC9RDanTDg/edit) guide.
+If you want to convert MMD animations that can be used _within FFXIV_, instead of using this addon:
+ - Use [XAT](https://github.com/AsgardXIV/XAT) and follow this [guide](https://docs.google.com/document/d/1siUjAAJjUk7-Nlq11wE-Sldr8UyCeu7SkFJzUsxZpTU/edit).
+ - For source MMD Model, **I recommend using ['Kaito' MMD Model modified with Skirt Physics](https://github.com/wikid24/ffxiv_mmd_tools_helper/raw/master/sample_files/KAITOwPhy-RexZ.zip)**
+ - Once you have experience with doing this successfully, you can move on to intermediate-level face/lip animations using Haine's [Working With Custom Lip Animations](https://docs.google.com/document/d/1y0hLaO6WA7C6ayT7udr0puNAa7PY5qDvcRC9RDanTDg/edit) guide (which does leverage this addon as part of the workflow).
 
-While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on any models that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools) addon for Blender.
+While this tool is geared towards FFXIV model conversion to MMD, the majority of it's features can be used on _any MMD models_ that leverage the [MMD Tools](https://github.com/UuuNyaa/blender_mmd_tools).
 
 If you have questions you can find me (wikid24) in Discord on [XIV Tools](https://discord.gg/xivtools) mostly active in  #xat-discussion channel.
 

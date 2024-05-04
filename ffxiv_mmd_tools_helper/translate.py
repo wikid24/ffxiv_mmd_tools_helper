@@ -1,4 +1,7 @@
 import bpy
+import unicodedata
+from . import import_csv
+from . import bone_tools
 
 jp_half_to_full = (
     ('ｳﾞ', 'ヴ'), ('ｶﾞ', 'ガ'), ('ｷﾞ', 'ギ'), ('ｸﾞ', 'グ'), ('ｹﾞ', 'ゲ'),
@@ -35,21 +38,22 @@ jp_uni_to_ascii=(
 
 def parseJp(input_string):
     # Initialize the output string
-    output_string = input_string
+    #output_string = input_string
+
 
     # Iterate over each list of replacement tuples
-    for item in jp_half_to_full:
-        output_string = output_string.replace(item[0], item[1])
+    #for item in jp_half_to_full:
+    #    output_string = output_string.replace(item[0], item[1])
 
-    for item in jp_uni_to_ascii:
-        output_string = output_string.replace(item[0], item[1])
+    #for item in jp_uni_to_ascii:
+    #    output_string = output_string.replace(item[0], item[1])
 
-    return output_string
+    #return output_string
+
+    return unicodedata.normalize('NFKC',input_string)
+    
 
 
-
-
-"""
 jp_to_en_tuples = [
   ('全ての親', 'ParentNode'),
   ('操作中心', 'ControlNode'),               
@@ -174,15 +178,58 @@ jp_to_en_tuples = [
  ]
 
 
+def toEng(jp_name):
 
+    #convert JP unicode to JP ascii characters
+    parsed_name = parseJp(jp_name)
 
-def translateFromJp(name):
+    #convert japanese to english
     for tuple in jp_to_en_tuples:
-        if tuple[0] in name:
-            name = name.replace(tuple[0], tuple[1])
-    return name
+        if tuple[0] in parsed_name:
+            parsed_name = parsed_name.replace(tuple[0], tuple[1])
+    
+    return parsed_name
+
+def is_translated(name):
+    try:
+        name.encode('ascii', errors='strict')
+    except UnicodeEncodeError:
+        return False
+    return True
+
+def toJap(eng_name):
+
+    parsed_name = eng_name
+
+    #convert english to japanese
+    for tuple in jp_to_en_tuples:
+        if tuple[1] in eng_name:
+            parsed_name = eng_name.replace(tuple[1],tuple[0])
+    
+    parsed_name = parseJp(parsed_name)
+    
+    return parsed_name
 
 
+#MMD Tools uses a their translator instead of hard-coded text, Need a translator
+def EngtoMMDEng(eng_name):
+
+    parsed_name = bone_tools.get_mmd_english_equivalent_bone_name(eng_name)
+
+    return bone_tools.get_bone_name_by_mmd_english_bone_name(parsed_name,'mmd_english_alt')
+
+    
+
+#MMD Tools uses a their translator instead of hard-coded text, Need a translator
+def MMDEngToEng(eng_name):
+
+    parsed_name = bone_tools.get_mmd_english_equivalent_bone_name(eng_name)
+
+    return True
+
+    
+
+"""
 def half_to_full(self, name):
     return self.replace_from_tuples(name, jp_half_to_full_tuples)
 

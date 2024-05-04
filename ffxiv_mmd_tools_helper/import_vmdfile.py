@@ -3,7 +3,9 @@ import struct
 from . import register_wrap
 from bpy_extras.io_utils import ImportHelper
 from . import model
-import mmd_tools.core.model as mmd_model
+#import mmd_tools.core.model as mmd_model
+from . import translate
+
 
 def _toShiftJisString(byteString):
 	return byteString.split(b'\x00')[0].decode('shift_jis', errors='replace')
@@ -113,7 +115,10 @@ class FFXIV_VMDInspectFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 		unique_bone_names = sorted(set(keyframe['bone_name'] for keyframe in bone_keyframes))
 		print("\nBone Names in the VMD file:")
 		for bone_name in unique_bone_names:
-			print(bone_name)
+				if translate.is_translated(bone_name):
+					print (bone_name)
+				else:
+					print (bone_name, f' ({translate.toEng(bone_name)})')
 				
 		num_bones = len(unique_bone_names)
 		print("\nTotal num bones:",num_bones)
@@ -123,7 +128,10 @@ class FFXIV_VMDInspectFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 		unique_face_names = set(keyframe['face_name'] for keyframe in face_keyframes)
 		print("\nMorphs/Shape Keys in the VMD File:")
 		for face_name in unique_face_names:
-			print(face_name)
+			if translate.is_translated(face_name):
+				print (face_name)
+			else:
+				print (face_name, f' ({translate.toEng(face_name)})')
 
 		num_face_names = len(unique_face_names)
 		print("\nTotal num morphs:",num_face_names)
@@ -188,7 +196,11 @@ class FFXIV_VMDCompareFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 				arm.pose.bones[b.name].mmd_bone.name_j = b.name
 
 			if vmd_bone not in pmx_bonenames:
-				print (vmd_bone)
+
+				if translate.is_translated(vmd_bone):
+					print (vmd_bone)
+				else:
+					print (vmd_bone, f' ({translate.toEng(vmd_bone)})')
 		
 		#get the PMX bones on the currently selected armature
 

@@ -6,7 +6,7 @@ from . import import_csv
 from . import translate
 import mmd_tools.core.model as mmd_model
 from mmd_tools.core.bone import FnBone
-
+import unicodedata
 
 
 def add_bone(armature, bone_name, parent_bone, length=None, head=None, tail=None,use_connect=None):
@@ -424,6 +424,8 @@ def get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type):
 				#print(mmd_e_bone_name,'found:',metadata_bone[1])
 				return metadata_bone[1]
 			
+def get_bone_name(bone_type,mmd_e_bone_name):
+	return get_bone_name_by_mmd_english_bone_name(mmd_e_bone_name,bone_type)
 
 			
 
@@ -478,7 +480,7 @@ def is_bone_bone_type(armature,bone_name,bone_type):
 			for bone in armature.data.bones.keys():
 				#if it finds a match with any of the bones from the csv, and it matches the MMD_English bone name, return the bone name
 				if bone.strip() == metadata_bone[1] and metadata_bone[1]==bone_name:
-					print(bone_name,'is bone type',bone_type)
+					#print(bone_name,'is bone type',bone_type)
 					isbone_bonetype = True
 		return isbone_bonetype
 

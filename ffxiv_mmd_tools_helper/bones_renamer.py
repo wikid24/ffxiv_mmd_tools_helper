@@ -37,25 +37,35 @@ def print_missing_bone_names():
 
 
 
-def rename_bones(boneMap1, boneMap2, BONE_NAMES_DICTIONARY): 
+def rename_bones(source, target, BONE_NAMES_DICTIONARY): 
 	boneMaps = BONE_NAMES_DICTIONARY[0]
-	boneMap1_index = boneMaps.index(boneMap1)
-	boneMap2_index = boneMaps.index(boneMap2)
+	source_index = boneMaps.index(source)
+	target_index = boneMaps.index(target)
 	bpy.ops.object.mode_set(mode='OBJECT')
 
-	for k in BONE_NAMES_DICTIONARY[1:]:
-		if k[boneMap1_index] and k[boneMap1_index] != '' :
-			if k[boneMap1_index] in bpy.context.active_object.data.bones.keys():
-				if k[boneMap2_index] and k[boneMap2_index] != '':
-					bpy.context.active_object.data.bones[k[boneMap1_index]].name = k[boneMap2_index]
-					if boneMap2 == 'mmd_japanese' or boneMap2 == 'mmd_japaneseLR':
+	for mapping in BONE_NAMES_DICTIONARY[1:]:
+		#if source and target mappings are not blank
+		if mapping[source_index] and mapping[source_index] != '' :
+			#if target bone name exists on the armature
+			if mapping[source_index] in bpy.context.active_object.data.bones.keys():
+				#if target bonemap is not blank
+				if mapping[target_index] and mapping[target_index] != '':
+					#set the bone name
+					bpy.context.active_object.data.bones[mapping[source_index]].name = mapping[target_index]
+					#If target is MMD Japanese
+					if target == 'mmd_japanese' or target == 'mmd_japaneseLR':
 						bpy.ops.object.mode_set(mode='POSE')
-						if hasattr(bpy.context.active_object.pose.bones[k[boneMap2_index]] , "mmd_bone"):
-							bpy.context.active_object.pose.bones[k[boneMap2_index]].mmd_bone.name_e = k[0]
+						#If armature is converted to MMD armature
+						if hasattr(bpy.context.active_object.pose.bones[mapping[target_index]] , "mmd_bone"):
+							#set the MMD English Bone name as well to english equivalent
+							bpy.context.active_object.pose.bones[mapping[target_index]].mmd_bone.name_e = mapping[0]
 						bpy.ops.object.mode_set(mode='OBJECT')
 
+	#after finished translating, set the source dropdown to the same as the target
+	bpy.context.scene.Origin_Armature_Type = target
 
 
+"""
 def rename_finger_bones(boneMap1, boneMap2, FINGER_BONE_NAMES_DICTIONARY):
 	boneMaps = FINGER_BONE_NAMES_DICTIONARY[0]
 	boneMap1_index = boneMaps.index(boneMap1)
@@ -75,7 +85,7 @@ def rename_finger_bones(boneMap1, boneMap2, FINGER_BONE_NAMES_DICTIONARY):
 
 	bpy.context.scene.Origin_Armature_Type = boneMap2
 	print_missing_bone_names()
-
+"""
 
 def mass_bones_renamer(context):
 	bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
@@ -84,9 +94,9 @@ def mass_bones_renamer(context):
 	bpy.context.object.data.show_names = True
 	unhide_all_armatures()
 	BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_dictionary()
-	FINGER_BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_fingers_dictionary()
+	#FINGER_BONE_NAMES_DICTIONARY = import_csv.use_csv_bones_fingers_dictionary()
 	rename_bones(bpy.context.scene.Origin_Armature_Type, bpy.context.scene.Destination_Armature_Type, BONE_NAMES_DICTIONARY)
-	rename_finger_bones(bpy.context.scene.Origin_Armature_Type, bpy.context.scene.Destination_Armature_Type, FINGER_BONE_NAMES_DICTIONARY)
+	#rename_finger_bones(bpy.context.scene.Origin_Armature_Type, bpy.context.scene.Destination_Armature_Type, FINGER_BONE_NAMES_DICTIONARY)
 	bpy.ops.object.mode_set(mode='POSE')
 	bpy.ops.pose.select_all(action='SELECT')
 	bpy.ops.object.mode_set(mode='OBJECT')
@@ -101,6 +111,7 @@ class MassBonesRenamer(bpy.types.Operator):
 
 	bpy.types.Scene.Origin_Armature_Type = bpy.props.EnumProperty(items = [\
 	('mmd_english', 'MMD English', 'MikuMikuDance English bone names')\
+	, ('mmd_english_alt', 'MMD English (Alternate TL)', 'MMD English (Alternate Translation used from MMD Tools Translator)')\
 	, ('mmd_japanese', 'MMD Japanese', 'MikuMikuDamce Japanese bone names')\
 	, ('mmd_japaneseLR', 'MMD Japanese w/.L.R suffix', 'MikuMikuDamce Japanese bones names with .L.R suffixes')\
 	, ('xna_lara', 'XNALara', 'XNALara bone names')\
@@ -130,6 +141,7 @@ class MassBonesRenamer(bpy.types.Operator):
 
 	bpy.types.Scene.Destination_Armature_Type = bpy.props.EnumProperty(items = [ \
 	('mmd_english', 'MMD English', 'MikuMikuDance English bone names')\
+	, ('mmd_english_alt', 'MMD English (Alternate TL)', 'MMD English (Alternate Translation used from MMD Tools Translator)')\
 	, ('mmd_japanese', 'MMD Japanese', 'MikuMikuDamce Japanese bone names')\
 	, ('mmd_japaneseLR', 'MMD Japanese w/.L.R suffix', 'MikuMikuDamce Japanese bones names with .L.R suffixes')\
 	, ('xna_lara', 'XNALara', 'XNALara bone names')\
@@ -180,28 +192,28 @@ def find_and_replace_bone_names(context,bone_search_type):
 
 					if bone_search_type=='blender_bone_name':
 						b.name = b.name.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-					elif bone_search_type=='pmx_bone_name_j':
+					elif bone_search_type=='mmd_bone_name_j':
 						if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-							new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-							armature.pose.bones[b.name].mmd_bone.name_j = new_pmx_bone_name
-					elif bone_search_type=='pmx_bone_name_e':
+							new_mmd_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+							armature.pose.bones[b.name].mmd_bone.name_j = new_mmd_bone_name
+					elif bone_search_type=='mmd_bone_name_e':
 						if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-							new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-							armature.pose.bones[b.name].mmd_bone.name_e = new_pmx_bone_name
+							new_mmd_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+							armature.pose.bones[b.name].mmd_bone.name_e = new_mmd_bone_name
 
 	if context.scene.bones_all_or_selected == False:
 		for b in context.active_object.data.bones:
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				if bone_search_type=='blender_bone_name':
 					b.name = b.name.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-				elif bone_search_type=='pmx_bone_name_j':
+				elif bone_search_type=='mmd_bone_name_j':
 					if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-						new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-						armature.pose.bones[b.name].mmd_bone.name_j = new_pmx_bone_name
-				elif bone_search_type=='pmx_bone_name_e':
+						new_mmd_bone_name = armature.pose.bones[b.name].mmd_bone.name_j.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+						armature.pose.bones[b.name].mmd_bone.name_j = new_mmd_bone_name
+				elif bone_search_type=='mmd_bone_name_e':
 					if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-						new_pmx_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
-						armature.pose.bones[b.name].mmd_bone.name_e = new_pmx_bone_name
+						new_mmd_bone_name = armature.pose.bones[b.name].mmd_bone.name_e.replace(context.scene.find_bone_string, context.scene.replace_bone_string)
+						armature.pose.bones[b.name].mmd_bone.name_e = new_mmd_bone_name
 
 def find_bone_names(bone_search_type=None,contains=None,startswith=None,endswith=None,append_to_selected=None):
 
@@ -238,12 +250,12 @@ def find_bone_names(bone_search_type=None,contains=None,startswith=None,endswith
 
 		for b in bpy.data.objects[armature.name].data.edit_bones:
 
-			pmx_j_bone_name = ''
-			pmx_e_bone_name = ''
+			mmd_j_bone_name = ''
+			mmd_e_bone_name = ''
 
 			if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-				pmx_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
-				pmx_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
+				mmd_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
+				mmd_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
 
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				
@@ -251,13 +263,13 @@ def find_bone_names(bone_search_type=None,contains=None,startswith=None,endswith
 					if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
 						b.hide=False
 						b.select = True
-				elif bone_search_type=='pmx_bone_name_j':
-					if pmx_j_bone_name.startswith(str(startswith)) and pmx_j_bone_name.endswith(str(endswith)) and contains in pmx_j_bone_name:
+				elif bone_search_type=='mmd_bone_name_j':
+					if mmd_j_bone_name.startswith(str(startswith)) and mmd_j_bone_name.endswith(str(endswith)) and contains in mmd_j_bone_name:
 						b.hide=False
 						b.select = True
 
-				elif bone_search_type=='pmx_bone_name_e':
-					if pmx_e_bone_name.startswith(str(startswith)) and pmx_e_bone_name.endswith(str(endswith)) and contains in pmx_e_bone_name:
+				elif bone_search_type=='mmd_bone_name_e':
+					if mmd_e_bone_name.startswith(str(startswith)) and mmd_e_bone_name.endswith(str(endswith)) and contains in mmd_e_bone_name:
 						b.hide=False
 						b.select = True
 
@@ -272,25 +284,25 @@ def find_bone_names(bone_search_type=None,contains=None,startswith=None,endswith
 		
 		for b in bpy.context.active_object.pose.bones:
 
-			pmx_j_bone_name = ''
-			pmx_e_bone_name = ''
+			mmd_j_bone_name = ''
+			mmd_e_bone_name = ''
 
 			if hasattr(armature.pose.bones[b.name], "mmd_bone"):
-				pmx_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
-				pmx_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
+				mmd_j_bone_name = armature.pose.bones[b.name].mmd_bone.name_j
+				mmd_e_bone_name = armature.pose.bones[b.name].mmd_bone.name_e
 
 			if '_dummy' not in b.name and '_shadow' not in b.name:
 				if bone_search_type=='blender_bone_name':
 					if b.name.startswith(str(startswith)) and b.name.endswith(str(endswith)) and contains in b.name:
 						b.bone.hide = False
 						b.bone.select = True
-				elif bone_search_type=='pmx_bone_name_j':
-					if pmx_j_bone_name.startswith(str(startswith)) and pmx_j_bone_name.endswith(str(endswith)) and contains in pmx_j_bone_name:
+				elif bone_search_type=='mmd_bone_name_j':
+					if mmd_j_bone_name.startswith(str(startswith)) and mmd_j_bone_name.endswith(str(endswith)) and contains in mmd_j_bone_name:
 						b.bone.hide = False
 						b.bone.select = True
 
-				elif bone_search_type=='pmx_bone_name_e':
-					if pmx_e_bone_name.startswith(str(startswith)) and pmx_e_bone_name.endswith(str(endswith)) and contains in pmx_e_bone_name:
+				elif bone_search_type=='mmd_bone_name_e':
+					if mmd_e_bone_name.startswith(str(startswith)) and mmd_e_bone_name.endswith(str(endswith)) and contains in mmd_e_bone_name:
 						b.bone.hide = False
 						b.bone.select = True
 		
@@ -336,9 +348,9 @@ class FindBoneNames(bpy.types.Operator):
 
 
 	bpy.types.Scene.find_bone_name_mode = bpy.props.EnumProperty(items = \
-	[("blender_bone_name", "Blender","Blender Bone Name") \
-	, ("pmx_bone_name_j", "PMX Japanese", "PMX Bone Name (Japanese)")\
-	, ("pmx_bone_name_e", "PMX English", "PMX Bone Name (English)")\
+	[("blender_bone_name", "Blender Bone Names","Search for Blender Bone Names") \
+	, ("mmd_bone_name_j", "MMD Japanese Bone Names", "Search for MMD Japanese Bone Names")\
+	, ("mmd_bone_name_e", "MMD English Bone Names", "Search for MMD English Bone Name")\
 	], name = "", default = 'blender_bone_name')
 
 	@classmethod

@@ -47,9 +47,14 @@ def try_read_file (file_path):
 				CSVdata = csv.reader(csvfile, delimiter=',', skipinitialspace=True)
 				dictionary = [tuple(x) for x in CSVdata]
 				return dictionary
-		except:
-			print(f"File found but can't be opened: {file_path}")
-			return None
+		except FileNotFoundError:
+			print(f"File not found: {file_path}")
+		except PermissionError:
+			print(f"Permission denied: {file_path}")
+		except UnicodeDecodeError:
+			print(f"Error decoding file: {file_path}. Make sure it's encoded as UTF-8.")
+		except Exception as e:
+			print(f"Error reading file: {file_path}. Details: {e}")
 	else:
 		print(f"File not found: {file_path}")
 		return None

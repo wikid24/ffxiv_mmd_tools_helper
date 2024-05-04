@@ -8,72 +8,102 @@ upper body,UpperBody,上半身,上半身,j_sebo_a,kosi_c_n,spine_02,spine lower,
 upper body 2,UpperBody2,上半身2,上半身2,j_sebo_b,mune_c_n,spine_04,spine upper,chest,spine.002,spine2,Spine2,Chest3,,chest,kl_mune_b_wj,spine02,spine02,b__Spine1__,MOT02_Chest,Bip001 Spine2,Spine2,bip_spine_2,ValveBiped.Bip01_Spine2,Spine01,c_spine_02.x,mixamorig:Spine1
 upper body 3,UpperBody3,上半身3,上半身3,j_sebo_c,,spine_05,,,,,,,,,,,,,,,,,,,,
 lower body,LowerBody,下半身,下半身,j_kosi,ketu_c_n,spine_01,pelvis,,hips,,,,,hips,kl_kosi_etc_wj,,,b__Pelvis__,,,,,,Pelvis,,mixamorig:Hips
-shoulder_L,Shoulder_L,左肩,肩.L,j_sako_l,kata_l_n,clavicle_l,arm left shoulder 1,lCollar,shoulder.L,l_clavicle,LeftShoulder,LeftCollar,Left Collar,shoulder.L,kl_waki_l_wj,clavicle_L,shoulder01.L,b__L_Clavicle__,MOT_*Shoulder.1.L,Bip001 L Clavicle,L Clavicle,bip_collar_L,ValveBiped.Bip01_L_Clavicle,L_Clavicle,c_shoulder.l,mixamorig:LeftShoulder
-arm_L,Arm_L,左腕,腕.L,j_ude_a_l,ude1_l_n,upperarm_l,arm left shoulder 2,lShldr,upper_arm.L,l_upperarm,LeftUpArm,LeftShoulder,Left Shoulder,uparm.L,j_kata_l_wj_cu,upperarm_L,upperarm02.L,b__L_UpperArm__,MOT_*Arm.1.L,Bip001 L UpperArm,L UpperArm,bip_upperArm_L,ValveBiped.Bip01_L_UpperArm,L_Upperarm,c_arm_fk.l,mixamorig:LeftArm
-elbow_L,Elbow_L,左ひじ,ひじ.L,j_ude_b_l,ude2_l_n,lowerarm_l,arm left elbow,lForeArm,forearm.L,l_forearm,LeftLowArm,LeftElbow,Left Forearm,loarm.L,j_ude_l_wj,lowerarm_L,lowerarm01.L,b__L_Forearm__,MOT_*ForeArm.1.L,Bip001 L Forearm,L Forearm,bip_lowerArm_L,ValveBiped.Bip01_L_Forearm,L_Forearm,c_forearm_fk.l,mixamorig:LeftForeArm
-wrist_L,Wrist_L,左手首,手首.L,j_te_l,ude3_l_n,hand_l,arm left wrist,lHand,hand.L,l_hand,LeftHand,LeftWrist,Left Hand,finger3-1.L,e_ude_l_cp,hand_L,wrist.L,b__L_Hand__,MOT_*Hand.1.L,Bip001 L Hand,L Hand,bip_hand_L,ValveBiped.Bip01_L_Hand,L_Hand,c_hand_fk.l,mixamorig:LeftHand
-shoulder_R,Shoulder_R,右肩,肩.R,j_sako_r,kata_r_n,clavicle_r,arm right shoulder 1,rCollar,shoulder.R,r_clavicle,RightShoulder,RightCollar,Right Collar,shoulder.R,kl_waki_r_wj,clavicle_R,shoulder01.R,b__R_Clavicle__,MOT_*Shoulder.1.R,Bip001 R Clavicle,R Clavicle,bip_collar_R,ValveBiped.Bip01_R_Clavicle,R_Clavicle,c_shouldder.r,mixamorig:RightShoulder
-arm_R,Arm_R,右腕,腕.R,j_ude_a_r,ude1_r_n,upperarm_r,arm right shoulder 2,rShldr,upper_arm.R,r_upperarm,RightUpArm,RightShoulder,Right Shoulder,uparm.R,j_kata_r_wj_cu,upperarm_R,upperarm02.R,b__R_UpperArm__,MOT_*Arm.1.R,Bip001 R UpperArm,R UpperArm,bip_upperArm_R,ValveBiped.Bip01_R_UpperArm,R_Upperarm,c_arm_fk.r,mixamorig:RightArm
-elbow_R,Elbow_R,右ひじ,ひじ.R,j_ude_b_r,ude2_r_n,lowerarm_r,arm right elbow,rForeArm,forearm.R,r_forearm,RightLowArm,RightElbow,Right Forearm,loarm.R,j_ude_r_wj,lowerarm_R,lowerarm01.R,b__R_Forearm__,MOT_*ForeArm.1.R,Bip001 R Forearm,R Forearm,bip_lowerArm_R,ValveBiped.Bip01_R_Forearm,R_Forearm,c_forearm_fk.r,mixamorig:RightForeArm
-wrist_R,Wrist_R,右手首,手首.R,j_te_r,ude3_r_n,hand_r,arm right wrist,rHand,hand.R,r_hand,RightHand,RightWrist,Right Hand,finger3-1.R,e_ude_r_cp,hand_R,wrist.R,b__R_Hand__,MOT_*Hand.1.R,Bip001 R Hand,R Hand,bip_hand_R,ValveBiped.Bip01_R_Hand,R_Hand,c_hand_fk.r,mixamorig:RightHand
-leg_L,Leg_L,左足,足.L,j_asi_a_l,asi1_l_n,thigh_l,leg left thigh,lThigh,thigh.L,l_thigh,LeftUpLeg,LeftHip,Left Thigh,upleg.L,j_momo_l_wj,thigh_L,upperleg01.L,b__L_Thigh__,MOT_*UpLeg.1.L,Bip001 L Thigh,L Thigh,bip_hip_L,ValveBiped.Bip01_L_Thigh,L_Thigh,c_thigh_fk.l,mixamorig:LeftUpLeg
-knee_L,Knee_L,左ひざ,ひざ.L,j_asi_b_l,asi2_l_n,calf_l,leg left knee,lShin,shin.L,l_calf,LeftLowLeg,LeftKnee,Left Shin,loleg.L,j_sune_l_wj,calf_L,lowerleg01.L,b__L_Calf__,MOT_*Leg.1.L,Bip001 L Calf,L Calf,bip_knee_L,ValveBiped.Bip01_L_Calf,L_Calf,c_leg_fk.l,mixamorig:LeftLeg
-ankle_L,Ankle_L,左足首,足首.L,j_asi_d_l,asi3_l_n,foot_l,leg left ankle,lFoot,foot.L,l_foot,LeftFoot,LeftAnkle,Left Foot,foot.L,kl_asi_l_wj_co,foot_L,foot.L,b__L_Foot__,MOT_*Foot.1.L,Bip001 L Foot,L Foot,bip_foot_L,ValveBiped.Bip01_L_Foot,L_Foot,c_foot_fk.l,mixamorig:LeftFoot
-toe_L,ToeTip_L,左つま先,つま先.L,j_asi_e_l,asi3_r_n,ball_l,leg left toes,lToe,toe.L,l_toe,LeftToeBase,LeftToe,Left Toe,toe1-1.L,kl_toe_l_wj,toes_L,toe1-1.L,b__L_Toe__,MOT_*Toe.1.L,Bip001 L Toe0,L Toe0,bip_toe_L,ValveBiped.Bip01_L_Toe0,L_ToeBase,,mixamorig:LeftToeBase
-leg_R,Leg_L,右足,足.R,j_asi_a_r,asi4_l_n,thigh_r,leg right thigh,rThigh,thigh.R,r_thigh,RightUpLeg,RightHip,Right Thigh,upleg.R,j_momo_r_wj,thigh_R,upperleg01.R,b__R_Thigh__,MOT_*UpLeg.1.R,Bip001 R Thigh,R Thigh,bip_hip_R,ValveBiped.Bip01_R_Thigh,R_Thigh,c_thigh_fk.r,mixamorig:RightUpLeg
-knee_R,Knee_R,右ひざ,ひざ.R,j_asi_b_r,asi1_r_n,calf_r,leg right knee,rShin,shin.R,r_calf,RightLowLeg,RightKnee,Right Shin,loleg.R,j_sune_r_wj,calf_R,lowerleg01.R,b__R_Calf__,MOT_*Leg.1.R,Bip001 R Calf,R Calf,bip_knee_R,ValveBiped.Bip01_R_Calf,R_Calf,c_leg_fk.r,mixamorig:RightLeg
-ankle_R,Ankle_R,右足首,足首.R,j_asi_d_r,asi2_r_n,foot_r,leg right ankle,rFoot,foot.R,r_foot,RightFoot,RightAnkle,Right Foot,foot.R,kl_asi_r_wj_co,foot_R,foot.R,b__R_Foot__,MOT_*Foot.1.R,Bip001 R Foot,R Foot,bip_foot_R,ValveBiped.Bip01_R_Foot,R_Foot,c_foot_fk.r,mixamorig:RightFoot
-toe_R,ToeTip_R,右つま先,つま先.R,j_asi_e_r,asi4_r_n,ball_r,leg right toes,rToe,toe.R,r_toe,RightToeBase,RightToe,Right Toe,toe1-1.R,kl_toe_r_wj,toes_R,toe1-1.R,b__R_Toe__,MOT_*Toe.1.R,Bip001 R Toe0,R Toe0,bip_toe_R,ValveBiped.Bip01_R_Toe0,R_ToeBase,,mixamorig:RightToeBase
-eye_L,Eye_L,左目,目.L,j_f_eye_l,_eye_l_n,FACIAL_L_Eye,head eyeball left,leftEye,eye.L,l_eye,LeftEye,LeftEye,Left Eye,eye.L,kl_eye_l_wj,,eye.R,b__LeftEye__,OPT_Face_*_eye.0.l,Bip001 L Eye,L Eye,bip_eye_L,ValveBiped.Bip01_L_Eye,L_Eye,c_eye_target.l,
-eye_R,Eye_R,右目,目.R,j_f_eye_r,_eye_r_n,FACIAL_R_Eye,head eyeball right,rightEye,eye.R,r_eye,RightEye,RightEye,Right Eye,eye.R,kl_eye_r_wj,,eye.L,b__RightEye__,OPT_Face_*_eye.0.r,Bip001 R Eye,R Eye,bip_eye_R,ValveBiped.Bip01_R_Eye,R_Eye,c_eye_target.r,
+shoulder_L,LeftShoulder,左肩,肩.L,j_sako_l,kata_l_n,clavicle_l,arm left shoulder 1,lCollar,shoulder.L,l_clavicle,LeftShoulder,LeftCollar,Left Collar,shoulder.L,kl_waki_l_wj,clavicle_L,shoulder01.L,b__L_Clavicle__,MOT_*Shoulder.1.L,Bip001 L Clavicle,L Clavicle,bip_collar_L,ValveBiped.Bip01_L_Clavicle,L_Clavicle,c_shoulder.l,mixamorig:LeftShoulder
+arm_L,LeftArm,左腕,腕.L,j_ude_a_l,ude1_l_n,upperarm_l,arm left shoulder 2,lShldr,upper_arm.L,l_upperarm,LeftUpArm,LeftShoulder,Left Shoulder,uparm.L,j_kata_l_wj_cu,upperarm_L,upperarm02.L,b__L_UpperArm__,MOT_*Arm.1.L,Bip001 L UpperArm,L UpperArm,bip_upperArm_L,ValveBiped.Bip01_L_UpperArm,L_Upperarm,c_arm_fk.l,mixamorig:LeftArm
+elbow_L,LeftElbow,左ひじ,ひじ.L,j_ude_b_l,ude2_l_n,lowerarm_l,arm left elbow,lForeArm,forearm.L,l_forearm,LeftLowArm,LeftElbow,Left Forearm,loarm.L,j_ude_l_wj,lowerarm_L,lowerarm01.L,b__L_Forearm__,MOT_*ForeArm.1.L,Bip001 L Forearm,L Forearm,bip_lowerArm_L,ValveBiped.Bip01_L_Forearm,L_Forearm,c_forearm_fk.l,mixamorig:LeftForeArm
+wrist_L,LeftWrist,左手首,手首.L,j_te_l,ude3_l_n,hand_l,arm left wrist,lHand,hand.L,l_hand,LeftHand,LeftWrist,Left Hand,finger3-1.L,e_ude_l_cp,hand_L,wrist.L,b__L_Hand__,MOT_*Hand.1.L,Bip001 L Hand,L Hand,bip_hand_L,ValveBiped.Bip01_L_Hand,L_Hand,c_hand_fk.l,mixamorig:LeftHand
+thumb0_L,LeftThumb0, 左親指０, 親指０.L,,oya1_l_n,thumb_01_l, arm left finger 1a, lThumb1, thumb.01.L, l_thumb0, LeftHandThumb1, LeftFinger0, finger1-2.L,,thumb01_L,finger1-1.L,b__L_Thumb0__,OPT_Hand_*_Thumb1.1.L,Bip001 L Finger0,L Finger0,bip_thumb_0_L,ValveBiped.Bip01_L_Finger0,L_Thumb1,c_thumb1.l,mixamorig:LeftHandThumb1,
+thumb1_L,LeftThumb1, 左親指１, 親指１.L,j_oya_a_l,oya2_l_n,thumb_02_l, arm left finger 1b, lThumb2, thumb.02.L, l_thumb1, LeftHandThumb2, LeftFinger01, finger1-3.L,,thumb02_L,finger1-2.L,b__L_Thumb1__,OPT_Hand_*_Thumb2.1.L,Bip001 L Finger01,L Finger01,bip_thumb_1_L,ValveBiped.Bip01_L_Finger01,L_Thumb2,c_thumb2.l,mixamorig:LeftHandThumb2,
+thumb2_L,LeftThumb2, 左親指２, 親指２.L,j_oya_b_l,oya3_l_n,thumb_03_l, arm left finger 1c, lThumb3, thumb.03.L, l_thumb2, LeftHandThumb3, LeftFinger02, finger1-4.L,,thumb03_L,finger1-3.L,b__L_Thumb2__,OPT_Hand_*_Thumb3.1.L,Bip001 L Finger02,L Finger02,bip_thumb_2_L,ValveBiped.Bip01_L_Finger02,L_Thumb3,c_thumb3.l,mixamorig:LeftHandThumb3,
+fore1_L,LeftIndexFinger1, 左人指１, 人指１.L,j_hito_a_l,hito1_l_n,index_01_l, arm left finger 2a, lIndex1, f_index.01.L, l_index0, LeftHandIndex1, LeftFinger1, finger2-2.L,,index01_L,finger2-1.L,b__L_Index0__,OPT_Hand_*_Index1.1.L,Bip001 L Finger1,L Finger1,bip_index_0_L,ValveBiped.Bip01_L_Finger1,L_Index1,c_index1.l,mixamorig:LeftHandIndex1,
+fore2_L,LeftIndexFinger2, 左人指２, 人指２.L,j_hito_b_l,hito2_l_n,index_02_l, arm left finger 2b, lIndex2, f_index.02.L, l_index1, LeftHandIndex2, LeftFinger11, finger2-3.L,,index02_L,finger2-2.L,b__L_Index1__,OPT_Hand_*_Index2.1.L,Bip001 L Finger11,L Finger11,bip_index_1_L,ValveBiped.Bip01_L_Finger11,L_Index2,c_index2.l,mixamorig:LeftHandIndex2,
+fore3_L,LeftIndexFinger3, 左人指３, 人指３.L,,hito3_l_n,index_03_l, arm left finger 2c, lIndex3, f_index.03.L, l_index2, LeftHandIndex3, LeftFinger12, finger2-4.L,,index03_L,finger2-3.L,b__L_Index2__,OPT_Hand_*_Index3.1.L,Bip001 L Finger12,L Finger12,bip_index_2_L,ValveBiped.Bip01_L_Finger12,L_Index3,c_index3.l,mixamorig:LeftHandIndex3,
+middle1_L,LeftMiddleFinger1, 左中指１, 中指１.L,j_naka_a_l,naka1_l_n,middle_01_l, arm left finger 3a, lMid1, f_middle.01.L, l_mid0, LeftHandMiddle1, LeftFinger2, finger3-2.L,,middle01_L,finger3-1.L,b__L_Mid0__,OPT_Hand_*_Middle1.1.L,Bip001 L Finger2,L Finger2,bip_middle_0_L,ValveBiped.Bip01_L_Finger2,L_Mid1,c_middle1.l,mixamorig:LeftHandMiddle1,
+middle2_L,LeftMiddleFinger2, 左中指２, 中指２.L,j_naka_b_l,naka2_l_n,middle_02_l, arm left finger 3b, lMid2, f_middle.02.L, l_mid1, LeftHandMiddle2, LeftFinger21, finger3-3.L,,middle02_L,finger3-2.L,b__L_Mid1__,OPT_Hand_*_Middle2.1.L,Bip001 L Finger21,L Finger21,bip_middle_1_L,ValveBiped.Bip01_L_Finger21,L_Mid2,c_middle2.l,mixamorig:LeftHandMiddle2,
+middle3_L,LeftMiddleFinger3, 左中指３, 中指３.L,,naka3_l_n,middle_03_l, arm left finger 3c, lMid3, f_middle.03.L, l_mid2, LeftHandMiddle3, LeftFinger22, finger3-4.L,,middle03_L,finger3-3.L,b__L_Mid2__,OPT_Hand_*_Middle3.1.L,Bip001 L Finger22,L Finger22,bip_middle_2_L,ValveBiped.Bip01_L_Finger22,L_Mid3,c_middle3.l,mixamorig:LeftHandMiddle3,
+third1_L,LeftRingFinger1, 左薬指１, 薬指１.L,j_kusu_a_l,kusu1_l_n,ring_01_l, arm left finger 4a, lRing1, f_ring.01.L, l_ring0, LeftHandRing1, LeftFinger3, finger4-2.L,,ring01_L,finger4-1.L,b__L_Pinky0__,OPT_Hand_*_Ring1.1.L,Bip001 L Finger3,L Finger3,bip_ring_0_L,ValveBiped.Bip01_L_Finger3,L_Ring1,c_ring1.l,mixamorig:LeftHandRing1,
+third2_L,LeftRingFinger2, 左薬指２, 薬指２.L,j_kusu_b_l,kusu2_l_n,ring_02_l, arm left finger 4b, lRing2, f_ring.02.L, l_ring1, LeftHandRing2, LeftFinger31, finger4-3.L,,ring02_L,finger4-2.L,b__L_Pinky1__,OPT_Hand_*_Ring2.1.L,Bip001 L Finger31,L Finger31,bip_ring_1_L,ValveBiped.Bip01_L_Finger31,L_Ring2,c_ring2.l,mixamorig:LeftHandRing2,
+third3_L,LeftRingFinger3, 左薬指３, 薬指３.L,,kusu3_l_n,ring_03_l, arm left finger 4c, lRing3, f_ring.03.L, l_ring2, LeftHandRing3, LeftFinger32, finger4-4.L,,ring03_L,finger4-3.L,b__L_Pinky2__,OPT_Hand_*_Ring3.1.L,Bip001 L Finger32,L Finger32,bip_ring_2_L,ValveBiped.Bip01_L_Finger32,L_Ring3,c_ring3.l,mixamorig:LeftHandRing3,
+little1_L,LeftLittleFinger1, 左小指１, 小指１.L,j_ko_a_l,koyu1_l_n,pinky_01_l, arm left finger 5a, lPinky1, f_pinky.01.L, l_pinky0, LeftHandPinky1, LeftFinger4, finger5-2.L,,pinky01_L,finger5-1.L,b__L_Ring0__,OPT_Hand_*_Pinky1.1.L,Bip001 L Finger4,L Finger4,bip_pinky_0_L,ValveBiped.Bip01_L_Finger4,L_Pinky1,c_pinky1.l,mixamorig:LeftHandPinky1,
+little2_L,LeftLittleFinger2, 左小指２, 小指２.L,j_ko_b_l,koyu2_l_n,pinky_02_l, arm left finger 5b, lPinky2, f_pinky.02.L, l_pinky1, LeftHandPinky2, LeftFinger41, finger5-3.L,,pinky02_L,finger5-2.L,b__L_Ring1__,OPT_Hand_*_Pinky2.1.L,Bip001 L Finger41,L Finger41,bip_pinky_1_L,ValveBiped.Bip01_L_Finger41,L_Pinky2,c_pinky2.l,mixamorig:LeftHandPinky2,
+little3_L,LeftLittleFinger3, 左小指３, 小指３.L,,koyu3_l_n,pinky_03_l, arm left finger 5c, lPinky3, f_pinky.03.L, l_pinky2, LeftHandPinky3, LeftFinger42, finger5-4.L,,pinky03_L,finger5-3.L,b__L_Ring2__,OPT_Hand_*_Pinky3.1.L,Bip001 L Finger42,L Finger42,bip_pinky_2_L,ValveBiped.Bip01_L_Finger42,L_Pinky3,c_pinky3.l,mixamorig:LeftHandPinky3,
+shoulder_R,RightShoulder,右肩,肩.R,j_sako_r,kata_r_n,clavicle_r,arm right shoulder 1,rCollar,shoulder.R,r_clavicle,RightShoulder,RightCollar,Right Collar,shoulder.R,kl_waki_r_wj,clavicle_R,shoulder01.R,b__R_Clavicle__,MOT_*Shoulder.1.R,Bip001 R Clavicle,R Clavicle,bip_collar_R,ValveBiped.Bip01_R_Clavicle,R_Clavicle,c_shouldder.r,mixamorig:RightShoulder
+arm_R,RightArm,右腕,腕.R,j_ude_a_r,ude1_r_n,upperarm_r,arm right shoulder 2,rShldr,upper_arm.R,r_upperarm,RightUpArm,RightShoulder,Right Shoulder,uparm.R,j_kata_r_wj_cu,upperarm_R,upperarm02.R,b__R_UpperArm__,MOT_*Arm.1.R,Bip001 R UpperArm,R UpperArm,bip_upperArm_R,ValveBiped.Bip01_R_UpperArm,R_Upperarm,c_arm_fk.r,mixamorig:RightArm
+elbow_R,RightElbow,右ひじ,ひじ.R,j_ude_b_r,ude2_r_n,lowerarm_r,arm right elbow,rForeArm,forearm.R,r_forearm,RightLowArm,RightElbow,Right Forearm,loarm.R,j_ude_r_wj,lowerarm_R,lowerarm01.R,b__R_Forearm__,MOT_*ForeArm.1.R,Bip001 R Forearm,R Forearm,bip_lowerArm_R,ValveBiped.Bip01_R_Forearm,R_Forearm,c_forearm_fk.r,mixamorig:RightForeArm
+wrist_R,RightWrist,右手首,手首.R,j_te_r,ude3_r_n,hand_r,arm right wrist,rHand,hand.R,r_hand,RightHand,RightWrist,Right Hand,finger3-1.R,e_ude_r_cp,hand_R,wrist.R,b__R_Hand__,MOT_*Hand.1.R,Bip001 R Hand,R Hand,bip_hand_R,ValveBiped.Bip01_R_Hand,R_Hand,c_hand_fk.r,mixamorig:RightHand
+thumb0_R,RightThumb0, 右親指０, 親指０.R,,oya1_r_n,thumb_01_r, arm right finger 1a, rThumb1, thumb.01.R, r_thumb0, RightHandThumb1, RightFinger0, finger1-2.R,,thumb01_R,finger1-1.R,b__R_Thumb0__,OPT_Hand_*_Thumb1.1.R,Bip001 R Finger0,R Finger0,bip_thumb_0_R,ValveBiped.Bip01_R_Finger0,R_Thumb1,c_thumb1.r,mixamorig:RightHandThumb1,mixamorig:LeftUpLeg
+thumb1_R,RightThumb1, 右親指１, 親指１.R,j_oya_a_r,oya2_r_n,thumb_02_r, arm right finger 1b, rThumb2, thumb.02.R, r_thumb1, RightHandThumb2, RightFinger01, finger1-3.R,,thumb02_R,finger1-2.R,b__R_Thumb1__,OPT_Hand_*_Thumb2.1.R,Bip001 R Finger01,R Finger01,bip_thumb_1_R,ValveBiped.Bip01_R_Finger01,R_Thumb2,c_thumb2.r,mixamorig:RightHandThumb2,mixamorig:LeftLeg
+thumb2_R,RightThumb2, 右親指２, 親指２.R,j_oya_b_r,oya3_r_n,thumb_03_r, arm right finger 1c, rThumb3, thumb.03.R, r_thumb2, RightHandThumb3, RightFinger02, finger1-4.R,,thumb03_R,finger1-3.R,b__R_Thumb2__,OPT_Hand_*_Thumb3.1.R,Bip001 R Finger02,R Finger02,bip_thumb_2_R,ValveBiped.Bip01_R_Finger02,R_Thumb3,c_thumb3.r,mixamorig:RightHandThumb3,mixamorig:LeftFoot
+fore1_R,RightIndexFinger1, 右人指１, 人指１.R,j_hito_a_r,hito1_r_n,index_01_r, arm right finger 2a, rIndex1, f_index.01.R, r_index0, RightHandIndex1, RightFinger1, finger2-2.R,,index01_R,finger2-1.R,b__R_Index0__,OPT_Hand_*_Index1.1.R,Bip001 R Finger1,R Finger1,bip_index_0_R,ValveBiped.Bip01_R_Finger1,R_Index1,c_index1.r,mixamorig:RightHandIndex1,mixamorig:LeftToeBase
+fore2_R,RightIndexFinger2, 右人指２, 人指２.R,j_hito_b_r,hito2_r_n,index_02_r, arm right finger 2b, rIndex2, f_index.02.R, r_index1, RightHandIndex2, RightFinger11, finger2-3.R,,index02_R,finger2-2.R,b__R_Index1__,OPT_Hand_*_Index2.1.R,Bip001 R Finger11,R Finger11,bip_index_1_R,ValveBiped.Bip01_R_Finger11,R_Index2,c_index2.r,mixamorig:RightHandIndex2,mixamorig:RightUpLeg
+fore3_R,RightIndexFinger3, 右人指３, 人指３.R,,hito3_r_n,index_03_r, arm right finger 2c, rIndex3, f_index.03.R, r_index2, RightHandIndex3, RightFinger12, finger2-4.R,,index03_R,finger2-3.R,b__R_Index2__,OPT_Hand_*_Index3.1.R,Bip001 R Finger12,R Finger12,bip_index_2_R,ValveBiped.Bip01_R_Finger12,R_Index3,c_index3.r,mixamorig:RightHandIndex3,mixamorig:RightLeg
+middle1_R,RightMiddleFinger1, 右中指１, 中指１.R,j_naka_a_r,naka1_r_n,middle_01_r, arm right finger 3a, rMid1, f_middle.01.R, r_mid0, RightHandMiddle1, RightFinger2, finger3-2.R,,middle01_R,finger3-1.R,b__R_Mid0__,OPT_Hand_*_Middle1.1.R,Bip001 R Finger2,R Finger2,bip_middle_0_R,ValveBiped.Bip01_R_Finger2,R_Mid1,c_middle1.r,mixamorig:RightHandMiddle1,mixamorig:RightFoot
+middle2_R,RightMiddleFinger2, 右中指２, 中指２.R,j_naka_b_r,naka2_r_n,middle_02_r, arm right finger 3b, rMid2, f_middle.02.R, r_mid1, RightHandMiddle2, RightFinger21, finger3-3.R,,middle02_R,finger3-2.R,b__R_Mid1__,OPT_Hand_*_Middle2.1.R,Bip001 R Finger21,R Finger21,bip_middle_1_R,ValveBiped.Bip01_R_Finger21,R_Mid2,c_middle2.r,mixamorig:RightHandMiddle2,mixamorig:RightToeBase
+middle3_R,RightMiddleFinger3, 右中指３, 中指３.R,,naka3_r_n,middle_03_r, arm right finger 3c, rMid3, f_middle.03.R, r_mid2, RightHandMiddle3, RightFinger22, finger3-4.R,,middle03_R,finger3-3.R,b__R_Mid2__,OPT_Hand_*_Middle3.1.R,Bip001 R Finger22,R Finger22,bip_middle_2_R,ValveBiped.Bip01_R_Finger22,R_Mid3,c_middle3.r,mixamorig:RightHandMiddle3,
+third1_R,RightRingFinger1, 右薬指１, 薬指１.R,j_kusu_a_r,kusu1_r_n,ring_01_r, arm right finger 4a, rRing1, f_ring.01.R, r_ring0, RightHandRing1, RightFinger3, finger4-2.R,,ring01_R,finger4-1.R,b__R_Pinky0__,OPT_Hand_*_Ring1.1.R,Bip001 R Finger3,R Finger3,bip_ring_0_R,ValveBiped.Bip01_R_Finger3,R_Ring1,c_ring1.r,mixamorig:RightHandRing1,
+third2_R,RightRingFinger2, 右薬指２, 薬指２.R,j_kusu_b_r,kusu2_r_n,ring_02_r, arm right finger 4b, rRing2, f_ring.02.R, r_ring1, RightHandRing2, RightFinger31, finger4-3.R,,ring02_R,finger4-2.R,b__R_Pinky1__,OPT_Hand_*_Ring2.1.R,Bip001 R Finger31,R Finger31,bip_ring_1_R,ValveBiped.Bip01_R_Finger31,R_Ring2,c_ring2.r,mixamorig:RightHandRing2,
+third3_R,RightRingFinger3, 右薬指３, 薬指３.R,,kusu3_r_n,ring_03_r, arm right finger 4c, rRing3, f_ring.03.R, r_ring2, RightHandRing3, RightFinger32, finger4-4.R,,ring03_R,finger4-3.R,b__R_Pinky2__,OPT_Hand_*_Ring3.1.R,Bip001 R Finger32,R Finger32,bip_ring_2_R,ValveBiped.Bip01_R_Finger32,R_Ring3,c_ring3.r,mixamorig:RightHandRing3,
+little1_R,RightLittleFinger1, 右小指１, 小指１.R,j_ko_a_r,koyu1_r_n,pinky_01_r, arm right finger 5a, rPinky1, f_pinky.01.R, r_pinky0, RightHandPinky1, RightFinger4, finger5-2.R,,pinky01_R,finger5-1.R,b__R_Ring0__,OPT_Hand_*_Pinky1.1.R,Bip001 R Finger4,R Finger4,bip_pinky_0_R,ValveBiped.Bip01_R_Finger4,R_Pinky1,c_pinky1.r,mixamorig:RightHandPinky1,
+little2_R,RightLittleFinger2, 右小指２, 小指２.R,j_ko_b_r,koyu2_r_n,pinky_02_r, arm right finger 5b, rPinky2, f_pinky.02.R, r_pinky1, RightHandPinky2, RightFinger41, finger5-3.R,,pinky02_R,finger5-2.R,b__R_Ring1__,OPT_Hand_*_Pinky2.1.R,Bip001 R Finger41,R Finger41,bip_pinky_1_R,ValveBiped.Bip01_R_Finger41,R_Pinky2,c_pinky2.r,mixamorig:RightHandPinky2,
+little3_R,RightLittleFinger3, 右小指３, 小指３.R,,koyu3_r_n,pinky_03_r, arm right finger 5c, rPinky3, f_pinky.03.R, r_pinky2, RightHandPinky3, RightFinger42, finger5-4.R,,pinky03_R,finger5-3.R,b__R_Ring2__,OPT_Hand_*_Pinky3.1.R,Bip001 R Finger42,R Finger42,bip_pinky_2_R,ValveBiped.Bip01_R_Finger42,R_Pinky3,c_pinky3.r,mixamorig:RightHandPinky3,
+leg_L,LeftLeg,左足,足.L,j_asi_a_l,asi1_l_n,thigh_l,leg left thigh,lThigh,thigh.L,l_thigh,LeftUpLeg,LeftHip,Left Thigh,upleg.L,j_momo_l_wj,thigh_L,upperleg01.L,b__L_Thigh__,MOT_*UpLeg.1.L,Bip001 L Thigh,L Thigh,bip_hip_L,ValveBiped.Bip01_L_Thigh,L_Thigh,c_thigh_fk.l,
+knee_L,LeftKnee,左ひざ,ひざ.L,j_asi_b_l,asi2_l_n,calf_l,leg left knee,lShin,shin.L,l_calf,LeftLowLeg,LeftKnee,Left Shin,loleg.L,j_sune_l_wj,calf_L,lowerleg01.L,b__L_Calf__,MOT_*Leg.1.L,Bip001 L Calf,L Calf,bip_knee_L,ValveBiped.Bip01_L_Calf,L_Calf,c_leg_fk.l,
+ankle_L,LeftAnkle,左足首,足首.L,j_asi_d_l,asi3_l_n,foot_l,leg left ankle,lFoot,foot.L,l_foot,LeftFoot,LeftAnkle,Left Foot,foot.L,kl_asi_l_wj_co,foot_L,foot.L,b__L_Foot__,MOT_*Foot.1.L,Bip001 L Foot,L Foot,bip_foot_L,ValveBiped.Bip01_L_Foot,L_Foot,c_foot_fk.l,
+toe_L,LeftToeTip,左つま先,つま先.L,j_asi_e_l,asi3_r_n,ball_l,leg left toes,lToe,toe.L,l_toe,LeftToeBase,LeftToe,Left Toe,toe1-1.L,kl_toe_l_wj,toes_L,toe1-1.L,b__L_Toe__,MOT_*Toe.1.L,Bip001 L Toe0,L Toe0,bip_toe_L,ValveBiped.Bip01_L_Toe0,L_ToeBase,,
+leg_R,RightLeg,右足,足.R,j_asi_a_r,asi4_l_n,thigh_r,leg right thigh,rThigh,thigh.R,r_thigh,RightUpLeg,RightHip,Right Thigh,upleg.R,j_momo_r_wj,thigh_R,upperleg01.R,b__R_Thigh__,MOT_*UpLeg.1.R,Bip001 R Thigh,R Thigh,bip_hip_R,ValveBiped.Bip01_R_Thigh,R_Thigh,c_thigh_fk.r,
+knee_R,RightKnee,右ひざ,ひざ.R,j_asi_b_r,asi1_r_n,calf_r,leg right knee,rShin,shin.R,r_calf,RightLowLeg,RightKnee,Right Shin,loleg.R,j_sune_r_wj,calf_R,lowerleg01.R,b__R_Calf__,MOT_*Leg.1.R,Bip001 R Calf,R Calf,bip_knee_R,ValveBiped.Bip01_R_Calf,R_Calf,c_leg_fk.r,
+ankle_R,RightAnkle,右足首,足首.R,j_asi_d_r,asi2_r_n,foot_r,leg right ankle,rFoot,foot.R,r_foot,RightFoot,RightAnkle,Right Foot,foot.R,kl_asi_r_wj_co,foot_R,foot.R,b__R_Foot__,MOT_*Foot.1.R,Bip001 R Foot,R Foot,bip_foot_R,ValveBiped.Bip01_R_Foot,R_Foot,c_foot_fk.r,
+toe_R,RightToeTip,右つま先,つま先.R,j_asi_e_r,asi4_r_n,ball_r,leg right toes,rToe,toe.R,r_toe,RightToeBase,RightToe,Right Toe,toe1-1.R,kl_toe_r_wj,toes_R,toe1-1.R,b__R_Toe__,MOT_*Toe.1.R,Bip001 R Toe0,R Toe0,bip_toe_R,ValveBiped.Bip01_R_Toe0,R_ToeBase,,
+eye_L,LeftEye,左目,目.L,j_f_eye_l,_eye_l_n,FACIAL_L_Eye,head eyeball left,leftEye,eye.L,l_eye,LeftEye,LeftEye,Left Eye,eye.L,kl_eye_l_wj,,eye.R,b__LeftEye__,OPT_Face_*_eye.0.l,Bip001 L Eye,L Eye,bip_eye_L,ValveBiped.Bip01_L_Eye,L_Eye,c_eye_target.l,
+eye_R,RightEye,右目,目.R,j_f_eye_r,_eye_r_n,FACIAL_R_Eye,head eyeball right,rightEye,eye.R,r_eye,RightEye,RightEye,Right Eye,eye.R,kl_eye_r_wj,,eye.L,b__RightEye__,OPT_Face_*_eye.0.r,Bip001 R Eye,R Eye,bip_eye_R,ValveBiped.Bip01_R_Eye,R_Eye,c_eye_target.r,
 waist,Waist,腰,腰,n_hara,center_c_n,,,,,,,,,,,,,,,,,,,,c_root.x,
 groove,Groove,グルーブ,グルーブ,,,,,,,,,,,,,,,,,,,,,,,
 groove_2,Groove2,グルーブ2,グルーブ2,,,,,,,,,,,,,,,,,,,,,,,
-leg IK_L,LegIK_L,左足ＩＫ,足ＩＫ.L,,,,,,,,,,,,,,,,,,,,,,,
-toe IK_L,ToeTipIK_L,左つま先ＩＫ,つま先ＩＫ.L,,,,,,,,,,,,,,,,,,,,,,,
-leg IK_root_L,LegIKParent_L,左足IK親,足IK親.L,,,,,,,,,,,,,,,,,,,,,,,
-leg IK_R,LegIK_R,右足ＩＫ,足ＩＫ.R,,,,,,,,,,,,,,,,,,,,,,,
-toe IK_R,ToeTipIK_R,右つま先ＩＫ,つま先ＩＫ.R,,,,,,,,,,,,,,,,,,,,,,,
-leg IK_root_R,LegIKParent_R,右足IK親,足IK親.R,,,,,,,,,,,,,,,,,,,,,,,
-leg_L_D,LegD_L,左足D,足D.L,,asi1_twist_l_sup,,,,,,,,,,,,,,,,,,,,,
-knee_L_D,KneeD_L,左ひざD,ひざD.L,,asi2_l_sup,,,,,,,,,,,,,,,,,,,,,
-ankle_L_D,AnkleD_L,左足首D,足首D.L,,,,,,,,,,,,,,,,,,,,,,,
-toe_L_EX,LegTipEX_L,左足先EX,足先EX.L,,,,,,,,,,,,,,,,,,,,,,,
-leg_R_D,LegD_R,右足D,足D.R,,asi1_twist_r_sup,,,,,,,,,,,,,,,,,,,,,
-knee_R_D,KneeD_R,右ひざD,ひざD.R,,asi2_r_sup,,,,,,,,,,,,,,,,,,,,,
-ankle_R_D,AnkleD_R,右足首D,足首D.R,,,,,,,,,,,,,,,,,,,,,,,
-toe_R_EX,LegTipEX_R,右足先EX,足先EX.R,,,,,,,,,,,,,,,,,,,,,,,
-waist_cancel_L,WaistCancel_L,腰キャンセル左,腰キャンセル.L,,,,,,,,,,,,,,,,,,,,,,,
-waist_cancel_R,WaistCancel_R,腰キャンセル右,腰キャンセル.R,,,,,,,,,,,,,,,,,,,,,,,
+leg IK_L,LeftLegIK,左足ＩＫ,足ＩＫ.L,,,,,,,,,,,,,,,,,,,,,,,
+toe IK_L,LeftToeTipIK,左つま先ＩＫ,つま先ＩＫ.L,,,,,,,,,,,,,,,,,,,,,,,
+leg IK_root_L,LeftLegIKParent,左足IK親,足IK親.L,,,,,,,,,,,,,,,,,,,,,,,
+leg IK_R,RightLegIK,右足ＩＫ,足ＩＫ.R,,,,,,,,,,,,,,,,,,,,,,,
+toe IK_R,RightToeTipIK,右つま先ＩＫ,つま先ＩＫ.R,,,,,,,,,,,,,,,,,,,,,,,
+leg IK_root_R,RightLegIKParent,右足IK親,足IK親.R,,,,,,,,,,,,,,,,,,,,,,,
+leg_L_D,LeftLegD,左足D,足D.L,,asi1_twist_l_sup,,,,,,,,,,,,,,,,,,,,,
+knee_L_D,LeftKneeD,左ひざD,ひざD.L,,asi2_l_sup,,,,,,,,,,,,,,,,,,,,,
+ankle_L_D,LeftAnkleD,左足首D,足首D.L,,,,,,,,,,,,,,,,,,,,,,,
+toe_L_EX,LeftLegTipEX,左足先EX,足先EX.L,,,,,,,,,,,,,,,,,,,,,,,
+leg_R_D,RightLegD,右足D,足D.R,,asi1_twist_r_sup,,,,,,,,,,,,,,,,,,,,,
+knee_R_D,RightKneeD,右ひざD,ひざD.R,,asi2_r_sup,,,,,,,,,,,,,,,,,,,,,
+ankle_R_D,RightAnkleD,右足首D,足首D.R,,,,,,,,,,,,,,,,,,,,,,,
+toe_R_EX,RightLegTipEX,右足先EX,足先EX.R,,,,,,,,,,,,,,,,,,,,,,,
+waist_cancel_L,WaistCancelLeft,腰キャンセル左,腰キャンセル.L,,,,,,,,,,,,,,,,,,,,,,,
+waist_cancel_R,WaistCancelRight,腰キャンセル右,腰キャンセル.R,,,,,,,,,,,,,,,,,,,,,,,
 eyes,Eyes,両目,両目,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_L,ArmTwist_L,左腕捩,腕捩.L,n_hkata_l,kata_twist_l_sup,upperarm_twist_01_l,,,,,,,,,,,,,,,,,,,,
-arm_twist_1_L,ArmTwist1_L,左腕捩1,腕捩1.L,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_2_L,ArmTwist2_L,左腕捩2,腕捩2.L,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_3_L,ArmTwist3_L,左腕捩3,腕捩3.L,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_R,ArmTwist_R,右腕捩,腕捩.R,n_hkata_r,kata_twist_r_sup,upperarm_twist_01_r,,,,,,,,,,,,,,,,,,,,
-arm_twist_1_R,ArmTwist1_R,右腕捩1,腕捩1.R,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_2_R,ArmTwist2_R,右腕捩2,腕捩2.R,,,,,,,,,,,,,,,,,,,,,,,
-arm_twist_3_R,ArmTwist3_R,右腕捩3,腕捩3.R,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_L,HandTwist_L,左手捩,手捩.L,n_hte_l,,lowerarm_twist_01_l,,,,,,,,,,,,,,,,,,,,
-wrist_twist_1_L,HandTwist1_L,左手捩1,手捩1.L,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_2_L,HandTwist2_L,左手捩2,手捩2.L,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_3_L,HandTwist3_L,左手捩3,手捩3.L,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_R,HandTwist_R,右手捩,手捩.R,n_hte_r,,lowerarm_twist_01_r,,,,,,,,,,,,,,,,,,,,
-wrist_twist_1_R,HandTwist1_R,右手捩1,手捩1.R,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_2_R,HandTwist2_R,右手捩2,手捩2.R,,,,,,,,,,,,,,,,,,,,,,,
-wrist_twist_3_R,HandTwist3_R,右手捩3,手捩3.R,,,,,,,,,,,,,,,,,,,,,,,
-shoulder_P_L,ShoulderP_L,左肩P,肩P.L,,,,,,,,,,,,,,,,,,,,,,,
-shoulder_P_R,ShoulderP_R,右肩P,肩P.R,,,,,,,,,,,,,,,,,,,,,,,
-shoulder_C_L,Shoulder_C_L,左肩C,肩C.L,,,,,,,,,,,,,,,,,,,,,,,
-shoulder_C_R,Shoulder_C_R,右肩C,肩C.R,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_L,LeftArmTwist,左腕捩,腕捩.L,n_hkata_l,kata_twist_l_sup,upperarm_twist_01_l,,,,,,,,,,,,,,,,,,,,
+arm_twist_1_L,LeftArmTwist1,左腕捩1,腕捩1.L,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_2_L,LeftArmTwist2,左腕捩2,腕捩2.L,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_3_L,LeftArmTwist3,左腕捩3,腕捩3.L,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_R,RightArmTwist,右腕捩,腕捩.R,n_hkata_r,kata_twist_r_sup,upperarm_twist_01_r,,,,,,,,,,,,,,,,,,,,
+arm_twist_1_R,RightArmTwist1,右腕捩1,腕捩1.R,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_2_R,RightArmTwist2,右腕捩2,腕捩2.R,,,,,,,,,,,,,,,,,,,,,,,
+arm_twist_3_R,RightArmTwist3,右腕捩3,腕捩3.R,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_L,LeftHandTwist,左手捩,手捩.L,n_hte_l,,lowerarm_twist_01_l,,,,,,,,,,,,,,,,,,,,
+wrist_twist_1_L,LeftHandTwist1,左手捩1,手捩1.L,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_2_L,LeftHandTwist2,左手捩2,手捩2.L,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_3_L,LeftHandTwist3,左手捩3,手捩3.L,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_R,RightHandTwist,右手捩,手捩.R,n_hte_r,,lowerarm_twist_01_r,,,,,,,,,,,,,,,,,,,,
+wrist_twist_1_R,RightHandTwist1,右手捩1,手捩1.R,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_2_R,RightHandTwist2,右手捩2,手捩2.R,,,,,,,,,,,,,,,,,,,,,,,
+wrist_twist_3_R,RightHandTwist3,右手捩3,手捩3.R,,,,,,,,,,,,,,,,,,,,,,,
+shoulder_P_L,LeftShoulderP,左肩P,肩P.L,,,,,,,,,,,,,,,,,,,,,,,
+shoulder_P_R,RightShoulderP,右肩P,肩P.R,,,,,,,,,,,,,,,,,,,,,,,
+shoulder_C_L,LeftShoulder_C,左肩C,肩C.L,,,,,,,,,,,,,,,,,,,,,,,
+shoulder_C_R,RightShoulder_C,右肩C,肩C.R,,,,,,,,,,,,,,,,,,,,,,,
 view cnt,ControlNode,操作中心,操作中心,,,,,,,,,,,,,,,,,,,,,,,
-dummy_L,Dummy_L,左ダミー,ダミー.L,n_buki_l,,,,,,,,,,,,,,,,,,,,,,
-dummy_R,Dummy_R,右ダミー, ダミー.R,n_buki_r,,,,,,,,,,,,,,,,,,,,,,
-shoulder+_L,Shoulder+_L,左肩+,肩+.L,,,,,,,,,,,,,,,,,,,,,,,
-shoulder+_R,Shoulder+_R,右肩+,肩+.R,,,,,,,,,,,,,,,,,,,,,,,
-arm+_L,Arm+_L,左腕+,腕+.L,,,,,,,,,,,,,,,,,,,,,,,
-arm+_R,Arm+_R,右腕+,腕+.R,,,,,,,,,,,,,,,,,,,,,,,
-elbow+_L,Elbow+_L,左ひじ+,ひじ+.L,,,,,,,,,,,,,,,,,,,,,,,
-elbow+_R,Elbow+_R,右ひじ+,ひじ+.R,,,,,,,,,,,,,,,,,,,,,,,
-wrist+_L,Wrist+_L,左手首+,手首+.L,,,,,,,,,,,,,,,,,,,,,,,
-wrist+_R,Wrist+_R,右手首+,手首+.R,,,,,,,,,,,,,,,,,,,,,,,
+dummy_L,LeftDummy,左ダミー,ダミー.L,n_buki_l,,,,,,,,,,,,,,,,,,,,,,
+dummy_R,RightDummy,右ダミー, ダミー.R,n_buki_r,,,,,,,,,,,,,,,,,,,,,,
+shoulder+_L,LeftShoulder+,左肩+,肩+.L,,,,,,,,,,,,,,,,,,,,,,,
+shoulder+_R,RightShoulder+,右肩+,肩+.R,,,,,,,,,,,,,,,,,,,,,,,
+arm+_L,LeftArm+,左腕+,腕+.L,,,,,,,,,,,,,,,,,,,,,,,
+arm+_R,RightArm+,右腕+,腕+.R,,,,,,,,,,,,,,,,,,,,,,,
+elbow+_L,LeftElbow+,左ひじ+,ひじ+.L,,,,,,,,,,,,,,,,,,,,,,,
+elbow+_R,RightElbow+,右ひじ+,ひじ+.R,,,,,,,,,,,,,,,,,,,,,,,
+wrist+_L,LeftWrist+,左手首+,手首+.L,,,,,,,,,,,,,,,,,,,,,,,
+wrist+_R,RightWrist+,右手首+,手首+.R,,,,,,,,,,,,,,,,,,,,,,,

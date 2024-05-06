@@ -11,37 +11,11 @@ from . import add_foot_leg_ik
 from . import add_hand_arm_ik
 
 
-#gets the equivalent primary bones from armature and returns the primary bonename type (mmd_english,mmd_english_alt, mmd_japanese, mmd_japaneseLR etc...)
-def get_primary_bonetype (armature):
-	bone_list = {'root','neck','head','center','center_2','upper body','upper body 2','upper body 3','lower body','shoulder_L','arm_L','elbow_L','wrist_L'
-			,'thumb0_L','thumb1_L','thumb2_L','fore1_L','fore2_L','fore3_L','middle1_L','middle2_L','middle3_L','third1_L','third2_L','third3_L','little1_L','little2_L','little3_L'
-			,'shoulder_R','arm_R','elbow_R','wrist_R',
-			'thumb0_R','thumb1_R','thumb2_R','fore1_R','fore2_R','fore3_R','middle1_R','middle2_R','middle3_R','third1_R','third2_R','third3_R','little1_R','little2_R','little3_R'
-			,'leg_L','knee_L','ankle_L','toe_L','leg_R','knee_R','ankle_R','toe_R','eye_L','eye_R','waist'}
-	
-	bone_finds = []
-		
-	for bone in bone_list:
-		if bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,bone):
-			armature_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,bone)
-			bone_finds.append(armature_bone_name)
 
-	bone_types = ['mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
-
-	max_counter = 0
-	max_bone_type = None
-
-	for bone_type in bone_types:
-		counter = sum(1 for bone in bone_finds if bone_tools.is_bone_bone_type(armature, bone, bone_type))
-		if counter > max_counter:
-			max_counter = counter
-			max_bone_type = bone_type
-
-	return max_bone_type
 		
 def correct_root_center(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -108,7 +82,7 @@ def correct_root_center(armature):
 
 def correct_groove(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -166,7 +140,7 @@ def correct_groove(armature):
 
 def correct_waist(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -210,7 +184,7 @@ def correct_waist(armature):
 
 def correct_waist_cancel(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -258,7 +232,7 @@ def correct_waist_cancel(armature):
 
 def correct_view_cnt(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -280,7 +254,7 @@ def correct_view_cnt(armature):
 def add_extra_finger_bones(armature,hand_mesh): 
 	print('\nadd_extra_finger_bones(armature,hand_mesh):')
 	
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -416,7 +390,7 @@ def fix_bone_length(armature,source_bone_name,target_bone_name):
 
 def correct_bones_length(armature):
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -437,7 +411,7 @@ def correct_bones_length(armature):
 
 def add_breast_tip_bones(armature):
 	print('\nadd_breast_tip_bones(armature):')
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -460,7 +434,7 @@ def add_breast_tip_bones(armature):
 
 def add_eye_control_bone(armature):
 	print('\nadd_eye_control_bone():')
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -505,7 +479,7 @@ def add_eye_control_bone(armature):
 
 
 def add_arm_wrist_twist(armature):
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -698,7 +672,7 @@ def offset_bone_by_source_bone(source_bone_name,target_bone_name,head_or_tail,ax
 def add_shoulder_control_bones(armature):
 	print('\nadd_shoulder_control_bones():')
 
-	bone_type = get_primary_bonetype(armature)
+	bone_type = model.get_primary_bonetype(armature)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -756,8 +730,11 @@ def add_shoulder_control_bones(armature):
 def merge_double_jointed_knee(armature, context):
 	print('\n')
 	
-	if model.is_mmd_english() == True:
+	bone_type = model.get_primary_bonetype(armature)
 
+	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
+		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
+	else:
 		bpy.ops.object.mode_set(mode='POSE')
 
 		#get the bones
@@ -803,9 +780,7 @@ def merge_double_jointed_knee(armature, context):
 			add_foot_leg_ik.main(context)
 			bpy.ops.object.mode_set(mode='OBJECT')
 
-	
-	else:
-		print("Rename bones to MMD_English and then try again.")
+
 
 def set_bust_size(bust_scale=None,bust_xyz=None):
 	print('\n')
@@ -1007,15 +982,15 @@ def main(context):
 		armature = context.view_layer.objects.active
 		miscellaneous_tools.flag_unused_bones()
 		miscellaneous_tools.delete_unused_bones()
-		correct_root_center()
-		correct_groove()
-		correct_waist()
-		correct_waist_cancel()
-		correct_view_cnt()
-		correct_bones_length()
-		add_eye_control_bone()
-		add_arm_wrist_twist()
-		add_shoulder_control_bones()
+		correct_root_center(armature)
+		correct_groove(armature)
+		correct_waist(armature)
+		correct_waist_cancel(armature)
+		correct_view_cnt(armature)
+		correct_bones_length(armature)
+		add_eye_control_bone(armature)
+		add_arm_wrist_twist(armature)
+		add_shoulder_control_bones(armature)
 		#leg_IK
 		bpy.ops.object.mode_set(mode='OBJECT')
 		add_foot_leg_ik.clear_IK(context)

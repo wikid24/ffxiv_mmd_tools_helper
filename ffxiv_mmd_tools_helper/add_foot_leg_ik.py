@@ -1,4 +1,4 @@
-import bpy9
+import bpy
 import math
 
 from . import register_wrap
@@ -6,6 +6,7 @@ from . import register_wrap
 from . import model
 from mmd_tools.core.bone import FnBone
 from . import bone_tools
+
 
 
 # def armature_diagnostic():
@@ -46,9 +47,10 @@ def clear_IK(context):
 	armature = get_armature()
 	bpy.ops.object.mode_set(mode='POSE')
 	english = ["knee_L", "knee_R", "ankle_L", "ankle_R", "toe_L", "toe_R"]
+	english_alt = ["LeftKnee", "RightKnee", "LeftAnkle", "RightAnkle", "LeftToeTip", "RightToeTip"]
 	japanese = ["左ひざ", "右ひざ", "左足首", "右足首", "左つま先", "右つま先"]
 	japanese_L_R = ["ひざ.L", "ひざ.R", "足首.L", "足首.R", "つま先.L", "つま先.R"]
-	leg_foot_bones = english + japanese + japanese_L_R
+	leg_foot_bones = english + english_alt + japanese + japanese_L_R 
 	for b in bpy.context.active_object.pose.bones.keys():
 		if b in leg_foot_bones:
 			for c in bpy.context.active_object.pose.bones[b].constraints:
@@ -85,94 +87,107 @@ def main(context):
 	bpy.context.view_layer.objects.active = get_armature()
 	armature=get_armature()
 
-	#Searches through the bones of the armature and finds the knee, ankle and toe bones.
-	ROOT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'root')
-	LOWER_BODY = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'lower body')
-	LEG_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'leg_L')
-	LEG_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'leg_R')
-	KNEE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_L')
-	KNEE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_R')
-	ANKLE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'ankle_L')
-	ANKLE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'ankle_R')
-	TOE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_L')
-	TOE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_R')
-	KNEE2_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_L')
-	KNEE2_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_R')
+	bone_type = model.get_primary_bonetype(armature)
 
-	bones = [ROOT,LOWER_BODY,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT]
-	bone_check_english = []
-	bone_check_japanese = []
-	bone_check_japaneseLR = [] 
-
-	#test japanese or english
-	for bone_name in bones:
-		bone_check_english.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_english"))
-
-	for bone_name in bones:
-		bone_check_japanese.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_japanese"))
-
-	for bone_name in bones:
-		bone_check_japaneseLR.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_japaneseLR"))
-
-	mmd_bone_type = None
-
-	#if all bone are the same type and are found (is_bone_bone_type=True)
-	if all(bone_check_english):
-		mmd_bone_type = 'mmd_english'
-	elif all(bone_check_japanese):
-		mmd_bone_type = 'mmd_japanese'
-	elif all(bone_check_japaneseLR):
-		mmd_bone_type = 'mmd_japaneseLR'
+	if bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
+		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
 	else:
-		print ('This is not an MMD armature. MMD bone names of knee, ankle and toe bones are required for this script to run.')
-	print (mmd_bone_type)
 
+		#Searches through the bones of the armature and finds the knee, ankle and toe bones.
+		ROOT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'root')
+		LOWER_BODY = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'lower body')
+		LEG_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'leg_L')
+		LEG_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'leg_R')
+		KNEE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_L')
+		KNEE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_R')
+		ANKLE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'ankle_L')
+		ANKLE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'ankle_R')
+		TOE_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_L')
+		TOE_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'toe_R')
+		KNEE2_LEFT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_L')
+		KNEE2_RIGHT = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_R')
 
-	if mmd_bone_type:
-		LEG_IK_ROOT_LEFT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("leg IK_root_L",mmd_bone_type)
-		LEG_IK_ROOT_RIGHT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("leg IK_root_R",mmd_bone_type)
-		LEG_IK_LEFT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("leg IK_L",mmd_bone_type)
-		LEG_IK_RIGHT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("leg IK_R",mmd_bone_type)
-		TOE_IK_LEFT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("toe IK_L",mmd_bone_type)
-		TOE_IK_RIGHT_BONE = bone_tools.get_bone_name_by_mmd_english_bone_name("toe IK_R",mmd_bone_type)
-		LEG_LEFT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("leg_L_D",mmd_bone_type)
-		LEG_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("leg_R_D",mmd_bone_type)
-		KNEE_LEFT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_L_D",mmd_bone_type)
-		KNEE_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_R_D",mmd_bone_type)
-		ANKLE_LEFT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("ankle_L_D",mmd_bone_type)
-		ANKLE_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("ankle_R_D",mmd_bone_type)
-		TOE_LEFT_EX = bone_tools.get_bone_name_by_mmd_english_bone_name("toe_L_EX",mmd_bone_type)
-		TOE_RIGHT_EX = bone_tools.get_bone_name_by_mmd_english_bone_name("toe_R_EX",mmd_bone_type)
-		KNEE2_LEFT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_2_L_D",mmd_bone_type)
-		KNEE2_RIGHT_D = bone_tools.get_bone_name_by_mmd_english_bone_name("knee_2_R_D",mmd_bone_type)
+		bones = [ROOT,LOWER_BODY,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT]
+		
+		"""
+		bone_check_english = []
+		bone_check_japanese = []
+		bone_check_japaneseLR = [] 
+
+		#test japanese or english
+		for bone_name in bones:
+			bone_check_english.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_english"))
+
+		for bone_name in bones:
+			bone_check_japanese.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_japanese"))
+
+		for bone_name in bones:
+			bone_check_japaneseLR.append(bone_tools.is_bone_bone_type(armature,bone_name,"mmd_japaneseLR"))
+
+		mmd_bone_type = None
+
+		#if all bone are the same type and are found (is_bone_bone_type=True)
+		if all(bone_check_english):
+			mmd_bone_type = 'mmd_english'
+
+		elif all(bone_check_japanese):
+			mmd_bone_type = 'mmd_japanese'
+		elif all(bone_check_japaneseLR):
+			mmd_bone_type = 'mmd_japaneseLR'
+		else:
+			raise TypeError ('This is not an MMD armature. MMD bone names of knee, ankle and toe bones are required for this script to run.')
+		print (mmd_bone_type)
+
 		
 
 
-	print('\n')
-
-
-
-	if all([ROOT,LOWER_BODY,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT]):
-
-		bpy.ops.object.mode_set(mode='POSE')
-		bpy.context.active_object.pose.bones[KNEE_LEFT].use_ik_limit_x = True
-		bpy.context.active_object.pose.bones[KNEE_RIGHT].use_ik_limit_x = True
-
-		#The IK bones are created
-		create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT)
-
-		#Add IK constraints
-		create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE,KNEE2_LEFT,KNEE2_RIGHT)
+		if mmd_bone_type:
 		
-		#create an 'IK' bone group and add the IK bones to it
-		create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE)
+		"""
+		LEG_IK_ROOT_LEFT_BONE = bone_tools.get_bone_name(bone_type,"leg IK_root_L")
+		LEG_IK_ROOT_RIGHT_BONE = bone_tools.get_bone_name(bone_type,"leg IK_root_R")
+		LEG_IK_LEFT_BONE = bone_tools.get_bone_name(bone_type,"leg IK_L")
+		LEG_IK_RIGHT_BONE = bone_tools.get_bone_name(bone_type,"leg IK_R")
+		TOE_IK_LEFT_BONE = bone_tools.get_bone_name(bone_type,"toe IK_L")
+		TOE_IK_RIGHT_BONE = bone_tools.get_bone_name(bone_type,"toe IK_R")
+		LEG_LEFT_D = bone_tools.get_bone_name(bone_type,"leg_L_D")
+		LEG_RIGHT_D = bone_tools.get_bone_name(bone_type,"leg_R_D")
+		KNEE_LEFT_D = bone_tools.get_bone_name(bone_type,"knee_L_D")
+		KNEE_RIGHT_D = bone_tools.get_bone_name(bone_type,"knee_R_D")
+		ANKLE_LEFT_D = bone_tools.get_bone_name(bone_type,"ankle_L_D")
+		ANKLE_RIGHT_D = bone_tools.get_bone_name(bone_type,"ankle_R_D")
+		TOE_LEFT_EX = bone_tools.get_bone_name(bone_type,"toe_L_EX")
+		TOE_RIGHT_EX = bone_tools.get_bone_name(bone_type,"toe_R_EX")
+		KNEE2_LEFT_D = bone_tools.get_bone_name(bone_type,"knee_2_L_D")
+		KNEE2_RIGHT_D = bone_tools.get_bone_name(bone_type,"knee_2_R_D")
+			
 
-		#create control bones
-		create_control_bones(armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX,KNEE2_LEFT,KNEE2_RIGHT,KNEE2_LEFT_D,KNEE2_RIGHT_D)
 
-		bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
-	else:
-		print('error--count not find one of these bones: root,lower body,leg_L,leg_R,knee_L,knee_R,ankle_L,ankle_R,toe_L,toe_R. aborted.')
+		print('\n')
+
+
+
+		if all([ROOT,LOWER_BODY,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT]):
+
+			bpy.ops.object.mode_set(mode='POSE')
+			bpy.context.active_object.pose.bones[KNEE_LEFT].use_ik_limit_x = True
+			bpy.context.active_object.pose.bones[KNEE_RIGHT].use_ik_limit_x = True
+
+			#The IK bones are created
+			create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT)
+
+			#Add IK constraints
+			create_IK_constraints(KNEE_LEFT,LEG_IK_LEFT_BONE,KNEE_RIGHT,LEG_IK_RIGHT_BONE,ANKLE_LEFT,TOE_IK_LEFT_BONE,ANKLE_RIGHT,TOE_IK_RIGHT_BONE,KNEE2_LEFT,KNEE2_RIGHT)
+			
+			#create an 'IK' bone group and add the IK bones to it
+			create_IK_bone_group(LEG_IK_ROOT_LEFT_BONE,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_IK_RIGHT_BONE)
+
+			#create control bones
+			create_control_bones(armature,LEG_LEFT,LEG_RIGHT,KNEE_LEFT,KNEE_RIGHT,ANKLE_LEFT,ANKLE_RIGHT,TOE_LEFT,TOE_RIGHT,LOWER_BODY,LEG_LEFT_D,LEG_RIGHT_D,KNEE_LEFT_D,KNEE_RIGHT_D,ANKLE_LEFT_D,ANKLE_RIGHT_D,TOE_LEFT_EX,TOE_RIGHT_EX,KNEE2_LEFT,KNEE2_RIGHT,KNEE2_LEFT_D,KNEE2_RIGHT_D)
+
+			bpy.context.active_object.data.display_type = 'OCTAHEDRAL'
+		else:
+			raise TypeError(f'error--count not find one of these bones: {ROOT},{LOWER_BODY},{LEG_LEFT},{LEG_RIGHT},{KNEE_LEFT},{KNEE2_RIGHT},{ANKLE_LEFT},{ANKLE_RIGHT},{TOE_LEFT},{TOE_RIGHT}. aborted.')
 
 def create_IK_bones(armature,ANKLE_LEFT,LEG_IK_ROOT_LEFT_BONE,ROOT,ANKLE_RIGHT,LEG_IK_ROOT_RIGHT_BONE,LEG_IK_LEFT_BONE,LEG_IK_RIGHT_BONE,TOE_IK_LEFT_BONE,TOE_LEFT,TOE_IK_RIGHT_BONE,TOE_RIGHT):
 

@@ -1058,7 +1058,7 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		split.prop(context.scene, "selected_miscellaneous_tools")	
 		split.operator("ffxiv_mmd.miscellaneous_tools", text = "Run", icon='ORIENTATION_NORMAL')
 		row = layout.row(align=True)
-		row.prop(context.scene,"bust_slider",text='FFXIV Bust Scale',slider=True)
+		row.prop(context.scene,"bust_slider",text='FFXIV Breast Scale',slider=True)
 		row.operator("ffxiv_mmd.bust_slider",text='',icon='CHECKMARK' )
 		row = layout.row()
 			

@@ -357,12 +357,16 @@ def set_fixed_axis_local_axis_bones(armature):
 					bpy.ops.mmd_tools.bone_local_axes_setup(type='LOAD')
 					#bpy.ops.mmd_tools.bone_local_axes_setup(type='APPLY')
 
-def auto_fix_mmd_bone_names(armature):
+def auto_fix_mmd_bone_names(armature,bone_type=None):
 
 	#Get bones from the metadata dictionary
 	target_columns = ['mmd_english', 'mmd_english_alt', 'mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
 	FFXIV_BONE_METADATA_DICTIONARY_MMD_J = get_csv_metadata_by_bone_type("mmd_japanese", target_columns)
-	FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+	if bone_type and bone_type == 'mmd_english_alt':
+		FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english_alt", target_columns)
+	else:
+		FFXIV_BONE_METADATA_DICTIONARY_MMD_E = get_csv_metadata_by_bone_type("mmd_english", target_columns)
+		
 
 	if FFXIV_BONE_METADATA_DICTIONARY_MMD_J is not None:
 
@@ -672,6 +676,38 @@ def apply_rotation_from_bone_to_posebone(source_armature_name, source_bone_name,
 			#bpy.ops.object.mode_set(mode='OBJECT')
 
 
+#gets the equivalent primary bones from armature and returns the primary bonename type (mmd_english,mmd_english_alt, mmd_japanese, mmd_japaneseLR etc...)
+def get_primary_bonetype (armature,bone_type=None):
+
+	if bone_type is None:
+
+		bone_list = {'root','neck','head','center','center_2','upper body','upper body 2','upper body 3','lower body','shoulder_L','arm_L','elbow_L','wrist_L'
+				,'thumb0_L','thumb1_L','thumb2_L','fore1_L','fore2_L','fore3_L','middle1_L','middle2_L','middle3_L','third1_L','third2_L','third3_L','little1_L','little2_L','little3_L'
+				,'shoulder_R','arm_R','elbow_R','wrist_R',
+				'thumb0_R','thumb1_R','thumb2_R','fore1_R','fore2_R','fore3_R','middle1_R','middle2_R','middle3_R','third1_R','third2_R','third3_R','little1_R','little2_R','little3_R'
+				,'leg_L','knee_L','ankle_L','toe_L','leg_R','knee_R','ankle_R','toe_R','eye_L','eye_R','waist'}
+		
+		bone_finds = []
+			
+		for bone in bone_list:
+			if get_armature_bone_name_by_mmd_english_bone_name(armature,bone):
+				armature_bone_name = get_armature_bone_name_by_mmd_english_bone_name(armature,bone)
+				bone_finds.append(armature_bone_name)
+
+		bone_types = ['mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR', 'blender_rigify', 'ffxiv','mmd_kaito']
+
+		max_counter = 0
+		max_bone_type = None
+
+		for bone_type in bone_types:
+			counter = sum(1 for bone in bone_finds if is_bone_bone_type(armature, bone, bone_type))
+			if counter > max_counter:
+				max_counter = counter
+				max_bone_type = bone_type
+
+		return max_bone_type
+	else:
+		return bone_type
 
 @register_wrap
 class SortMMDBoneOrder(bpy.types.Operator):

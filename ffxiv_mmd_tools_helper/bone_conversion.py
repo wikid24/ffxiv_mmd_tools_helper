@@ -13,9 +13,9 @@ from . import add_hand_arm_ik
 
 
 		
-def correct_root_center(armature):
+def correct_root_center(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -80,9 +80,9 @@ def correct_root_center(armature):
 		
 	
 
-def correct_groove(armature):
+def correct_groove(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -138,9 +138,9 @@ def correct_groove(armature):
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 
-def correct_waist(armature):
+def correct_waist(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -182,9 +182,9 @@ def correct_waist(armature):
 		bpy.ops.object.mode_set(mode='OBJECT')
 		
 
-def correct_waist_cancel(armature):
+def correct_waist_cancel(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -230,9 +230,9 @@ def correct_waist_cancel(armature):
 		bpy.ops.object.mode_set(mode='OBJECT')
 
 
-def correct_view_cnt(armature):
+def correct_view_cnt(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -251,16 +251,17 @@ def correct_view_cnt(armature):
 
 	
 
-def add_extra_finger_bones(armature,hand_mesh): 
+def add_extra_finger_bones(armature,hand_mesh,bone_type=None): 
 	print('\nadd_extra_finger_bones(armature,hand_mesh):')
 	
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
 	else:
 		bpy.ops.object.mode_set(mode='EDIT')
 
+		#correct_finger(armature,hand_mesh,'fore2_L','fore3_L')
 		correct_finger(armature,hand_mesh,bone_tools.get_bone_name(bone_type,'fore2_L'),bone_tools.get_bone_name(bone_type,'fore3_L'))
 		correct_finger(armature,hand_mesh,bone_tools.get_bone_name(bone_type,'little2_L'),bone_tools.get_bone_name(bone_type,'little3_L'))
 		correct_finger(armature,hand_mesh,bone_tools.get_bone_name(bone_type,'third2_L'),bone_tools.get_bone_name(bone_type,'third3_L'))
@@ -388,9 +389,9 @@ def fix_bone_length(armature,source_bone_name,target_bone_name):
 	#bpy.ops.armature.calculate_roll(type='GLOBAL_POS_Y')
 	#bpy.context.active_object.data.bones.active = bpy.data.armatures[armature.name].bones[source_bone.name]
 
-def correct_bones_length(armature):
+def correct_bones_length(armature,bone_type=None):
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -409,32 +410,32 @@ def correct_bones_length(armature):
 
 		bpy.ops.object.mode_set(mode='OBJECT')
 
-def add_breast_tip_bones(armature):
+def add_breast_tip_bones(armature,bone_type=None):
 	print('\nadd_breast_tip_bones(armature):')
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 	
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
 	else:
 		bpy.ops.object.mode_set(mode='EDIT')
 	
-		breast = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'bust_L'))
-		if breast and armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'bust_2_L')) is None:
-			bone = bone_tools.add_bone(armature,bone_tools.get_bone_name(bone_type,'bust_2_L'),parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
+		breast = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'breast_L'))
+		if breast and armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'breast_2_L')) is None:
+			bone = bone_tools.add_bone(armature,bone_tools.get_bone_name(bone_type,'breast_2_L'),parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
 			bone.head = breast.tail
 			bone.roll = breast.roll
 
-		breast = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'bust_R'))
-		if breast and armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'bust_2_R')) is None:
-			bone = bone_tools.add_bone(armature,bone_tools.get_bone_name(bone_type,'bust_2_R'),parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
+		breast = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'breast_R'))
+		if breast and armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'breast_2_R')) is None:
+			bone = bone_tools.add_bone(armature,bone_tools.get_bone_name(bone_type,'breast_2_R'),parent_bone=breast,head=breast.head,tail=breast.tail,length=breast.length*1.25)
 			bone.head = breast.tail
 			bone.roll = breast.roll
 
 		bpy.ops.object.mode_set(mode='OBJECT')
 
-def add_eye_control_bone(armature):
+def add_eye_control_bone(armature,bone_type=None):
 	print('\nadd_eye_control_bone():')
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -478,8 +479,8 @@ def add_eye_control_bone(armature):
 
 
 
-def add_arm_wrist_twist(armature):
-	bone_type = model.get_primary_bonetype(armature)
+def add_arm_wrist_twist(armature,bone_type=None):
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -529,6 +530,8 @@ def create_twist_support_bones(armature,source_bone_name,bone_1_name,bone_2_name
 		# Get the armature in edit mode
 		bpy.ops.object.mode_set(mode='EDIT')
 
+		####### DO NOT TOUCH ANYWHERE BELOW THIS CODE, IT WILL BREAK BLENDER IF YOU DO#################	
+  
 		armature.data['source_bone_name']  = bone_tools.get_bone_name(bone_type,source_bone_name)
 		armature.data['bone_1_name'] = bone_tools.get_bone_name(bone_type,bone_1_name)
 		armature.data['bone_2_name'] = bone_tools.get_bone_name(bone_type,bone_2_name)	
@@ -596,8 +599,8 @@ def offset_bone_by_parents_tail(parent,child,percentage_of_parent):
 	bpy.ops.object.mode_set(mode='EDIT')
 
 
-	parent = bpy.context.active_object.data.edit_bones[parent]
-	child = bpy.context.active_object.data.edit_bones[child]
+	parent = bpy.context.active_object.data.edit_bones.get(parent)
+	child = bpy.context.active_object.data.edit_bones.get(child)
 
 	child.head = parent.head
 	child.tail = parent.tail    
@@ -669,10 +672,10 @@ def offset_bone_by_source_bone(source_bone_name,target_bone_name,head_or_tail,ax
 			target_bone.tail.z = source_bone.tail.z - offset
 
 
-def add_shoulder_control_bones(armature):
+def add_shoulder_control_bones(armature,bone_type=None):
 	print('\nadd_shoulder_control_bones():')
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -680,11 +683,11 @@ def add_shoulder_control_bones(armature):
 		bpy.ops.object.mode_set(mode='EDIT')
 
 		#get the bones
-		shoulder_L = armature.data.edit_bones[bone_tools.get_bone_name(bone_type,"shoulder_L")]
-		shoulder_R = armature.data.edit_bones[bone_tools.get_bone_name(bone_type,"shoulder_R")]
-		arm_L = armature.data.edit_bones[bone_tools.get_bone_name(bone_type,"arm_L")]
-		arm_R = armature.data.edit_bones[bone_tools.get_bone_name(bone_type,"arm_R")]
-		upper_body_3 = armature.data.edit_bones[bone_tools.get_bone_name(bone_type,"upper body 3")]
+		shoulder_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,"shoulder_L"))
+		shoulder_R = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,"shoulder_R"))
+		arm_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,"arm_L"))
+		arm_R = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,"arm_R"))
+		upper_body_3 = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,"upper body 3"))
 
 		#create new bones
 		shoulder_P_L = bone_tools.add_bone(armature,bone_tools.get_bone_name(bone_type, 'shoulder_P_L'),parent_bone=upper_body_3,length=shoulder_L.length,head=shoulder_L.head ,tail=shoulder_L.head)
@@ -727,10 +730,10 @@ def add_shoulder_control_bones(armature):
 	
 
 
-def merge_double_jointed_knee(armature, context):
+def merge_double_jointed_knee(armature, context,bone_type=None):
 	print('\n')
 	
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 
 	if armature and bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")
@@ -738,10 +741,10 @@ def merge_double_jointed_knee(armature, context):
 		bpy.ops.object.mode_set(mode='POSE')
 
 		#get the bones
-		knee_L = bpy.context.active_object.pose.bones['knee_L']
-		knee_R = bpy.context.active_object.pose.bones['knee_R']
-		j_asi_c_l = bpy.context.active_object.pose.bones['j_asi_c_l']
-		j_asi_c_r = bpy.context.active_object.pose.bones['j_asi_c_r']
+		knee_L = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_L'))
+		knee_R = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_R'))
+		j_asi_c_l = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_L'))
+		j_asi_c_r = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'knee_2_R'))
 
 		for pbone in armature.pose.bones:
 			pbone.bone.select = False
@@ -782,7 +785,7 @@ def merge_double_jointed_knee(armature, context):
 
 
 
-def set_bust_size(bust_scale=None,bust_xyz=None):
+def set_bust_size(bust_scale=None,bust_xyz=None,bone_type=None):
 	print('\n')
 	armature = model.findArmature(bpy.context.active_object)
 
@@ -790,8 +793,8 @@ def set_bust_size(bust_scale=None,bust_xyz=None):
 		bpy.context.view_layer.objects.active = armature
 
 		bpy.ops.object.mode_set(mode='POSE')
-		bust_L = armature.pose.bones.get('j_mune_l')
-		bust_R = armature.pose.bones.get('j_mune_r')
+		bust_L = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'breast_L'))
+		bust_R = armature.pose.bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'breast_R'))
 		bust_core = armature.pose.bones.get('j_mune_core')
 
 		scale_x = 1
@@ -834,12 +837,12 @@ def set_bust_size(bust_scale=None,bust_xyz=None):
 
 			
 
-def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
+def convert_ffxiv_boobs_to_genshin_boobs(context,armature,bone_type=None):
 
 	bpy.ops.object.mode_set(mode='EDIT')
 
-	j_mune_l = armature.data.edit_bones.get('j_mune_l')
-	j_mune_r = armature.data.edit_bones.get('j_mune_r')
+	j_mune_l = armature.data.edit_bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'breast_L'))
+	j_mune_r = armature.data.edit_bones.get(bone_tools.get_armature_bone_name_by_mmd_english_bone_name(armature,'breast_R'))
 
 	boob_core = None
 
@@ -912,15 +915,58 @@ def convert_ffxiv_boobs_to_genshin_boobs(context,armature):
 		#bone_tip.length = (bone.length) *0.66
 
 
+def adjust_arm_position(armature,bone_type=None):
 
-		
+	bpy.ops.object.mode_set(mode='EDIT')
+	bpy.context.object.data.use_mirror_x = True
+
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
+
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'head','x',1.15)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'head','y',1)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'head','z',0.75)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'tail','x',2.56)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'tail','z',0.33)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'upper body 3'),bone_tools.get_bone_name(bone_type,'shoulder_L'),'tail','y',0.825)
+	arm_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'arm_L'))
+	shoulder_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'shoulder_L'))
+	arm_L.head = shoulder_L.tail
+	arm_L.tail.x = arm_L.tail.x * 0.98
+	arm_L.tail.y = arm_L.tail.y * 0.7
+	arm_L.tail.z = arm_L.tail.z * 1.008
+	elbow_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'elbow_L'))
+	elbow_L.head = arm_L.tail
+	elbow_L.tail.x = elbow_L.tail.x * 0.979
+	#elbow_L.tail.y = elbow_L.tail.y * 0.999
+	wrist_L = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'wrist_L'))
+	wrist_L.head = elbow_L.tail
+	wrist_L.tail.x = wrist_L.tail.x * 0.965
+	"""
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'head','x',1/1.15)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'head','y',1)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'head','z',0.75)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'tail','x',-0.56)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'tail','z',0.33)
+	offset_bone_by_source_bone(bone_tools.get_bone_name(bone_type,'j_sebo_c'),bone_tools.get_bone_name(bone_type,'shoulder_R'),'tail','y',0.825)
+	arm_R = armature..data.edit_bones.get(bone_tools.get_bone_name(bone_type,'arm_R'))
+	shoulder_R = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'shoulder_R'))
+	arm_R.head = shoulder_R.tail
+	arm_R.tail.x = arm_R.tail.x * 0.98
+	arm_R.tail.y = arm_R.tail.y * 0.7
+	arm_R.tail.z = arm_R.tail.z * 1.008
+	elbow_R = armature.data.edit_bones.get(bone_tools.get_bone_name(bone_type,'elbow_R'))
+	elbow_R.head = arm_R.tail
+	"""
+	bpy.context.object.data.use_mirror_x = False
+	bpy.ops.object.mode_set(mode='OBJECT')
+	
 
 
 
 def main(context):
 
 	armature = model.findArmature(context.active_object)
-	context.view_layer.objects.active = armature
+	#context.view_layer.objects.active = armature
 
 	selected_bone_tool = bpy.context.scene.selected_bone_tool
 	if selected_bone_tool == "delete_unused_bones":
@@ -962,10 +1008,9 @@ def main(context):
 		add_hand_arm_ik.main(context)
 		bpy.ops.object.mode_set(mode='OBJECT')
 
-
 	if selected_bone_tool == "add_extra_finger_bones":
-		mesh = bpy.context.view_layer.objects.active
-		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
+		mesh = bpy.context.active_object
+		bpy.context.view_layer.objects.active  = model.findArmature(bpy.context.active_object)
 		armature = bpy.context.view_layer.objects.active
 		add_extra_finger_bones(armature,mesh)
 	if selected_bone_tool == "add_breast_tip_bones":
@@ -980,67 +1025,30 @@ def main(context):
 		#delete unused bones
 		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		armature = context.view_layer.objects.active
+		bone_type = bone_tools.get_primary_bonetype(armature)
 		miscellaneous_tools.flag_unused_bones()
 		miscellaneous_tools.delete_unused_bones()
-		correct_root_center(armature)
-		correct_groove(armature)
-		correct_waist(armature)
-		correct_waist_cancel(armature)
-		correct_view_cnt(armature)
-		correct_bones_length(armature)
-		add_eye_control_bone(armature)
-		add_arm_wrist_twist(armature)
-		add_shoulder_control_bones(armature)
+		correct_root_center(armature,bone_type)
+		correct_groove(armature,bone_type)
+		correct_waist(armature,bone_type)
+		correct_waist_cancel(armature,bone_type)
+		correct_view_cnt(armature,bone_type)
+		correct_bones_length(armature,bone_type)
+		add_eye_control_bone(armature,bone_type)
+		add_arm_wrist_twist(armature,bone_type)
+		add_shoulder_control_bones(armature,bone_type)
 		#leg_IK
 		bpy.ops.object.mode_set(mode='OBJECT')
 		add_foot_leg_ik.clear_IK(context)
-		add_foot_leg_ik.main(context)
+		add_foot_leg_ik.main(context,bone_type)
 		#auto_fix bone names
 		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
 		armature = context.view_layer.objects.active
-		bone_tools.auto_fix_mmd_bone_names(armature)
+		bone_tools.auto_fix_mmd_bone_names(armature,bone_type)
 		bpy.ops.object.mode_set(mode='OBJECT')
 	if selected_bone_tool == 'adjust_arm_position':
-		bpy.ops.object.mode_set(mode='EDIT')
-		bpy.context.object.data.use_mirror_x = True
-
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','x',1.15)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','y',1)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','head','z',0.75)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','x',2.56)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','z',0.33)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_L','tail','y',0.825)
-		arm_L = bpy.context.active_object.data.edit_bones['arm_L']
-		shoulder_L = bpy.context.active_object.data.edit_bones['shoulder_L']
-		arm_L.head = shoulder_L.tail
-		arm_L.tail.x = arm_L.tail.x * 0.98
-		arm_L.tail.y = arm_L.tail.y * 0.7
-		arm_L.tail.z = arm_L.tail.z * 1.008
-		elbow_L = bpy.context.active_object.data.edit_bones['elbow_L']
-		elbow_L.head = arm_L.tail
-		elbow_L.tail.x = elbow_L.tail.x * 0.979
-		#elbow_L.tail.y = elbow_L.tail.y * 0.999
-		wrist_L = bpy.context.active_object.data.edit_bones['wrist_L']
-		wrist_L.head = elbow_L.tail
-		wrist_L.tail.x = wrist_L.tail.x * 0.965
-		"""
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','x',1/1.15)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','y',1)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','head','z',0.75)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','x',-0.56)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','z',0.33)
-		offset_bone_by_source_bone('j_sebo_c','shoulder_R','tail','y',0.825)
-		arm_R = bpy.context.active_object.data.edit_bones['arm_R']
-		shoulder_R = bpy.context.active_object.data.edit_bones['shoulder_R']
-		arm_R.head = shoulder_R.tail
-		arm_R.tail.x = arm_R.tail.x * 0.98
-		arm_R.tail.y = arm_R.tail.y * 0.7
-		arm_R.tail.z = arm_R.tail.z * 1.008
-		elbow_R = bpy.context.active_object.data.edit_bones['elbow_R']
-		elbow_R.head = arm_R.tail
-		"""
-		bpy.context.object.data.use_mirror_x = False
-		bpy.ops.object.mode_set(mode='OBJECT')
+		adjust_arm_position(armature)
+		
 	if selected_bone_tool == "convert_ffxiv_boobs_to_genshin_boobs":
 		armature = None
 		bpy.context.view_layer.objects.active  = model.findArmature(context.active_object)
@@ -1097,7 +1105,7 @@ class BoneTools(bpy.types.Operator):
 class FFXIVBustSlider(bpy.types.Operator):
 	"""Slider for FFXIV Bust"""
 	bl_idname = "ffxiv_mmd.bust_slider"
-	bl_label = "FFXIV Bust Slider"
+	bl_label = "FFXIV Breast Slider"
 	bl_options = {'REGISTER', 'UNDO'}
 
 	bpy.types.Scene.bust_slider = bpy.props.IntProperty(name='Bust',default=50,min=0, soft_min=0,soft_max=300)

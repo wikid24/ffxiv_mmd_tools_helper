@@ -83,11 +83,11 @@ def clear_IK(context):
 	bpy.ops.object.mode_set(mode='OBJECT')
 
 
-def main(context):
+def main(context, bone_type=None):
 	bpy.context.view_layer.objects.active = get_armature()
 	armature=get_armature()
 
-	bone_type = model.get_primary_bonetype(armature)
+	bone_type = bone_tools.get_primary_bonetype(armature,bone_type)
 
 	if bone_type not in ('mmd_english', 'mmd_english_alt','mmd_japanese', 'mmd_japaneseLR'):
 		raise TypeError(f"Primary bone type detected '{bone_type}' is not recognized as an MMD bone type. Rename bones to one of the MMD types (English, EnglishAlt, Japanese, JapaneseLR) and then try again.")

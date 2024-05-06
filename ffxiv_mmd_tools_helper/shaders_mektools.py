@@ -63,8 +63,10 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 	def execute(self, context):
 
 		addon_name = 'mek_tools'
-		addon_required_version = '0.35'
+		bl_3_addon_required_version = '0.35'
+		bl_4_addon_required_version = '0.36'
 		addon_module = None
+		blender_version = bpy.app.version
 		try:
 			addon_module = [m for m in addon_utils.modules() if m.__name__ == addon_name][0] # get module
 		except:
@@ -77,8 +79,11 @@ class ApplyMekToolsSkinShader(bpy.types.Operator):
 		# Check if the addon is enabled
 		if addon_name not in bpy.context.preferences.addons.keys():
 			raise Exception(f"The addon '{addon_name}' is not installed or is not enabled. Please install and enable it.")
-		elif  installed_version < float(addon_required_version):
-			raise Exception(f"Addon '{addon_name}' version is {installed_version} please install {addon_required_version} or higher.")
+		elif  blender_version < (4,0,0) and (installed_version != float(bl_3_addon_required_version)):
+			raise Exception(f"Addon '{addon_name}' version is {installed_version}. Please install {addon_name} v{bl_3_addon_required_version} for Blender 3.x.x.")
+		elif  blender_version > (4,0,0) and installed_version < float(bl_4_addon_required_version):
+			raise Exception(f"Addon '{addon_name}' version is {installed_version}. Please install {addon_name} v{bl_4_addon_required_version} or higher for Blender 4.x.x.")
+		
 		else:
 
 			mek_tools.check_for_nodes()

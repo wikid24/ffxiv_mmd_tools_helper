@@ -85,6 +85,94 @@ def read_vmd_file(file_path):
 	
 	return model_name, bone_keyframes, face_keyframes, camera_keyframes
 		
+def output_vmdfile_results(model_name,bone_keyframes,face_keyframes,camera_keyframes):
+
+	
+	# Print model name
+	print("\nModel Name from the VMD file:", model_name)
+
+	# Sorting and printing unique bone names alphabetically
+	unique_bone_names = sorted(set(keyframe['bone_name'] for keyframe in bone_keyframes))
+	print("\nBone Names in the VMD file:")
+	for bone_name in unique_bone_names:
+			if translate.is_translated(bone_name):
+				print (bone_name)
+			else:
+				print (bone_name, f' ({translate.toEng(bone_name)})')
+			
+	num_bones = len(unique_bone_names)
+	print("\nTotal num bones:",num_bones)
+	print("\n-------")
+	
+	# Printing unique face names
+	unique_face_names = set(keyframe['face_name'] for keyframe in face_keyframes)
+	print("\nMorphs/Shape Keys in the VMD File:")
+	for face_name in unique_face_names:
+		if translate.is_translated(face_name):
+			print (face_name)
+		else:
+			print (face_name, f' ({translate.toEng(face_name)})')
+
+	num_face_names = len(unique_face_names)
+	print("\nTotal num morphs:",num_face_names)
+	print("\n-------")
+
+	# Print the number of camera keyframes
+	num_camera_keyframes = len(camera_keyframes)
+	print("Number of Camera Keyframes:", num_camera_keyframes)
+
+
+def compare_vmd_to_armature(vmd_bone_name_mode,arm,model_name,bone_keyframes,face_keyframes,camera_keyframes):
+
+	print("\nModel Name from the VMD file:", model_name)
+
+	# Sorting and printing unique bone names alphabetically
+	unique_vmd_bone_names = sorted(set(keyframe['bone_name'] for keyframe in bone_keyframes))
+	num_vmd_bones = len(unique_vmd_bone_names)
+
+	#armature_bone_names = [bone.name for bone in arm.data.bones]
+	#get all the PMX bones name from currently selected aramture
+ 
+	
+	armature_bonenames = []
+	for b in arm.data.bones:
+		if vmd_bone_name_mode == 'mmd_bone_name_j' and hasattr(arm.pose.bones[b.name], "mmd_bone"):
+			armature_bonenames.append(translate.parseJp(arm.pose.bones[b.name].mmd_bone.name_j))
+		elif vmd_bone_name_mode == 'mmd_bone_name_e' and hasattr(arm.pose.bones[b.name], "mmd_bone"):
+			armature_bonenames.append(translate.parseJp(arm.pose.bones[b.name].mmd_bone.name_e))
+		elif vmd_bone_name_mode == 'blender_bone_name':
+			armature_bonenames.append(translate.parseJp(b.name))
+
+	print("\nTotal num bones in VMD:",num_vmd_bones)
+	print("Bones in VMD but not on selected Armature:")
+
+	nomatch_counter = 0
+
+	for vmd_bone in unique_vmd_bone_names:
+		
+		#if hasattr(arm.pose.bones[b.name], "mmd_bone"):
+			#arm.pose.bones[b.name].mmd_bone.name_j = b.name
+
+		if translate.parseJp(vmd_bone) not in armature_bonenames:
+			nomatch_counter += 1
+			if translate.is_translated(vmd_bone):
+				print (vmd_bone)
+			else:
+				print (vmd_bone, f' ({translate.toEng(vmd_bone)})')
+	
+
+	print(f"\nTotal nomatches: {nomatch_counter}")
+	#get the PMX bones on the currently selected armature
+
+	print("\n-------")
+	
+	# Printing unique face names
+	unique_vmd_face_names = set(keyframe['face_name'] for keyframe in face_keyframes)
+	num_vmd_face_names = len(unique_vmd_face_names)
+	print("\nTotal num morphs in VMD:",num_vmd_face_names)
+	print("Morphs in VMD but not on selected Armature:")
+	print("\n-------")
+
 
 @register_wrap
 class FFXIV_VMDInspectFileBrowserImportOperator(bpy.types.Operator, ImportHelper):
@@ -108,38 +196,8 @@ class FFXIV_VMDInspectFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 		print("\n-------")
 		print("\nVMD File Inspector:")
 		print(filepath)
-		# Print model name
-		print("\nModel Name from the VMD file:", model_name)
 
-		# Sorting and printing unique bone names alphabetically
-		unique_bone_names = sorted(set(keyframe['bone_name'] for keyframe in bone_keyframes))
-		print("\nBone Names in the VMD file:")
-		for bone_name in unique_bone_names:
-				if translate.is_translated(bone_name):
-					print (bone_name)
-				else:
-					print (bone_name, f' ({translate.toEng(bone_name)})')
-				
-		num_bones = len(unique_bone_names)
-		print("\nTotal num bones:",num_bones)
-		print("\n-------")
-		
-		# Printing unique face names
-		unique_face_names = set(keyframe['face_name'] for keyframe in face_keyframes)
-		print("\nMorphs/Shape Keys in the VMD File:")
-		for face_name in unique_face_names:
-			if translate.is_translated(face_name):
-				print (face_name)
-			else:
-				print (face_name, f' ({translate.toEng(face_name)})')
-
-		num_face_names = len(unique_face_names)
-		print("\nTotal num morphs:",num_face_names)
-		print("\n-------")
-
-		# Print the number of camera keyframes
-		num_camera_keyframes = len(camera_keyframes)
-		print("Number of Camera Keyframes:", num_camera_keyframes)
+		output_vmdfile_results(model_name, bone_keyframes, face_keyframes,camera_keyframes)
 
 
 		return {'FINISHED'}
@@ -157,6 +215,12 @@ class FFXIV_VMDCompareFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 		options={'HIDDEN'},
 	)
 
+	bpy.types.Scene.vmd_bone_name_mode = bpy.props.EnumProperty(items = \
+	[("blender_bone_name", "Compare VMD vs Blender Bone","Compare VMD against Blender Bone Names") \
+	, ("mmd_bone_name_j", "Compare VMD vs MMD Japanese Bone", "Compare VMD against MMD Japanese Bone Names")\
+	, ("mmd_bone_name_e", "Compare VMD vs MMD English Bone", "Compare VMD against MMD English Bone Names")\
+	], name = "", default = 'blender_bone_name')
+
 	@classmethod
 	def poll(cls, context):		
 
@@ -166,52 +230,29 @@ class FFXIV_VMDCompareFileBrowserImportOperator(bpy.types.Operator, ImportHelper
 	def execute(self, context):
 		filepath = self.filepath
 
-		arm = model.find_MMD_Armature(context.active_object)
+		arm=None
 
-		model_name, bone_keyframes, face_keyframes,camera_keyframes  = read_vmd_file(filepath)
 
-		print("\n-------")
-		print("\nVMD File Comparison:")
-		print(filepath)
-		# Print model name
-		print("\nModel Name from the VMD file:", model_name)
+		if bpy.context.scene.vmd_bone_name_mode in ('mmd_bone_name_j','mmd_bone_name_e'):
+			arm = model.find_MMD_Armature(context.active_object)
+		else:
+			arm = model.findArmature(context.active_object)
 
-		# Sorting and printing unique bone names alphabetically
-		unique_vmd_bone_names = sorted(set(keyframe['bone_name'] for keyframe in bone_keyframes))
-		num_vmd_bones = len(unique_vmd_bone_names)
+		if not arm:
+			raise TypeError("Only works on armatures that have been converted to MMD.")
+		else:
 
-		#armature_bone_names = [bone.name for bone in arm.data.bones]
-  		#get all the PMX bones name from currently selected aramture
-		pmx_bonenames = []
-		for b in arm.data.bones:
-			if hasattr(arm.pose.bones[b.name], "mmd_bone"):
-				pmx_bonenames.append(arm.pose.bones[b.name].mmd_bone.name_j)
+			model_name, bone_keyframes, face_keyframes,camera_keyframes  = read_vmd_file(filepath)
 
-		print("\nTotal num bones in VMD:",num_vmd_bones)
-		print("Bones in VMD but not on selected Armature:")
+			print("\n-------")
+			print("\nVMD File Comparison:")
+			print(filepath)
 
-		for vmd_bone in unique_vmd_bone_names:
+			compare_vmd_to_armature(bpy.context.scene.vmd_bone_name_mode,arm,model_name, bone_keyframes, face_keyframes,camera_keyframes)
 			
-			if hasattr(arm.pose.bones[b.name], "mmd_bone"):
-				arm.pose.bones[b.name].mmd_bone.name_j = b.name
+	
 
-			if vmd_bone not in pmx_bonenames:
-
-				if translate.is_translated(vmd_bone):
-					print (vmd_bone)
-				else:
-					print (vmd_bone, f' ({translate.toEng(vmd_bone)})')
-		
-		#get the PMX bones on the currently selected armature
-
-		print("\n-------")
-		
-		# Printing unique face names
-		unique_vmd_face_names = set(keyframe['face_name'] for keyframe in face_keyframes)
-		num_vmd_face_names = len(unique_vmd_face_names)
-		print("\nTotal num morphs in VMD:",num_vmd_face_names)
-		print("Morphs in VMD but not on selected Armature:")
-		print("\n-------")
+			
 		return {'FINISHED'}
 	
 	

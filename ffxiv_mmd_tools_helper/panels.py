@@ -1117,9 +1117,14 @@ class MiscellaneousToolsPanel_MTH(bpy.types.Panel):
 		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.label(text="VMD Inspector", icon="VIEWZOOM")
+		row = layout.row(align=True)
 		col = row.column(align=True)
 		col.operator("ffxiv_mmd.read_vmd_file_browser_operator", text = "Read VMD")
-		col.operator("ffxiv_mmd.compare_vmd_file_browser_operator", text = "Compare to MMD Armature")
+		row = layout.row(align=True)
+		col = row.column(align=True)
+		col.prop(context.scene,"vmd_bone_name_mode")
+		col = row.column(align=True)
+		col.operator("ffxiv_mmd.compare_vmd_file_browser_operator", text = "Compare VMD")
 
 
 

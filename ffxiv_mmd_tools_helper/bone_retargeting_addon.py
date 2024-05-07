@@ -634,6 +634,11 @@ class ART_SetBoneInMapping(bpy.types.Operator):
 	#bone_name = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
 	armature_type = bpy.props.StringProperty(name="bone_name", update=None, get=None, set=None)
 
+	@classmethod
+	def poll(cls, context):
+		obj = context.active_object
+		return obj is not None and obj.type == 'ARMATURE' and bpy.context.object.mode == 'POSE'
+
 	def execute(self, context):
 
 		if is_addon_installed():

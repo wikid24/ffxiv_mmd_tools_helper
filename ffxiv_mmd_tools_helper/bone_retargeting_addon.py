@@ -192,15 +192,19 @@ def get_mapping_bone_group_list(bone_group):
 
 		#run through the bone dictionary and only append bones that match bone_group
 		for metadata_bone in FFXIV_BONE_METADATA_DICTIONARY:
-			if metadata_bone[0] == bone_group:
+			print(metadata_bone)
+			if bone_group is not None:
+				if metadata_bone[0] == bone_group:
+					bone_list.append(metadata_bone[1])
+					#print(metadata_bone[1])
+			else:
 				bone_list.append(metadata_bone[1])
-				#print(metadata_bone[1])
 
 		return bone_list
 	
 	return None
 
-def get_mapping_target_bones(bone_group,target_armature):
+def get_mapping_target_bones(target_armature,bone_group=None):
 
 	#get ALL bones that match the bone group
 	all_bones_in_bone_group = get_mapping_bone_group_list(bone_group)
@@ -223,22 +227,65 @@ def get_mapping_target_bones(bone_group,target_armature):
 
 ####################### DEREK PICK UP FROM HERE################################################
 # NEED TO FINISH OPERATOR FOR ffxiv_mmd.art_autofix_bone_mapping AND THIS FUNCTION ####################
-def get_bone_from_index(context,index):
+def get_mapping_from_index(context,index):
 	active_object = context.active_object
 	#active_pose_bone = context.active_pose_bone
 	rtc = active_object.get('retargeting_context')
 	source_arm = rtc.get('source')
-	#target_arm = rtc.get('target')
+	target_arm = rtc.get('target')
 
 	#mapping_data = active_object.get('retargeting_context').get('mappings')
-	index = int(active_object.retargeting_context.active_mapping)
+	current_index = int(active_object.retargeting_context.active_mapping)
 
-	target_bone_name = active_object.retargeting_context.mappings[index]['target']
+	#if index exists within current mapping table
+	if index >= 0 and index < len(active_object.retargeting_context.mappings):
+		active_object.retargeting_context.active_mapping = index
 	
-	mmd_e_bone_name = bone_tools.get_mmd_english_equivalent_bone_name(target_bone_name)
-	source_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,mmd_e_bone_name)
+		try:
+			target_bone_name = active_object.retargeting_context.mappings[index]['target']
+		except:
+			target_bone_name=""
+		try:
+			source_bone_name = active_object.retargeting_context.mappings[index]['source']
+		except:
+			source_bone_name=""
 
-	active_object.retargeting_context.mappings[index]['source'] = source_bone_name
+
+		#return index to original position
+		active_object.retargeting_context.active_mapping = current_index
+
+		return [source_bone_name,target_bone_name]
+		#return (f"index:{index},source_bone:{source_bone_name},target_bone:{target_bone_name}")
+
+#def get_mapping_length(content,)
+
+def set_mapping_from_index(context,index,source=None,target=None):
+	active_object = context.active_object
+	#active_pose_bone = context.active_pose_bone
+	rtc = active_object.get('retargeting_context')
+
+	source_arm = rtc.get('source')
+	target_arm = rtc.get('target')
+
+	
+	current_index = int(active_object.retargeting_context.active_mapping)
+
+	#if index exists within current mapping table
+	if index >= 0 and index < len(active_object.retargeting_context.mappings):
+		#set the mapping index
+		active_object.retargeting_context.active_mapping = index
+
+		if source:
+			active_object.retargeting_context.mappings[index]['source'] = source
+		
+		if target:
+			active_object.retargeting_context.mappings[index]['target'] = target
+
+
+		#return index to original position
+		active_object.retargeting_context.active_mapping = current_index
+
+
 
 @register_wrap
 class ART_AutoFixBoneMapping(bpy.types.Operator):
@@ -246,6 +293,8 @@ class ART_AutoFixBoneMapping(bpy.types.Operator):
 	bl_idname = "ffxiv_mmd.art_autofix_bone_mapping"
 	bl_label = "Fixes mappings and removes bones that do not exist"
 	bl_options = {'REGISTER', 'UNDO'}
+
+	#bone_group = bpy.props.StringProperty(name="bone_group")
 
 	def execute(self, context):
 
@@ -259,31 +308,72 @@ class ART_AutoFixBoneMapping(bpy.types.Operator):
 
 			if is_source_and_target_mapped(active_object):
 
-				get_mapping_target_bones()
+				
+				#get index 0 to max
+				mapping_length = len(active_object.retargeting_context.mappings)
+
+				#iterate through each mapping
+				for i in range(0, mapping_length):
+					mapping = get_mapping_from_index(context,i)
+					source_mapping = mapping[0] 
+					target_mapping = mapping[1] 
+					source_bone = source_arm.pose.bones.get(source_mapping)
+					target_bone = target_arm.pose.bones.get(target_mapping)
+
+					#if the mapping doesn't exist on the armature, find the equivalent bone
+					if source_mapping and source_bone is None:
+						source_mmd_e_bone_name = bone_tools.get_mmd_english_equivalent_bone_name(translate.parseJp(source_mapping))
+						source_new_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(source_arm,source_mmd_e_bone_name)
+						source_bone = source_arm.pose.bones.get(source_new_bone_name)
+						if source_bone:
+							set_mapping_from_index(context,i,source=source_bone.name)
+						else:
+							source_new_bone_name = ""
+							set_mapping_from_index(context,i,source=source_new_bone_name)
+
+						print(f"index:{i} source old bone name:{source_mapping},source new bone name: {source_new_bone_name}")
+
+					#if the mapping doesn't exist on the armature, find the equivalent bone
+					if target_mapping and target_bone is None:
+						target_mmd_e_bone_name = bone_tools.get_mmd_english_equivalent_bone_name(translate.parseJp(target_mapping))
+						target_new_bone_name = bone_tools.get_armature_bone_name_by_mmd_english_bone_name(target_arm,target_mmd_e_bone_name)
+						target_bone = target_arm.pose.bones.get(target_new_bone_name)
+						if target_bone:
+							set_mapping_from_index(context,i,target=target_bone.name)
+						else:
+							target_new_bone_name = ""
+							set_mapping_from_index(context,i,source=target_new_bone_name)
+						print(f"index:{i} target old bone name:{target_mapping},target new bone name: {target_new_bone_name}")
 
 
-				armatures = [source_arm, target_arm]
-
-				for armature in armatures:
-
-					for bone in armature.pose.bones:
-						print (bone.name)
-
-				#get all bones, if equivalent bone exists on armature
-
-
-				#if equivalent bone exists on armature, map it
-
-				#if equivalent bone exists does not exist on armature, remove it
-
-
-				#garbage cleanup for when both the source mapping and target mapping don't exist
-
-
+					#if source mapping exists but target mapping doesn't, set the target to the equivalent bone
+					if source_bone and target_bone is None:
+						target_bone = bone_tools.get_equivalent_bone_from_armature(source_arm,source_bone,target_arm)
+						if target_bone:
+							target_new_bone_name = target_bone.name
+							set_mapping_from_index(context,i,target=target_new_bone_name)
 							
+						else:
+							target_new_bone_name = ""
+							set_mapping_from_index(context,i,source=target_new_bone_name)
+						print(f"index:{i} target old bone name:{target_mapping},target new bone name: {target_new_bone_name}")
+
+						
+
+					#if target mapping exists but source doesn't, set source to the equivalent bone
+					if target_bone and source_bone is None:
+						source_bone = bone_tools.get_equivalent_bone_from_armature(target_arm,target_bone,source_arm)
+						if source_bone:
+							source_new_bone_name = source_bone.name
+							set_mapping_from_index(context,i,source=source_new_bone_name)
+						else:
+							source_new_bone_name = ""
+						print(f"index:{i} source old bone name:{source_mapping},source new bone name: {source_new_bone_name}")
+						
+	
 					
 		return {'FINISHED'}
-####################### DEREK FINISHED EVERYTHING UP FROM HERE################################################
+
 
 @register_wrap
 class ART_AddBoneMapping(bpy.types.Operator):
@@ -295,8 +385,11 @@ class ART_AddBoneMapping(bpy.types.Operator):
 	#reference data only
 	bone_group_list = ['all_verbatim','clear_mapping','body','breast','eye','eyelid','eyebrow','nose','mouth','ear','skirt','tail']
 
-	bone_group = bpy.props.StringProperty(name="bone_group", update=None, get=None, set=None)
+	#decal_slot_id = bpy.props.IntProperty(name="decal_slot_id")
+	bone_group = bpy.props.StringProperty(name="bone_group")
 
+	#bpy.types.Scene.art_bone_group = bpy.props.StringProperty(name="bone_group")
+	
 	def execute(self, context):
 
 		if is_addon_installed():
@@ -327,7 +420,7 @@ class ART_AddBoneMapping(bpy.types.Operator):
 								add_bone_mapping(target_arm, source_bone,target_bone)
 				else:
 
-					target_bone_list = get_mapping_target_bones(self.bone_group,target_arm)					
+					target_bone_list = get_mapping_target_bones(target_arm,self.bone_group)					
 
 					if target_bone_list:
 
@@ -345,14 +438,14 @@ class ART_AddBoneMapping(bpy.types.Operator):
 					#mmd_e_bones = ('thumb1_L','thumb2_L','thumb1_R','thumb2_R')
 
 					for bone_name in mmd_kaito_bones:
-						print(bone_name)
+						#print(bone_name)
 						if bone_name not in source_arm.pose.bones:
-							print('its not in it')
+							#print('its not in it')
 							has_all_kaito_bones = False
-						else:
-							print('its in it')
+						#else:
+							#print('its in it')
 
-					print('has all kaito bones:', has_all_kaito_bones)
+					#print('has all kaito bones:', has_all_kaito_bones)
 
 					if has_all_kaito_bones:
 						for kaito_bone_name in mmd_kaito_bones: 

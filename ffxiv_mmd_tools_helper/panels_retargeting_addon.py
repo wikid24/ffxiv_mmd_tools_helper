@@ -29,13 +29,16 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 				row = layout.row()
 				row.label(text = 'Select source & target armature')
 			else:
-
+				
 				art_mapping_controls = bpy.context.active_object.retargeting_context
 				row = layout.row()
+				
 				if art_mapping_controls:
+					
 					if art_mapping_controls.ui_editing_mappings is None or art_mapping_controls.ui_editing_mappings == False:
 						row.label(text = 'Edit the bone mapping to see options')
 					else:
+						
 						#to-do: check if in pose mode first
 						box = layout.box()
 						#row = box.row()
@@ -69,7 +72,7 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 									if source_bone:
 										source_bone_description = bone_tools.get_metadata_by_bone_name(source_bone_name,'description')
 									if target_bone:
-										print(target_bone.name)
+										#print(target_bone.name)
 										target_bone_description = bone_tools.get_metadata_by_bone_name(target_bone_name,'description')
 							#else:
 							row = box.row()
@@ -105,25 +108,25 @@ class ART_BoneMapping_MTH(bpy.types.Panel):
 					
 					row = layout.row()
 					grid = row.grid_flow(columns=2,align=True)
-					row.operator("ffxiv_mmd.art_autofix_bone_mapping", text="Autofix the Mapping List").bone_group='clear_mapping'
+					row.operator("ffxiv_mmd.art_autofix_bone_mapping", text="Autofix the Mapping List")
 					row.operator("ffxiv_mmd.art_add_bone_mapping", text="CLEAR THE MAPPING LIST").bone_group='clear_mapping'
 			
 					row = layout.row()
 					row.label(text = 'Add Mapping by Bone Type')
 					row = layout.row()
 					grid = row.grid_flow(columns=3,align=True)
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="ALL!").bone_group='all_verbatim'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Body").bone_group='body'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Tail").bone_group='tail'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Breasts").bone_group='breast'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Skirt").bone_group='skirt'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="ALL!").bone_group ='all_verbatim'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Body").bone_group ='body'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Tail").bone_group ='tail'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Breasts").bone_group ='breast'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Skirt").bone_group ='skirt'
 					row = layout.row()
 					grid = row.grid_flow(columns=3,align=True)
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Mouth").bone_group='mouth'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyes").bone_group='eye'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyelids").bone_group='eyelid'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyebrows").bone_group='eyebrow'
-					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Nose").bone_group='nose'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Mouth").bone_group ='mouth'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyes").bone_group ='eye'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyelids").bone_group ='eyelid'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Eyebrows").bone_group ='eyebrow'
+					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Nose").bone_group ='nose'
 					grid.operator("ffxiv_mmd.art_add_bone_mapping", text="Ears").bone_group='ear'
 					row = layout.row()
 					row.label(text = 'Should work on MMD(Kaito w/Skirt),FFXIV(converted),FFXIV')

@@ -8,6 +8,7 @@ import re
 import math
 from functools import reduce
 from . import bones_renamer
+from . import bone_tools
 import mathutils
 
 def get_attribute(obj, attr_name):
@@ -69,7 +70,7 @@ def get_armature_from_rigid_body(obj):
 	else:
 		print ('could not find armature for obj:','obj')
 
-def apply_all_rigid_bodies(armature,rigid_body_data):
+def apply_all_rigid_bodies(armature,rigid_body_data,bone_type=None):
 	
 
 	if rigid_body_data: 
@@ -95,7 +96,7 @@ def apply_all_rigid_bodies(armature,rigid_body_data):
 			
 
 			bpy.context.view_layer.objects.active = armature
-			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping)
+			create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping,bone_type)
 	
 def remove_orphaned_rigid_bodies(armature):
 	for obj in armature.parent.children_recursive:
@@ -107,7 +108,7 @@ def remove_orphaned_rigid_bodies(armature):
 				bpy.data.objects.remove(obj, do_unlink=True)
 
 
-def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping):
+def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_rot,name_j,name_e,collision_group_number,collision_group_mask, rigid_type,rigid_shape,size,mass,friction,bounce,linear_damping,angular_damping,bone_type=None):
 
 	
 	#if rigid body exists, delete it
@@ -117,15 +118,23 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_
 			bpy.data.objects.remove(obj, do_unlink=True)
 
 	
+	if bone_type is None:
+		bone_type = bone_tools.get_primary_bonetype(armature)
+	
+	bone_name_result = bone_tools.get_bone_name(bone_type,bone)
+
+	bone_name = bone_name_result or bone
+	#print(f"bone:{bone} bone_name{bone_name}")
+
 	#check if bone exists
 	bpy.ops.object.mode_set(mode='EDIT')
-	if bone in bpy.context.active_object.data.edit_bones:
+	if bone_name in bpy.context.active_object.data.edit_bones:
 
 
 		# Select the bone		
 		bpy.ops.armature.select_all(action='DESELECT')
-		armature.data.edit_bones[bone].select = True
-		armature.data.bones.active = armature.data.bones[bone]
+		armature.data.edit_bones[bone_name].select = True
+		armature.data.bones.active = armature.data.bones[bone_name]
 			
 		bpy.ops.mmd_tools.rigid_body_add(
 			name_j= name_j #'$name_j'
@@ -212,7 +221,7 @@ def create_rigid_body(armature,rigid_body_name,bone,offset_loc,offset_rot,reset_
 		print ('created rigid body: ',rigid_body.name)
 		return rigid_body
 	else:
-		print ('bone ',bone,' does not exist')
+		print ('bone ',bone_name,' does not exist')
 
 
 def get_skirt_rigid_vertical_objects(obj):
@@ -1201,8 +1210,10 @@ def create_rigid_bodies_from_csv(context):
 	bpy.context.view_layer.objects.active = armature 
 
 	RIGID_BODY_DICTIONARY = read_rigid_body_file ()
+
+	bone_type = bone_tools.get_primary_bonetype(armature)
 	
-	apply_all_rigid_bodies(armature, RIGID_BODY_DICTIONARY)
+	apply_all_rigid_bodies(armature, RIGID_BODY_DICTIONARY,bone_type)
 	#apply_all_rigid_bodies(armature)
 
 @register_wrap

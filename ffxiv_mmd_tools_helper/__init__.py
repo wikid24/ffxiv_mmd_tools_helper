@@ -42,7 +42,7 @@ if "bpy" in locals():
 	importlib.reload(import_csv)
 	importlib.reload(add_foot_leg_ik)
 	importlib.reload(add_hand_arm_ik)
-	importlib.reload(armature_diagnostic)
+	#importlib.reload(armature_diagnostic)
 	importlib.reload(bone_conversion)
 	importlib.reload(bone_groups)
 	importlib.reload(bone_morphs)
@@ -85,7 +85,7 @@ else:
 	from . import import_csv
 	from . import add_foot_leg_ik
 	from . import add_hand_arm_ik
-	from . import armature_diagnostic
+	#from . import armature_diagnostic
 	from . import bone_conversion
 	from . import bone_groups
 	from . import bone_morphs

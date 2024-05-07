@@ -1,6 +1,6 @@
 ﻿joint_name,rigid_body_1,rigid_body_2,move_to_rigid_bone_tail,use_bone_rotation,linear_min_x,linear_min_y,linear_min_z,linear_max_x,linear_max_y,linear_max_z,angular_min_x,angular_min_y,angular_min_z,angular_max_x,angular_max_y,angular_max_z,linear_spring_x,linear_spring_y,linear_spring_z,angular_spring_x,angular_spring_y,angular_spring_z
-J.v_upper body 2b-j_mune_l,upper body 2b,j_mune_l,,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
-J.v_upper body 2b-j_mune_r,upper body 2b,j_mune_r,,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
+J.v_upper body 2b-breast_L,upper body 2b,breast_L,,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
+J.v_upper body 2b-breast_R,upper body 2b,breast_R,,1,,,,,,,-0.01,-1,-5,0.01,5,5,,,,,,
 J.v_head-j_kami_a,head,j_kami_a,,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
 J.v_j_kami_a-j_kami_b,j_kami_a,j_kami_b,,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
 J.v_head-j_kami_f_l,head,j_kami_f_l,,1,,,,,,,-5,-5,-5,5,5,5,,,,,,
@@ -48,11 +48,11 @@ J.h_j_sk_f_c_r-j_sk_s_c_r,j_sk_f_c_r,j_sk_s_c_r,,0,,,,,,,-0.0531,0.0531,,,,,,,,,
 J.h_j_sk_f_c_l-j_sk_f_c_r,j_sk_f_c_l,j_sk_f_c_r,,0,,,,,,,-0.0531,0.0531,,,,,,,,,,
 J.h_j_sk_s_c_l-j_sk_f_c_l,j_sk_s_c_l,j_sk_f_c_l,,0,,,,,,,-0.0531,0.0531,,,,,,,,,,
 J.h_j_sk_b_c_l-j_sk_s_c_l,j_sk_b_c_l,j_sk_s_c_l,,0,,,,,,,-0.0531,0.0531,,,,,,,,,,
-J.j_mune_core-j_mune_l_top,j_mune_core,j_mune_l_top,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
-J.j_mune_core-j_mune_r_top,j_mune_core,j_mune_r_top,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
-J.j_mune_core-j_mune_l_bot,j_mune_core,j_mune_l_bot,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
-J.j_mune_core-j_mune_r_bot,j_mune_core,j_mune_r_bot,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
-J.j_mune_l_top-j_mune_l_mid,j_mune_l_top,j_mune_l_mid,1,0,,,,,,,-25,,,25,,,,100,,100,100,80
-J.j_mune_r_top-j_mune_r_mid,j_mune_r_top,j_mune_r_mid,1,0,,,,,,,-25,,,25,,,,100,,100,100,80
-J.j_mune_l_mid-j_mune_l_bot,j_mune_l_mid,j_mune_l_bot,1,0,,,,,,,-30,,,30,,,100,100,,20,,
-J.j_mune_r_mid-j_mune_r_bot,j_mune_r_mid,j_mune_r_bot,1,0,,,,,,,-30,,,30,,,100,100,,20,,
+J.j_mune_core-breast_L_top,j_mune_core,breast_L_top,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
+J.j_mune_core-breast_R_top,j_mune_core,breast_R_top,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
+J.j_mune_core-breast_L_bot,j_mune_core,breast_L_bot,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
+J.j_mune_core-breast_R_bot,j_mune_core,breast_R_bot,,0,,,,,,,-3,-5,-10,30,5,10,,,,100,100,80
+J.breast_L_top-breast_L_mid,breast_L_top,breast_L_mid,1,0,,,,,,,-25,,,25,,,,100,,100,100,80
+J.breast_R_top-breast_R_mid,breast_R_top,breast_R_mid,1,0,,,,,,,-25,,,25,,,,100,,100,100,80
+J.breast_L_mid-breast_L_bot,breast_L_mid,breast_L_bot,1,0,,,,,,,-30,,,30,,,100,100,,20,,
+J.breast_R_mid-breast_R_bot,breast_R_mid,breast_R_bot,1,0,,,,,,,-30,,,30,,,100,100,,20,,

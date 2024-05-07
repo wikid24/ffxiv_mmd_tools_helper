@@ -690,9 +690,7 @@ def main(context,filepath,apply_charafile_to_selected=None):
 	print('----------------')
 	print (f".chara file: {filepath}")
 
-	obj = bpy.context.active_object
-	#root = model.findRoot(obj)
-	selected_armature = model.findArmature(obj)
+	
 
 	#if obj and obj.type == 'ARMATURE':
 		#selected_armature = obj
@@ -711,13 +709,18 @@ def main(context,filepath,apply_charafile_to_selected=None):
 	context.scene.color_facepaint = hex_to_rgba(color_hex_data['facepaint'])
 
 	
-	diagnose_meshes_against_charafile(RESULTS_DICT,selected_armature)
+	
 
 	print_textools_data(RESULTS_DICT,color_hex_data)
 	
 
 	
 	if apply_charafile_to_selected == True:
+		obj = bpy.context.active_object
+		#root = model.findRoot(obj)
+		selected_armature = model.findArmature(obj)
+		diagnose_meshes_against_charafile(RESULTS_DICT,selected_armature)
+		
 		add_custom_properties_to_armature(selected_armature,RESULTS_DICT)
 		apply_face_shape_keys(RESULTS_DICT)
 		apply_face_bone_morphs(RESULTS_DICT)
